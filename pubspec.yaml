@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   usda_db_package:
-  git:
-    url: https://github.com/marshall-buck/usda_db_package.git
+    git:
+      url: https://github.com/marshall-buck/usda_db_package.git
   flutter:
     sdk: flutter
 
