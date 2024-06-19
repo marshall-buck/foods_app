@@ -6,19 +6,19 @@ part of 'db_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$foodsDBHash() => r'fc1c9a6a69113dd7bb601ca5754910865ad24b5b';
+String _$foodsDBRepoHash() => r'aec6b160b1ca52636a8298c8ad8b4f3d18b7488b';
 
-/// See also [FoodsDB].
-@ProviderFor(FoodsDB)
-final foodsDBProvider = NotifierProvider<FoodsDB, void>.internal(
-  FoodsDB.new,
-  name: r'foodsDBProvider',
+/// See also [foodsDBRepo].
+@ProviderFor(foodsDBRepo)
+final foodsDBRepoProvider = Provider<FoodsDBInterface>.internal(
+  foodsDBRepo,
+  name: r'foodsDBRepoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$foodsDBHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$foodsDBRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$FoodsDB = Notifier<void>;
+typedef FoodsDBRepoRef = ProviderRef<FoodsDBInterface>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

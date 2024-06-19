@@ -6,31 +6,36 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 part 'local_db.g.dart';
 
-@Riverpod(keepAlive: true)
-class LocalDB extends _$LocalDB implements FoodsDBInterface {
-  @override
-  Future<UsdaDB> build() async {
-    return await UsdaDB.init();
+class _LocalDB implements FoodsDBInterface {
+  late final UsdaDB _db;
+
+  UsdaDB get db => _db;
+
+  bool get isDataLoaded => _db.isDataLoaded;
+  bool get isInitializing => _db.isInitializing;
+
+  _LocalDB() {
+    _initDb();
+  }
+
+  Future<void> _initDb() async {
+    _db = await UsdaDB.init();
   }
 
   @override
   Future<FoodModel?> queryFood({required id}) async {
-    final SrLegacyFoodType? food = await state.value!.queryFood(id: id);
-    return FoodModel.fromUsdaDB(food!);
+    final SrLegacyFoodModel? food = await db.queryFood(id: id);
+    return FoodModel.fromUsdaDB(food);
   }
 
   @override
   Future<List<FoodModel?>> queryFoods({required String searchTerm}) async {
-    final List<SrLegacyFoodType?> foods =
-        await state.value!.queryFoods(searchString: searchTerm);
+    final List<SrLegacyFoodModel?> foods =
+        await db.queryFoods(searchString: searchTerm);
 
-    final List<FoodModel?> converted = [];
-    if (foods.isNotEmpty) {
-      for (final food in foods) {
-        converted.add(FoodModel.fromUsdaDB(food!));
-      }
-    }
-
-    return converted;
+    return foods.isEmpty ? [] : foods.map(FoodModel.fromUsdaDB).toList();
   }
 }
+
+@Riverpod(keepAlive: true)
+FoodsDBInterface localDB(LocalDBRef ref) => _LocalDB();

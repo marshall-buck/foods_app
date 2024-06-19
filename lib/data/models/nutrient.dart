@@ -15,7 +15,7 @@ class Nutrient {
     required this.unit,
   });
 
-  factory Nutrient.fromUsdaDB(SrLegacyNutrientType nutrient) {
+  factory Nutrient.fromUsdaDB(SrLegacyNutrientModel nutrient) {
     return Nutrient(
         id: nutrient.id,
         name: nutrient.name ?? '',

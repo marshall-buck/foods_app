@@ -6,12 +6,12 @@ part of 'local_db.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$localDBHash() => r'b1338adc96c54018cb09287653c26928aa18bff3';
+String _$localDBHash() => r'f2b0acc06bc66e4a3617b97a67544b87114fff30';
 
-/// See also [LocalDB].
-@ProviderFor(LocalDB)
-final localDBProvider = AsyncNotifierProvider<LocalDB, UsdaDB>.internal(
-  LocalDB.new,
+/// See also [localDB].
+@ProviderFor(localDB)
+final localDBProvider = Provider<FoodsDBInterface>.internal(
+  localDB,
   name: r'localDBProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$localDBHash,
@@ -19,6 +19,6 @@ final localDBProvider = AsyncNotifierProvider<LocalDB, UsdaDB>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$LocalDB = AsyncNotifier<UsdaDB>;
+typedef LocalDBRef = ProviderRef<FoodsDBInterface>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

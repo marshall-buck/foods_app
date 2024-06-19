@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:foods_app/data/data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 import 'nutrient.dart';
@@ -13,10 +12,16 @@ class FoodModel {
   const FoodModel(
       {required this.id, required this.description, required this.nutrients});
 
-  factory FoodModel.fromUsdaDB(SrLegacyFoodType food) {
-    final List<Nutrient> nutrients = food.nutrients
-        .map((SrLegacyNutrientType e) => Nutrient.fromUsdaDB(e))
-        .toList();
+  static FoodModel? fromUsdaDB(SrLegacyFoodModel? food) {
+    if (food == null) return null;
+    // final List<Nutrient> nutrients = [];
+    // for (SrLegacyNutrientModel nutrient in food.nutrients) {
+    //   final Nutrient nut = Nutrient.fromUsdaDB(nutrient);
+    //   nutrients.add(nut);
+    // }
+
+    final List<Nutrient> nutrients =
+        food.nutrients.map((e) => Nutrient.fromUsdaDB(e)).toList();
     return FoodModel(
         id: food.id, description: food.description, nutrients: nutrients);
   }
