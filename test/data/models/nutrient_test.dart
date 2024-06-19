@@ -5,7 +5,7 @@ import 'package:usda_db_package/usda_db_package.dart';
 void main() {
   group('Nutrient class tests', () {
     group('Constructor tests', () {
-      test('initiates properly', () {
+      test('initiates new nutrient', () {
         const Nutrient nutrient = Nutrient(
           id: 1,
           name: 'Test Nutrient',
@@ -19,7 +19,7 @@ void main() {
         expect(nutrient.amount, 10.0);
         expect(nutrient.unit, 'g');
       });
-      test('creates from SrLegacyNutrientModel', () {
+      test('creates Nutrient from SrLegacyNutrientModel', () {
         const SrLegacyNutrientModel srNutrient = SrLegacyNutrientModel(
           id: 1,
           name: 'Test Nutrient',

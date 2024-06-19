@@ -1,19 +1,16 @@
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:usda_db_package/usda_db_package.dart';
+part 'nutrient.freezed.dart';
 
-@immutable
-class Nutrient {
-  final int id;
-  final String name;
-  final num amount;
-  final String unit;
-
-  const Nutrient({
-    required this.id,
-    required this.name,
-    required this.amount,
-    required this.unit,
-  });
+@freezed
+class Nutrient with _$Nutrient {
+  const factory Nutrient({
+    required int id,
+    required String name,
+    required num amount,
+    required String unit,
+  }) = _Nutrient;
 
   factory Nutrient.fromUsdaDB(SrLegacyNutrientModel nutrient) {
     return Nutrient(

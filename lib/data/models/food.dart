@@ -1,24 +1,19 @@
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 import 'nutrient.dart';
+part 'food.freezed.dart';
 
-@immutable
-class FoodModel {
-  final int id;
-  final String description;
-  final List<Nutrient> nutrients;
-
-  const FoodModel(
-      {required this.id, required this.description, required this.nutrients});
+@freezed
+class FoodModel with _$FoodModel {
+  const factory FoodModel(
+      {required int id,
+      required String description,
+      required List<Nutrient> nutrients}) = _FoodModel;
 
   static FoodModel? fromUsdaDB(SrLegacyFoodModel? food) {
     if (food == null) return null;
-    // final List<Nutrient> nutrients = [];
-    // for (SrLegacyNutrientModel nutrient in food.nutrients) {
-    //   final Nutrient nut = Nutrient.fromUsdaDB(nutrient);
-    //   nutrients.add(nut);
-    // }
 
     final List<Nutrient> nutrients =
         food.nutrients.map((e) => Nutrient.fromUsdaDB(e)).toList();
