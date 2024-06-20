@@ -5,4 +5,5 @@ import 'package:foods_app/data/data.dart';
 abstract interface class FoodsDBInterface {
   Future<FoodModel?> queryFood({required id});
   Future<List<FoodModel?>> queryFoods({required String searchTerm});
+  bool get isDataLoaded;
 }

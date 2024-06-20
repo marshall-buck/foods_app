@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:foods_app/data/data.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,20 +9,12 @@ import 'package:usda_db_package/usda_db_package.dart';
 part 'local_db.g.dart';
 
 class _LocalDB implements FoodsDBInterface {
-  late final UsdaDB _db;
+  final UsdaDB db;
 
-  UsdaDB get db => _db;
+  const _LocalDB({required this.db});
 
-  bool get isDataLoaded => _db.isDataLoaded;
-  bool get isInitializing => _db.isInitializing;
-
-  _LocalDB() {
-    _initDb();
-  }
-
-  Future<void> _initDb() async {
-    _db = await UsdaDB.init();
-  }
+  @override
+  bool get isDataLoaded => db.isDataLoaded;
 
   @override
   Future<FoodModel?> queryFood({required id}) async {
@@ -38,4 +32,8 @@ class _LocalDB implements FoodsDBInterface {
 }
 
 @Riverpod(keepAlive: true)
-FoodsDBInterface localDB(LocalDBRef ref) => _LocalDB();
+UsdaDB usdaDB(UsdaDBRef ref) => throw UnimplementedError();
+
+@riverpod
+FoodsDBInterface localDB(LocalDBRef ref) =>
+    _LocalDB(db: ref.watch(usdaDBProvider));

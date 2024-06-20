@@ -1,17 +1,14 @@
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:foods_app/data/data.dart';
+import 'dart:math';
 
-// import '../../provider_container.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:foods_app/data/data.dart';
 
-// void main() {
-//   test('Some description', () {
-//     // Create a ProviderContainer for this test.
-//     // DO NOT share ProviderContainers between tests.
-//     final container = createContainer();
+import '../../setup/provider_container.dart';
+import '../../setup/startup.dart';
 
-//     // TODO: use the container to test your application.
-
-//     final localDBP = container.read(localDBProvider);
-//     print(container);
-//   });
-// }
+void main() {
+  set_up_all();
+  test('Some description', () {
+    expect(1, 1);
+  });
+}

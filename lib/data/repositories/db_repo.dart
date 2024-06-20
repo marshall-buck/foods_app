@@ -12,6 +12,9 @@ class _FoodsDBRepo implements FoodsDBInterface {
   const _FoodsDBRepo(this._localDB);
 
   @override
+  bool get isDataLoaded => _localDB.isDataLoaded;
+
+  @override
   Future<FoodModel?> queryFood({required id}) => _localDB.queryFood(id: id);
 
   @override
@@ -19,6 +22,6 @@ class _FoodsDBRepo implements FoodsDBInterface {
       _localDB.queryFoods(searchTerm: searchTerm);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 FoodsDBInterface foodsDBRepo(FoodsDBRepoRef ref) =>
     _FoodsDBRepo(ref.watch(localDBProvider));

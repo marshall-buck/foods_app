@@ -6,11 +6,11 @@ part of 'db_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$foodsDBRepoHash() => r'aec6b160b1ca52636a8298c8ad8b4f3d18b7488b';
+String _$foodsDBRepoHash() => r'f4da3d1865a81228ecf5787640ce506b648d4c1b';
 
 /// See also [foodsDBRepo].
 @ProviderFor(foodsDBRepo)
-final foodsDBRepoProvider = Provider<FoodsDBInterface>.internal(
+final foodsDBRepoProvider = AutoDisposeProvider<FoodsDBInterface>.internal(
   foodsDBRepo,
   name: r'foodsDBRepoProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final foodsDBRepoProvider = Provider<FoodsDBInterface>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef FoodsDBRepoRef = ProviderRef<FoodsDBInterface>;
+typedef FoodsDBRepoRef = AutoDisposeProviderRef<FoodsDBInterface>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
