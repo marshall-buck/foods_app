@@ -1,16 +1,12 @@
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 import 'nutrient.dart';
-part 'food.freezed.dart';
 
-@freezed
-class FoodModel with _$FoodModel {
-  const factory FoodModel(
+class FoodModel {
+  const FoodModel(
       {required int id,
       required String description,
-      required List<Nutrient> nutrients}) = _FoodModel;
+      required List<Nutrient> nutrients});
 
   static FoodModel? fromUsdaDB(SrLegacyFoodModel? food) {
     if (food == null) return null;

@@ -1,17 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:foods_app/data/data.dart';
-
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
 
-part 'local_db.g.dart';
-
-class _LocalDB implements FoodsDBInterface {
+class LocalDB implements FoodsDBInterface {
   final UsdaDB db;
 
-  const _LocalDB({required this.db});
+  const LocalDB({required this.db});
 
   @override
   bool get isDataLoaded => db.isDataLoaded;
@@ -30,10 +24,3 @@ class _LocalDB implements FoodsDBInterface {
     return foods.isEmpty ? [] : foods.map(FoodModel.fromUsdaDB).toList();
   }
 }
-
-@Riverpod(keepAlive: true)
-UsdaDB usdaDB(UsdaDBRef ref) => throw UnimplementedError();
-
-@riverpod
-FoodsDBInterface localDB(LocalDBRef ref) =>
-    _LocalDB(db: ref.watch(usdaDBProvider));
