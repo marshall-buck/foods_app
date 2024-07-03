@@ -1,14 +1,19 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
+
 import 'package:usda_db_package/usda_db_package.dart';
 
-@freezed
-class Nutrient {
+class Nutrient extends Equatable {
   const Nutrient({
-    required int id,
-    required String name,
-    required num amount,
-    required String unit,
+    required int this.id,
+    required String this.name,
+    required num this.amount,
+    required String this.unit,
   });
+
+  final int id;
+  final String name;
+  final num amount;
+  final String unit;
 
   factory Nutrient.fromUsdaDB(SrLegacyNutrientModel nutrient) {
     return Nutrient(
@@ -17,6 +22,12 @@ class Nutrient {
         amount: nutrient.amount,
         unit: nutrient.unit ?? '');
   }
+
+  @override
+  List<Object?> get props => [id, name, amount, unit];
+
+  @override
+  bool get stringify => true;
 
 /*CSpell:disable*/
   /// Some names have been changed to be more user friendly.

@@ -1,26 +1,36 @@
-import 'package:foods_app/data/data.dart';
+/// The local data source is an external package.
 
-import 'package:usda_db_package/usda_db_package.dart';
+// class LocalDB implements FoodsDBInterface {
+//   UsdaDB? _localDBService;
 
-class LocalDB implements FoodsDBInterface {
-  final UsdaDB db;
+//   Future<void> init() async {
+//     if (_localDBService != null) {
+//       dev.log(
+//         '''_localDBService is already initiated,
+//       if this is happening there is a bug that needs attention''',
+//         name: '../lib/data/data_source',
+//       );
+//       return;
+//     }
 
-  const LocalDB({required this.db});
+//     _localDBService = await UsdaDB.init();
+//   }
 
-  @override
-  bool get isDataLoaded => db.isDataLoaded;
+//   bool get isDataLoaded =>
+//       _localDBService != null ? _localDBService!.isDataLoaded : false;
 
-  @override
-  Future<FoodModel?> queryFood({required id}) async {
-    final SrLegacyFoodModel? food = await db.queryFood(id: id);
-    return FoodModel.fromUsdaDB(food);
-  }
+//   @override
+//   Future<FoodModel?> queryFood({required id}) async {
+//     final SrLegacyFoodModel? food = await _localDBService?.queryFood(id: id);
+//     return FoodModel.fromUsdaDB(food);
+//   }
 
-  @override
-  Future<List<FoodModel?>> queryFoods({required String searchTerm}) async {
-    final List<SrLegacyFoodModel?> foods =
-        await db.queryFoods(searchString: searchTerm);
+//   @override
+//   Future<List<FoodModel?>> queryFoods({required String searchTerm}) async {
+//     final List<SrLegacyFoodModel?> foods =
+//         await _localDBService!.queryFoods(searchString: searchTerm);
 
-    return foods.isEmpty ? [] : foods.map(FoodModel.fromUsdaDB).toList();
-  }
-}
+//     return foods.isEmpty ? [] : foods.map(FoodModel.fromUsdaDB).toList();
+//   }
+// }
+
