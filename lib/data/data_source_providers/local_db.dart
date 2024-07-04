@@ -1,19 +1,21 @@
-/// The local data source is an external package.
+// import 'package:foods_app/data/interfaces/foods_db_interface.dart';
+// import 'package:foods_app/data/models/food.dart';
+// import 'package:usda_db_package/usda_db_package.dart';
+
+// /// The local data source is an external package.
 
 // class LocalDB implements FoodsDBInterface {
-//   UsdaDB? _localDBService;
-
-//   Future<void> init() async {
-//     if (_localDBService != null) {
-//       dev.log(
-//         '''_localDBService is already initiated,
-//       if this is happening there is a bug that needs attention''',
-//         name: '../lib/data/data_source',
-//       );
-//       return;
-//     }
-
+//   static UsdaDB? _localDBService;
+//   LocalDB._();
+//   static Future<LocalDB> init() async {
+//     final _instance = LocalDB._();
 //     _localDBService = await UsdaDB.init();
+//     return _instance;
+//   }
+
+//   static Future<void> dispose() async {
+//     await _localDBService?.dispose();
+//     _localDBService = null;
 //   }
 
 //   bool get isDataLoaded =>
@@ -33,4 +35,3 @@
 //     return foods.isEmpty ? [] : foods.map(FoodModel.fromUsdaDB).toList();
 //   }
 // }
-

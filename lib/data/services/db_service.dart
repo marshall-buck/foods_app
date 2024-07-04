@@ -7,6 +7,7 @@ import 'package:watch_it/watch_it.dart';
 
 class FoodsDBService implements FoodsDBInterface {
   const FoodsDBService();
+
   @override
   Future<FoodModel?> queryFood({required id}) async {
     final usdaDB = await di.getAsync<UsdaDB>();

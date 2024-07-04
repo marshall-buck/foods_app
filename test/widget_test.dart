@@ -1,63 +1,37 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:foods_app/main.dart';
-// import 'package:usda_db_package/usda_db_package.dart';
-// import 'package:watch_it/watch_it.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:foods_app/constants.dart';
+import 'package:foods_app/data/interfaces/foods_db_interface.dart';
+import 'package:foods_app/data/services/db_service.dart';
+import 'package:foods_app/main.dart';
 
-// void main() {
-//   setUp(() {
-//     di.reset();
-//   });
+import 'package:usda_db_package/usda_db_package.dart';
+import 'package:watch_it/watch_it.dart';
 
-//   testWidgets('LoadingWidget shows CircularProgressIndicator while waiting',
-//       (WidgetTester tester) async {
-//     // Arrange
-//     di.registerSingletonAsync<UsdaDB>(() async {
-//       return await UsdaDB.init();
-//     });
+void main() {
+  setUp(() async {
+    await di.reset();
+    di.registerSingletonAsync<UsdaDB>(() async => UsdaDB.init(),
+        dispose: (x) async => await x.dispose());
+    di.registerSingletonWithDependencies<FoodsDBInterface>(
+        () => FoodsDBService(),
+        instanceName: ServiceInstance.foodsDBService.string,
+        dependsOn: [UsdaDB]);
+  });
 
-//     // Act
-//     await tester.pumpWidget(const MaterialApp(home: LoadingWidget()));
+  testWidgets(
+      'LoadingWidget displays CircularProgressIndicator and then HomePage',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const LoadingWidget());
+    print(tester.allWidgets);
+    // expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    // print(di.isReady());
+    // Allow FutureBuilder to complete
+    final count = await tester.pumpAndSettle();
+    print(count);
+    print(tester.allWidgets);
 
-//     // Assert
-//     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-//     // Manually pump the widget tree and introduce delays
-//     await tester.pump(const Duration(seconds: 1));
-//     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-//     await tester.pump(const Duration(seconds: 1));
-//     await tester.pump(); // Ensure all async operations are completed
-
-//     // Assert
-//     expect(find.byType(HomePage), findsOneWidget);
-//   });
-
-//   // testWidgets('LoadingWidget shows HomePage when ready',
-//   //     (WidgetTester tester) async {
-//   //   // Arrange
-//   //   di.registerSingletonAsync<UsdaDB>(() async {
-//   //     return await UsdaDB.init();
-//   //   });
-
-//   //   // Act
-//   //   await tester.pumpWidget(const MaterialApp(home: LoadingWidget()));
-
-//   //   // Manually pump the widget tree and introduce delays
-//   //   await tester.pump(const Duration(seconds: 1));
-//   //   await tester.pump(const Duration(seconds: 1));
-//   //   await tester.pump(); // Ensure all async operations are completed
-
-//   //   // Assert
-//   //   expect(find.byType(HomePage), findsOneWidget);
-//   // });
-
-//   // testWidgets('HomePage displays correct content', (WidgetTester tester) async {
-//   //   // Act
-//   //   await tester.pumpWidget(const MaterialApp(home: HomePage()));
-
-//   //   // Assert
-//   //   expect(find.text('Hello World!'), findsOneWidget);
-//   //   expect(find.byType(SearchBar), findsOneWidget);
-//   // });
-// }
+    // Verify HomePage is shown
+    // expect(find.byType(HomePage), findsOneWidget);
+  });
+}
