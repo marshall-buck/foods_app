@@ -8,7 +8,7 @@ import 'package:foods_app/registrations.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   registerGetIt();
   runApp(const MainApp());
@@ -27,26 +27,58 @@ class MainApp extends StatelessWidget {
         extensions: <ThemeExtension<dynamic>>[darkColors],
       ),
       themeMode: ThemeMode.light,
-      home: const LoadingWidget(),
+      home: LoadingWidget(),
     );
   }
 }
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key});
-
+  LoadingWidget({super.key});
+  final Future<String> _calculation = Future<String>.delayed(
+    const Duration(seconds: 2),
+    () => 'Data Loaded',
+  );
   @override
   Widget build(BuildContext context) {
     print('build widget');
     return FutureBuilder(
       future: di.allReady(),
+      // future: _calculation,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           print('returning HomePage:  ${snapshot.data}');
           return const HomePage();
+        } else if (snapshot.hasError) {
+          print('Snapshot error: ${snapshot.error}');
+          return Column(
+            children: [
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ],
+          );
         } else {
           print('returning CircularProgressIndicator:  ${snapshot}');
-          return CircularProgressIndicator();
+          return const Column(
+            children: [
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ],
+          );
+          ;
         }
       },
     );
@@ -60,18 +92,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late final colors = Theme.of(context).extension<AppColorsExtension>();
-    final db = di.get<FoodsDBInterface>(
+    print('building HomePage');
+    // late final colors = Theme.of(context).extension<AppColorsExtension>();
+    late final FoodsDBInterface db = di.get<FoodsDBInterface>(
         instanceName: ServiceInstance.foodsDBService.string);
 
     return Scaffold(
-      backgroundColor: colors?.surface,
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Hello World!',
-              style: TextStyle(color: colors?.onSurface),
             ),
             SearchBar(
               onTap: () async => print(await db.queryFood(id: 167512)),
