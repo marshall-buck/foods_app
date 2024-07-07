@@ -10,7 +10,7 @@ import 'package:watch_it/watch_it.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  registerGetIt();
+  registerDependencies();
   runApp(const MainApp());
 }
 
@@ -27,17 +27,17 @@ class MainApp extends StatelessWidget {
         extensions: <ThemeExtension<dynamic>>[darkColors],
       ),
       themeMode: ThemeMode.light,
-      home: LoadingWidget(),
+      home: const LoadingWidget(),
     );
   }
 }
 
 class LoadingWidget extends StatelessWidget {
-  LoadingWidget({super.key});
-  final Future<String> _calculation = Future<String>.delayed(
-    const Duration(seconds: 2),
-    () => 'Data Loaded',
-  );
+  const LoadingWidget({super.key});
+  // final Future<String> _calculation = Future<String>.delayed(
+  //   const Duration(seconds: 2),
+  //   () => 'Data Loaded',
+  //);
   @override
   Widget build(BuildContext context) {
     print('build widget');
@@ -45,6 +45,7 @@ class LoadingWidget extends StatelessWidget {
       future: di.allReady(),
       // future: _calculation,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        print('FutureBuilder');
         if (snapshot.hasData) {
           print('returning HomePage:  ${snapshot.data}');
           return const HomePage();
@@ -105,6 +106,7 @@ class HomePage extends StatelessWidget {
             Text(
               'Hello World!',
             ),
+            Text('${di.isReady(instance: db)}'),
             SearchBar(
               onTap: () async => print(await db.queryFood(id: 167512)),
             ),
