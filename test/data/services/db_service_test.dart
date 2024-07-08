@@ -1,10 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/constants.dart';
-import 'package:foods_app/data/interfaces/foods_db_interface.dart';
-import 'package:foods_app/data/services/db_service.dart';
+import 'package:foods_app/common/constants.dart';
+import 'package:foods_app/data/data_B.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
-import 'package:watch_it/watch_it.dart';
 
 import '../../setup/setup.dart';
 
@@ -15,19 +13,27 @@ void main() {
   group('FoodsDBService class tests', () {
     group('queryFood', () {
       test('calls method from usdaDB', () async {
-        await di.reset();
-        di.registerSingletonAsync<UsdaDB>(() async => await UsdaDB.init());
-        di.registerSingleton<FoodsDBInterface>(FoodsDBService(),
-            instanceName: ServiceInstance.foodsDBService.string,
-            signalsReady: true);
-        final usdaDB = await di.getAsync<UsdaDB>();
-        final db = di.get<FoodsDBInterface>(
-            instanceName: ServiceInstance.foodsDBService.string);
+        await testingInstance.reset();
+        testingInstance.registerSingletonAsync<UsdaDB>(() async {
+          final db = UsdaDB();
+          await db.init();
+          return db;
+        }, dispose: (x) async => await x.dispose());
+        testingInstance.registerSingletonWithDependencies<FoodsDBInterface>(
+            () => FoodsDB(),
+            instanceName: LocatorName.foodsDBService.name,
+            dependsOn: [UsdaDB]);
+        await testingInstance.allReady();
+        final usdaDB = await testingInstance.getAsync<UsdaDB>();
+        final db = await testingInstance.get<FoodsDBInterface>(
+            instanceName: LocatorName.foodsDBService.name);
 
         expect(usdaDB.isDataLoaded, isTrue);
         expect(db, isA<FoodsDBInterface>());
 
         expect(() async => await db.queryFood(id: 00000000), returnsNormally);
+        final food = await db.queryFood(id: 167512);
+        expect(food, isA<FoodModel>());
       });
     });
   });

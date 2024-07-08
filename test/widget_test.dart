@@ -1,51 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/constants.dart';
-import 'package:foods_app/data/interfaces/foods_db_interface.dart';
-import 'package:foods_app/data/services/db_service.dart';
-import 'package:foods_app/main.dart';
-
-import 'package:mocktail/mocktail.dart';
-
-import 'package:usda_db_package/usda_db_package.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:foods_app/ui/home_page.dart';
 
 import 'setup/setup.dart';
 
-class MockUsdaDB extends Mock implements UsdaDB {}
-
-class MockFoodsDBService extends Mock implements FoodsDBService {}
-
 void main() {
   startUpOnce();
-  TestWidgetsFlutterBinding.ensureInitialized();
-  setUp(() async {
-    // await di.reset();
-    di.registerSingletonAsync<MockUsdaDB>(() async {
-      final db = MockUsdaDB();
-      await db.init();
-      return db;
-    }, dispose: (x) async => await x.dispose());
-    di.registerSingletonWithDependencies<FoodsDBInterface>(
-        () => MockFoodsDBService(),
-        instanceName: ServiceInstance.foodsDBService.string,
-        dependsOn: [MockUsdaDB]);
+
+  group('description', () {
+    testWidgets('LoadingWidget shows CircularProgressIndicator while waiting',
+        (WidgetTester tester) async {
+      final Future<String> _calculation = Future<String>.delayed(
+        const Duration(seconds: 2),
+        () => 'Data Loaded',
+      );
+
+      await tester.pumpWidget(
+          MaterialApp(home: MockLoadingWidget(future: _calculation)));
+
+      await tester.pump();
+
+      // Verify CircularProgressIndicator is shown
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.text('Awaiting result...'), findsOneWidget);
+      await tester.pumpAndSettle();
+    });
+    testWidgets('LoadingWidget shows HomePage when data is available',
+        (WidgetTester tester) async {
+      final Future<String> _calculation = Future<String>.delayed(
+        const Duration(seconds: 2),
+        () => 'Data Loaded',
+      );
+      // Simulate the Future being completed with data
+      await tester.pumpWidget(
+          MaterialApp(home: MockLoadingWidget(future: _calculation)));
+      await tester.pumpAndSettle(); // Trigger a frame
+
+      // Verify HomePage is shown
+      expect(find.byType(HomePage), findsOneWidget);
+      await tester.pumpAndSettle();
+    });
+    testWidgets('LoadingWidget shows error message when there is an error',
+        (WidgetTester tester) async {
+      final Future<String?> _calculation = Future<String>.delayed(
+        const Duration(seconds: 2),
+        () => throw Exception('An error occurred'),
+      );
+      // Simulate the Future completing with an error
+      await tester.pumpWidget(
+          MaterialApp(home: MockLoadingWidget(future: _calculation)));
+      await tester.pump(); // Trigger a frame
+      await tester.pumpAndSettle();
+      // Verify error message is shown
+      expect(find.byIcon(Icons.error_outline), findsOneWidget);
+      expect(find.textContaining('Error: Exception: An error occurred'),
+          findsOneWidget);
+    });
   });
-  tearDown(() async {
-    await di.reset();
-  });
+}
 
-  testWidgets(
-      'LoadingWidget displays CircularProgressIndicator and then HomePage',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(const MainApp());
+class MockLoadingWidget extends StatelessWidget {
+  MockLoadingWidget({super.key, required Future this.future});
+  final Future future;
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.pumpAndSettle();
-
-    // Wait for the FutureBuilder to complete
-
-    // Verify that HomePage is displayed
-    expect(find.byType(HomePage), findsOneWidget);
-  });
+  @override
+  Widget build(BuildContext context) {
+    print('build widget');
+    return FutureBuilder(
+      // future: testingInstance.allReady(),
+      future: future,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        print('FutureBuilder');
+        if (snapshot.hasData) {
+          print('returning HomePage:  ${snapshot.data}');
+          return const HomePage();
+        } else if (snapshot.hasError) {
+          print('Error: ${snapshot.error}');
+          return Column(
+            children: [
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ],
+          );
+        } else {
+          print('returning CircularProgressIndicator:  ${snapshot}');
+          return const Column(
+            children: [
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ],
+          );
+        }
+      },
+    );
+  }
 }
