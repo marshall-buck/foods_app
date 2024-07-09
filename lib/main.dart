@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:foods_app/common/colors.dart';
 
-import 'package:foods_app/service_locator..dart';
-import 'package:foods_app/ui/home_page.dart';
+import 'package:foods_app/common/service_locator..dart';
+import 'package:foods_app/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

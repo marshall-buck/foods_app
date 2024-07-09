@@ -1,5 +1,5 @@
-import 'package:foods_app/data/interfaces/foods_db_interface.dart';
-import 'package:foods_app/data/models/food.dart';
+import 'package:foods_app/services/interfaces/foods_db_interface.dart';
+import 'package:foods_app/services/models/food.dart';
 
 class ExternalDb implements FoodsDBInterface {
   Future<ExternalDb> init() async {

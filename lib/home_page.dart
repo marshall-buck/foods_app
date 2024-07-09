@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/constants.dart';
-import 'package:foods_app/data/data_B.dart';
+import 'package:foods_app/common/service_locator..dart';
+
+import 'package:foods_app/services/services_B.dart';
 import 'package:watch_it/watch_it.dart';
 
 class LoadingWidget extends StatelessWidget {

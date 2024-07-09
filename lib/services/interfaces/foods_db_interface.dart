@@ -1,4 +1,4 @@
-import 'package:foods_app/data/models/food.dart';
+import 'package:foods_app/services/models/food.dart';
 
 /// Interface for for a foods database.
 

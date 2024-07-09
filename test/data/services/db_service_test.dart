@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/common/constants.dart';
-import 'package:foods_app/data/data_B.dart';
+
+import 'package:foods_app/common/service_locator..dart';
+import 'package:foods_app/services/services_B.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
 

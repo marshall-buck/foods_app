@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/ui/home_page.dart';
+import 'package:foods_app/home_page.dart';
 
 import 'setup/setup.dart';
 
