@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/service_locator..dart';
 
-import 'package:foods_app/services/services_B.dart';
+import 'package:foods_app/food_search/ui/search_page.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -16,16 +16,17 @@ class LoadingWidget extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         print('FutureBuilder');
         if (snapshot.hasData) {
-          print('returning HomePage:  ${snapshot.data}');
+          print('returning HomePage');
           return const HomePage();
         } else if (snapshot.hasError) {
           print('Snapshot error: ${snapshot.error}');
+          print('Snapshot stacktrace: ${snapshot.stackTrace}');
           return Column(
             children: [
               const Icon(
                 Icons.error_outline,
                 color: Colors.red,
-                size: 60,
+                size: 24,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
@@ -58,32 +59,19 @@ class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
   });
-  Future<List<FoodModel?>> _queryFoods(String searchTerm) async {
-    final db = await di.getAsync<FoodsDBInterface>(
-        instanceName: LocatorName.foodsDBService.name);
-    final foods = await db.queryFoods(searchTerm: searchTerm.trim());
-    print(foods);
-    return foods;
-  }
 
   @override
   Widget build(BuildContext context) {
     print('building HomePage');
-    // late final colors = Theme.of(context).extension<AppColorsExtension>();
-    // late final FoodsDBInterface db = di.get<FoodsDBInterface>(
-    //     instanceName: ServiceInstance.foodsDBService.string);
 
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Hello World!',
             ),
-            SearchBar(
-              onTap: () async => await _queryFoods('apple'),
-            ),
+            const SearchPage(),
           ],
         ),
       ),

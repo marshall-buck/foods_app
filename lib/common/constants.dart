@@ -1,10 +1,6 @@
-enum DisplayMode {
-  light('light'),
-  dark('dark');
-
-  final String _name;
-  const DisplayMode(this._name);
-  String get name => _name;
+class DisplayMode {
+  static const String light = 'light';
+  static const String dark = 'dark';
 }
 
 enum QuickSearch {

@@ -7,8 +7,6 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 import '../../setup/setup.dart';
 
-// import '../../setup/setup_tests.dart';
-
 void main() {
   startUpOnce();
   group('FoodsDBService class tests', () {
@@ -22,12 +20,12 @@ void main() {
         }, dispose: (x) async => await x.dispose());
         testingInstance.registerSingletonWithDependencies<FoodsDBInterface>(
             () => FoodsDB(),
-            instanceName: LocatorName.foodsDBService.name,
+            instanceName: LocatorName.foodsDBService,
             dependsOn: [UsdaDB]);
         await testingInstance.allReady();
         final usdaDB = await testingInstance.getAsync<UsdaDB>();
         final db = await testingInstance.get<FoodsDBInterface>(
-            instanceName: LocatorName.foodsDBService.name);
+            instanceName: LocatorName.foodsDBService);
 
         expect(usdaDB.isDataLoaded, isTrue);
         expect(db, isA<FoodsDBInterface>());

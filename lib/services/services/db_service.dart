@@ -23,39 +23,3 @@ class FoodsDB implements FoodsDBInterface {
     return foods.isEmpty ? [] : foods.map(FoodModel.fromUsdaDB).toList();
   }
 }
-
-// GetIt getIt = GetIt.instance;
-
-// void main() async {
-//   getIt.registerSingleton<Service1>(Service1(), signalsReady: true);
-//   getIt.registerSingletonWithDependencies<Service2>(() => Service2(),
-//       dependsOn: [Service1], signalsReady: true);
-
-//   await getIt.allReady();
-
-//   final service2 = getIt<Service2>();
-
-//   runApp(MyApp());
-// }
-// class Service1 {
-//   Service1() {
-//     _init();
-//   }
-
-//   _init() async {
-//     await Future.delayed(Duration(milliseconds: 1));
-//     getIt.signalReady(this);
-//   }
-// }
-
-// class Service2 {
-//   Service2() {
-//     _init();
-//   }
-
-//   _init() async {
-//     await Future.delayed(Duration(milliseconds: 1));
-//     getIt.signalReady(this);
-//   }
-// }`
-
