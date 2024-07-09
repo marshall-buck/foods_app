@@ -28,10 +28,11 @@ registerDependencies() {
   di.registerSingletonWithDependencies<FoodsDBInterface>(() => FoodsDB(),
       instanceName: LocatorName.foodsDBService, dependsOn: [UsdaDB]);
 
-  di.registerSingletonWithDependencies<FoodSearchManager>(
-      () => FoodSearchManager(),
-      dependsOn: [
-        InitDependency(FoodsDBInterface,
-            instanceName: LocatorName.foodsDBService)
-      ]);
+  di.registerSingleton<FoodSearchManager>(FoodSearchManager());
+  // di.registerSingletonWithDependencies<FoodSearchManager>(
+  //     () => FoodSearchManager(),
+  //     dependsOn: [
+  //       InitDependency(FoodsDBInterface,
+  //           instanceName: LocatorName.foodsDBService)
+  //     ]);
 }

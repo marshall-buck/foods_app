@@ -12,7 +12,6 @@ class LoadingWidget extends StatelessWidget {
     print('build widget');
     return FutureBuilder(
       future: di.allReady(),
-      // future: _calculation,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         print('FutureBuilder');
         if (snapshot.hasData) {
@@ -71,7 +70,7 @@ class HomePage extends StatelessWidget {
             Text(
               'Hello World!',
             ),
-            const SearchPage(),
+            const Text(''),
           ],
         ),
       ),
