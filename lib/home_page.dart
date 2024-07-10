@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/food_search/ui/search_page.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -62,15 +63,16 @@ class HomePage extends StatelessWidget {
     print('building HomePage');
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-              'Hello World!',
-            ),
-            const Text(''),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('FoodsApp'),
+      ),
+      body: Column(
+        children: [
+          Text(
+            'Hello World!',
+          ),
+          const SearchPage(),
+        ],
       ),
     );
   }

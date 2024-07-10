@@ -1,10 +1,15 @@
 import 'package:usda_db_package/usda_db_package.dart';
 
-const protein = SrLegacyNutrientModel(id: 1003, amount: 20, unit: 'g');
-const totalFat = SrLegacyNutrientModel(id: 1004, amount: 15, unit: 'g');
-const totalCarbs = SrLegacyNutrientModel(id: 1005, amount: 30, unit: 'g');
-const water = SrLegacyNutrientModel(id: 1051, amount: 500, unit: 'g');
-const totalSugars = SrLegacyNutrientModel(id: 2000, amount: 10, unit: 'g');
+const protein =
+    SrLegacyNutrientModel(id: 1003, amount: 20, unit: 'g', name: 'Protein');
+const totalFat =
+    SrLegacyNutrientModel(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
+const totalCarbs = SrLegacyNutrientModel(
+    id: 1005, amount: 30, unit: 'g', name: 'Total Carbohydrates');
+const water =
+    SrLegacyNutrientModel(id: 1051, amount: 500, unit: 'g', name: 'Water');
+const totalSugars = SrLegacyNutrientModel(
+    id: 2000, amount: 10, unit: 'g', name: 'Totlal Sugars');
 
 const food1 = SrLegacyFoodModel(
     id: 1, description: 'Chicken Breast', nutrients: [protein]);

@@ -18,9 +18,9 @@ class Nutrient extends Equatable {
   factory Nutrient.fromUsdaDB(SrLegacyNutrientModel nutrient) {
     return Nutrient(
         id: nutrient.id,
-        name: nutrient.name ?? '',
+        name: nutrient.name,
         amount: nutrient.amount,
-        unit: nutrient.unit ?? '');
+        unit: nutrient.unit);
   }
 
   @override
