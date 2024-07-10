@@ -6,7 +6,7 @@ import '../../mock_data.dart';
 void main() {
   group('Nutrient class model tests', () {});
   group('Nutrient.fromUsdaDB', () {
-    test('test_create_nutrient_from_valid_usda_db', () {
+    test('creates nutrient from usda nutrient', () {
       final nutrient = Nutrient.fromUsdaDB(protein);
       expect(nutrient, isA<Nutrient>());
 

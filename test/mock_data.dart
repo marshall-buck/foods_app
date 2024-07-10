@@ -9,7 +9,7 @@ const totalCarbs = SrLegacyNutrientModel(
 const water =
     SrLegacyNutrientModel(id: 1051, amount: 500, unit: 'g', name: 'Water');
 const totalSugars = SrLegacyNutrientModel(
-    id: 2000, amount: 10, unit: 'g', name: 'Totlal Sugars');
+    id: 2000, amount: 10, unit: 'g', name: 'Total Sugars');
 
 const food1 = SrLegacyFoodModel(
     id: 1, description: 'Chicken Breast', nutrients: [protein]);
