@@ -1,17 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foods_app/common/service_locator.dart';
 import 'package:foods_app/food_search/managers/food_search_manager.dart';
 import 'package:foods_app/services/services_B.dart';
-import 'package:mocktail/mocktail.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
 
 import '../setup/setup.dart';
-
-class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 GetIt? instance;
 
@@ -22,9 +18,9 @@ void main() {
       instance = GetIt.asNewInstance();
 
       instance!.registerSingletonAsync<UserPreferencesService>(() async {
-        SharedPreferences.setMockInitialValues({});
+        SharedPreferences.setMockInitialValues({'a': 1});
         final shared = await SharedPreferences.getInstance();
-        await shared.clear();
+        // await shared.clear();
         final settings = UserPreferencesService(shared);
         await settings.init();
         return settings;
@@ -36,27 +32,41 @@ void main() {
         return db;
       }, dispose: (x) async => await x.dispose());
 
-      instance!.registerSingletonWithDependencies<FoodsDBInterface>(
-          () => FoodsDB(),
-          instanceName: LocatorName.foodsDBService,
-          dependsOn: [UsdaDB]);
+      instance!.registerSingleton<FoodsDBInterface>(FoodsDB(),
+          instanceName: LocatorName.foodsDBService);
 
       instance!.registerSingleton<FoodSearchManager>(FoodSearchManager());
-      // di.registerSingletonWithDependencies<FoodSearchManager>(
-      //     () => FoodSearchManager(),
-      //     dependsOn: [
-      //       InitDependency(FoodsDBInterface,
-      //           instanceName: LocatorName.foodsDBService)
-      //     ]);
     });
     tearDown(() async {
       await instance!.reset();
       instance = null;
     });
-    test('registerDependencies should register all dependencies without errors',
-        () async {
-      // Verify that all dependencies are registered
+    test('allReady should complete without error', () async {
+      final usda = await instance!.getAsync<UsdaDB>();
+      expect(usda.isDataLoaded, isTrue);
+
       expect(instance!.allReady(), completes);
+    });
+    test('UsdaDB singleton should complete and be type UsdaDB', () async {
+      final usda = await instance!.getAsync<UsdaDB>();
+      expect(usda, isA<UsdaDB>());
+    });
+    test(
+        'UserPreferencesService singleton should complete and be type UserPreferencesService',
+        () async {
+      final prefs = await instance!.getAsync<UserPreferencesService>();
+      expect(prefs, isA<UserPreferencesService>());
+    });
+    test('FoodsDB singleton should complete and be type FoodsDBInterface', () {
+      final foodsDB = instance!
+          .get<FoodsDBInterface>(instanceName: LocatorName.foodsDBService);
+      expect(foodsDB, isA<FoodsDBInterface>());
+    });
+    test(
+        'FoodSearchManager singleton should complete and be type FoodSearchManager',
+        () {
+      final search = instance!.get<FoodSearchManager>();
+      expect(search, isA<FoodSearchManager>());
     });
   });
 }
