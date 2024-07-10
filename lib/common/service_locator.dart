@@ -26,13 +26,7 @@ registerDependencies() {
   }, dispose: (x) async => await x.dispose());
 
   di.registerSingletonWithDependencies<FoodsDBInterface>(() => FoodsDB(),
-      instanceName: LocatorName.foodsDBService, dependsOn: [UsdaDB]);
+      instanceName: LocatorName.foodsDBService);
 
   di.registerSingleton<FoodSearchManager>(FoodSearchManager());
-  // di.registerSingletonWithDependencies<FoodSearchManager>(
-  //     () => FoodSearchManager(),
-  //     dependsOn: [
-  //       InitDependency(FoodsDBInterface,
-  //           instanceName: LocatorName.foodsDBService)
-  //     ]);
 }
