@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:foods_app/services/services_B.dart';
+import 'package:foods_app/external_data/external_services_B.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 //  List<FoodListItem>? foods =

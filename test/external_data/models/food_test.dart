@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/services/services_B.dart';
+import 'package:foods_app/external_data/external_services_B.dart';
 
-import '../../mock_data.dart';
+import '../../setup/mock_data.dart';
 
 void main() {
   group('Food class model tests', () {});

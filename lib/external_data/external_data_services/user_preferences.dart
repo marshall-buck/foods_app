@@ -20,12 +20,12 @@ class PreferencesNotInitializedException implements Exception {
 
 class UserPreferencesService {
   SharedPreferences? _prefs;
-  late final String? _mode;
+  late final String? _colorTheme;
   late final List<String>? _quickSearch;
 
   UserPreferencesService(this._prefs);
 
-  String? get mode => _mode;
+  String? get colorTheme => _colorTheme;
 
   List<String>? get quickSearch => _quickSearch;
 
@@ -42,7 +42,7 @@ class UserPreferencesService {
       PreferenceKeys.quickSearch.key,
       QuickSearch.defaults,
     );
-    _mode = await _getOrSetDefaultString(
+    _colorTheme = await _getOrSetDefaultString(
       PreferenceKeys.colorTheme.key,
       DisplayMode.light,
     );

@@ -1,5 +1,7 @@
-import 'package:foods_app/services/interfaces/foods_db_interface.dart';
-import 'package:foods_app/services/models/food.dart';
+import 'dart:async';
+
+import 'package:foods_app/external_data/interfaces/foods_db_interface.dart';
+import 'package:foods_app/external_data/models/food.dart';
 
 class ExternalDb implements FoodsDBInterface {
   Future<ExternalDb> init() async {
@@ -13,4 +15,10 @@ class ExternalDb implements FoodsDBInterface {
   @override
   Future<List<FoodModel?>> queryFoods({required String searchTerm}) =>
       throw UnimplementedError();
+
+  @override
+  Future<void> dispose() {
+    // TODO: implement dispose
+    throw UnimplementedError();
+  }
 }

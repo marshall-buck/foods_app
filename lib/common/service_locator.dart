@@ -1,5 +1,5 @@
-import 'package:foods_app/food_search/managers/food_search_manager.dart';
-import 'package:foods_app/services/services_B.dart';
+import 'package:foods_app/features/food_search/managers/food_search_manager.dart';
+import 'package:foods_app/external_data/external_services_B.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
@@ -19,14 +19,13 @@ registerDependencies() {
     return settings;
   });
 
-  di.registerSingletonAsync<UsdaDB>(() async {
-    final db = UsdaDB();
-    await db.init();
-    return db;
-  }, dispose: (x) async => await x.dispose());
-
-  di.registerSingletonWithDependencies<FoodsDBInterface>(() => FoodsDB(),
-      instanceName: LocatorName.foodsDBService);
+  di.registerSingletonAsync<FoodsDBInterface>(() async {
+    final UsdaDB usdaDB = UsdaDB();
+    await usdaDB.init();
+    return FoodsDB(usdaDB);
+  },
+      instanceName: LocatorName.foodsDBService,
+      dispose: (x) async => await x.dispose());
 
   di.registerSingleton<FoodSearchManager>(FoodSearchManager());
 }
