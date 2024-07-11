@@ -1,3 +1,4 @@
+import 'package:foods_app/services/models/food.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 const protein =
@@ -21,3 +22,11 @@ const food4 = SrLegacyFoodModel(
     id: 4, description: 'Yogurt', nutrients: [protein, totalCarbs, water]);
 const food5 = SrLegacyFoodModel(
     id: 5, description: 'Granola Bar', nutrients: [totalCarbs, totalSugars]);
+
+final List<FoodModel> mockFoodsList = [
+  FoodModel.fromUsdaDB(food1),
+  FoodModel.fromUsdaDB(food2),
+  FoodModel.fromUsdaDB(food3),
+  FoodModel.fromUsdaDB(food4),
+  FoodModel.fromUsdaDB(food5),
+];

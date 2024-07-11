@@ -10,7 +10,7 @@ void main() {
       final food = FoodModel.fromUsdaDB(food1);
       expect(food, isA<FoodModel>());
 
-      expect(food!.id, 1);
+      expect(food.id, 1);
       expect(food.description, 'Chicken Breast');
       expect(food.nutrients.length, 1);
       expect(food.nutrients[0], isA<Nutrient>());

@@ -12,8 +12,8 @@ class FoodModel extends Equatable {
   final String description;
   final List<Nutrient> nutrients;
 
-  static FoodModel? fromUsdaDB(SrLegacyFoodModel? food) {
-    if (food == null) return null;
+  static FoodModel fromUsdaDB(SrLegacyFoodModel food) {
+    // if (food == null) return;
 
     final List<Nutrient> nutrients =
         food.nutrients.map((e) => Nutrient.fromUsdaDB(e)).toList();

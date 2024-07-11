@@ -66,13 +66,15 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('FoodsApp'),
       ),
-      body: Column(
-        children: [
-          Text(
-            'Hello World!',
-          ),
-          const SearchPage(),
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              'Hello World!',
+            ),
+            SearchPage(),
+          ],
+        ),
       ),
     );
   }
