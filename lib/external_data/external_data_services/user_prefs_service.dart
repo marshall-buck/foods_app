@@ -1,34 +1,30 @@
 import 'package:foods_app/common/constants.dart';
+import 'package:foods_app/common/exceptions.dart';
 import 'package:foods_app/external_data/external_services_B.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum PreferenceKeys {
-  quickSearch('quickSearch'),
-  colorTheme('colorTheme');
+class UserPreferencesServiceI implements PreferencesService {
+  SharedPreferences? _prefs;
 
-  const PreferenceKeys(this.key);
-  final String key;
-}
-
-class PreferencesNotInitializedException implements Exception {
-  final String message;
-  PreferencesNotInitializedException(this.message);
+  late final String _colorTheme;
+  late final List<String> _favoriteFoods;
+  late final List<String> _quickSearch;
+  late final List<SavedFoodRecord>? _savedFoods;
 
   @override
-  String toString() => 'PreferencesNotInitializedException: $message';
-}
+  String get colorTheme => _colorTheme;
 
-class UserPreferencesService implements PreferencesServiceInterface {
-  SharedPreferences? _prefs;
-  late final String? _colorTheme;
-  late final List<String>? _quickSearch;
+  @override
+  List<String> get favoriteFoods => _favoriteFoods;
 
-  UserPreferencesService(this._prefs);
-
-  String? get colorTheme => _colorTheme;
   @override
   List<String> get quickSearch => _quickSearch;
+
+  @override
+  List<SavedFoodRecord>? get savedFoods => _savedFoods;
+
+  UserPreferencesServiceI(this._prefs);
 
   Future<void> init() async {
     if (_prefs == null) {
@@ -40,11 +36,11 @@ class UserPreferencesService implements PreferencesServiceInterface {
 
   Future<void> _initializePreferences() async {
     _quickSearch = await _getOrSetDefaultList(
-      PreferenceKeys.quickSearch.key,
+      PreferencesService.quickSearchKey,
       QuickSearch.defaults,
     );
     _colorTheme = await _getOrSetDefaultString(
-      PreferenceKeys.colorTheme.key,
+      PreferencesService.colorThemeKey,
       DisplayMode.light,
     );
   }
@@ -83,59 +79,3 @@ class UserPreferencesService implements PreferencesServiceInterface {
     }
   }
 }
-
-// class UserPreferencesService {
-//   SharedPreferences? _prefs;
-//   late final String? _mode;
-//   late final List<String>? _quickSearch;
-
-//   UserPreferencesService(this._prefs);
-
-//   String? get mode => _mode;
-
-//   List<String>? get quickSearch => _quickSearch;
-
-//   Future<void> init() async {
-//     await _initializePreferences();
-//   }
-
-//   Future<void> _initializePreferences() async {
-//     if (_prefs != null) {
-//       _quickSearch = await _getOrSetDefaultList(
-//         PreferenceKeys.quickSearch.key,
-//         QuickSearch.defaults,
-//       );
-//       _mode = await _getOrSetDefaultString(
-//         PreferenceKeys.colorTheme.key,
-//         'defaultMode',
-//       );
-//     } else {
-//       // Handle the case where _prefs is null
-//       _quickSearch = QuickSearch.defaults;
-//       _mode = 'defaultMode';
-//     }
-//   }
-
-//   Future<List<String>> _getOrSetDefaultList(
-//       String key, List<String> defaultValue) async {
-//     if (_prefs != null && _prefs!.containsKey(key)) {
-//       return _prefs!.getStringList(key) ?? defaultValue;
-//     } else {
-//       if (_prefs != null) {
-//         await _prefs!.setStringList(key, defaultValue);
-//       }
-//       return defaultValue;
-//     }
-//   }
-
-//   Future<String> _getOrSetDefaultString(String key, String defaultValue) async {
-//     if (_prefs != null && _prefs!.containsKey(key)) {
-//       return _prefs!.getString(key) ?? defaultValue;
-//     } else {
-//       if (_prefs != null) {
-//         await _prefs!.setString(key, defaultValue);
-//       }
-//       return defaultValue;
-//     }
-//   }
-// }

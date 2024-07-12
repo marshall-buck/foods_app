@@ -14,11 +14,11 @@ void main() {
   setUp(() async {
     instance = GetIt.asNewInstance();
 
-    instance!.registerSingletonAsync<UserPreferencesService>(() async {
+    instance!.registerSingletonAsync<UserPreferencesServiceI>(() async {
       SharedPreferences.setMockInitialValues({'a': 1});
       final shared = await SharedPreferences.getInstance();
 
-      final settings = UserPreferencesService(shared);
+      final settings = UserPreferencesServiceI(shared);
       await settings.init();
       return settings;
     });
@@ -49,8 +49,8 @@ void main() {
     test(
         'UserPreferencesService singleton should complete and be type UserPreferencesService',
         () async {
-      final prefs = await instance!.getAsync<UserPreferencesService>();
-      expect(prefs, isA<UserPreferencesService>());
+      final prefs = await instance!.getAsync<UserPreferencesServiceI>();
+      expect(prefs, isA<UserPreferencesServiceI>());
     });
     test('FoodsDB singleton should complete and be type FoodsDBInterface', () {
       final foodsDB = instance!
