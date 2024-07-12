@@ -1,4 +1,5 @@
 import 'package:foods_app/common/constants.dart';
+import 'package:foods_app/external_data/external_services_B.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,7 @@ class PreferencesNotInitializedException implements Exception {
   String toString() => 'PreferencesNotInitializedException: $message';
 }
 
-class UserPreferencesService {
+class UserPreferencesService implements PreferencesServiceInterface {
   SharedPreferences? _prefs;
   late final String? _colorTheme;
   late final List<String>? _quickSearch;
@@ -26,8 +27,8 @@ class UserPreferencesService {
   UserPreferencesService(this._prefs);
 
   String? get colorTheme => _colorTheme;
-
-  List<String>? get quickSearch => _quickSearch;
+  @override
+  List<String> get quickSearch => _quickSearch;
 
   Future<void> init() async {
     if (_prefs == null) {
