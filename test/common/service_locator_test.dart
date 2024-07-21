@@ -23,10 +23,10 @@ void main() {
       return settings;
     });
 
-    instance!.registerSingletonAsync<FoodsDBInterface>(() async {
+    instance!.registerSingletonAsync<FoodsDB>(() async {
       final UsdaDB usdaDB = UsdaDB();
       await usdaDB.init();
-      return FoodsDB(usdaDB);
+      return FoodsDBI(usdaDB);
     },
         instanceName: LocatorName.foodsDBService,
         dispose: (x) async => await x.dispose());
@@ -53,10 +53,10 @@ void main() {
       expect(prefs, isA<UserPreferencesServiceI>());
     });
     test('FoodsDB singleton should complete and be type FoodsDBInterface', () {
-      final foodsDB = instance!
-          .get<FoodsDBInterface>(instanceName: LocatorName.foodsDBService);
+      final foodsDB =
+          instance!.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
-      expect(foodsDB, isA<FoodsDBInterface>());
+      expect(foodsDB, isA<FoodsDB>());
     });
     test(
         'FoodSearchManager singleton should complete and be type FoodSearchManager',

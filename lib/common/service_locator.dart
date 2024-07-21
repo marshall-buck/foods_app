@@ -19,10 +19,10 @@ registerDependencies() {
     return settings;
   });
 
-  di.registerSingletonAsync<FoodsDBInterface>(() async {
+  di.registerSingletonAsync<FoodsDB>(() async {
     final UsdaDB usdaDB = UsdaDB();
     await usdaDB.init();
-    return FoodsDB(usdaDB);
+    return FoodsDBI(usdaDB);
   },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => await x.dispose());

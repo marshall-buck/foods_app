@@ -5,8 +5,8 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Implement logic to handle external foods source
 
-class FoodsDB implements FoodsDBInterface {
-  FoodsDB(UsdaDB? _usdaDB) {
+class FoodsDBI implements FoodsDB {
+  FoodsDBI(UsdaDB? _usdaDB) {
     assert(_usdaDB != null);
   }
   UsdaDB? _usdaDB;

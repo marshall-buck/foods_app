@@ -1,19 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:foods_app/external_data/external_services_B.dart';
 
-class FoodListItem extends Equatable {
+class FoodListItemModel extends Equatable {
   final String description;
   final List<Nutrient> nutrients;
 
-  const FoodListItem({required this.description, required this.nutrients});
+  const FoodListItemModel({required this.description, required this.nutrients});
 
-  factory FoodListItem.fromFoodModel(
+  factory FoodListItemModel.fromFoodModel(
       FoodModel food, List<String> quickSearchPrefs) {
     final List<Nutrient> amounts = quickSearchPrefs
         .map((id) => food.nutrients.firstWhere((n) => n.id.toString() == id))
         .toList();
 
-    return FoodListItem(description: food.description, nutrients: amounts);
+    return FoodListItemModel(description: food.description, nutrients: amounts);
   }
 
   @override
