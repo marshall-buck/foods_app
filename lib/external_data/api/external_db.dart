@@ -5,7 +5,7 @@ import 'package:foods_app/external_data/models/food.dart';
 
 class ExternalDb implements FoodsDB {
   Future<ExternalDb> init() async {
-    Future.delayed(Duration(seconds: 1));
+    Future.delayed(const Duration(seconds: 1));
     return this;
   }
 

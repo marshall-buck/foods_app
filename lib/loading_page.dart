@@ -7,17 +7,18 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('build widget');
+    // print('build widget');
     return FutureBuilder(
       future: di.allReady(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        print('FutureBuilder');
+        // print('FutureBuilder');
         if (snapshot.hasData) {
-          print('returning HomePage');
+          // print('returning HomePage');
           return const HomePage();
         } else if (snapshot.hasError) {
-          print('Snapshot error: ${snapshot.error}');
-          print('Snapshot stacktrace: ${snapshot.stackTrace}');
+          print('Snapshot error from LoadingWidget : ${snapshot.error}');
+          print(
+              'Snapshot stacktrace from LoadingWidget: ${snapshot.stackTrace}');
           return Column(
             children: [
               const Icon(
@@ -27,24 +28,24 @@ class LoadingWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
+                child: Text('Error from LoadingWidget: ${snapshot.error}'),
               ),
             ],
           );
         } else {
-          print('returning CircularProgressIndicator:  ${snapshot}');
-          return const Column(
-            children: [
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result...'),
-              ),
-            ],
+          // print('returning CircularProgressIndicator:  ${snapshot}');
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: CircularProgressIndicator(),
+                ),
+                Text('Awaiting result...')
+              ],
+            ),
           );
         }
       },

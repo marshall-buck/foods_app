@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:foods_app/external_data/external_services_B.dart';
+import 'package:foods_app/external_data/external_services_bar.dart';
 
 class FoodListItemModel extends Equatable {
   final String description;

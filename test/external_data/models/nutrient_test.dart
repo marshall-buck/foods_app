@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/external_data/external_services_B.dart';
+import 'package:foods_app/external_data/external_services_bar.dart';
 
 import '../../setup/mock_data.dart';
 

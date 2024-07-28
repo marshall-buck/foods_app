@@ -4,10 +4,10 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 class Nutrient extends Equatable {
   const Nutrient({
-    required int this.id,
-    required String this.name,
-    required num this.amount,
-    required String this.unit,
+    required this.id,
+    required this.name,
+    required this.amount,
+    required this.unit,
   });
 
   final int id;

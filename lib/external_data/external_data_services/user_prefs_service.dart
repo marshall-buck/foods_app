@@ -1,11 +1,11 @@
 import 'package:foods_app/common/constants.dart';
 import 'package:foods_app/common/exceptions.dart';
-import 'package:foods_app/external_data/external_services_B.dart';
+import 'package:foods_app/external_data/external_services_bar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferencesServiceI implements PreferencesService {
-  SharedPreferences? _prefs;
+  final SharedPreferences? _prefs;
 
   late final String _colorTheme;
   late final List<String> _favoriteFoods;
@@ -26,6 +26,7 @@ class UserPreferencesServiceI implements PreferencesService {
 
   UserPreferencesServiceI(this._prefs);
 
+  @override
   Future<void> init() async {
     if (_prefs == null) {
       throw PreferencesNotInitializedException(
@@ -51,10 +52,10 @@ class UserPreferencesServiceI implements PreferencesService {
       throw PreferencesNotInitializedException(
           'SharedPreferences is not initialized.');
     }
-    if (_prefs!.containsKey(key)) {
-      return _prefs!.getStringList(key) ?? defaultValue;
+    if (_prefs.containsKey(key)) {
+      return _prefs.getStringList(key) ?? defaultValue;
     } else {
-      await _prefs!.setStringList(key, defaultValue);
+      await _prefs.setStringList(key, defaultValue);
       return defaultValue;
     }
   }
@@ -64,8 +65,8 @@ class UserPreferencesServiceI implements PreferencesService {
       throw PreferencesNotInitializedException(
           'SharedPreferences is not initialized.');
     }
-    if (_prefs!.containsKey(key)) {
-      final value = _prefs!.get(key);
+    if (_prefs.containsKey(key)) {
+      final value = _prefs.get(key);
       if (value is String) {
         return value;
       } else {
@@ -74,7 +75,7 @@ class UserPreferencesServiceI implements PreferencesService {
             'Expected a String for key $key but found ${value.runtimeType}');
       }
     } else {
-      await _prefs!.setString(key, defaultValue);
+      await _prefs.setString(key, defaultValue);
       return defaultValue;
     }
   }

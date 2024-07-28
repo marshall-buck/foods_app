@@ -5,9 +5,7 @@ import 'nutrient.dart';
 
 class FoodModel extends Equatable {
   const FoodModel(
-      {required int this.id,
-      required String this.description,
-      required List<Nutrient> this.nutrients});
+      {required this.id, required this.description, required this.nutrients});
   final int id;
   final String description;
   final List<Nutrient> nutrients;

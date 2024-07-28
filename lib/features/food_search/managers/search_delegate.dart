@@ -71,7 +71,8 @@ class FoodSearchDelegate extends SearchDelegate {
           }
         },
       );
-    } else
+    } else {
       return Container();
+    }
   }
 }

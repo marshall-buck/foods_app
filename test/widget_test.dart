@@ -10,13 +10,13 @@ void main() {
   group('description', () {
     testWidgets('LoadingWidget shows CircularProgressIndicator while waiting',
         (WidgetTester tester) async {
-      final Future<String> _calculation = Future<String>.delayed(
+      final Future<String> calculation = Future<String>.delayed(
         const Duration(seconds: 2),
         () => 'Data Loaded',
       );
 
       await tester.pumpWidget(
-          MaterialApp(home: MockLoadingWidget(future: _calculation)));
+          MaterialApp(home: MockLoadingWidget(future: calculation)));
 
       await tester.pump();
 
@@ -27,13 +27,13 @@ void main() {
     });
     testWidgets('LoadingWidget shows HomePage when data is available',
         (WidgetTester tester) async {
-      final Future<String> _calculation = Future<String>.delayed(
+      final Future<String> calculation = Future<String>.delayed(
         const Duration(seconds: 2),
         () => 'Data Loaded',
       );
       // Simulate the Future being completed with data
       await tester.pumpWidget(
-          MaterialApp(home: MockLoadingWidget(future: _calculation)));
+          MaterialApp(home: MockLoadingWidget(future: calculation)));
       await tester.pumpAndSettle(); // Trigger a frame
 
       // Verify HomePage is shown
@@ -42,13 +42,13 @@ void main() {
     });
     testWidgets('LoadingWidget shows error message when there is an error',
         (WidgetTester tester) async {
-      final Future<String?> _calculation = Future<String>.delayed(
+      final Future<String?> calculation = Future<String>.delayed(
         const Duration(seconds: 2),
         () => throw Exception('An error occurred'),
       );
       // Simulate the Future completing with an error
       await tester.pumpWidget(
-          MaterialApp(home: MockLoadingWidget(future: _calculation)));
+          MaterialApp(home: MockLoadingWidget(future: calculation)));
       await tester.pump(); // Trigger a frame
       await tester.pumpAndSettle();
       // Verify error message is shown
@@ -60,7 +60,7 @@ void main() {
 }
 
 class MockLoadingWidget extends StatelessWidget {
-  MockLoadingWidget({super.key, required Future this.future});
+  const MockLoadingWidget({super.key, required this.future});
   final Future future;
 
   @override
@@ -90,7 +90,7 @@ class MockLoadingWidget extends StatelessWidget {
             ],
           );
         } else {
-          print('returning CircularProgressIndicator:  ${snapshot}');
+          print('returning CircularProgressIndicator:  $snapshot');
           return const Column(
             children: [
               SizedBox(

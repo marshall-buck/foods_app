@@ -1,5 +1,5 @@
 import 'package:foods_app/external_data/models/food.dart';
-import 'package:foods_app/features/food_search/models/food_list_Item.dart';
+import 'package:foods_app/features/food_search/models/food_list_item.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 const protein =

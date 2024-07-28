@@ -1,6 +1,8 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:async';
 
-import 'package:foods_app/external_data/external_services_B.dart';
+import 'package:foods_app/external_data/external_services_bar.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Implement logic to handle external foods source
