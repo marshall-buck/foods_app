@@ -164,3 +164,6 @@ enum QuickSearch {
         QuickSearch.id1008.id,
       ];
 }
+
+const orangesImage = 'assets/jpegs/pexels-enginakyurt-2771926.jpg';
+const appleImage = 'assets/jpegs/pexels-rpphotography-693794.jpg';

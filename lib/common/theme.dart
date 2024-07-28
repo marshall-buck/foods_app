@@ -217,17 +217,6 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
             surfaceContainerHighest ?? this.surfaceContainerHighest);
   }
 
-  //   @override
-//   MyColors lerp(MyColors? other, double t) {
-//     if (other is! MyColors) {
-//       return this;
-//     }
-//     return MyColors(
-//       brandColor: Color.lerp(brandColor, other.brandColor, t),
-//       danger: Color.lerp(danger, other.danger, t),
-//     );
-//   }
-
   @override
   AppColorsExtension lerp(AppColorsExtension? other, double t) {
     if (other is! AppColorsExtension) {
