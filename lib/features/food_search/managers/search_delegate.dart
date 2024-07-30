@@ -27,7 +27,7 @@ class FoodSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    return const Text('buildResults Called');
   }
 
   @override
@@ -45,8 +45,8 @@ class FoodSearchDelegate extends SearchDelegate {
               children: [
                 const Icon(
                   Icons.error_outline,
-                  color: Colors.red,
                   size: 24,
+                  color: Colors.blueAccent,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
@@ -72,7 +72,7 @@ class FoodSearchDelegate extends SearchDelegate {
         },
       );
     } else {
-      return Container();
+      return const Text('No Result Found');
     }
   }
 }
