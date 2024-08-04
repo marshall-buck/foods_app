@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:foods_app/common/text_styles.dart';
 import 'package:foods_app/common/theme.dart';
-
 import 'package:foods_app/features/food_search/models/food_list_item.dart';
 
 class FoodListItem extends StatelessWidget {
@@ -36,23 +34,55 @@ class FoodListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            foods[index].description,
-            style: description,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '200 / 100 / 50 / 25',
-                style: quickLook,
-              ),
-              const Icon(Icons.chevron_right)
-            ],
-          ),
+          FoodDescription(foods: foods, index: index, description: description),
+          QuickResults(quickLook: quickLook),
         ],
       ),
+    );
+  }
+}
+
+class QuickResults extends StatelessWidget {
+  const QuickResults({
+    super.key,
+    required this.quickLook,
+  });
+
+  final TextStyle quickLook;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          '200 / 100 / 50 / 25',
+          style: quickLook,
+        ),
+        const Icon(Icons.chevron_right)
+      ],
+    );
+  }
+}
+
+class FoodDescription extends StatelessWidget {
+  const FoodDescription({
+    super.key,
+    required this.foods,
+    required this.index,
+    required this.description,
+  });
+
+  final List<FoodListItemModel> foods;
+  final int index;
+  final TextStyle description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      foods[index].description,
+      style: description,
     );
   }
 }
