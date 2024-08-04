@@ -20,8 +20,8 @@ class FoodListItem extends StatelessWidget {
     final quickLook =
         AppTextStyle.m3BodyMedium.copyWith(color: colors.onSurfaceVariant);
     return Container(
-      padding: const EdgeInsets.only(bottom: 8),
-      constraints: BoxConstraints(maxHeight: 128),
+      padding: const EdgeInsets.only(bottom: 4),
+      constraints: const BoxConstraints(maxHeight: 128),
       decoration: BoxDecoration(
         color: colors.surface,
         border: Border(

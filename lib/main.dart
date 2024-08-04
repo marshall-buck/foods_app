@@ -1,15 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:foods_app/common/colors.dart';
 import 'package:foods_app/common/constants.dart';
+import 'package:foods_app/common/service_locator.dart';import 'package:watch_it/watch_it.dart';
 
-import 'package:foods_app/common/service_locator.dart';
-import 'package:foods_app/common/theme.dart';
-import 'package:foods_app/features/food_search/managers/search_delegate.dart';
-
-import 'package:watch_it/watch_it.dart';
+import 'features/food_search/food_search_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,16 +38,8 @@ class MyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
 
-    final searchBar = SearchBar(
-      hintText: 'Search For Foods',
-      backgroundColor: WidgetStateProperty.all(colors.surfaceContainer),
-      onTap: () => showSearch(
-        context: context,
-        delegate: FoodSearchDelegate(),
-      ),
-    );
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
@@ -94,10 +82,10 @@ class MyScaffold extends StatelessWidget {
                       )
                     ],
                   ),
-                  Padding(
+                  const Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     child: Center(
-                      child: searchBar,
+                      child: const FoodSearchBar(),
                     ),
                   ),
                 ],
