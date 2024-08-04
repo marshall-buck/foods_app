@@ -16,9 +16,7 @@ class AppLoader extends StatelessWidget {
     return FutureBuilder(
       future: di.allReady(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        // print('FutureBuilder');
         if (snapshot.hasData) {
-          // print('returning HomePage');
           return Stack(
             children: [
               Column(
@@ -79,7 +77,6 @@ class AppLoader extends StatelessWidget {
             ],
           );
         } else {
-          // print('returning CircularProgressIndicator:  ${snapshot}');
           return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

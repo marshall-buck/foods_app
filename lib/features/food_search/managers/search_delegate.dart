@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/zcommon.dart';
 import 'package:foods_app/features/food_search/managers/food_search_manager.dart';
 import 'package:foods_app/features/food_search/managers/food_search_results_list.dart';
 import 'package:watch_it/watch_it.dart';
-
-import '../../../common/theme.dart';
 
 class FoodSearchDelegate extends SearchDelegate {
   final foodManager = di.get<FoodSearchManager>();
