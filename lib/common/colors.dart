@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:foods_app/common/theme.dart';
+import 'package:foods_app/common/zcommon.dart';
 
 const lightColors = AppColorsExtension(
     //brightness: Brightness.light,
@@ -21,9 +21,11 @@ const lightColors = AppColorsExtension(
     onError: Color(0xffffffff),
     errorContainer: Color(0xffffdad6),
     onErrorContainer: Color(0xff410002),
-    background: Color(0xfff5fbf7), //0xfff5fbf7
+    background: Color(0xfff5fbf7),
+    //0xfff5fbf7
     onBackground: Color(0xff171d1b),
-    surface: Color(0xfff5fbf7), //0xfff5fbf7
+    surface: Color(0xfff5fbf7),
+    //0xfff5fbf7
     onSurface: Color(0xff171d1b),
     surfaceVariant: Color(0xffdbe5e0),
     onSurfaceVariant: Color(0xff3f4945),

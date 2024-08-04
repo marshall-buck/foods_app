@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:foods_app/common/service_locator.dart';
-import 'package:foods_app/external_data/external_services_bar.dart';
+import 'package:foods_app/common/zcommon.dart';
+import 'package:foods_app/external_data/zexternal_data.dart';
 import 'package:foods_app/features/food_search/models/food_list_item.dart';
-import 'package:foods_app/features/food_search/ui/fake_data.dart';
+import 'package:foods_app/mockData/fake_data.dart';
 import 'package:watch_it/watch_it.dart';
-
-import '../../../common/quicksearch.dart';
 
 class FoodSearchManager extends ChangeNotifier {
   final ValueNotifier<List<FoodListItemModel>?> currentResults =

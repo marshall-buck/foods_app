@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/constants.dart';
+import 'package:foods_app/common/zcommon.dart';
 import 'package:watch_it/watch_it.dart';
 
 import 'features/food_search/food_search_bar.dart';
@@ -54,9 +54,9 @@ class AppLoader extends StatelessWidget {
                 ],
               ),
               const Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
+                padding: EdgeInsets.only(left: 8, right: 8),
                 child: Center(
-                  child: const FoodSearchBar(),
+                  child: FoodSearchBar(),
                 ),
               ),
             ],

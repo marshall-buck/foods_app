@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:foods_app/external_data/external_services_bar.dart';
+import 'package:foods_app/external_data/zexternal_data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Implement logic to handle external foods source
@@ -11,6 +11,7 @@ class FoodsDBI implements FoodsDB {
   FoodsDBI(UsdaDB? _usdaDB) {
     assert(_usdaDB != null);
   }
+
   UsdaDB? _usdaDB;
 
   get localDB => _usdaDB;
