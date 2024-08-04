@@ -8,14 +8,9 @@ class FoodListItem extends StatelessWidget {
   final List<FoodListItemModel> foods;
   final int index;
 
-  // void _onPressed() {}
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<AppColorsExtension>()!;
-    final description =
-        AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface);
-    final quickLook =
-        AppTextStyle.m3BodyMedium.copyWith(color: colors.onSurfaceVariant);
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
       constraints: const BoxConstraints(maxHeight: 128),
@@ -33,8 +28,8 @@ class FoodListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          FoodDescription(foods: foods, index: index, description: description),
-          QuickResults(quickLook: quickLook),
+          FoodDescription(foods: foods, index: index),
+          const QuickResults(),
         ],
       ),
     );
@@ -44,44 +39,44 @@ class FoodListItem extends StatelessWidget {
 class QuickResults extends StatelessWidget {
   const QuickResults({
     super.key,
-    required this.quickLook,
   });
-
-  final TextStyle quickLook;
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    final quickLookStyle =
+        AppTextStyle.m3BodyMedium.copyWith(color: colors.onSurfaceVariant);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
           '200 / 100 / 50 / 25',
-          style: quickLook,
+          style: quickLookStyle,
         ),
-        const Icon(Icons.chevron_right)
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: () {},
+        ),
       ],
     );
   }
 }
 
 class FoodDescription extends StatelessWidget {
-  const FoodDescription({
-    super.key,
-    required this.foods,
-    required this.index,
-    required this.description,
-  });
+  const FoodDescription({super.key, required this.foods, required this.index});
 
   final List<FoodListItemModel> foods;
   final int index;
-  final TextStyle description;
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    final descriptionStyle =
+        AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface);
     return Text(
       foods[index].description,
-      style: description,
+      style: descriptionStyle,
     );
   }
 }
