@@ -16,6 +16,7 @@ dependencies:
   watch_it: ^1.4.2
   mocktail: ^1.0.4
   shared_preferences: ^2.2.3
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:

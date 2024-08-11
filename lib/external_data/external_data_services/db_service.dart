@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:foods_app/external_data/zexternal_data.dart';
+import 'package:foods_app/external_data/external_data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Implement logic to handle external foods source

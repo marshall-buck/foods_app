@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:foods_app/common/zcommon.dart';
+import 'package:foods_app/common/common.dart';
 
 const lightColors = AppColorsExtension(
     //brightness: Brightness.light,

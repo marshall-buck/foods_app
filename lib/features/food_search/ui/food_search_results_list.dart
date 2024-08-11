@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/food_search/managers/food_search_manager.dart';
-import 'package:foods_app/features/food_search/ui/foods_list.dart';
-
-import '../../../common/theme.dart';
+import 'package:foods_app/common/common.dart';
+import 'package:foods_app/features/food_search/food_search.dart';
 
 class FoodSearchResultsList extends StatelessWidget {
   const FoodSearchResultsList({

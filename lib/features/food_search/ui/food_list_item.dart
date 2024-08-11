@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/zcommon.dart';
-import 'package:foods_app/features/food_search/models/food_list_item.dart';
+import 'package:foods_app/common/common.dart';
+import 'package:foods_app/features/food_search/food_search.dart';
 
 class FoodListItem extends StatelessWidget {
   const FoodListItem({super.key, required this.foods, required this.index});
@@ -13,7 +13,7 @@ class FoodListItem extends StatelessWidget {
     final colors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
-      constraints: const BoxConstraints(maxHeight: 128),
+      constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
         color: colors.surface,
         border: Border(

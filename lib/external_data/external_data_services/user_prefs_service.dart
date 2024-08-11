@@ -1,9 +1,9 @@
 import 'package:foods_app/common/constants.dart';
 import 'package:foods_app/common/exceptions.dart';
-import 'package:foods_app/external_data/zexternal_data.dart';
+import 'package:foods_app/external_data/external_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../common/quicksearch.dart';
+import '../../common/quick_search.dart';
 
 class UserPreferencesServiceI implements PreferencesService {
   final SharedPreferences? _prefs;

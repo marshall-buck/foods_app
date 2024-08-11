@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:foods_app/common/zcommon.dart';
-import 'package:foods_app/external_data/zexternal_data.dart';
-import 'package:foods_app/features/food_search/models/food_list_item.dart';
+import 'package:foods_app/common/common.dart';
+import 'package:foods_app/external_data/external_data.dart';
+import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:foods_app/mockData/fake_data.dart';
 import 'package:watch_it/watch_it.dart';
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:foods_app/features/food_search/models/food_list_item.dart';
-import 'package:foods_app/features/food_search/ui/food_list_item.dart';
+import 'package:foods_app/features/food_search/food_search.dart';
 
 class FoodsList extends StatelessWidget {
   const FoodsList({

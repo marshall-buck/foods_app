@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/app_loader.dart';
-import 'package:foods_app/common/zcommon.dart';
+import 'package:foods_app/common/common.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
       darkTheme: ThemeData.dark().copyWith(
         extensions: <ThemeExtension<dynamic>>[darkColors],
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: const Scaffold(
         body: SafeArea(
           child: AppLoader(),

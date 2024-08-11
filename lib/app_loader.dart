@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/zcommon.dart';
 import 'package:watch_it/watch_it.dart';
 
-import 'features/food_search/food_search_bar.dart';
+import 'home_page.dart';
 
 class AppLoader extends StatelessWidget {
   const AppLoader({
@@ -17,48 +14,7 @@ class AppLoader extends StatelessWidget {
       future: di.allReady(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          return Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: ClipRect(
-                      child: ImageFiltered(
-                        imageFilter:
-                            ImageFilter.blur(sigmaX: 11.4, sigmaY: 11.4),
-                        child: Image.asset(
-                          orangesImage,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ClipRect(
-                      child: Opacity(
-                        opacity: 0.5,
-                        child: ImageFiltered(
-                          imageFilter:
-                              ImageFilter.blur(sigmaX: 11.4, sigmaY: 11.4),
-                          child: Image.asset(
-                            appleImage,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                child: Center(
-                  child: FoodSearchBar(),
-                ),
-              ),
-            ],
-          );
+          return const HomePage();
         } else if (snapshot.hasError) {
           print('Snapshot error from LoadingWidget : ${snapshot.error}');
           print(
