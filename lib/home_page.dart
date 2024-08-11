@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foods_app/features/food_search/food_search.dart';
 
 import 'common/common.dart';
 
@@ -15,9 +16,15 @@ class HomePage extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: SvgPicture.string(
-                logo,
+            InkWell(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FoodSearchPage())),
+              child: Expanded(
+                child: SvgPicture.string(
+                  logo,
+                ),
               ),
             ),
           ],

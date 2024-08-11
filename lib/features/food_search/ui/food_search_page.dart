@@ -11,12 +11,22 @@ class FoodSearchPage extends StatefulWidget {
 
 class _FoodSearchPageState extends State<FoodSearchPage> {
   final foodManager = di.get<FoodSearchManager>();
+  final TextEditingController _searchTerm = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Text(''),
+        child: CustomScrollView(slivers: [
+          SliverAppBar(
+            title: TextField(
+              controller: _searchTerm,
+            ),
+          ),
+          SliverFillRemaining(
+            child: FoodSearchResultsList(foodManager: foodManager),
+          ),
+        ]),
       ),
     );
   }

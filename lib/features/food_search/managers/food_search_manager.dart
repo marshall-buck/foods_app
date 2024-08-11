@@ -7,6 +7,7 @@ import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:foods_app/mockData/fake_data.dart';
 import 'package:watch_it/watch_it.dart';
 
+/// Comments
 class FoodSearchManager extends ChangeNotifier {
   final ValueNotifier<List<FoodListItemModel>?> currentResults =
       ValueNotifier<List<FoodListItemModel>?>(null);

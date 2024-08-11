@@ -6,14 +6,13 @@ class FoodSearchResultsList extends StatelessWidget {
   const FoodSearchResultsList({
     super.key,
     required this.foodManager,
-    required this.colors,
   });
 
   final FoodSearchManager foodManager;
-  final AppColorsExtension colors;
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColorsExtension>()!;
     return FutureBuilder(
       future: foodManager.getMockData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -45,7 +44,7 @@ class FoodSearchResultsList extends StatelessWidget {
               SizedBox(
                 width: 60,
                 height: 60,
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator.adaptive(),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16),
