@@ -5,10 +5,10 @@ import 'package:watch_it/watch_it.dart';
 class FoodSearchPage extends StatefulWidget {
   const FoodSearchPage({
     super.key,
-    required this.additionalSlivers,
+     this.additionalSlivers,
   });
 
-  final List<Widget> additionalSlivers;
+  final List<Widget>? additionalSlivers;
 
   @override
   State<FoodSearchPage> createState() => _FoodSearchPageState();
@@ -33,7 +33,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   void _onSearchTermChanged() {
     foodManager.searchTerm.value = _searchTermController.text;
-    foodManager.queryFoods(searchTerm: _searchTermController.text);
+    // foodManager.queryFoods(searchTerm: _searchTermController.text);
   }
 
   @override
@@ -52,7 +52,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
                 ),
               ),
             ),
-            ...widget.additionalSlivers,
+            ...?widget.additionalSlivers,
             SliverFillRemaining(
               child: FoodSearchResultsList(foodManager: foodManager),
             ),
