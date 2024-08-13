@@ -11,23 +11,21 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMaterial(context));
     return Stack(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const FoodSearchPage())),
-              child: Expanded(
-                child: SvgPicture.string(
-                  logo,
-                ),
-              ),
+        Align(
+          widthFactor: double.infinity,
+          heightFactor: double.infinity,
+          child: InkWell(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const FoodSearchPage())),
+            child: SvgPicture.string(
+              logo,
             ),
-          ],
+          ),
         ),
         // const Padding(
         //   padding: EdgeInsets.only(left: 8, right: 8),

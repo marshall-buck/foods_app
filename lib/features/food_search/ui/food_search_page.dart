@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodSearchPage extends StatefulWidget {
-  const FoodSearchPage({
-    super.key,
-     this.additionalSlivers,
-  });
+  const FoodSearchPage({super.key, this.additionalSlivers});
 
   final List<Widget>? additionalSlivers;
 
@@ -32,18 +30,19 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
   }
 
   void _onSearchTermChanged() {
-    foodManager.searchTerm.value = _searchTermController.text;
+    print(_searchTermController.text);
     // foodManager.queryFoods(searchTerm: _searchTermController.text);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    return Material(
+      child: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              pinned: true,
+              // pinned: true,
               floating: true,
               title: TextField(
                 controller: _searchTermController,
@@ -53,8 +52,70 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
               ),
             ),
             ...?widget.additionalSlivers,
-            SliverFillRemaining(
-              child: FoodSearchResultsList(foodManager: foodManager),
+            FutureBuilder<List<FoodListItemModel?>>(
+              future: foodManager.getMockData(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  final List<FoodListItemModel> foods = snapshot.data;
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return FoodListItem(foods: foods, index: index);
+                        // return Column(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   children: [
+                        //     Flexible(child: Text(foods[index].description)),
+                        //     Flexible(
+                        //       child: Text(
+                        //         '200 / 100 / 50 / 25',
+                        //         style: AppTextStyle.m3BodyMedium
+                        //             .copyWith(color: colors.onSurfaceVariant),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // );
+                      },
+                      childCount: foods.length,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  print('Snapshot error: ${snapshot.error}');
+                  print('Snapshot stacktrace: ${snapshot.stackTrace}');
+                  return SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          size: 24,
+                          color: Colors.blueAccent,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text('Error: ${snapshot.error}'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator.adaptive(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text('Awaiting result...'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
@@ -63,37 +124,8 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
   }
 }
 
-// import 'package:flutter/material.dart';
-// import 'package:foods_app/features/food_search/food_search.dart';
-// import 'package:watch_it/watch_it.dart';
-//
-// class FoodSearchPage extends StatefulWidget {
-//   const FoodSearchPage({super.key});
-//
-//   @override
-//   State<FoodSearchPage> createState() => _FoodSearchPageState();
-// }
-//
-// class _FoodSearchPageState extends State<FoodSearchPage> {
-//   final foodManager = di.get<FoodSearchManager>();
-//   final TextEditingController _searchTerm = TextEditingController();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: CustomScrollView(slivers: [
-//           SliverAppBar(
-//             title: TextField(
-//               controller: _searchTerm,
-//             ),
-//           ),
-//           SliverFillRemaining(
-//             child: FoodSearchResultsList(foodManager: foodManager),
-//           ),
-//         ]),
-//       ),
-//     );
-//   }
-// }
-//
+
+//  return ListTile(
+//                           title: Text(foods[index].description),
+//                           subtitle: Text(foods[index].nutrients.toString()),
+//                         );

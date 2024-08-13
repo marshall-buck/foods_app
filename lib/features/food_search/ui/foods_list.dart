@@ -1,19 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:foods_app/features/food_search/food_search.dart';
+// import 'package:flutter/material.dart';
+// import 'package:foods_app/features/food_search/food_search.dart';
 
-class FoodsList extends StatelessWidget {
-  const FoodsList({
-    required this.foods,
-    super.key,
-  });
+// // class FoodsList extends StatelessWidget {
+// //
 
-  final List<FoodListItemModel> foods;
+// class FoodsList extends StatelessWidget {
+//   final List<FoodListItemModel> foods;
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: foods.length,
-        itemBuilder: (BuildContext context, int index) =>
-            FoodListItem(foods: foods, index: index));
-  }
-}
+//   const FoodsList({Key? key, required this.foods}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SliverList(
+//       delegate: SliverChildBuilderDelegate(
+//         (BuildContext context, int index) {
+//           return ListTile(
+//             title: Text(foods[index].description),
+//             subtitle: Text(foods[index].nutrients.toString()),
+//           );
+//         },
+//         childCount: foods.length,
+//       ),
+//     );
+//   }
+// }

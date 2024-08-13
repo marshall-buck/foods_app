@@ -14,7 +14,12 @@ class FoodSearchManager extends ChangeNotifier {
 
   final ValueNotifier<String> searchTerm = ValueNotifier<String>('');
 
-  Future<List<FoodListItemModel>> getMockData() => fakeFoodsListItems();
+  Future<List<FoodListItemModel>> getMockData() async =>
+      await fakeFoodsListItems();
+
+  // Future<List<FoodListItemModel?>> throwError() async {
+  //   throw Exception('throwError');
+  // }
 
   Future<void> queryFoods({required String searchTerm}) async {
     final db =

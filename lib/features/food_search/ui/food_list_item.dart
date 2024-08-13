@@ -13,7 +13,6 @@ class FoodListItem extends StatelessWidget {
     final colors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
-      constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
         color: colors.surface,
         border: Border(
@@ -28,8 +27,11 @@ class FoodListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          FoodDescription(foods: foods, index: index),
-          const QuickResults(),
+          Flexible(child: FoodDescription(foods: foods, index: index)),
+          const Flexible(
+              child: QuickResults(
+            quickResultText: '200 / 100 / 50 / 25',
+          ))
         ],
       ),
     );
@@ -37,26 +39,33 @@ class FoodListItem extends StatelessWidget {
 }
 
 class QuickResults extends StatelessWidget {
-  const QuickResults({
-    super.key,
-  });
+  const QuickResults({super.key, required this.quickResultText});
+  final String quickResultText;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<AppColorsExtension>()!;
-    final quickLookStyle =
-        AppTextStyle.m3BodyMedium.copyWith(color: colors.onSurfaceVariant);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          '200 / 100 / 50 / 25',
-          style: quickLookStyle,
+        Flexible(
+          child: Text(
+            quickResultText,
+            style: AppTextStyle.m3BodyMedium
+                .copyWith(color: colors.onSurfaceVariant),
+          ),
         ),
-        IconButton(
-          icon: const Icon(Icons.chevron_right),
-          onPressed: () {},
+        Flexible(
+          child: IconButton(
+            icon: const Icon(Icons.chevron_right),
+            style: const ButtonStyle(
+                fixedSize: WidgetStatePropertyAll<Size>(Size(12, 12))),
+            // alignment: AlignmentGeometry,
+            iconSize: 12,
+            onPressed: () {},
+          ),
         ),
       ],
     );
@@ -72,11 +81,10 @@ class FoodDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<AppColorsExtension>()!;
-    final descriptionStyle =
-        AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface);
+
     return Text(
       foods[index].description,
-      style: descriptionStyle,
+      style: AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface),
     );
   }
 }

@@ -40,7 +40,7 @@ class AppLoader extends StatelessWidget {
                 SizedBox(
                   width: 60,
                   height: 60,
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator.adaptive(),
                 ),
                 Text('Awaiting result...')
               ],
