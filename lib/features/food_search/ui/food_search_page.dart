@@ -62,20 +62,6 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
                       (BuildContext context, int index) {
                         return FoodListItem(foods: foods, index: index);
                         // return Column(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   mainAxisSize: MainAxisSize.min,
-                        //   children: [
-                        //     Flexible(child: Text(foods[index].description)),
-                        //     Flexible(
-                        //       child: Text(
-                        //         '200 / 100 / 50 / 25',
-                        //         style: AppTextStyle.m3BodyMedium
-                        //             .copyWith(color: colors.onSurfaceVariant),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // );
                       },
                       childCount: foods.length,
                     ),

@@ -27,11 +27,10 @@ class FoodListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Flexible(child: FoodDescription(foods: foods, index: index)),
-          const Flexible(
-              child: QuickResults(
+          FoodDescription(foods: foods, index: index),
+          QuickResults(
             quickResultText: '200 / 100 / 50 / 25',
-          ))
+          )
         ],
       ),
     );
