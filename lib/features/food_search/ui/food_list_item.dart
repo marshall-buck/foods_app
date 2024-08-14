@@ -28,7 +28,7 @@ class FoodListItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           FoodDescription(foods: foods, index: index),
-          QuickResults(
+          const QuickResults(
             quickResultText: '200 / 100 / 50 / 25',
           )
         ],
@@ -49,22 +49,18 @@ class QuickResults extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Flexible(
-          child: Text(
-            quickResultText,
-            style: AppTextStyle.m3BodyMedium
-                .copyWith(color: colors.onSurfaceVariant),
-          ),
+        Text(
+          quickResultText,
+          style: AppTextStyle.m3BodyMedium
+              .copyWith(color: colors.onSurfaceVariant),
         ),
-        Flexible(
-          child: IconButton(
-            icon: const Icon(Icons.chevron_right),
-            style: const ButtonStyle(
-                fixedSize: WidgetStatePropertyAll<Size>(Size(12, 12))),
-            // alignment: AlignmentGeometry,
-            iconSize: 12,
-            onPressed: () {},
-          ),
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          style: const ButtonStyle(
+              fixedSize: WidgetStatePropertyAll<Size>(Size(12, 12))),
+          // alignment: AlignmentGeometry,
+          iconSize: 12,
+          onPressed: () {},
         ),
       ],
     );
