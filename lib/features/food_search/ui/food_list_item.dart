@@ -3,10 +3,9 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 
 class FoodListItem extends StatelessWidget {
-  const FoodListItem({super.key, required this.foods, required this.index});
+  const FoodListItem({super.key, required this.food});
 
-  final List<FoodListItemModel> foods;
-  final int index;
+  final FoodListItemModel food;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +26,28 @@ class FoodListItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          FoodDescription(foods: foods, index: index),
+          FoodDescription(food: food),
           const QuickResults(
             quickResultText: '200 / 100 / 50 / 25',
           )
         ],
       ),
+    );
+  }
+}
+
+class FoodDescription extends StatelessWidget {
+  const FoodDescription({super.key, required this.food});
+
+  final FoodListItemModel food;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+
+    return Text(
+      food.description,
+      style: AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface),
     );
   }
 }
@@ -63,23 +78,6 @@ class QuickResults extends StatelessWidget {
           onPressed: () {},
         ),
       ],
-    );
-  }
-}
-
-class FoodDescription extends StatelessWidget {
-  const FoodDescription({super.key, required this.foods, required this.index});
-
-  final List<FoodListItemModel> foods;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColorsExtension>()!;
-
-    return Text(
-      foods[index].description,
-      style: AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface),
     );
   }
 }
