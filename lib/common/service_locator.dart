@@ -21,6 +21,7 @@ registerDependencies() {
   di.registerSingletonAsync<FoodsDB>(() async {
     final UsdaDB usdaDB = UsdaDB();
     await usdaDB.init();
+    assert(usdaDB.isDataLoaded == true);
     return FoodsDBI(usdaDB);
   },
       instanceName: LocatorName.foodsDBService,

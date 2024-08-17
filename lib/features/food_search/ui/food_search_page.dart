@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/common.dart';
+
 import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:watch_it/watch_it.dart';
 
@@ -29,14 +29,16 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     super.dispose();
   }
 
-  void _onSearchTermChanged() {
+  void _onSearchTermChanged() async {
     print(_searchTermController.text);
-    // foodManager.queryFoods(searchTerm: _searchTermController.text);
+    if (_searchTermController.text.length >= 2) {
+      await foodManager.queryFoods(searchTerm: _searchTermController.text);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
     return Material(
       child: SafeArea(
         child: CustomScrollView(
@@ -109,9 +111,3 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     );
   }
 }
-
-
-//  return ListTile(
-//                           title: Text(foods[index].description),
-//                           subtitle: Text(foods[index].nutrients.toString()),
-//                         );

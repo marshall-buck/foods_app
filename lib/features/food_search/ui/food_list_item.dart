@@ -56,10 +56,10 @@ class QuickResults extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.chevron_right),
-          style: const ButtonStyle(
-              fixedSize: WidgetStatePropertyAll<Size>(Size(12, 12))),
+          // style: const ButtonStyle(
+          // fixedSize: WidgetStatePropertyAll<Size>(Size(12, 12))),
           // alignment: AlignmentGeometry,
-          iconSize: 12,
+
           onPressed: () {},
         ),
       ],
