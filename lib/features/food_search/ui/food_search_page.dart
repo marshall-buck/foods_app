@@ -71,20 +71,29 @@ class FoodsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: foodManager.currentResults,
-      builder: (BuildContext context, value, Widget? child) {return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            final foods = foodManager.currentResults.value[index];
-            return FoodListItem(food: foods, index: index);
-            // return Column(
-          },
-          childCount: foods.length,
-        ),
-      ),},
+    if (foodManager.currentResults.value == null) {
+      return const SliverToBoxAdapter(
+        child: Text('stuff'),
+      );
+    } else {
+      return ValueListenableBuilder(
+        valueListenable: foodManager.currentResults,
+        builder: (BuildContext context, value, Widget? child) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                final foods = value;
 
-    );
+                final id = foods![index].id;
+                final key = ValueKey<int>(id);
+                return FoodListItem(key: key, food: foods[index]);
+              },
+              // childCount: foods.length,
+            ),
+          );
+        },
+      );
+    }
   }
 }
 

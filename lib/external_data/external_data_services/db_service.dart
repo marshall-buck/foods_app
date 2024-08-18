@@ -7,18 +7,15 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Implement logic to handle external foods source
 
-class FoodsDBI implements FoodsDB {
-  FoodsDBI(UsdaDB? _usdaDB) {
-    assert(_usdaDB != null);
-  }
-
-  UsdaDB? _usdaDB;
+class FoodsDBService implements FoodsDB {
+  FoodsDBService(this._usdaDB);
+  final UsdaDB _usdaDB;
 
   get localDB => _usdaDB;
 
   @override
   Future<FoodModel?> queryFood({required id}) async {
-    final SrLegacyFoodModel? food = await _usdaDB?.queryFood(id: id);
+    final SrLegacyFoodModel? food = await _usdaDB.queryFood(id: id);
     if (food == null) {
       return null;
     }
@@ -28,7 +25,7 @@ class FoodsDBI implements FoodsDB {
   @override
   Future<List<FoodModel?>> queryFoods({required String searchTerm}) async {
     final List<SrLegacyFoodModel?> foods =
-        await _usdaDB!.queryFoods(searchString: searchTerm);
+        await _usdaDB.queryFoods(searchString: searchTerm);
 
     return foods.isEmpty
         ? []
@@ -37,7 +34,7 @@ class FoodsDBI implements FoodsDB {
 
   @override
   Future<void> dispose() async {
-    await _usdaDB?.dispose();
-    _usdaDB = null;
+    await _usdaDB.dispose();
+    assert(_usdaDB.isDataLoaded == false);
   }
 }

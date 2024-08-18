@@ -3,7 +3,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 
 class FoodListItem extends StatelessWidget {
-  const FoodListItem({super.key, required this.food});
+  const FoodListItem({required super.key, required this.food});
 
   final FoodListItemModel food;
 

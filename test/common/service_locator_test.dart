@@ -25,7 +25,7 @@ void main() {
     instance!.registerSingletonAsync<FoodsDB>(() async {
       final UsdaDB usdaDB = UsdaDB();
       await usdaDB.init();
-      return FoodsDBI(usdaDB);
+      return FoodsDBService(usdaDB);
     },
         instanceName: LocatorName.foodsDBService,
         dispose: (x) async => await x.dispose());

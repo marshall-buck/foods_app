@@ -22,7 +22,7 @@ registerDependencies() {
     final UsdaDB usdaDB = UsdaDB();
     await usdaDB.init();
     assert(usdaDB.isDataLoaded == true);
-    return FoodsDBI(usdaDB);
+    return FoodsDBService(usdaDB);
   },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => await x.dispose());
