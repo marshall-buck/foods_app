@@ -11,12 +11,22 @@ class FoodListItemModel extends Equatable {
 
   factory FoodListItemModel.fromFoodModel(
       FoodModel food, List<String> quickSearchPrefs) {
-    final List<Nutrient> amounts = quickSearchPrefs
-        .map((id) => food.nutrients.firstWhere((n) => n.id.toString() == id))
+    // print('FoodListItemModel.fromFoodModel - food:  $food');
+    // print(
+    //     'FoodListItemModel.fromFoodModel - quickSearchPrefs:  $quickSearchPrefs');
+
+    final List<Nutrient> quickSearchNutrients = quickSearchPrefs
+        .map((id) => food.nutrients.firstWhere(
+              (n) => n.id.toString() == id,
+              orElse: () =>
+                  const Nutrient(id: 0, name: 'name', amount: 0, unit: 'unit'),
+            ))
         .toList();
 
     return FoodListItemModel(
-        id: food.id, description: food.description, nutrients: amounts);
+        id: food.id,
+        description: food.description,
+        nutrients: quickSearchNutrients);
   }
 
   // String quickSearchString() {

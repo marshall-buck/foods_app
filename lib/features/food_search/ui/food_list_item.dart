@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 
+// TODO: refactor layout of item
 class FoodListItem extends StatelessWidget {
   const FoodListItem({required super.key, required this.food});
 
@@ -71,10 +72,6 @@ class QuickResults extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.chevron_right),
-          // style: const ButtonStyle(
-          // fixedSize: WidgetStatePropertyAll<Size>(Size(12, 12))),
-          // alignment: AlignmentGeometry,
-
           onPressed: () {},
         ),
       ],

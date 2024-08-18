@@ -9,8 +9,8 @@ import 'package:watch_it/watch_it.dart';
 
 /// Comments
 class FoodSearchManager extends ChangeNotifier {
-  final ValueNotifier<List<FoodListItemModel>?> currentResults =
-      ValueNotifier<List<FoodListItemModel>?>(null);
+  final ValueNotifier<List<FoodListItemModel?>> currentResults =
+      ValueNotifier<List<FoodListItemModel?>>([]);
 
   // final ValueNotifier<String> searchTerm = ValueNotifier<String>('');
 
@@ -20,12 +20,20 @@ class FoodSearchManager extends ChangeNotifier {
   Future<void> queryFoods({required String searchTerm}) async {
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
-    final List<FoodModel?> foods = await db.queryFoods(searchTerm: searchTerm);
-    // if (foods.isEmpty) return [];
 
-    currentResults.value = foods
-        .map((food) =>
-            FoodListItemModel.fromFoodModel(food!, QuickSearch.defaults))
-        .toList();
+    final List<FoodModel?> foods = await db.queryFoods(searchTerm: searchTerm);
+
+    // print('queryFoods: $foods');
+    if (foods.isNotEmpty) {
+      currentResults.value = foods
+          .map((food) =>
+              FoodListItemModel.fromFoodModel(food!, QuickSearch.defaults))
+          .toList();
+    }
+
+    print(
+        'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}');
+    print(
+        'FoodSearchManager - currentResults:length: ${currentResults.value.length}');
   }
 }

@@ -27,6 +27,9 @@ class FoodsDBService implements FoodsDB {
     final List<SrLegacyFoodModel?> foods =
         await _usdaDB.queryFoods(searchString: searchTerm);
 
+    // print('FoodsDBService- queryFoods searchTerm:  $searchTerm');
+    // print('FoodsDBService- queryFoods foods:  $foods');
+
     return foods.isEmpty
         ? []
         : foods.map((food) => FoodModel.fromUsdaDB(food!)).toList();
