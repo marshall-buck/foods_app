@@ -11,10 +11,6 @@ class FoodListItemModel extends Equatable {
 
   factory FoodListItemModel.fromFoodModel(
       FoodModel food, List<String> quickSearchPrefs) {
-    // print('FoodListItemModel.fromFoodModel - food:  $food');
-    // print(
-    //     'FoodListItemModel.fromFoodModel - quickSearchPrefs:  $quickSearchPrefs');
-
     final List<Nutrient> quickSearchNutrients = quickSearchPrefs
         .map((id) => food.nutrients.firstWhere(
               (n) => n.id.toString() == id,
@@ -28,11 +24,6 @@ class FoodListItemModel extends Equatable {
         description: food.description,
         nutrients: quickSearchNutrients);
   }
-
-  // String quickSearchString() {
-  //   final String output = '';
-  //   for
-  // }
 
   @override
   bool? get stringify => true;

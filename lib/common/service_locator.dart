@@ -11,7 +11,7 @@ class LocatorName {
 
 registerDependencies() {
   di.registerSingletonAsync<UserPreferencesServiceI>(() async {
-    final shared = await SharedPreferences.getInstance();
+    final SharedPreferencesAsync shared = SharedPreferencesAsync();
 
     final settings = UserPreferencesServiceI(shared);
     await settings.init();

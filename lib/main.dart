@@ -21,7 +21,8 @@ class MainApp extends StatelessWidget {
       darkTheme: ThemeData.dark().copyWith(
         extensions: <ThemeExtension<dynamic>>[darkColors],
       ),
-      themeMode: ThemeMode.dark,
+      themeMode:
+          DisplayMode.dark.name == 'dark' ? ThemeMode.dark : ThemeMode.light,
       home: const Scaffold(
         body: SafeArea(
           child: AppLoader(),

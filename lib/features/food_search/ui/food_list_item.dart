@@ -10,7 +10,8 @@ class FoodListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    final colors = AppColorsExtension.of(context);
+
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
       decoration: BoxDecoration(

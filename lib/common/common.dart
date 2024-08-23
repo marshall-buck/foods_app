@@ -2,7 +2,7 @@
 export 'colors.dart';
 export 'constants.dart';
 export 'exceptions.dart';
-export 'quick_search.dart';
+
 export 'service_locator.dart';
 export 'text_styles.dart';
 export 'theme.dart';

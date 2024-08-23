@@ -2,6 +2,12 @@ import "package:flutter/material.dart";
 
 @immutable
 class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
+  static AppColorsExtension of(BuildContext context) {
+    return Theme.of(context).extension<AppColorsExtension>()!;
+  }
+
+  // final appTheme = AppColorsExtension.of(context);
+
   const AppColorsExtension(
       {
       //required this.brightness,

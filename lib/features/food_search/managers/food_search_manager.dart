@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/external_data/external_data.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
-import 'package:foods_app/mockData/fake_data.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 /// Comments
@@ -12,18 +12,12 @@ class FoodSearchManager extends ChangeNotifier {
   final ValueNotifier<List<FoodListItemModel?>> currentResults =
       ValueNotifier<List<FoodListItemModel?>>([]);
 
-  // final ValueNotifier<String> searchTerm = ValueNotifier<String>('');
-
-  Future<List<FoodListItemModel>> getMockData() async =>
-      await fakeFoodsListItems();
-
   Future<void> queryFoods({required String searchTerm}) async {
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
     final List<FoodModel?> foods = await db.queryFoods(searchTerm: searchTerm);
 
-    // print('queryFoods: $foods');
     if (foods.isNotEmpty) {
       currentResults.value = foods
           .map((food) =>
