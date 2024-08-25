@@ -1,1 +1,0 @@
-enum DisplayMode { light, dark }

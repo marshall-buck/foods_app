@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/common/service_locator.dart';
+import 'package:foods_app/common/common.dart';
+
 import 'package:foods_app/external_data/external_data.dart';
 import 'package:foods_app/features/food_search/managers/food_search_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,11 +14,11 @@ void main() {
   setUp(() async {
     instance = GetIt.asNewInstance();
 
-    instance!.registerSingletonAsync<UserPreferencesServiceI>(() async {
+    instance!.registerSingletonAsync<UserPreferencesServiceImp>(() async {
       SharedPreferences.setMockInitialValues({'a': 1});
-      final shared = await SharedPreferences.getInstance();
+      final shared = SharedPreferencesAsync();
 
-      final settings = UserPreferencesServiceI(shared);
+      final settings = UserPreferencesServiceImp(shared);
       await settings.init();
       return settings;
     });
@@ -27,7 +28,7 @@ void main() {
       await usdaDB.init();
       return FoodsDBService(usdaDB);
     },
-        instanceName: LocatorName.foodsDBService,
+        instanceName: LocatorName.foodsDBService.name,
         dispose: (x) async => await x.dispose());
 
     instance!.registerSingleton<FoodSearchManager>(FoodSearchManager());
@@ -48,12 +49,12 @@ void main() {
     test(
         'UserPreferencesService singleton should complete and be type UserPreferencesService',
         () async {
-      final prefs = await instance!.getAsync<UserPreferencesServiceI>();
-      expect(prefs, isA<UserPreferencesServiceI>());
+      final prefs = await instance!.getAsync<UserPreferencesServiceImp>();
+      expect(prefs, isA<UserPreferencesServiceImp>());
     });
     test('FoodsDB singleton should complete and be type FoodsDBInterface', () {
       final foodsDB =
-          instance!.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
+          instance!.get<FoodsDB>(instanceName: LocatorName.foodsDBService.name);
 
       expect(foodsDB, isA<FoodsDB>());
     });

@@ -1,19 +1,16 @@
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/external_data/external_data.dart';
-import 'package:foods_app/features/food_search/managers/food_search_manager.dart';
+import 'package:foods_app/features/food_search/food_search.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
 
-class LocatorName {
-  static const String foodsDBService = 'foodsDBService';
-  static const String externalDBService = 'externalDBService';
-}
-
 registerDependencies() {
-  di.registerSingletonAsync<UserPreferencesServiceI>(() async {
+  di.registerSingletonAsync<UserPreferencesServiceImp>(() async {
     final SharedPreferencesAsync shared = SharedPreferencesAsync();
 
-    final settings = UserPreferencesServiceI(shared);
+    final settings = UserPreferencesServiceImp(shared);
     await settings.init();
     return settings;
   });
@@ -24,7 +21,7 @@ registerDependencies() {
     assert(usdaDB.isDataLoaded == true);
     return FoodsDBService(usdaDB);
   },
-      instanceName: LocatorName.foodsDBService,
+      instanceName: LocatorName.foodsDBService.name,
       dispose: (x) async => await x.dispose());
 
   di.registerSingleton<FoodSearchManager>(FoodSearchManager());

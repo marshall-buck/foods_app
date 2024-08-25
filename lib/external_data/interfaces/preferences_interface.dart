@@ -1,21 +1,23 @@
 import 'dart:async';
 
-/// This would be (food id, saved amount)
-typedef SavedFoodRecord = (int, int);
+import 'package:flutter/foundation.dart';
 
-abstract interface class PreferencesService {
-  /// Whether there are saved settings or not?
-  void setHasSettings(bool value);
-  bool getHasSettings();
+abstract interface class PreferencesService<T> {
+  late final T prefProvider;
 
-  /// Color theme.
-  void setColorTheme(String value);
-  String getColorTheme(String value);
-
-  /// A list of Nutrient id's to use to retrieve the amounts to show in autocomplete.
-  void setQuickSearchPrefs(List<String> value);
-  List<String> getQuickSearchPrefs();
-
-  /// Initiate the preferences
   FutureOr<void> init();
+}
+
+abstract interface class ColorModePref<T> {
+  late final String colorModeKey;
+  late final ValueNotifier<T> colorMode;
+  Future<void> setColorMode<K>(K value);
+  Future<K> getColorMode<K>();
+}
+
+abstract interface class QuickSearchPrefs<T> {
+  late final String quickSearchAmountsKey;
+  late final ValueNotifier<T> quickSearchAmounts;
+  Future<void> setQuickSearchAmounts<K>(K value);
+  Future<K> getQuickSearchAmounts<K>();
 }

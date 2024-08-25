@@ -1,6 +1,6 @@
 //GENERATED BARREL FILE
 export 'colors.dart';
-export 'constants.dart';
+export 'magic.dart';
 export 'exceptions.dart';
 
 export 'service_locator.dart';
