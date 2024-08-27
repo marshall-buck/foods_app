@@ -13,8 +13,8 @@ class FoodSearchManager {
       ValueNotifier<List<FoodListItemModel?>>([]);
 
   Future<void> queryFoods({required String searchTerm}) async {
-    final db = await di.getAsync<FoodsDB>(
-        instanceName: LocatorName.foodsDBService.name);
+    final db =
+        await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
     final List<FoodModel?> foods = await db.queryFoods(searchTerm: searchTerm);
 //TODO:Change quick search

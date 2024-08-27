@@ -14,11 +14,11 @@ void main() {
   setUp(() async {
     instance = GetIt.asNewInstance();
 
-    instance!.registerSingletonAsync<UserPreferencesServiceImp>(() async {
+    instance!.registerSingletonAsync<SharedUserPrefsServiceImp>(() async {
       SharedPreferences.setMockInitialValues({'a': 1});
       final shared = SharedPreferencesAsync();
 
-      final settings = UserPreferencesServiceImp(shared);
+      final settings = SharedUserPrefsServiceImp(shared);
       await settings.init();
       return settings;
     });
@@ -28,7 +28,7 @@ void main() {
       await usdaDB.init();
       return FoodsDBService(usdaDB);
     },
-        instanceName: LocatorName.foodsDBService.name,
+        instanceName: LocatorName.foodsDBService,
         dispose: (x) async => await x.dispose());
 
     instance!.registerSingleton<FoodSearchManager>(FoodSearchManager());
@@ -49,12 +49,12 @@ void main() {
     test(
         'UserPreferencesService singleton should complete and be type UserPreferencesService',
         () async {
-      final prefs = await instance!.getAsync<UserPreferencesServiceImp>();
-      expect(prefs, isA<UserPreferencesServiceImp>());
+      final prefs = await instance!.getAsync<SharedUserPrefsServiceImp>();
+      expect(prefs, isA<SharedUserPrefsServiceImp>());
     });
     test('FoodsDB singleton should complete and be type FoodsDBInterface', () {
       final foodsDB =
-          instance!.get<FoodsDB>(instanceName: LocatorName.foodsDBService.name);
+          instance!.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
       expect(foodsDB, isA<FoodsDB>());
     });

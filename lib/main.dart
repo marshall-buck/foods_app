@@ -19,20 +19,7 @@ class MainApp extends StatelessWidget {
         future: di.allReady(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            return MaterialApp(
-              theme: ThemeData.light().copyWith(
-                extensions: <ThemeExtension<dynamic>>[lightColors],
-              ),
-              darkTheme: ThemeData.dark().copyWith(
-                extensions: <ThemeExtension<dynamic>>[darkColors],
-              ),
-              themeMode: ThemeMode.system,
-              home: const Scaffold(
-                body: SafeArea(
-                  child: HomePage(),
-                ),
-              ),
-            );
+            return const SuccessfulLoad();
           } else if (snapshot.hasError) {
             print('Snapshot error from LoadingWidget : ${snapshot.error}');
             print(
@@ -58,7 +45,8 @@ class MainApp extends StatelessWidget {
                   SizedBox(
                     width: 60,
                     height: 60,
-                    child: CircularProgressIndicator.adaptive(),
+                    child:
+                        Material(child: CircularProgressIndicator.adaptive()),
                   ),
                   Text('Awaiting result...')
                 ],
@@ -66,5 +54,29 @@ class MainApp extends StatelessWidget {
             );
           }
         });
+  }
+}
+
+class SuccessfulLoad extends StatelessWidget {
+  const SuccessfulLoad({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.light().copyWith(
+        extensions: <ThemeExtension<dynamic>>[lightColors],
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        extensions: <ThemeExtension<dynamic>>[darkColors],
+      ),
+      themeMode: ThemeMode.system,
+      home: const Scaffold(
+        body: SafeArea(
+          child: HomePage(),
+        ),
+      ),
+    );
   }
 }

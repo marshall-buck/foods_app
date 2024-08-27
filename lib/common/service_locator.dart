@@ -7,10 +7,10 @@ import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
 
 registerDependencies() {
-  di.registerSingletonAsync<UserPreferencesServiceImp>(() async {
+  di.registerSingletonAsync<SharedUserPrefsServiceImp>(() async {
     final SharedPreferencesAsync shared = SharedPreferencesAsync();
 
-    final settings = UserPreferencesServiceImp(shared);
+    final settings = SharedUserPrefsServiceImp(shared);
     await settings.init();
     return settings;
   });
@@ -21,7 +21,7 @@ registerDependencies() {
     assert(usdaDB.isDataLoaded == true);
     return FoodsDBService(usdaDB);
   },
-      instanceName: LocatorName.foodsDBService.name,
+      instanceName: LocatorName.foodsDBService,
       dispose: (x) async => await x.dispose());
 
   di.registerSingleton<FoodSearchManager>(FoodSearchManager());
