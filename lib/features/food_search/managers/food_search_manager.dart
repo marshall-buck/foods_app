@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/external_data/external_data.dart';
+import 'package:foods_app/services/services.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 
 import 'package:watch_it/watch_it.dart';

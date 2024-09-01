@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:foods_app/external_data/interfaces/foods_db_interface.dart';
-import 'package:foods_app/external_data/models/food.dart';
+import 'package:foods_app/services/services.dart';
 
 class ExternalDb implements FoodsDB {
   Future<ExternalDb> init() async {

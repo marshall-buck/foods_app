@@ -1,16 +1,17 @@
-//
-
 import 'dart:async';
 
-import 'package:foods_app/external_data/external_data.dart';
+import 'package:foods_app/services/services.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Implement logic to handle external foods source
 
-/// A service class that interacts with a foods database both local and remote in the future to query food data.
+/// A service class that interacts with a foods database both local and
+/// remote in the future to query food data.
 
 /// This class implements the `FoodsDB` interface and provides methods to query
-/// individual food items and lists of food items from the  database. It also includes a method to dispose of the database connection when it is no longer needed.
+/// individual food items and lists of food items from the  database.
+/// It also includes a method to dispose of the database connection when
+/// it is no longer needed.
 
 class FoodsDBService implements FoodsDB {
   FoodsDBService(this._usdaDB);

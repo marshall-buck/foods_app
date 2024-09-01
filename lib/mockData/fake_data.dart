@@ -1,4 +1,4 @@
-import 'package:foods_app/external_data/external_data.dart';
+import 'package:foods_app/services/services.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 

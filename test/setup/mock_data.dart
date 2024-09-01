@@ -1,4 +1,4 @@
-import 'package:foods_app/external_data/models/food.dart';
+import 'package:foods_app/services/models/food.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 const protein =
