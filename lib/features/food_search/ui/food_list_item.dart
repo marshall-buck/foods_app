@@ -10,16 +10,16 @@ class FoodListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorsExtension.of(context);
+    // final colors = AppColorsExtension.of(context);
 
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
       decoration: BoxDecoration(
-        color: colors.surface,
+        // color: colors.surface,
         border: Border(
             bottom: BorderSide(
           width: 1,
-          color: colors.outlineVariant,
+          // color: colors.outlineVariant,
         )),
       ),
       // color: colors.surface,
@@ -45,11 +45,11 @@ class FoodDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Text(
       food.description,
-      style: AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface),
+      // style: AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface),
     );
   }
 }
@@ -60,7 +60,7 @@ class QuickResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColorsExtension>()!;
+    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,8 +68,8 @@ class QuickResults extends StatelessWidget {
       children: [
         Text(
           quickResultText,
-          style: AppTextStyle.m3BodyMedium
-              .copyWith(color: colors.onSurfaceVariant),
+          // style: AppTextStyle.m3BodyMedium
+          //     .copyWith(color: colors.onSurfaceVariant),
         ),
         IconButton(
           icon: const Icon(Icons.chevron_right),

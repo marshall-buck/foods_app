@@ -425,10 +425,10 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
+      sha256: "801fd0b26f14a4a58ccb09d5892c3fbdeff209594300a542492cf13fba9d247a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   mocktail:
     dependency: "direct main"
     description:
@@ -545,10 +545,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: a7e8467e9181cef109f601e3f65765685786c1a738a83d7fbbde377589c0d974
+      sha256: "480ba4345773f56acda9abf5f50bd966f581dac5d514e5fc4a18c62976bbba7e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -695,7 +695,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "61f062bf62865522d9f7d4021c80acac5d2c33d0"
+      resolved-ref: "30d5cc2b82e0680f576900182d68f1766e80446c"
       url: "https://github.com/marshall-buck/usda_db_package.git"
     source: git
     version: "1.0.0"

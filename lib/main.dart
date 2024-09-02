@@ -18,42 +18,65 @@ class MainApp extends StatelessWidget {
     return FutureBuilder(
         future: di.allReady(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return const SuccessfulLoad();
-          } else if (snapshot.hasError) {
-            print('Snapshot error from LoadingWidget : ${snapshot.error}');
-            print(
-                'Snapshot stacktrace from LoadingWidget: ${snapshot.stackTrace}');
-            return Column(
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  color: Colors.red,
-                  size: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text('Error from LoadingWidget: ${snapshot.error}'),
-                ),
-              ],
-            );
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingScreen();
           } else {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 60,
-                    height: 60,
-                    child:
-                        Material(child: CircularProgressIndicator.adaptive()),
-                  ),
-                  Text('Awaiting result...')
-                ],
-              ),
-            );
+            if (snapshot.error != null) {
+              return ErrorScreen(snapshot: snapshot);
+            } else {
+              return const SuccessfulLoad();
+            }
           }
         });
+  }
+}
+
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({super.key, required this.snapshot});
+  final AsyncSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Column(
+        children: [
+          const Icon(
+            Icons.error_outline,
+            // color: Colors.red,
+            size: 24,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Text('Error from LoadingWidget: ${snapshot.error}'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 60,
+              height: 60,
+              child: CircularProgressIndicator.adaptive(),
+            ),
+            Text('Awaiting result...')
+          ],
+        ),
+      ),
+    );
   }
 }
 

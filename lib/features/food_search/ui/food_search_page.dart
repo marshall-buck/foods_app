@@ -39,36 +39,42 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
-    return Material(
-      child: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              // automaticallyImplyLeading: false,
-              floating: true,
-              title: TextField(
-                controller: _searchTermController,
-                decoration: const InputDecoration(
-                  hintText: 'Search for food...',
-                ),
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            // automaticallyImplyLeading: false,
+            actions: const [FoodResultsCountBadge()],
+            floating: true,
+            title: TextField(
+              controller: _searchTermController,
+              decoration: const InputDecoration(
+                hintText: 'Search for food...',
               ),
             ),
-            ...?widget.additionalSlivers,
-            FoodsList(
-              foodManager: foodManager,
-            ),
-          ],
-        ),
+          ),
+          ...?widget.additionalSlivers,
+          FoodsList(),
+        ],
       ),
     );
   }
 }
 
-class FoodsList extends StatelessWidget {
-  const FoodsList({super.key, required this.foodManager});
+class FoodResultsCountBadge extends WatchingWidget {
+  const FoodResultsCountBadge({super.key});
 
-  final FoodSearchManager foodManager;
+  @override
+  Widget build(BuildContext context) {
+    final count = watchValue((FoodSearchManager m) => m.currentResults);
+    return Badge.count(count: count.length);
+  }
+}
+
+class FoodsList extends StatelessWidget {
+  FoodsList({super.key});
+
+  final foodManager = di.get<FoodSearchManager>();
 
   @override
   Widget build(BuildContext context) {

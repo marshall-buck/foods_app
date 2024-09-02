@@ -9,10 +9,10 @@ import 'package:watch_it/watch_it.dart';
 
 /// Comments
 class FoodSearchManager {
-  final ValueNotifier<List<FoodListItemModel?>> currentResults =
-      ValueNotifier<List<FoodListItemModel?>>([]);
+  final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
 
   Future<void> queryFoods({required String searchTerm}) async {
+    print(searchTerm);
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
