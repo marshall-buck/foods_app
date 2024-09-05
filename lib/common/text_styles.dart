@@ -9,7 +9,7 @@
 /// * [Very Good Flutter Styles](https://www.figma.com/community/plugin/1208619373237156795)
 library;
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 abstract class AppTextStyle {
   /// The name of the package that the text styles are defined in.
@@ -304,3 +304,21 @@ abstract class AppTextStyle {
     package: _fontPackage,
   );
 }
+
+const TextTheme appTextTheme = TextTheme(
+  displayLarge: AppTextStyle.m3DisplayLarge,
+  displayMedium: AppTextStyle.m3DisplayMedium,
+  displaySmall: AppTextStyle.m3DisplaySmall,
+  headlineLarge: AppTextStyle.m3HeadlineLarge,
+  headlineMedium: AppTextStyle.m3HeadlineMedium,
+  headlineSmall: AppTextStyle.m3HeadlineSmall,
+  titleLarge: AppTextStyle.m3TitleLarge,
+  titleMedium: AppTextStyle.m3TitleMedium,
+  titleSmall: AppTextStyle.m3TitleSmall,
+  bodyLarge: AppTextStyle.m3BodyLarge,
+  bodyMedium: AppTextStyle.m3BodyMedium,
+  bodySmall: AppTextStyle.m3BodySmall,
+  labelLarge: AppTextStyle.m3LabelLarge,
+  labelMedium: AppTextStyle.m3LabelMedium,
+  labelSmall: AppTextStyle.m3LabelSmall,
+);

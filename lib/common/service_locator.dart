@@ -7,6 +7,7 @@ import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
 
 registerDependencies() {
+  di.registerSingleton<FoodSearchManager>(FoodSearchManager());
   di.registerSingletonAsync<PreferencesService>(() async {
     final SharedPreferencesAsync shared = SharedPreferencesAsync();
 
@@ -23,6 +24,4 @@ registerDependencies() {
   },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => await x.dispose());
-
-  di.registerSingleton<FoodSearchManager>(FoodSearchManager());
 }

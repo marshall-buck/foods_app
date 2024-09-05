@@ -83,8 +83,12 @@ class FoodsList extends StatelessWidget {
       valueListenable: foodManager.currentResults,
       builder: (BuildContext context, value, Widget? child) {
         if (value.isEmpty) {
-          return const SliverToBoxAdapter(
-            child: Text('No results found.'),
+          return SliverToBoxAdapter(
+            child: Text(
+              'No results found.',
+              style: Theme.of(context).textTheme.titleSmall,
+              textAlign: TextAlign.center,
+            ),
           );
         } else {
           return SliverList(

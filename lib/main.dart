@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/home_page.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 void main() async {
@@ -15,19 +16,28 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: di.allReady(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingScreen();
-          } else {
-            if (snapshot.error != null) {
-              return ErrorScreen(snapshot: snapshot);
-            } else {
-              return const SuccessfulLoad();
-            }
-          }
-        });
+    return MaterialApp(
+        theme: ThemeData.light().copyWith(
+            extensions: <ThemeExtension<dynamic>>[lightColors],
+            textTheme: appTextTheme),
+        darkTheme: ThemeData.dark().copyWith(
+            extensions: <ThemeExtension<dynamic>>[darkColors],
+            textTheme: appTextTheme),
+        themeMode: ThemeMode.system,
+        home: FutureBuilder(
+            future: di.allReady(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const LoadingScreen();
+              } else {
+                if (snapshot.error != null) {
+                  return ErrorScreen(snapshot: snapshot);
+                } else {
+                  return const HomePage();
+                  // return const LoadingScreen();
+                }
+              }
+            }));
   }
 }
 
@@ -37,20 +47,18 @@ class ErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Column(
-        children: [
-          const Icon(
-            Icons.error_outline,
-            // color: Colors.red,
-            size: 24,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Text('Error from LoadingWidget: ${snapshot.error}'),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        const Icon(
+          Icons.error_outline,
+          // color: Colors.red,
+          size: 48,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Text('Error from LoadingWidget: ${snapshot.error}'),
+        ),
+      ],
     );
   }
 }
@@ -62,42 +70,18 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: CircularProgressIndicator.adaptive(),
+    return Container(
+      color: AppColorsExtension.of(context).background,
+      child: Center(
+        child: SizedBox(
+          width: 48,
+          height: 48,
+          child: Transform.scale(
+            scale: 2.0,
+            child: CircularProgressIndicator.adaptive(
+              backgroundColor: AppColorsExtension.of(context).onBackground,
             ),
-            Text('Awaiting result...')
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SuccessfulLoad extends StatelessWidget {
-  const SuccessfulLoad({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.light().copyWith(
-        extensions: <ThemeExtension<dynamic>>[lightColors],
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        extensions: <ThemeExtension<dynamic>>[darkColors],
-      ),
-      themeMode: ThemeMode.system,
-      home: const Scaffold(
-        body: SafeArea(
-          child: HomePage(),
+          ),
         ),
       ),
     );

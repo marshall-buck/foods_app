@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/common.dart';
+
 import 'package:foods_app/features/food_search/food_search.dart';
 
 // TODO: refactor layout of item
@@ -14,7 +14,7 @@ class FoodListItem extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         // color: colors.surface,
         border: Border(
             bottom: BorderSide(
