@@ -20,7 +20,7 @@ class FoodsDBService implements FoodsDB {
   get localDB => _usdaDB;
 
   @override
-  Future<FoodModel?> queryFood({required id}) async {
+  Future<FoodModel?> queryFood({required int id}) async {
     final SrLegacyFoodModel? food = await _usdaDB.queryFood(id: id);
     if (food == null) {
       return null;

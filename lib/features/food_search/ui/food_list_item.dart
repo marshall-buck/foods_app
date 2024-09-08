@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/text_styles.dart';
+import 'package:foods_app/common/theme.dart';
 
 import 'package:foods_app/features/food_search/food_search.dart';
 
@@ -14,12 +16,12 @@ class FoodListItem extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.only(bottom: 4),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         // color: colors.surface,
         border: Border(
             bottom: BorderSide(
           width: 1,
-          // color: colors.outlineVariant,
+          color: AppColorsExtension.of(context).outlineVariant,
         )),
       ),
       // color: colors.surface,
@@ -49,7 +51,8 @@ class FoodDescription extends StatelessWidget {
 
     return Text(
       food.description,
-      // style: AppTextStyle.m3BodyLarge.copyWith(color: colors.onSurface),
+      style: AppTextStyle.m3BodyLarge
+          .copyWith(color: AppColorsExtension.of(context).onBackground),
     );
   }
 }
@@ -60,20 +63,17 @@ class QuickResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
           quickResultText,
-          // style: AppTextStyle.m3BodyMedium
-          //     .copyWith(color: colors.onSurfaceVariant),
+          style: AppTextStyle.m3BodyMedium
+              .copyWith(color: AppColorsExtension.of(context).onSurfaceVariant),
         ),
-        IconButton(
-          icon: const Icon(Icons.chevron_right),
-          onPressed: () {},
+        const Icon(
+          Icons.chevron_right,
         ),
       ],
     );

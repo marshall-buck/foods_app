@@ -24,9 +24,13 @@ class FoodSearchManager {
           .toList();
     }
 
-    print(
-        'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}');
-    print(
-        'FoodSearchManager - currentResults:length: ${currentResults.value.length}');
+    // print(
+    //     'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}');
+    // print(
+    //     'FoodSearchManager - currentResults:length: ${currentResults.value.length}');
+  }
+
+  Future<void> clearSearch() async {
+    currentResults.value = [];
   }
 }
