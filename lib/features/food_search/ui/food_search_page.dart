@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/common/theme.dart';
 
 import 'package:foods_app/features/food_search/food_search.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class FoodSearchPage extends StatefulWidget {
@@ -71,7 +72,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
             pinned: true,
           ),
           ...?widget.additionalSlivers,
-          FoodsList(),
+          const FoodsList(),
         ],
       ),
     );
@@ -85,44 +86,5 @@ class _FoodResultsCountBadge extends WatchingWidget {
   Widget build(BuildContext context) {
     final count = watchValue((FoodSearchManager m) => m.currentResults);
     return Badge.count(count: count.length);
-  }
-}
-
-class FoodsList extends StatelessWidget {
-  FoodsList({super.key});
-
-  final foodManager = di.get<FoodSearchManager>();
-
-  @override
-  Widget build(BuildContext context) {
-    print('FoodsList: building');
-    return ValueListenableBuilder<List<FoodListItemModel?>>(
-      valueListenable: foodManager.currentResults,
-      builder: (BuildContext context, value, Widget? child) {
-        if (value.isEmpty) {
-          return SliverToBoxAdapter(
-            child: Text(
-              'No results found.',
-              style: Theme.of(context).textTheme.titleSmall,
-              textAlign: TextAlign.center,
-            ),
-          );
-        } else {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                print('SliverChildBuilderDelegate: building');
-                final food = value[index];
-
-                final id = food!.id;
-                final key = ValueKey<int>(id);
-                return FoodListItem(key: key, food: food);
-              },
-              childCount: value.length,
-            ),
-          );
-        }
-      },
-    );
   }
 }

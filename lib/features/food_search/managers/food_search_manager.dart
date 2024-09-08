@@ -33,4 +33,8 @@ class FoodSearchManager {
   Future<void> clearSearch() async {
     currentResults.value = [];
   }
+
+  void dispose() {
+    currentResults.dispose();
+  }
 }
