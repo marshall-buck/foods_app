@@ -14,27 +14,29 @@ class FoodListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // final colors = AppColorsExtension.of(context);
 
-    return Container(
-      padding: const EdgeInsets.only(bottom: 4),
-      decoration: BoxDecoration(
+    return GestureDetector(
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 4),
+        decoration: BoxDecoration(
+          // color: colors.surface,
+          border: Border(
+              bottom: BorderSide(
+            width: 1,
+            color: AppColorsExtension.of(context).outlineVariant,
+          )),
+        ),
         // color: colors.surface,
-        border: Border(
-            bottom: BorderSide(
-          width: 1,
-          color: AppColorsExtension.of(context).outlineVariant,
-        )),
-      ),
-      // color: colors.surface,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FoodDescription(food: food),
-          const QuickResults(
-            quickResultText: '200 / 100 / 50 / 25',
-          )
-        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FoodDescription(food: food),
+            const QuickResults(
+              quickResultText: '200 / 100 / 50 / 25',
+            )
+          ],
+        ),
       ),
     );
   }

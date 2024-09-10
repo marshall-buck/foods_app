@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/reusable_text.dart';
 import 'package:foods_app/common/theme.dart';
 
 import 'package:foods_app/features/food_search/food_search.dart';
@@ -16,10 +17,12 @@ class FoodSearchPage extends StatefulWidget {
 
 class _FoodSearchPageState extends State<FoodSearchPage> {
   final foodManager = di.get<FoodSearchManager>();
-  final TextEditingController _controller = TextEditingController();
+  final _childKey = GlobalKey<ReusableTextFieldState>();
 
-  void _onSearchTermChanged() async {
-    final text = _controller.text;
+  final ScrollController _controllerScroll = ScrollController();
+
+  void _onSearchTermChanged(TextChangeNotification notification) async {
+    final text = notification.text;
     print('_onSearchTermChanged: $text');
 
     await foodManager.queryFoods(searchTerm: text);
@@ -27,20 +30,22 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   void _clearSearch() async {
     await foodManager.clearSearch();
-    _controller.clear();
+    _childKey.currentState?.clearSearch();
+  }
+
+  void _onTap() {
+    print(_controllerScroll.initialScrollOffset);
   }
 
   @override
   void initState() {
-    _controller.addListener(_onSearchTermChanged);
+    _controllerScroll.addListener(_onTap);
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_clearSearch);
-    _controller.dispose();
-
+    _childKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -49,6 +54,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     print('_FoodSearchPageState build');
     return Scaffold(
       body: CustomScrollView(
+        controller: _controllerScroll,
         slivers: [
           SliverAppBar(
             surfaceTintColor: AppColorsExtension.of(context).surfaceTint,
@@ -62,12 +68,14 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
               const _FoodResultsCountBadge(),
             ],
             floating: true,
-            title: TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(borderSide: BorderSide.none),
-                hintText: 'Search for food...',
+            title: NotificationListener<TextChangeNotification>(
+              child: ReusableTextField(
+                key: _childKey,
               ),
+              onNotification: (notification) {
+                _onSearchTermChanged(notification);
+                return true;
+              },
             ),
             pinned: true,
           ),

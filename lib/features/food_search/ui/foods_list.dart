@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/food_detail/food_detail.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodsList extends StatelessWidget {
   const FoodsList({super.key});
+
+  void _onTap(BuildContext context, ValueKey<int> id) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => FoodDetail(id: id)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +33,14 @@ class FoodsList extends StatelessWidget {
                 print('SliverChildBuilderDelegate: building');
                 final food = value[index];
 
-                final id = food!.id;
-                final key = ValueKey<int>(id);
-                return FoodListItem(key: key, food: food);
+                final id = ValueKey<int>(food!.id);
+                return GestureDetector(
+                  onTap: () => _onTap(context, id),
+                  child: FoodListItem(
+                    key: id,
+                    food: food,
+                  ),
+                );
               },
               childCount: value.length,
             ),
