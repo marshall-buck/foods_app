@@ -1,6 +1,5 @@
-/* cSpell:disable */
-const String logoString = '''
-<svg viewBox="0 0 342 351" xmlns="http://www.w3.org/2000/svg" >
+<svg viewBox="0 0 342 351" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"
+    stroke-linejoin="round" stroke-miterlimit="2">
     <path
         d="M15.37 163a160.49 160.49 0 01-.028-3.028C15.342 71.814 86.915.241 175.073.241s159.731 71.573 159.731 159.731c0 1.012-.009 2.021-.028 3.028h-11.233c.02-1.007.03-2.016.03-3.028 0-81.959-66.541-148.5-148.5-148.5s-148.5 66.541-148.5 148.5c0 1.012.01 2.021.03 3.028H15.37z"
         fill="#fe8608" />
@@ -26,4 +25,3 @@ const String logoString = '''
         </g>
     </g>
 </svg>
-''';
