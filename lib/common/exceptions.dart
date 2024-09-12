@@ -1,6 +1,6 @@
 class PreferencesNotInitializedException implements Exception {
-  final String message;
   PreferencesNotInitializedException(this.message);
+  final String message;
 
   @override
   String toString() => 'PreferencesNotInitializedException: $message';

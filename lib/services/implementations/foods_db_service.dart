@@ -17,11 +17,11 @@ class FoodsDBService implements FoodsDB {
   FoodsDBService(this._usdaDB);
   final UsdaDB _usdaDB;
 
-  get localDB => _usdaDB;
+  UsdaDB get localDB => _usdaDB;
 
   @override
   Future<FoodModel?> queryFood({required int id}) async {
-    final SrLegacyFoodModel? food = await _usdaDB.queryFood(id: id);
+    final food = await _usdaDB.queryFood(id: id);
     if (food == null) {
       return null;
     }
@@ -30,8 +30,7 @@ class FoodsDBService implements FoodsDB {
 
   @override
   Future<List<FoodModel?>> queryFoods({required String searchTerm}) async {
-    final List<SrLegacyFoodModel?> foods =
-        await _usdaDB.queryFoods(searchString: searchTerm);
+    final foods = await _usdaDB.queryFoods(searchString: searchTerm);
 
     // print('FoodsDBService- queryFoods searchTerm:  $searchTerm');
     // print('FoodsDBService- queryFoods foods:  $foods');
@@ -44,6 +43,9 @@ class FoodsDBService implements FoodsDB {
   @override
   Future<void> dispose() async {
     await _usdaDB.dispose();
-    assert(_usdaDB.isDataLoaded == false);
+    assert(
+      _usdaDB.isDataLoaded == false,
+      'FoodsDBService- dispose assert error',
+    );
   }
 }

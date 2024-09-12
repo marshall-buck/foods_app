@@ -1,11 +1,13 @@
-include: package:flutter_lints/flutter.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
-linter:
-  rules:
-    - prefer_final_locals
+
+
 analyzer:
   errors:
     avoid_print: ignore
-  plugins:
-    - custom_lint
+    flutter_style_todos: ignore
+    public_member_api_docs: ignore
+
+  # plugins:
+  #   - custom_lint
 #TODO: Remove avoid_print

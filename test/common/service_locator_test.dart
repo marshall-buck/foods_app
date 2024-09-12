@@ -1,8 +1,9 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foods_app/common/common.dart';
-
-import 'package:foods_app/services/services.dart';
 import 'package:foods_app/features/food_search/managers/food_search_manager.dart';
+import 'package:foods_app/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
@@ -23,13 +24,15 @@ void main() {
       return settings;
     });
 
-    instance!.registerSingletonAsync<FoodsDB>(() async {
-      final UsdaDB usdaDB = UsdaDB();
-      await usdaDB.init();
-      return FoodsDBService(usdaDB);
-    },
-        instanceName: LocatorName.foodsDBService,
-        dispose: (x) async => await x.dispose());
+    instance!.registerSingletonAsync<FoodsDB>(
+      () async {
+        final usdaDB = UsdaDB();
+        await usdaDB.init();
+        return FoodsDBService(usdaDB);
+      },
+      instanceName: LocatorName.foodsDBService,
+      dispose: (x) async => x.dispose(),
+    );
 
     instance!.registerSingleton<FoodSearchManager>(FoodSearchManager());
 

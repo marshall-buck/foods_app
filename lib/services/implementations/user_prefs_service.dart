@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,16 +14,15 @@ class _PreferenceKeys {
 
 class SharedUserPrefsServiceImp
     implements PreferencesService<SharedPreferencesAsync> {
+  SharedUserPrefsServiceImp(this.prefProvider);
   @override
   late final SharedPreferencesAsync prefProvider;
-
-  SharedUserPrefsServiceImp(this.prefProvider);
 
   static const List<String> defaultQuickSearchValue = [
     '1003',
     '1004',
     '1005',
-    '1008'
+    '1008',
   ];
 
   @override
@@ -46,12 +46,15 @@ class SharedUserPrefsServiceImp
   }
 
   @override
-  Future<void> setDisplayMode(value) async {
+  Future<void> setDisplayMode(String value) async {
     try {
       await prefProvider.setString(_PreferenceKeys.displayMode, value);
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e);
+      }
     }
+    if (kDebugMode) {}
   }
 
   @override
@@ -69,9 +72,13 @@ class SharedUserPrefsServiceImp
   Future<void> setQuickSearchAmounts(List<String> value) async {
     try {
       await prefProvider.setStringList(
-          _PreferenceKeys.quickSearchAmounts, value);
+        _PreferenceKeys.quickSearchAmounts,
+        value,
+      );
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -91,7 +98,9 @@ class SharedUserPrefsServiceImp
     try {
       await prefProvider.setStringList(_PreferenceKeys.savedFoods, value);
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }

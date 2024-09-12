@@ -3,22 +3,27 @@ import 'package:foods_app/services/services.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 class FoodModel extends Equatable {
-  const FoodModel(
-      {required this.id, required this.description, required this.nutrients});
-  final int id;
-  final String description;
-  final List<Nutrient> nutrients;
+  const FoodModel({
+    required this.id,
+    required this.description,
+    required this.nutrients,
+  });
 
-  static FoodModel fromUsdaDB(SrLegacyFoodModel food) {
-    // if (food == null) return;
+  factory FoodModel.fromUsdaDB(SrLegacyFoodModel food) {
+    // if (food == null) reNutrient.fromUsdaDB
 
-    final List<Nutrient> nutrients =
-        food.nutrients.map((e) => Nutrient.fromUsdaDB(e)).toList();
+    final nutrients = food.nutrients.map(Nutrient.fromUsdaDB).toList();
     return FoodModel(
-        id: food.id, description: food.description, nutrients: nutrients);
+      id: food.id,
+      description: food.description,
+      nutrients: nutrients,
+    );
   }
 
   factory FoodModel.fromExternalDB() => throw UnimplementedError();
+  final int id;
+  final String description;
+  final List<Nutrient> nutrients;
 
   @override
   List<Object?> get props => [id, description, nutrients];

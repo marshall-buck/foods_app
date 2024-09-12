@@ -6,25 +6,28 @@ import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
 
 void registerDependencies() {
-  di.registerSingleton<FoodSearchManager>(FoodSearchManager());
+  di
+    ..registerSingleton<FoodSearchManager>(FoodSearchManager())
 
-  di.registerSingletonAsync<PreferencesService>(
-    () async {
-      final SharedPreferencesAsync shared = SharedPreferencesAsync();
+    // ignore: strict_raw_type
+    ..registerSingletonAsync<PreferencesService>(
+      () async {
+        final shared = SharedPreferencesAsync();
 
-      final settings = SharedUserPrefsServiceImp(shared);
-      await settings.init();
-      return settings;
-    },
-    instanceName: LocatorName.sharedPrefsService,
-  );
-
-  di.registerSingletonAsync<FoodsDB>(() async {
-    final UsdaDB usdaDB = UsdaDB();
-    await usdaDB.init();
-    assert(usdaDB.isDataLoaded == true);
-    return FoodsDBService(usdaDB);
-  },
+        final settings = SharedUserPrefsServiceImp(shared);
+        await settings.init();
+        return settings;
+      },
+      instanceName: LocatorName.sharedPrefsService,
+    )
+    ..registerSingletonAsync<FoodsDB>(
+      () async {
+        final usdaDB = UsdaDB();
+        await usdaDB.init();
+        assert(usdaDB.isDataLoaded == true, 'usdaDB is not loaded');
+        return FoodsDBService(usdaDB);
+      },
       instanceName: LocatorName.foodsDBService,
-      dispose: (x) async => await x.dispose());
+      dispose: (x) async => x.dispose(),
+    );
 }

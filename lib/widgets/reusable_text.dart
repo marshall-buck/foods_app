@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReusableTextField extends StatefulWidget {
-  const ReusableTextField({Key? key}) : super(key: key);
+  const ReusableTextField({super.key});
 
   @override
   State<ReusableTextField> createState() => ReusableTextFieldState();
@@ -19,8 +19,9 @@ class ReusableTextFieldState extends State<ReusableTextField> {
 
   @override
   void dispose() {
-    _controller.removeListener(_onTextChanged);
-    _controller.dispose();
+    _controller
+      ..removeListener(_onTextChanged)
+      ..dispose();
     super.dispose();
     print('dispose called');
   }
@@ -29,7 +30,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
     TextChangeNotification(_controller.text).dispatch(context);
   }
 
-  void clearSearch() async {
+  void clearSearch() {
     print('ClearSearch called');
     _controller.clear();
   }
@@ -37,7 +38,6 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      // key: _key,
       controller: _controller,
       decoration: const InputDecoration(
         border: UnderlineInputBorder(borderSide: BorderSide.none),
@@ -48,17 +48,6 @@ class ReusableTextFieldState extends State<ReusableTextField> {
 }
 
 class TextChangeNotification extends Notification {
-  final String text;
-
   TextChangeNotification(this.text);
+  final String text;
 }
-
-
-// NotificationListener<TextChangeNotification>(
-//      onNotification: (notification) {
-//        // Handle the updated text here
-//        print("New search term: ${notification.text}");
-//        return true;
-//      },
-//      child: ReusableTextField(),
-//    )

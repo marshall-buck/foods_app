@@ -8,7 +8,9 @@ class FoodsList extends StatelessWidget {
 
   void _onTap(BuildContext context, ValueKey<int> id) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FoodDetail(id: id)));
+      context,
+      MaterialPageRoute<FoodDetail>(builder: (context) => FoodDetail(id: id)),
+    );
   }
 
   @override

@@ -20,10 +20,10 @@ class FoodListItem extends StatelessWidget {
         decoration: BoxDecoration(
           // color: colors.surface,
           border: Border(
-              bottom: BorderSide(
-            width: 1,
-            color: AppColorsExtension.of(context).outlineVariant,
-          )),
+            bottom: BorderSide(
+              color: AppColorsExtension.of(context).outlineVariant,
+            ),
+          ),
         ),
         // color: colors.surface,
         child: Column(
@@ -34,7 +34,7 @@ class FoodListItem extends StatelessWidget {
             FoodDescription(food: food),
             const QuickResults(
               quickResultText: '200 / 100 / 50 / 25',
-            )
+            ),
           ],
         ),
       ),
@@ -43,7 +43,7 @@ class FoodListItem extends StatelessWidget {
 }
 
 class FoodDescription extends StatelessWidget {
-  const FoodDescription({super.key, required this.food});
+  const FoodDescription({required this.food, super.key});
 
   final FoodListItemModel food;
 
@@ -60,7 +60,7 @@ class FoodDescription extends StatelessWidget {
 }
 
 class QuickResults extends StatelessWidget {
-  const QuickResults({super.key, required this.quickResultText});
+  const QuickResults({required this.quickResultText, super.key});
   final String quickResultText;
 
   @override

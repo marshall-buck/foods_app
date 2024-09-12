@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/services/services.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
-
+import 'package:foods_app/services/services.dart';
 import 'package:watch_it/watch_it.dart';
 
 /// Comments
@@ -16,7 +15,7 @@ class FoodSearchManager {
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
-    final List<FoodModel?> foods = await db.queryFoods(searchTerm: searchTerm);
+    final foods = await db.queryFoods(searchTerm: searchTerm);
 //TODO:Change quick search
     if (foods.isNotEmpty) {
       currentResults.value = foods
@@ -25,9 +24,11 @@ class FoodSearchManager {
     }
 
     // print(
-    //     'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}');
+    //     'FoodSearchManager - currentResults:hashCode:
+    //                          ${currentResults.value.hashCode}');
     // print(
-    //     'FoodSearchManager - currentResults:length: ${currentResults.value.length}');
+    //     'FoodSearchManager - currentResults:length:
+    //                                  ${currentResults.value.length}');
   }
 
   Future<void> clearSearch() async {
