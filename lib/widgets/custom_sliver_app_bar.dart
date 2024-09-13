@@ -3,40 +3,73 @@ import 'package:foods_app/common/theme.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:foods_app/widgets/reusable_text.dart';
 
+/// A custom [SliverAppBar] that can display either a [titleString] or a
+/// [ReusableTextField] for searching, in the title property
+/// of the [SliverAppBar].
+///
+/// This widget enforces that either a [titleString] is provided, or both
+/// [onClearSearch] and [textFieldKey] are provided. Providing a [titleString]
+/// will display the title in the app bar. Otherwise, a [ReusableTextField]
+/// will be displayed, along with a clear button and a  [FoodResultsCountBadge].
 class CustomSliverAppBar extends StatelessWidget {
+  /// Creates a [CustomSliverAppBar].
+  ///
+  /// Provide either a [titleString] or [textFieldKey] and [onClearSearch].
   const CustomSliverAppBar({
-    required this.textFieldKey,
-    required this.onClearSearch,
+    this.onClearSearch,
+    this.textFieldKey,
+    this.titleString,
     super.key,
-  });
-  final GlobalKey<ReusableTextFieldState> textFieldKey;
-  final VoidCallback onClearSearch;
+  }) : assert(
+          (titleString != null &&
+                  onClearSearch == null &&
+                  textFieldKey == null) ||
+              (titleString == null &&
+                  onClearSearch != null &&
+                  textFieldKey != null),
+          '''
+                Either titleString must be provided, or both onClearSearch and
+                  textFieldKey must be provided.
+          ''',
+        );
+
+  /// The key of the [ReusableTextField] used for searching.
+  ///
+  /// This is only used if no [titleString] is provided.
+  final GlobalKey<ReusableTextFieldState>? textFieldKey;
+
+  /// A callback that is called when the clear button is pressed.
+  ///
+  /// This is only used if no [titleString] is provided.
+  final VoidCallback? onClearSearch;
+
+  /// The title to display in the app bar.
+  ///
+  /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
+  final String? titleString;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       surfaceTintColor: AppColorsExtension.of(context).surfaceTint,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: IconButton(
-            onPressed: onClearSearch,
-            icon: const Icon(Icons.clear_outlined),
-          ),
-        ),
-        const FoodResultsCountBadge(),
-      ],
+      actions: titleString == null
+          ? [
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: IconButton(
+                  onPressed: onClearSearch,
+                  icon: const Icon(Icons.clear_outlined),
+                ),
+              ),
+              const FoodResultsCountBadge(),
+            ]
+          : null,
       floating: true,
-      title: NotificationListener<TextChangeNotification>(
-        child: ReusableTextField(
-          key: textFieldKey,
-        ),
-        onNotification: (notification) {
-          // You'll need to pass this notification up to FoodSearchPage
-          // You can use a callback or other state management techniques
-          return true;
-        },
-      ),
+      title: titleString != null
+          ? Text(titleString!)
+          : ReusableTextField(
+              key: textFieldKey,
+            ),
       pinned: true,
     );
   }

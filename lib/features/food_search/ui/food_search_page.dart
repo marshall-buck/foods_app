@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
-import 'package:foods_app/widgets/custom_sliver_app_bar.dart';
+import 'package:foods_app/widgets/base_page.dart';
+
 import 'package:foods_app/widgets/reusable_text.dart';
 import 'package:watch_it/watch_it.dart';
 
@@ -13,17 +14,22 @@ class FoodSearchPage extends StatefulWidget {
 
 class _FoodSearchPageState extends State<FoodSearchPage> {
   final foodManager = di.get<FoodSearchManager>();
-  final _childKey = GlobalKey<ReusableTextFieldState>();
+  final _textFieldKey = GlobalKey<ReusableTextFieldState>();
 
   final ScrollController _controllerScroll = ScrollController();
 
   Future<void> _clearSearch() async {
     await foodManager.clearSearch();
-    _childKey.currentState?.clearSearch();
+    _textFieldKey.currentState?.clearSearch();
   }
 
   void _onTap() {
     print(_controllerScroll.initialScrollOffset);
+  }
+
+  Future<void> _queryFoods(String searchTerm) async {
+    await foodManager.queryFoods(searchTerm: searchTerm);
+    print(searchTerm);
   }
 
   @override
@@ -34,24 +40,41 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   @override
   void dispose() {
-    _childKey.currentState?.dispose();
+    _textFieldKey.currentState?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     print('_FoodSearchPageState build');
-    return Scaffold(
-      body: CustomScrollView(
-        controller: _controllerScroll,
-        slivers: [
-          CustomSliverAppBar(
-            textFieldKey: _childKey,
-            onClearSearch: _clearSearch,
-          ),
-          const FoodsList(),
-        ],
+    return NotificationListener<ReusableTextFieldNotification>(
+      onNotification: (notification) {
+        _queryFoods(notification.text);
+        return true;
+      },
+      child: BasePage(
+        scrollController: _controllerScroll,
+        slivers: const [FoodsList()],
+        textFieldKey: _textFieldKey,
+        onClearSearch: _clearSearch,
       ),
     );
   }
 }
+
+// CustomScrollView(
+//         controller: _controllerScroll,
+//         slivers: [
+//           CustomSliverAppBar(
+//             // textFieldKey: _childKey,
+//             onClearSearch: _clearSearch,
+//           ),
+//           NotificationListener<ReusableTextFieldNotification>(
+//             onNotification: (notification) {
+//               _queryFoods(notification.text);
+//               return true;
+//             },
+//             child: const FoodsList(),
+//           ),
+//         ],
+//       ),

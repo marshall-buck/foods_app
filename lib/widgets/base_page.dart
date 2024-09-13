@@ -3,22 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
 class BasePage extends StatelessWidget {
-  // Optional title for the app bar
-
-  const BasePage({required this.slivers, super.key, this.title});
+  const BasePage({
+    required this.slivers,
+    super.key,
+    this.title,
+    this.onClearSearch,
+    this.textFieldKey,
+    this.scrollController,
+  });
   final List<Widget> slivers;
   final String? title;
+  final GlobalKey<ReusableTextFieldState>? textFieldKey;
+  final VoidCallback? onClearSearch;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
-    // final foodManager = di.get<FoodSearchManager>();
-
     return Scaffold(
       body: CustomScrollView(
+        controller: scrollController,
         slivers: [
           CustomSliverAppBar(
-            onClearSearch: () {},
-            textFieldKey: GlobalKey<ReusableTextFieldState>(),
+            titleString: title,
+            onClearSearch: onClearSearch,
+            textFieldKey: textFieldKey,
           ),
           ...slivers,
         ],

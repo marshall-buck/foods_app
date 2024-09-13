@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -23,12 +25,12 @@ class FoodSearchManager {
           .toList();
     }
 
-    // print(
-    //     'FoodSearchManager - currentResults:hashCode:
-    //                          ${currentResults.value.hashCode}');
-    // print(
-    //     'FoodSearchManager - currentResults:length:
-    //                                  ${currentResults.value.length}');
+    print(
+      'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}',
+    );
+    print(
+      'FoodSearchManager - currentResults:length: ${currentResults.value.length}',
+    );
   }
 
   Future<void> clearSearch() async {

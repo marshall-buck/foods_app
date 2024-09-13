@@ -27,7 +27,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   }
 
   void _onTextChanged() {
-    TextChangeNotification(_controller.text).dispatch(context);
+    ReusableTextFieldNotification(_controller.text).dispatch(context);
   }
 
   void clearSearch() {
@@ -47,7 +47,10 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   }
 }
 
-class TextChangeNotification extends Notification {
-  TextChangeNotification(this.text);
+/// A notification that is dispatched when the text in a [ReusableTextField]
+/// changes.
+class ReusableTextFieldNotification extends Notification {
+  ReusableTextFieldNotification(this.text);
+
   final String text;
 }
