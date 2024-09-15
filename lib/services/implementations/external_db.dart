@@ -17,7 +17,6 @@ class ExternalDb implements FoodsDB {
 
   @override
   Future<void> dispose() {
-    // TODO: implement dispose
     throw UnimplementedError();
   }
 }

@@ -17,7 +17,7 @@ class FoodSearchManager {
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
     final foods = await db.queryFoods(searchTerm: searchTerm);
-//TODO:Change quick search
+
     if (foods.isNotEmpty) {
       currentResults.value = foods
           .map((food) => FoodListItemModel.fromFoodModel(food!, const ['1003']))

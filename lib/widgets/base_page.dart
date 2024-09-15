@@ -23,10 +23,13 @@ class BasePage extends StatelessWidget {
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
-          CustomSliverAppBar(
-            titleString: title,
-            onClearSearch: onClearSearch,
-            textFieldKey: textFieldKey,
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 4),
+            sliver: CustomSliverAppBar(
+              titleString: title,
+              onClearSearch: onClearSearch,
+              textFieldKey: textFieldKey,
+            ),
           ),
           ...slivers,
         ],

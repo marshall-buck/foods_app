@@ -4,7 +4,6 @@ import 'package:foods_app/common/theme.dart';
 
 import 'package:foods_app/features/food_search/food_search.dart';
 
-// TODO: refactor layout of item
 class FoodListItem extends StatelessWidget {
   const FoodListItem({required super.key, required this.food});
 
@@ -12,31 +11,39 @@ class FoodListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final colors = AppColorsExtension.of(context);
-
-    return GestureDetector(
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 4),
-        decoration: BoxDecoration(
-          // color: colors.surface,
-          border: Border(
-            bottom: BorderSide(
-              color: AppColorsExtension.of(context).outlineVariant,
-            ),
+    return Container(
+      padding: const EdgeInsets.only(left: 8, bottom: 4),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: AppColorsExtension.of(context).outlineVariant,
           ),
         ),
-        // color: colors.surface,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FoodDescription(food: food),
-            const QuickResults(
-              quickResultText: '200 / 100 / 50 / 25',
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FoodDescription(food: food),
+                const QuickResults(
+                  quickResultText: '200 / 100 / 50 / 25',
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            width: 48,
+            child: Column(
+              children: [
+                Icon(
+                  Icons.chevron_right,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -49,8 +56,6 @@ class FoodDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final colors = Theme.of(context).extension<AppColorsExtension>()!;
-
     return Text(
       food.description,
       style: AppTextStyle.m3BodyLarge
@@ -66,16 +71,11 @@ class QuickResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
           quickResultText,
           style: AppTextStyle.m3BodyMedium
               .copyWith(color: AppColorsExtension.of(context).onSurfaceVariant),
-        ),
-        const Icon(
-          Icons.chevron_right,
         ),
       ],
     );
