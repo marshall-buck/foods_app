@@ -10,8 +10,6 @@ class FoodModel extends Equatable {
   });
 
   factory FoodModel.fromUsdaDB(SrLegacyFoodModel food) {
-    // if (food == null) reNutrient.fromUsdaDB
-
     final nutrients = food.nutrients.map(Nutrient.fromUsdaDB).toList();
     return FoodModel(
       id: food.id,
@@ -20,7 +18,7 @@ class FoodModel extends Equatable {
     );
   }
 
-  factory FoodModel.fromExternalDB() => throw UnimplementedError();
+  // factory FoodModel.fromExternalDB() => throw UnimplementedError();
   final int id;
   final String description;
   final List<Nutrient> nutrients;

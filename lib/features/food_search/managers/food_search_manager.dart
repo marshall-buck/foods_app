@@ -8,7 +8,6 @@ import 'package:foods_app/features/food_search/food_search.dart';
 import 'package:foods_app/services/services.dart';
 import 'package:watch_it/watch_it.dart';
 
-/// Comments
 class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
 
@@ -25,12 +24,12 @@ class FoodSearchManager {
           .toList();
     }
 
-    print(
-      'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}',
-    );
-    print(
-      'FoodSearchManager - currentResults:length: ${currentResults.value.length}',
-    );
+    // print(
+    //   'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}',
+    // );
+    // print(
+    //   'FoodSearchManager - currentResults:length: ${currentResults.value.length}',
+    // );
   }
 
   Future<void> clearSearch() async {

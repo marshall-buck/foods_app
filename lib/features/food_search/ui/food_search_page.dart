@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/features/food_search/food_search.dart';
-import 'package:foods_app/widgets/base_page.dart';
+import 'package:foods_app/widgets/widgets.dart';
 
-import 'package:foods_app/widgets/reusable_text.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodSearchPage extends StatefulWidget {
