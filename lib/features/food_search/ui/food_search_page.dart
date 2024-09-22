@@ -22,13 +22,10 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     _textFieldKey.currentState?.clearSearch();
   }
 
-  void _onTap() {
-    print(_controllerScroll.initialScrollOffset);
-  }
+  void _onTap() {}
 
   Future<void> _queryFoods(String searchTerm) async {
     await foodManager.queryFoods(searchTerm: searchTerm);
-    print(searchTerm);
   }
 
   @override
@@ -45,7 +42,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('_FoodSearchPageState build');
+    // print('_FoodSearchPageState build');
     return NotificationListener<ReusableTextFieldNotification>(
       onNotification: (notification) {
         _queryFoods(notification.text);

@@ -57,7 +57,7 @@ class FoodListItemModel extends Equatable {
       }
     }
 
-    return matches;
+    return matches.reversed.toList();
   }
 
   @override

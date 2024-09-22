@@ -17,7 +17,7 @@ class FoodsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final foodManager = di.get<FoodSearchManager>();
-    print('FoodsList: building');
+    // print('FoodsList: building');
     return ValueListenableBuilder<List<FoodListItemModel?>>(
       valueListenable: foodManager.currentResults,
       builder: (BuildContext context, value, Widget? child) {
@@ -33,7 +33,7 @@ class FoodsList extends StatelessWidget {
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                print('SliverChildBuilderDelegate: building');
+                // print('SliverChildBuilderDelegate: building');
                 final food = value[index];
 
                 final id = ValueKey<int>(food!.id);

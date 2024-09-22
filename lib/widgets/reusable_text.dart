@@ -23,7 +23,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
       ..removeListener(_onTextChanged)
       ..dispose();
     super.dispose();
-    print('dispose called');
+    // print('dispose called');
   }
 
   void _onTextChanged() {
@@ -31,7 +31,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   }
 
   void clearSearch() {
-    print('ClearSearch called');
+    // print('ClearSearch called');
     _controller.clear();
   }
 

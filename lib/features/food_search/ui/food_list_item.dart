@@ -27,8 +27,8 @@ class FoodListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FoodDescription(food: food),
-                const QuickResults(
-                  quickResultsList: ['100', '200', '300', '400'],
+                QuickResults(
+                  quickResultsList: food.quickResultsList,
                 ),
               ],
             ),
@@ -71,13 +71,17 @@ class QuickResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
-        Text(
-          quickResultsList.toString(),
-          style: AppTextStyle.m3BodyMedium
-              .copyWith(color: AppColorsExtension.of(context).onSurfaceVariant),
-        ),
-      ],
+      children: quickResultsList.map((quickResult) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: Text(
+            quickResult,
+            style: AppTextStyle.m3BodyMedium.copyWith(
+              color: AppColorsExtension.of(context).onSurfaceVariant,
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

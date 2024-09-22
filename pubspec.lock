@@ -655,7 +655,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3e18a0410a31e987e8e4a1d561410e7743dd992e"
+      resolved-ref: d3f060767798578024201da26b7cdc6c51cd1d7f
       url: "https://github.com/marshall-buck/usda_db_package.git"
     source: git
     version: "1.0.0"
