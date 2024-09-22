@@ -2,8 +2,7 @@
 export 'managers/food_search_manager.dart';
 
 //Models
-export 'models/food_list_item.dart';
-export 'models/quick_search.dart';
+export 'models/food_list_item_model.dart';
 
 //Ui
 export 'ui/food_list_item.dart';

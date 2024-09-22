@@ -249,18 +249,18 @@ packages:
     dependency: transitive
     description:
       name: functional_listener
-      sha256: "026d1bd4f66367f11d9ec9f1f1ddb42b89e4484b356972c76d983266cf82f33f"
+      sha256: ee8ffc29b2448981d96addf44ac9b4af2ba4ca2627979e77d3e6fe59b967ca4f
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "3.0.0"
   get_it:
     dependency: transitive
     description:
       name: get_it
-      sha256: d85128a5dae4ea777324730dc65edd9c9f43155c109d5cc0a69cab74139fbac1
+      sha256: ff97e5e7b2e82e63c82f5658c6ba2605ea831f0f7489b0d2fb255d817ec4eb5e
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.0"
+    version: "8.0.0"
   glob:
     dependency: transitive
     description:
@@ -655,7 +655,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "652bde9e2bdaee5075f82ac6ac018fd226308abe"
+      resolved-ref: "3e18a0410a31e987e8e4a1d561410e7743dd992e"
       url: "https://github.com/marshall-buck/usda_db_package.git"
     source: git
     version: "1.0.0"
@@ -711,10 +711,10 @@ packages:
     dependency: "direct main"
     description:
       name: watch_it
-      sha256: a01a9e8292c040de82670f28f8a7d35315115a22f3674d2c4a8fd811fd1ac0ab
+      sha256: a45ea7d5e841e96f904896f4783cc1820257c591f130d1513e89eaceaa528a28
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.5.0"
   watcher:
     dependency: transitive
     description:

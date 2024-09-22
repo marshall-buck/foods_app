@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -12,24 +10,20 @@ class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
 
   Future<void> queryFoods({required String searchTerm}) async {
-    print(searchTerm);
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
     final foods = await db.queryFoods(searchTerm: searchTerm);
 
     if (foods.isNotEmpty) {
-      currentResults.value = foods
-          .map((food) => FoodListItemModel.fromFoodModel(food!, const ['1003']))
-          .toList();
+      final newItems = <FoodListItemModel?>[];
+      for (final food in foods) {
+        newItems.add(await FoodListItemModel.fromFoodDTO(food!));
+      }
+      currentResults.value = newItems;
+    } else {
+      currentResults.value = [];
     }
-
-    // print(
-    //   'FoodSearchManager - currentResults:hashCode: ${currentResults.value.hashCode}',
-    // );
-    // print(
-    //   'FoodSearchManager - currentResults:length: ${currentResults.value.length}',
-    // );
   }
 
   Future<void> clearSearch() async {

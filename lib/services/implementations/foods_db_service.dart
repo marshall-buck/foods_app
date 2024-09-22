@@ -20,16 +20,16 @@ class FoodsDBService implements FoodsDB {
   UsdaDB get localDB => _usdaDB;
 
   @override
-  Future<FoodModel?> queryFood({required int id}) async {
+  Future<FoodDTO?> queryFood({required int id}) async {
     final food = await _usdaDB.queryFood(id: id);
     if (food == null) {
       return null;
     }
-    return FoodModel.fromUsdaDB(food);
+    return FoodDTO.fromUsdaDB(food);
   }
 
   @override
-  Future<List<FoodModel?>> queryFoods({required String searchTerm}) async {
+  Future<List<FoodDTO?>> queryFoods({required String searchTerm}) async {
     final foods = await _usdaDB.queryFoods(searchString: searchTerm);
 
     // print('FoodsDBService- queryFoods searchTerm:  $searchTerm');
@@ -37,7 +37,7 @@ class FoodsDBService implements FoodsDB {
 
     return foods.isEmpty
         ? []
-        : foods.map((food) => FoodModel.fromUsdaDB(food!)).toList();
+        : foods.map((food) => FoodDTO.fromUsdaDB(food!)).toList();
   }
 
   @override

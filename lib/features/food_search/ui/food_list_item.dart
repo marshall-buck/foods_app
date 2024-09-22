@@ -28,7 +28,7 @@ class FoodListItem extends StatelessWidget {
               children: [
                 FoodDescription(food: food),
                 const QuickResults(
-                  quickResultText: '200 / 100 / 50 / 25',
+                  quickResultsList: ['100', '200', '300', '400'],
                 ),
               ],
             ),
@@ -65,15 +65,15 @@ class FoodDescription extends StatelessWidget {
 }
 
 class QuickResults extends StatelessWidget {
-  const QuickResults({required this.quickResultText, super.key});
-  final String quickResultText;
+  const QuickResults({required this.quickResultsList, super.key});
+  final List<String> quickResultsList;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
-          quickResultText,
+          quickResultsList.toString(),
           style: AppTextStyle.m3BodyMedium
               .copyWith(color: AppColorsExtension.of(context).onSurfaceVariant),
         ),

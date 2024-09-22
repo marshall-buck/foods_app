@@ -9,10 +9,10 @@ class ExternalDb implements FoodsDB {
   }
 
   @override
-  Future<FoodModel?> queryFood({required int id}) => throw UnimplementedError();
+  Future<FoodDTO?> queryFood({required int id}) => throw UnimplementedError();
 
   @override
-  Future<List<FoodModel?>> queryFoods({required String searchTerm}) =>
+  Future<List<FoodDTO?>> queryFoods({required String searchTerm}) =>
       throw UnimplementedError();
 
   @override

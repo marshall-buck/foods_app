@@ -2,20 +2,30 @@ import 'package:equatable/equatable.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
 
-class Nutrient extends Equatable {
-  const Nutrient({
+class NutrientDTO extends Equatable {
+  const NutrientDTO({
     required this.id,
     required this.name,
     required this.amount,
     required this.unit,
   });
 
-  factory Nutrient.fromUsdaDB(SrLegacyNutrientModel nutrient) {
-    return Nutrient(
+  factory NutrientDTO.fromUsdaDB(SrLegacyNutrientModel nutrient) {
+    return NutrientDTO(
       id: nutrient.id,
       name: nutrient.name,
       amount: nutrient.amount,
       unit: nutrient.unit,
+    );
+  }
+  factory NutrientDTO.fromMapEntry(MapEntry<int, num> entry) {
+    final id = entry.key;
+    final amount = entry.value;
+    return NutrientDTO(
+      id: id,
+      name: originalNutrientTableEdit[id]?['name'] ?? '',
+      amount: amount,
+      unit: originalNutrientTableEdit[id]?['unit'] ?? '',
     );
   }
 

@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 
-import 'package:flutter/foundation.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,8 +8,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class _PreferenceKeys {
   static const String displayMode = 'displayMode';
   static const String quickSearchAmounts = 'quickSearchAmounts';
-  // ignore: unused_field
+
   static const String savedFoods = 'savedFoods';
+}
+
+class _DefaultPreferences {
+  static const List<String> defaultQuickSearchValue = [
+    '1003',
+    '1004',
+    '1005',
+    '1008',
+  ];
+
+  static const defaultDisplayMode = DisplayMode.system;
 }
 
 class SharedUserPrefsServiceImp
@@ -18,19 +29,25 @@ class SharedUserPrefsServiceImp
   @override
   late final SharedPreferencesAsync prefProvider;
 
-  static const List<String> defaultQuickSearchValue = [
-    '1003',
-    '1004',
-    '1005',
-    '1008',
-  ];
-
   @override
   Future<void> init() async {
-    final keys = await prefProvider.getKeys();
-    if (keys.isEmpty) {
-      await setDisplayMode(DisplayMode.system);
-      await setQuickSearchAmounts(defaultQuickSearchValue);
+    try {
+      final keys = await prefProvider.getKeys();
+      if (keys.isEmpty) {
+        await setDisplayMode(DisplayMode.system);
+        await setQuickSearchAmounts(
+          _DefaultPreferences.defaultQuickSearchValue,
+        );
+        await setSavedFoods([]);
+      }
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'init()',
+      );
     }
   }
 
@@ -39,9 +56,17 @@ class SharedUserPrefsServiceImp
     try {
       final colorMode =
           await prefProvider.getString(_PreferenceKeys.displayMode);
-      return colorMode ?? DisplayMode.system;
-    } catch (e) {
-      return DisplayMode.system;
+
+      return colorMode ?? _DefaultPreferences.defaultDisplayMode;
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'getDisplayMode()',
+      );
+      return _DefaultPreferences.defaultDisplayMode;
     }
   }
 
@@ -49,12 +74,15 @@ class SharedUserPrefsServiceImp
   Future<void> setDisplayMode(String value) async {
     try {
       await prefProvider.setString(_PreferenceKeys.displayMode, value);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'setDisplayMode()',
+      );
     }
-    if (kDebugMode) {}
   }
 
   @override
@@ -62,9 +90,16 @@ class SharedUserPrefsServiceImp
     try {
       final quickSearchPrefs =
           await prefProvider.getStringList(_PreferenceKeys.quickSearchAmounts);
-      return quickSearchPrefs ?? defaultQuickSearchValue;
-    } catch (e) {
-      return defaultQuickSearchValue;
+      return quickSearchPrefs ?? _DefaultPreferences.defaultQuickSearchValue;
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'getQuickSearchAmounts()',
+      );
+      return _DefaultPreferences.defaultQuickSearchValue;
     }
   }
 
@@ -75,10 +110,14 @@ class SharedUserPrefsServiceImp
         _PreferenceKeys.quickSearchAmounts,
         value,
       );
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'setQuickSearchAmounts()',
+      );
     }
   }
 
@@ -88,7 +127,14 @@ class SharedUserPrefsServiceImp
       final savedFoods =
           await prefProvider.getStringList(_PreferenceKeys.savedFoods);
       return savedFoods ?? [];
-    } catch (e) {
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'getSavedFoods()',
+      );
       return [];
     }
   }
@@ -97,10 +143,14 @@ class SharedUserPrefsServiceImp
   Future<void> setSavedFoods(List<String> value) async {
     try {
       await prefProvider.setStringList(_PreferenceKeys.savedFoods, value);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    } catch (e, st) {
+      dev.log(
+        runtimeType.toString(),
+        time: DateTime.now(),
+        error: e,
+        stackTrace: st,
+        name: 'setSavedFoods()',
+      );
     }
   }
 }
