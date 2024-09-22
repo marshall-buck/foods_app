@@ -3,6 +3,18 @@ import 'package:foods_app/common/magic.dart';
 import 'package:foods_app/services/services.dart';
 import 'package:watch_it/watch_it.dart';
 
+/// A class that represents the data for a food list item.
+///
+/// This class is responsible for storing food list item data, including its
+/// ID, description, and a list of quick results.
+///
+/// The [FoodListItemModel] class can be initialized by providing the food's
+/// [id], [description], and [quickResultsList], or by using the
+/// [fromFoodDTO] factory constructor.
+///
+/// The [fromFoodDTO] factory constructor creates a [FoodListItemModel]
+/// instance from a [FoodDTO] object.
+
 class FoodListItemModel extends Equatable {
   const FoodListItemModel({
     required this.id,
@@ -25,6 +37,8 @@ class FoodListItemModel extends Equatable {
   final String description;
   final List<String> quickResultsList;
 
+  /// Returns a list of nutrient amounts for the food, based on the user's
+  /// quick search preferences.
   static Future<List<String>> _quickSearchNutrientAmounts(FoodDTO food) async {
     // ignore: strict_raw_type
     final prefs = di.get<PreferencesService>(

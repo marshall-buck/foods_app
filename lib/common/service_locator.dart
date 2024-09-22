@@ -5,9 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 import 'package:watch_it/watch_it.dart';
 
+/// Registers all get_it dependencies.
 void registerDependencies() {
   di
-    ..registerSingleton<FoodSearchManager>(FoodSearchManager())
+    ..registerSingleton<FoodSearchManager>(
+      FoodSearchManager(),
+    ) //FoodSearchManager
 
     // ignore: strict_raw_type
     ..registerSingletonAsync<PreferencesService>(
@@ -19,7 +22,7 @@ void registerDependencies() {
         return settings;
       },
       instanceName: LocatorName.sharedPrefsService,
-    )
+    ) //PreferencesService
     ..registerSingletonAsync<FoodsDB>(
       () async {
         final usdaDB = UsdaDB();
@@ -29,5 +32,5 @@ void registerDependencies() {
       },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => x.dispose(),
-    );
+    ); //FoodsDB
 }

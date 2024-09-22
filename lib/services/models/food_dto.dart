@@ -2,6 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:foods_app/services/services.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
+// A class that represents the data for foods.
+///
+/// This class is responsible for storing food data, including its
+/// ID, description, and nutrients.
+///
+/// The [FoodDTO] class is initialized by providing the food's
+/// [id], [description], and [nutrients].
+///
+/// The [allNutrientDTOs] getter returns a map of all nutrients for the food,
+/// with the nutrient ID as the key and the [NutrientDTO] object as the value.
+
 class FoodDTO extends Equatable {
   const FoodDTO({
     required this.id,
@@ -9,6 +20,7 @@ class FoodDTO extends Equatable {
     required this.nutrients,
   });
 
+  /// Creates a [FoodDTO] instance from a [SrLegacyFoodModel] object.
   factory FoodDTO.fromUsdaDB(SrLegacyFoodModel food) {
     return FoodDTO(
       id: food.id,
@@ -17,6 +29,7 @@ class FoodDTO extends Equatable {
     );
   }
 
+  /// Returns a map of all nutrients for the food.
   Map<int, NutrientDTO> get allNutrientDTOs {
     final map = <int, NutrientDTO>{};
     for (final entry in nutrients.entries) {

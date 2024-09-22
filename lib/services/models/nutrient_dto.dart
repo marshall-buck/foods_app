@@ -1,6 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:foods_app/services/services.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
+
+/// A class that represents the data for a single nutrient.
+///
+/// This class is responsible for storing nutrient data, including its
+/// ID, name, amount, and unit.
+///
+/// The [NutrientDTO] class can be initialized by providing the nutrient's
+/// [id], [name], [amount], and [unit], or by using the
+/// [NutrientDTO.fromUsdaDB] or [NutrientDTO.fromMapEntry] factory constructors.
+///
+/// The [NutrientDTO.fromUsdaDB] factory constructor creates a [NutrientDTO]
+/// instance from a [SrLegacyNutrientModel] object.
+///
+/// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDTO]
+/// instance from a [MapEntry<int, num>] object, which represents a single
+/// entry in the [FoodDTO.nutrients] map.
 
 class NutrientDTO extends Equatable {
   const NutrientDTO({
@@ -10,6 +27,7 @@ class NutrientDTO extends Equatable {
     required this.unit,
   });
 
+  /// Creates a [NutrientDTO] instance from a [SrLegacyNutrientModel] object.
   factory NutrientDTO.fromUsdaDB(SrLegacyNutrientModel nutrient) {
     return NutrientDTO(
       id: nutrient.id,
@@ -18,6 +36,8 @@ class NutrientDTO extends Equatable {
       unit: nutrient.unit,
     );
   }
+
+  /// Creates a [NutrientDTO] instance from a MapEntry<int, num> object.
   factory NutrientDTO.fromMapEntry(MapEntry<int, num> entry) {
     final id = entry.key;
     final amount = entry.value;
@@ -40,7 +60,8 @@ class NutrientDTO extends Equatable {
   @override
   bool get stringify => true;
 
-  static const keepTheseNutrients = [
+  /// A list of nutrient IDs included in the USDA DB .
+  static const usdaNutrientIDs = [
     1003,
     1004,
     1005,
