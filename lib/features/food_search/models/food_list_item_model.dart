@@ -6,7 +6,8 @@ import 'package:watch_it/watch_it.dart';
 /// A class that represents the data for a food list item.
 ///
 /// This class is responsible for storing food list item data, including its
-/// ID, description, and a list of quick results.
+/// ID, description, and a list of quick results.  Quick results are the
+/// amounts of 4 nutrients based on user preferences.
 ///
 /// The [FoodListItemModel] class can be initialized by providing the food's
 /// [id], [description], and [quickResultsList], or by using the

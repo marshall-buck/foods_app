@@ -33,7 +33,7 @@ class CustomSliverAppBar extends StatelessWidget {
           ''',
         );
 
-  /// The key of the [ReusableTextField] used for searching.
+  /// The global key of the [ReusableTextField] used for searching.
   ///
   /// This is only used if no [titleString] is provided.
   final GlobalKey<ReusableTextFieldState>? textFieldKey;
@@ -74,3 +74,77 @@ class CustomSliverAppBar extends StatelessWidget {
     );
   }
 }
+
+
+// class MySliverAppBar extends StatefulWidget {
+//   // ... (rest of your existing properties)
+
+//   @override
+//   _MySliverAppBarState createState() => _MySliverAppBarState();
+// }
+
+// class _MySliverAppBarState extends State<MySliverAppBar> {
+//   final ScrollController _scrollController = ScrollController();
+//   bool _showHiddenText = false;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _scrollController.addListener(_scrollListener);
+//   }
+
+//   @override
+//   void dispose() {
+//     _scrollController.removeListener(_scrollListener);
+//     _scrollController.dispose();
+//     super.dispose();
+//   }
+
+//   void _scrollListener() {
+//     // Check if ReusableTextField is visible AND we're scrolling down
+//     if (widget.titleString == null &&
+//         _scrollController.position.userScrollDirection == ScrollDirection.reverse &&
+//         !_showHiddenText) {
+//       setState(() => _showHiddenText = true);
+//     } else if (_showHiddenText) {
+//       setState(() => _showHiddenText = false);
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SliverAppBar(
+//       // ... (rest of your existing SliverAppBar properties)
+
+//       flexibleSpace: LayoutBuilder(
+//         builder: (context, constraints) {
+//           final expandRatio = (constraints.maxHeight - kToolbarHeight) / (150 - kToolbarHeight);
+//           return FlexibleSpaceBar(
+//             collapseMode: CollapseMode.pin,
+//             background: Column(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               children: [
+//                 widget.titleString != null
+//                     ? Text(widget.titleString!)
+//                     : ReusableTextField(
+//                         key: widget.textFieldKey,
+//                       ),
+//                 Visibility(
+//                   visible: _showHiddenText && widget.titleString == null, // Only show if ReusableTextField is visible
+//                   child: Opacity(
+//                     opacity: expandRatio,
+//                     child: const Padding(
+//                       padding: EdgeInsets.all(8.0),
+//                       child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
+//                     ),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 16),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
