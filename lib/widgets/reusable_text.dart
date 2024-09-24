@@ -74,6 +74,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
       controller: _controller,
       decoration: const InputDecoration(
         border: UnderlineInputBorder(borderSide: BorderSide.none),

@@ -30,22 +30,24 @@ class FoodsList extends StatelessWidget {
             ),
           );
         } else {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                // print('SliverChildBuilderDelegate: building');
-                final food = value[index];
+          return SliverPadding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final food = value[index];
 
-                final id = ValueKey<int>(food!.id);
-                return GestureDetector(
-                  onTap: () => _onTap(context, id),
-                  child: FoodListItem(
-                    key: id,
-                    food: food,
-                  ),
-                );
-              },
-              childCount: value.length,
+                  final id = ValueKey<int>(food!.id);
+                  return GestureDetector(
+                    onTap: () => _onTap(context, id),
+                    child: FoodListItem(
+                      key: id,
+                      food: food,
+                    ),
+                  );
+                },
+                childCount: value.length,
+              ),
             ),
           );
         }
