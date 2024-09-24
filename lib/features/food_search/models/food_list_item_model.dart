@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:foods_app/common/magic.dart';
+import 'package:foods_app/common/common.dart';
+
 import 'package:foods_app/services/services.dart';
 import 'package:watch_it/watch_it.dart';
 

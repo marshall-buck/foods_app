@@ -1,6 +1,3 @@
-/// This would be (food id, saved amount)
-typedef SavedFoodRecord = (String, String);
-
 class DisplayMode {
   static const String light = 'light';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/food_detail/food_detail_page.dart';
-import 'package:foods_app/features/food_search/food_search.dart';
+import 'package:foods_app/features/features.dart';
 
 import 'package:watch_it/watch_it.dart';
 
