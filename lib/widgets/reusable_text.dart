@@ -1,5 +1,42 @@
 import 'package:flutter/material.dart';
 
+/// A [TextField] that can be reused in multiple places.
+///
+/// This widget is a simple wrapper around a [TextField] that provides a
+/// convenient way to listen for changes to the text and to clear the text.
+///
+/// To use this widget, simply create a new instance of it and pass it to the
+/// [TextField] constructor. For example:
+///
+/// ```dart
+/// ReusableTextField(
+///   key: _textFieldKey,
+/// )
+/// ```
+///
+/// To listen for changes to the text, use the [ReusableTextFieldNotification]
+/// class. For example:
+///
+/// ```dart
+/// NotificationListener<ReusableTextFieldNotification>(
+///   onNotification: (notification) {
+///     // Do something with the text.
+///     print(notification.text);
+///     return true;
+///   },
+///   child: ReusableTextField(
+///     key: _textFieldKey,
+///   ),
+/// ),
+/// ```
+///
+// ignore: comment_references
+/// To clear the text, call the [clearSearch] method on the
+/// [ReusableTextFieldState] object. For example:
+///
+/// ```dart
+/// _textFieldKey.currentState?.clearSearch();
+/// ```
 class ReusableTextField extends StatefulWidget {
   const ReusableTextField({super.key});
 
@@ -31,7 +68,6 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   }
 
   void clearSearch() {
-    // print('ClearSearch called');
     _controller.clear();
   }
 
