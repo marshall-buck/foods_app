@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/theme.dart';
-import 'package:foods_app/features/food_search/food_search.dart';
-import 'package:foods_app/widgets/reusable_text.dart';
+import 'package:foods_app/features/features.dart';
+import 'package:foods_app/widgets/widgets.dart';
 
 /// A custom [SliverAppBar] that can display either a [titleString] or a
 /// [ReusableTextField] for searching, in the title property
