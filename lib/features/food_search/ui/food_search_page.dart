@@ -57,20 +57,3 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     );
   }
 }
-
-// CustomScrollView(
-//         controller: _controllerScroll,
-//         slivers: [
-//           CustomSliverAppBar(
-//             // textFieldKey: _childKey,
-//             onClearSearch: _clearSearch,
-//           ),
-//           NotificationListener<ReusableTextFieldNotification>(
-//             onNotification: (notification) {
-//               _queryFoods(notification.text);
-//               return true;
-//             },
-//             child: const FoodsList(),
-//           ),
-//         ],
-//       ),

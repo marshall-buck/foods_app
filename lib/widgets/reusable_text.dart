@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/common.dart';
 
 /// A [TextField] that can be reused in multiple places.
 ///
@@ -74,7 +75,8 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+      style: AppTextStyle.m3LabelMedium
+          .copyWith(color: AppColorsExtension.of(context).onBackground),
       controller: _controller,
       decoration: const InputDecoration(
         border: UnderlineInputBorder(borderSide: BorderSide.none),

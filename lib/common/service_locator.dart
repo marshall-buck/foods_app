@@ -1,5 +1,6 @@
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/food_search/food_search.dart';
+import 'package:foods_app/features/features.dart';
+
 import 'package:foods_app/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
@@ -32,5 +33,12 @@ void registerDependencies() {
       },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => x.dispose(),
+    )
+    ..registerSingletonWithDependencies<FoodDetailManager>(
+      // ignore: unnecessary_lambdas
+      () => FoodDetailManager(),
+      dependsOn: [
+        InitDependency(FoodsDB, instanceName: LocatorName.foodsDBService),
+      ],
     ); //FoodsDB
 }

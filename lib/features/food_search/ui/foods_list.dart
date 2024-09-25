@@ -6,17 +6,20 @@ import 'package:watch_it/watch_it.dart';
 class FoodsList extends StatelessWidget {
   const FoodsList({super.key});
 
-  void _onTap(BuildContext context, ValueKey<int> id) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<FoodDetail>(builder: (context) => FoodDetail(id: id)),
-    );
+  Future<void> _onTap(BuildContext context, ValueKey<int> id) async {
+    await di.get<FoodDetailManager>().queryFood(id.value);
+    if (context.mounted) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute<FoodDetail>(builder: (context) => const FoodDetail()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final foodManager = di.get<FoodSearchManager>();
-    // print('FoodsList: building');
+
     return ValueListenableBuilder<List<FoodListItemModel?>>(
       valueListenable: foodManager.currentResults,
       builder: (BuildContext context, value, Widget? child) {
