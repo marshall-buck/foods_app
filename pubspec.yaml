@@ -16,10 +16,10 @@ dependencies:
   usda_db_package:
     git:
       url: https://github.com/marshall-buck/usda_db_package.git
-  watch_it: ^1.4.2
+  watch_it: ^1.5.0
 
 dev_dependencies:
-  build_runner: ^2.4.11
+  build_runner: ^2.4.12
   flutter_test:
     sdk: flutter
   very_good_analysis: ^6.0.0

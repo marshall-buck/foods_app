@@ -12,6 +12,9 @@ void registerDependencies() {
     ..registerSingleton<FoodSearchManager>(
       FoodSearchManager(),
     ) //FoodSearchManager
+    ..registerSingleton<FoodDetailManager>(
+      FoodDetailManager(),
+    ) //FoodSearchManager
 
     // ignore: strict_raw_type
     ..registerSingletonAsync<PreferencesService>(
@@ -33,12 +36,5 @@ void registerDependencies() {
       },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => x.dispose(),
-    )
-    ..registerSingletonWithDependencies<FoodDetailManager>(
-      // ignore: unnecessary_lambdas
-      () => FoodDetailManager(),
-      dependsOn: [
-        InitDependency(FoodsDB, instanceName: LocatorName.foodsDBService),
-      ],
-    ); //FoodsDB
+    );
 }

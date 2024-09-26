@@ -1,2 +1,3 @@
-export './food_detail/food_detail.dart';
-export './food_search/food_search.dart';
+export 'managers/managers.dart';
+export 'model/model.dart';
+export 'ui/ui.dart';

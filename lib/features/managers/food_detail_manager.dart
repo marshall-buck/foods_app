@@ -5,11 +5,12 @@ import 'package:watch_it/watch_it.dart';
 
 class FoodDetailManager {
   final currentFood = ValueNotifier<FoodDTO?>(null);
-  final _foodsDB = di.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
+
   String get description => currentFood.value!.description;
 
   Future<void> queryFood(int id) async {
-    final food = await _foodsDB.queryFood(id: id);
+    final foodsDB = di.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
+    final food = await foodsDB.queryFood(id: id);
     currentFood.value = food;
   }
 

@@ -75,7 +75,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: AppTextStyle.m3LabelMedium
+      style: AppTextStyle.m3BodyLarge
           .copyWith(color: AppColorsExtension.of(context).onBackground),
       controller: _controller,
       decoration: const InputDecoration(

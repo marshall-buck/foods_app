@@ -67,6 +67,7 @@ class CustomSliverAppBar extends StatelessWidget {
       floating: true,
       pinned: true,
       expandedHeight: 48,
+      flexibleSpace: FlexibleSpaceBar(title: Text('data'),),
       title: titleString != null
           ? Text(titleString!)
           : ReusableTextField(
