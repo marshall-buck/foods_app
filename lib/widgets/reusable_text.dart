@@ -78,9 +78,11 @@ class ReusableTextFieldState extends State<ReusableTextField> {
       style: AppTextStyle.m3BodyLarge
           .copyWith(color: AppColorsExtension.of(context).onBackground),
       controller: _controller,
-      decoration: const InputDecoration(
-        border: UnderlineInputBorder(borderSide: BorderSide.none),
+      decoration: InputDecoration(
+        border: const UnderlineInputBorder(borderSide: BorderSide.none),
         hintText: 'Search for food...',
+        hintStyle:
+            TextStyle(color: AppColorsExtension.of(context).onBackground),
       ),
     );
   }
