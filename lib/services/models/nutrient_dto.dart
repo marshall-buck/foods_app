@@ -18,8 +18,10 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDTO]
 /// instance from a [MapEntry<int, num>] object, which represents a single
 /// entry in the [FoodDTO.nutrients] map.
-
 class NutrientDTO extends Equatable {
+  /// Creates a [NutrientDTO].
+  ///
+  /// The [id], [name], [amount], and [unit] arguments are required.
   const NutrientDTO({
     required this.id,
     required this.name,

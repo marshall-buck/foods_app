@@ -73,11 +73,7 @@ class FoodDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: Text(
-        food.description,
-        style: AppTextStyle.m3BodyLarge
-            .copyWith(color: FoodsAppThemeExtension.of(context).onBackground),
-      ),
+      child: Text(food.description, style: AppTextStyle.m3BodyLarge),
     );
   }
 }
@@ -103,7 +99,7 @@ class QuickResults extends StatelessWidget {
           padding: const EdgeInsets.only(right: 16),
           child: Text(
             quickResult,
-            style: AppTextStyle.m3BodySmall.copyWith(
+            style: AppTextStyle.m3BodyMedium.copyWith(
               color: FoodsAppThemeExtension.of(context).onSurfaceVariant,
             ),
           ),

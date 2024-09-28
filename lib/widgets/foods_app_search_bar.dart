@@ -15,7 +15,7 @@ import 'package:foods_app/common/common.dart';
 /// )
 /// ```
 ///
-/// To listen for changes to the text, use the [ReusableTextFieldNotification]
+/// To listen for changes to the text, use the [FoodsAppSearchBarNotification]
 /// class. For example:
 ///
 /// ```dart
@@ -33,19 +33,19 @@ import 'package:foods_app/common/common.dart';
 ///
 // ignore: comment_references
 /// To clear the text, call the [clearSearch] method on the
-/// [ReusableTextFieldState] object. For example:
+/// [FoodsAppSearchBarState] object. For example:
 ///
 /// ```dart
 /// _textFieldKey.currentState?.clearSearch();
 /// ```
-class ReusableTextField extends StatefulWidget {
-  const ReusableTextField({super.key});
+class FoodsAppSearchBar extends StatefulWidget {
+  const FoodsAppSearchBar({super.key});
 
   @override
-  State<ReusableTextField> createState() => ReusableTextFieldState();
+  State<FoodsAppSearchBar> createState() => FoodsAppSearchBarState();
 }
 
-class ReusableTextFieldState extends State<ReusableTextField> {
+class FoodsAppSearchBarState extends State<FoodsAppSearchBar> {
   late TextEditingController _controller;
 
   @override
@@ -65,7 +65,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   }
 
   void _onTextChanged() {
-    ReusableTextFieldNotification(_controller.text).dispatch(context);
+    FoodsAppSearchBarNotification(_controller.text).dispatch(context);
   }
 
   void clearSearch() {
@@ -76,7 +76,7 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   Widget build(BuildContext context) {
     return TextField(
       style: AppTextStyle.m3BodyLarge
-          .copyWith(color: FoodsAppThemeExtension.of(context).onBackground),
+          .copyWith(color: FoodsAppThemeExtension.of(context).onSurface),
       controller: _controller,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(borderSide: BorderSide.none),
@@ -88,10 +88,10 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   }
 }
 
-/// A notification that is dispatched when the text in a [ReusableTextField]
+/// A notification that is dispatched when the text in a [FoodsAppSearchBar]
 /// changes.
-class ReusableTextFieldNotification extends Notification {
-  ReusableTextFieldNotification(this.text);
+class FoodsAppSearchBarNotification extends Notification {
+  FoodsAppSearchBarNotification(this.text);
 
   final String text;
 }

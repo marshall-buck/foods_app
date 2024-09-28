@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 
 import 'package:foods_app/widgets/widgets.dart';
@@ -13,7 +14,7 @@ import 'package:foods_app/widgets/widgets.dart';
 /// The [CustomSliverAppBar] can be customized with a [title], or
 /// [onClearSearch] and [textFieldKey]. If a [title] is provided,
 /// the [CustomSliverAppBar] will display the title in the app bar.
-/// Otherwise, a [ReusableTextField] will be displayed, along with
+/// Otherwise, a [FoodsAppSearchBar] will be displayed, along with
 /// a clear button and a [FoodResultsCountBadge].
 ///
 /// The [slivers] argument is a list of widgets that will be displayed
@@ -38,10 +39,10 @@ class BasePage extends StatelessWidget {
   /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
   final String? title;
 
-  /// The global key of the [ReusableTextField] used for searching.
+  /// The global key of the [FoodsAppSearchBar] used for searching.
   ///
   /// This is only used if no [title] is provided.
-  final GlobalKey<ReusableTextFieldState>? textFieldKey;
+  final GlobalKey<FoodsAppSearchBarState>? textFieldKey;
 
   /// A callback that is called when the clear button is pressed.
   ///
@@ -54,6 +55,7 @@ class BasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FoodsAppThemeExtension.of(context).background,
       body: CustomScrollView(
         controller: scrollController,
         slivers: [

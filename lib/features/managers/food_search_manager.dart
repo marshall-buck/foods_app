@@ -35,3 +35,25 @@ class FoodSearchManager {
     currentResults.dispose();
   }
 }
+
+// class SearchManager extends ChangeNotifier {
+//   final GlobalKey<FoodsAppSearchBarState> _textFieldKey =
+//       GlobalKey<FoodsAppSearchBarState>();
+
+//   GlobalKey<FoodsAppSearchBarState> get textFieldKey => _textFieldKey;
+
+//   String _searchTerm = '';
+
+//   String get searchTerm => _searchTerm;
+
+//   void updateSearchTerm(String newTerm) {
+//     _searchTerm = newTerm;
+//     notifyListeners();
+//   }
+
+//   void clearSearch() {
+//     _searchTerm = '';
+//     _textFieldKey.currentState?.clearSearch();
+//     notifyListeners();
+//   }
+// }

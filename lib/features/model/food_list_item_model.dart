@@ -12,7 +12,7 @@ import 'package:watch_it/watch_it.dart';
 ///
 /// The [FoodListItemModel] class can be initialized by providing the food's
 /// [id], [description], and [quickResultsList], or by using the
-/// [fromFoodDTO] factory constructor.
+/// [fromFoodDTO]  constructor.
 ///
 /// The [fromFoodDTO] factory constructor creates a [FoodListItemModel]
 /// instance from a [FoodDTO] object.

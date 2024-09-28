@@ -13,7 +13,7 @@ class FoodSearchPage extends StatefulWidget {
 
 class _FoodSearchPageState extends State<FoodSearchPage> {
   final foodManager = di.get<FoodSearchManager>();
-  final _textFieldKey = GlobalKey<ReusableTextFieldState>();
+  final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
 
   final ScrollController _controllerScroll = ScrollController();
 
@@ -43,7 +43,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
   @override
   Widget build(BuildContext context) {
     // print('_FoodSearchPageState build');
-    return NotificationListener<ReusableTextFieldNotification>(
+    return NotificationListener<FoodsAppSearchBarNotification>(
       onNotification: (notification) {
         _queryFoods(notification.text);
         return true;

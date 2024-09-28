@@ -4,12 +4,12 @@ import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
 /// A custom [SliverAppBar] that can display either a [titleString] or a
-/// [ReusableTextField] for searching, in the title property
+/// [FoodsAppSearchBar] for searching, in the title property
 /// of the [SliverAppBar].
 ///
 /// This widget enforces that either a [titleString] is provided, or both
 /// [onClearSearch] and [textFieldKey] are provided. Providing a [titleString]
-/// will display the title in the app bar. Otherwise, a [ReusableTextField]
+/// will display the title in the app bar. Otherwise, a [FoodsAppSearchBar]
 /// will be displayed, along with a clear button and a  [FoodResultsCountBadge].
 class CustomSliverAppBar extends StatelessWidget {
   /// Creates a [CustomSliverAppBar].
@@ -33,10 +33,10 @@ class CustomSliverAppBar extends StatelessWidget {
           ''',
         );
 
-  /// The global key of the [ReusableTextField] used for searching.
+  /// The global key of the [FoodsAppSearchBar] used for searching.
   ///
   /// This is only used if no [titleString] is provided.
-  final GlobalKey<ReusableTextFieldState>? textFieldKey;
+  final GlobalKey<FoodsAppSearchBarState>? textFieldKey;
 
   /// A callback that is called when the clear button is pressed.
   ///
@@ -64,6 +64,7 @@ class CustomSliverAppBar extends StatelessWidget {
               const FoodResultsCountBadge(),
             ]
           : null,
+      automaticallyImplyLeading: titleString == null,
       floating: true,
       pinned: true,
       // expandedHeight: 300,
@@ -71,7 +72,7 @@ class CustomSliverAppBar extends StatelessWidget {
       backgroundColor: FoodsAppThemeExtension.of(context).background,
       title: titleString != null
           ? Text(titleString!)
-          : ReusableTextField(
+          : FoodsAppSearchBar(
               key: textFieldKey,
             ),
     );
