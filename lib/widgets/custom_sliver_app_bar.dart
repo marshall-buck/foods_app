@@ -51,7 +51,7 @@ class CustomSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      surfaceTintColor: AppColorsExtension.of(context).surfaceTint,
+      surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
       actions: titleString == null
           ? [
               Padding(
@@ -66,8 +66,9 @@ class CustomSliverAppBar extends StatelessWidget {
           : null,
       floating: true,
       pinned: true,
-      expandedHeight: 48,
-      flexibleSpace: FlexibleSpaceBar(title: Text('data'),),
+      // expandedHeight: 300,
+      stretch: true,
+      backgroundColor: FoodsAppThemeExtension.of(context).background,
       title: titleString != null
           ? Text(titleString!)
           : ReusableTextField(

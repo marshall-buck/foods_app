@@ -13,7 +13,7 @@ class FoodResultsCountBadge extends WatchingWidget {
     return Badge.count(
       count: count.length,
       backgroundColor: Colors.transparent,
-      textColor: AppColorsExtension.of(context).onSurface,
+      textColor: FoodsAppThemeExtension.of(context).onSurface,
       padding: const EdgeInsets.only(right: 8),
     );
   }

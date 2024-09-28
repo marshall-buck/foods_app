@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:foods_app/common/common.dart';
 
-const lightColors = AppColorsExtension(
+const lightColors = FoodsAppThemeExtension(
   //brightness: Brightness.light,
   primary: Color(0xff096b5a),
   surfaceTint: Color(0xff096b5a),
@@ -57,7 +57,7 @@ const lightColors = AppColorsExtension(
   surfaceContainerHighest: Color(0xffdee4e0),
 );
 
-const darkColors = AppColorsExtension(
+const darkColors = FoodsAppThemeExtension(
   //brightness: Brightness.dark,
   primary: Color(0xff85d6c1),
   surfaceTint: Color(0xff85d6c1),

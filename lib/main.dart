@@ -19,11 +19,12 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.light().copyWith(
         extensions: <ThemeExtension<dynamic>>[lightColors],
-        textTheme: appTextTheme,
+        textTheme: lightColors.applyToTextTheme(appTextTheme),
+        // appBarTheme: const AppBarTheme().copyWith(tit)
       ),
       darkTheme: ThemeData.dark().copyWith(
         extensions: <ThemeExtension<dynamic>>[darkColors],
-        textTheme: appTextTheme,
+        textTheme: darkColors.applyToTextTheme(appTextTheme),
       ),
       // ignore: avoid_redundant_argument_values
       themeMode: ThemeMode.system,
@@ -76,7 +77,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColorsExtension.of(context).background,
+      color: FoodsAppThemeExtension.of(context).background,
       child: Center(
         child: SizedBox(
           width: 48,
@@ -84,7 +85,7 @@ class LoadingScreen extends StatelessWidget {
           child: Transform.scale(
             scale: 2,
             child: CircularProgressIndicator.adaptive(
-              backgroundColor: AppColorsExtension.of(context).onBackground,
+              backgroundColor: FoodsAppThemeExtension.of(context).onBackground,
             ),
           ),
         ),

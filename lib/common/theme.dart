@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
-  // final appTheme = AppColorsExtension.of(context);
-
-  const AppColorsExtension({
+class FoodsAppThemeExtension extends ThemeExtension<FoodsAppThemeExtension> {
+  const FoodsAppThemeExtension({
     //required this.brightness,
     required this.primary,
     required this.surfaceTint,
@@ -56,8 +54,29 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     required this.surfaceContainerHigh,
     required this.surfaceContainerHighest,
   });
-  static AppColorsExtension of(BuildContext context) {
-    return Theme.of(context).extension<AppColorsExtension>()!;
+
+  TextTheme applyToTextTheme(TextTheme baseTextTheme) {
+    return baseTextTheme.copyWith(
+      displayLarge: baseTextTheme.displayLarge?.copyWith(color: onSurface),
+      displayMedium: baseTextTheme.displayMedium?.copyWith(color: onSurface),
+      displaySmall: baseTextTheme.displaySmall?.copyWith(color: onSurface),
+      headlineLarge: baseTextTheme.headlineLarge?.copyWith(color: onSurface),
+      headlineMedium: baseTextTheme.headlineMedium?.copyWith(color: onSurface),
+      headlineSmall: baseTextTheme.headlineSmall?.copyWith(color: onSurface),
+      titleLarge: baseTextTheme.titleLarge?.copyWith(color: onSurface),
+      titleMedium: baseTextTheme.titleMedium?.copyWith(color: onSurface),
+      titleSmall: baseTextTheme.titleSmall?.copyWith(color: onSurface),
+      bodyLarge: baseTextTheme.bodyLarge?.copyWith(color: onSurface),
+      bodyMedium: baseTextTheme.bodyMedium?.copyWith(color: onSurface),
+      bodySmall: baseTextTheme.bodySmall?.copyWith(color: onSurface),
+      labelLarge: baseTextTheme.labelLarge?.copyWith(color: onSurface),
+      labelMedium: baseTextTheme.labelMedium?.copyWith(color: onSurface),
+      labelSmall: baseTextTheme.labelSmall?.copyWith(color: onSurface),
+    );
+  }
+
+  static FoodsAppThemeExtension of(BuildContext context) {
+    return Theme.of(context).extension<FoodsAppThemeExtension>()!;
   }
 
   //final Brightness brightness;
@@ -112,7 +131,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color surfaceContainerHighest;
 
   @override
-  ThemeExtension<AppColorsExtension> copyWith({
+  ThemeExtension<FoodsAppThemeExtension> copyWith({
     //Brightness? brightness,
     Color? primary,
     Color? surfaceTint,
@@ -164,7 +183,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
     Color? surfaceContainerHigh,
     Color? surfaceContainerHighest,
   }) {
-    return AppColorsExtension(
+    return FoodsAppThemeExtension(
       //brightness: brightness ?? this.brightness,
       primary: primary ?? this.primary,
       surfaceTint: surfaceTint ?? this.surfaceTint,
@@ -224,12 +243,12 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   }
 
   @override
-  AppColorsExtension lerp(AppColorsExtension? other, double t) {
-    if (other is! AppColorsExtension) {
+  FoodsAppThemeExtension lerp(FoodsAppThemeExtension? other, double t) {
+    if (other is! FoodsAppThemeExtension) {
       return this;
     }
 
-    return AppColorsExtension(
+    return FoodsAppThemeExtension(
       // brightness: Color.lerp(brightness, other.brightness, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
       surfaceTint: Color.lerp(surfaceTint, other.surfaceTint, t)!,

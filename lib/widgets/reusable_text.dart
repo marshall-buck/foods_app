@@ -76,13 +76,13 @@ class ReusableTextFieldState extends State<ReusableTextField> {
   Widget build(BuildContext context) {
     return TextField(
       style: AppTextStyle.m3BodyLarge
-          .copyWith(color: AppColorsExtension.of(context).onBackground),
+          .copyWith(color: FoodsAppThemeExtension.of(context).onBackground),
       controller: _controller,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(borderSide: BorderSide.none),
         hintText: 'Search for food...',
         hintStyle:
-            TextStyle(color: AppColorsExtension.of(context).onBackground),
+            TextStyle(color: FoodsAppThemeExtension.of(context).onBackground),
       ),
     );
   }
