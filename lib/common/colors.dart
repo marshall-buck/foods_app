@@ -22,10 +22,10 @@ const lightColors = FoodsAppThemeExtension(
   errorContainer: Color(0xffffdad6),
   onErrorContainer: Color(0xff410002),
   background: Color(0xfff5fbf7),
-  //0xfff5fbf7
+
   onBackground: Color(0xff171d1b),
   surface: Color(0xfff5fbf7),
-  //0xfff5fbf7
+
   onSurface: Color(0xff171d1b),
   surfaceVariant: Color(0xffdbe5e0),
   onSurfaceVariant: Color(0xff3f4945),
