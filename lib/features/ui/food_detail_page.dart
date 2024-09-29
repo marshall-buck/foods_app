@@ -30,6 +30,7 @@ class _FoodDetailState extends State<FoodDetail> {
         slivers: [SliverToBoxAdapter(child: Text(details!.description))],
         textFieldKey: _textFieldKey,
         onClearSearch: _clearSearch,
+        showBadge: false,
       ),
     );
   }

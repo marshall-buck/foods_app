@@ -31,6 +31,7 @@ class BasePage extends StatelessWidget {
     this.onClearSearch,
     this.textFieldKey,
     this.scrollController,
+    this.showBadge = true,
   });
   final List<Widget> slivers;
 
@@ -52,6 +53,8 @@ class BasePage extends StatelessWidget {
   /// The scroll controller for the [CustomScrollView].
   final ScrollController? scrollController;
 
+  final bool showBadge;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +68,7 @@ class BasePage extends StatelessWidget {
               titleString: title,
               onClearSearch: onClearSearch,
               textFieldKey: textFieldKey,
+              showBadge: showBadge,
             ),
           ),
           ...slivers,

@@ -19,6 +19,7 @@ class CustomSliverAppBar extends StatelessWidget {
     this.onClearSearch,
     this.textFieldKey,
     this.titleString,
+    this.showBadge = true,
     super.key,
   }) : assert(
           (titleString != null &&
@@ -48,6 +49,8 @@ class CustomSliverAppBar extends StatelessWidget {
   /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
   final String? titleString;
 
+  final bool showBadge;
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -61,7 +64,9 @@ class CustomSliverAppBar extends StatelessWidget {
                   icon: const Icon(Icons.clear_outlined),
                 ),
               ),
-              const FoodResultsCountBadge(),
+              if (showBadge) const FoodResultsCountBadge(),
+              // else
+              //   const SizedBox.shrink(),
             ]
           : null,
       automaticallyImplyLeading: titleString == null,
