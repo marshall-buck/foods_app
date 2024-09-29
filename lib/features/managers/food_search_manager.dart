@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 
 import 'package:foods_app/services/services.dart';
+import 'package:foods_app/widgets/widgets.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodSearchManager {
@@ -36,24 +37,20 @@ class FoodSearchManager {
   }
 }
 
-// class SearchManager extends ChangeNotifier {
-//   final GlobalKey<FoodsAppSearchBarState> _textFieldKey =
-//       GlobalKey<FoodsAppSearchBarState>();
+class SearchManager {
+  final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
+  final _searchTerm = ValueNotifier<String>('');
 
-//   GlobalKey<FoodsAppSearchBarState> get textFieldKey => _textFieldKey;
+  GlobalKey<FoodsAppSearchBarState> get textFieldKey => _textFieldKey;
+  String get searchTerm => _searchTerm.value;
+  set searchTerm(String value) => _searchTerm.value = value;
 
-//   String _searchTerm = '';
+  Future<void> clearSearch() async {
+    _searchTerm.value = '';
+    _textFieldKey.currentState?.clearSearch();
+  }
 
-//   String get searchTerm => _searchTerm;
-
-//   void updateSearchTerm(String newTerm) {
-//     _searchTerm = newTerm;
-//     notifyListeners();
-//   }
-
-//   void clearSearch() {
-//     _searchTerm = '';
-//     _textFieldKey.currentState?.clearSearch();
-//     notifyListeners();
-//   }
-// }
+  void dispose() {
+    _searchTerm.dispose();
+  }
+}

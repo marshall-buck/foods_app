@@ -61,7 +61,6 @@ class FoodsAppSearchBarState extends State<FoodsAppSearchBar> {
       ..removeListener(_onTextChanged)
       ..dispose();
     super.dispose();
-    // print('dispose called');
   }
 
   void _onTextChanged() {
