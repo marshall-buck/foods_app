@@ -25,19 +25,51 @@ class _FoodDetailState extends State<FoodDetail> {
     super.initState();
   }
 
+  late final Widget appBar = SliverPadding(
+    padding: const EdgeInsets.only(bottom: 4),
+    sliver: CustomSliverAppBar(
+      textFieldKey: _textFieldKey,
+      onClearSearch: _clearSearch,
+      showBadge: false,
+      hintText: AppStrings.detailsPageHintText,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
-    final details = watchValue((FoodDetailManager m) => m.currentFood);
+    final food = watchValue((FoodDetailManager m) => m.currentFood);
     return NotificationListener<FoodsAppSearchBarNotification>(
       onNotification: (notification) {
         return true;
       },
       child: BasePage(
-        slivers: [SliverToBoxAdapter(child: Text(details!.description))],
-        textFieldKey: _textFieldKey,
-        onClearSearch: _clearSearch,
-        showBadge: false,
-        hintText: AppStrings.detailsPageHintText,
+        slivers: [
+          appBar,
+          SliverToBoxAdapter(
+            child: Text(food!.description),
+          ),
+          FoodDetailDescription(food: food),
+        ],
+      ),
+    );
+  }
+}
+
+class FoodDetailDescription extends StatelessWidget {
+  const FoodDetailDescription({required this.food, super.key});
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: FoodsAppThemeExtension.of(context).primaryContainer,
+        ),
+        width: double.infinity,
+        height: 128,
+        child: const Placeholder(),
       ),
     );
   }

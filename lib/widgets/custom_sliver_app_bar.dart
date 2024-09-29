@@ -8,9 +8,11 @@ import 'package:foods_app/widgets/widgets.dart';
 /// of the [SliverAppBar].
 ///
 /// This widget enforces that either a [titleString] is provided, or both
-/// [onClearSearch] and [textFieldKey] are provided. Providing a [titleString]
-/// will display the title in the app bar. Otherwise, a [FoodsAppSearchBar]
-/// will be displayed, along with a clear button and a  [FoodResultsCountBadge].
+/// [onClearSearch] and [textFieldKey] are provided.
+///
+/// Providing a [titleString] will display the title in the app bar.
+/// Otherwise, a [FoodsAppSearchBar] will be displayed, along with a
+/// clear button and a  [FoodResultsCountBadge].
 class CustomSliverAppBar extends StatelessWidget {
   /// Creates a [CustomSliverAppBar].
   ///
@@ -75,7 +77,6 @@ class CustomSliverAppBar extends StatelessWidget {
       automaticallyImplyLeading: titleString == null,
       floating: true,
       pinned: true,
-      // expandedHeight: 300,
       stretch: true,
       backgroundColor: FoodsAppThemeExtension.of(context).background,
       title: titleString != null

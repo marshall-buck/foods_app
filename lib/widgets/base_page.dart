@@ -27,55 +27,58 @@ class BasePage extends StatelessWidget {
   const BasePage({
     required this.slivers,
     super.key,
-    this.title,
-    this.onClearSearch,
-    this.textFieldKey,
+    // this.title,
+    // this.onClearSearch,
+    // this.textFieldKey,
     this.scrollController,
-    this.hintText,
-    this.showBadge = true,
+    // this.hintText,
+    // this.showBadge = true,
   });
   final List<Widget> slivers;
 
-  /// The title to display in the app bar.
-  ///
-  /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
-  final String? title;
-  final String? hintText;
+  // /// The title to display in the app bar.
+  // ///
+  // /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
+  // final String? title;
+  // final String? hintText;
 
-  /// The global key of the [FoodsAppSearchBar] used for searching.
-  ///
-  /// This is only used if no [title] is provided.
-  final GlobalKey<FoodsAppSearchBarState>? textFieldKey;
+  // /// The global key of the [FoodsAppSearchBar] used for searching.
+  // ///
+  // /// This is only used if no [title] is provided.
+  // final GlobalKey<FoodsAppSearchBarState>? textFieldKey;
 
-  /// A callback that is called when the clear button is pressed.
-  ///
-  /// This is only used if no [title] is provided.
-  final VoidCallback? onClearSearch;
+  // /// A callback that is called when the clear button is pressed.
+  // ///
+  // /// This is only used if no [title] is provided.
+  // final VoidCallback? onClearSearch;
 
   /// The scroll controller for the [CustomScrollView].
   final ScrollController? scrollController;
 
-  final bool showBadge;
+  // final bool showBadge;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FoodsAppThemeExtension.of(context).background,
-      body: CustomScrollView(
-        controller: scrollController,
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 4),
-            sliver: CustomSliverAppBar(
-              titleString: title,
-              onClearSearch: onClearSearch,
-              textFieldKey: textFieldKey,
-              showBadge: showBadge,
-              hintText: hintText,
-            ),
-          ),
-          ...slivers,
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: CustomScrollView(
+          controller: scrollController,
+          slivers: [
+            // SliverPadding(
+            //   padding: const EdgeInsets.only(bottom: 4),
+            //   sliver: CustomSliverAppBar(
+            //     titleString: title,
+            //     onClearSearch: onClearSearch,
+            //     textFieldKey: textFieldKey,
+            //     showBadge: showBadge,
+            //     hintText: hintText,
+            //   ),
+            // ),
+            ...slivers,
+          ],
+        ),
       ),
     );
   }

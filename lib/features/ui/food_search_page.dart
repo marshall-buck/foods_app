@@ -40,6 +40,14 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     super.dispose();
   }
 
+  late final Widget appBar = SliverPadding(
+    padding: const EdgeInsets.only(bottom: 4),
+    sliver: CustomSliverAppBar(
+      textFieldKey: _textFieldKey,
+      onClearSearch: _clearSearch,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     // print('_FoodSearchPageState build');
@@ -50,9 +58,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
       },
       child: BasePage(
         scrollController: _controllerScroll,
-        slivers: const [FoodsList()],
-        textFieldKey: _textFieldKey,
-        onClearSearch: _clearSearch,
+        slivers: [appBar, const FoodsList()],
       ),
     );
   }
