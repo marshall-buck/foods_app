@@ -11,7 +11,7 @@ class FoodsList extends StatelessWidget {
     if (context.mounted) {
       await Navigator.push(
         context,
-        MaterialPageRoute<FoodDetail>(builder: (context) => FoodDetail()),
+        MaterialPageRoute<FoodDetail>(builder: (context) => const FoodDetail()),
       );
     }
   }

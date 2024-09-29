@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
@@ -20,6 +21,11 @@ class _FoodDetailState extends State<FoodDetail> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final details = watchValue((FoodDetailManager m) => m.currentFood);
     return NotificationListener<FoodsAppSearchBarNotification>(
@@ -31,6 +37,7 @@ class _FoodDetailState extends State<FoodDetail> {
         textFieldKey: _textFieldKey,
         onClearSearch: _clearSearch,
         showBadge: false,
+        hintText: AppStrings.detailsPageHintText,
       ),
     );
   }

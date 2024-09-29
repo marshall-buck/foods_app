@@ -31,6 +31,7 @@ class BasePage extends StatelessWidget {
     this.onClearSearch,
     this.textFieldKey,
     this.scrollController,
+    this.hintText,
     this.showBadge = true,
   });
   final List<Widget> slivers;
@@ -39,6 +40,7 @@ class BasePage extends StatelessWidget {
   ///
   /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
   final String? title;
+  final String? hintText;
 
   /// The global key of the [FoodsAppSearchBar] used for searching.
   ///
@@ -69,6 +71,7 @@ class BasePage extends StatelessWidget {
               onClearSearch: onClearSearch,
               textFieldKey: textFieldKey,
               showBadge: showBadge,
+              hintText: hintText,
             ),
           ),
           ...slivers,

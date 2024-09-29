@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/theme.dart';
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
@@ -20,6 +20,7 @@ class CustomSliverAppBar extends StatelessWidget {
     this.textFieldKey,
     this.titleString,
     this.showBadge = true,
+    this.hintText,
     super.key,
   }) : assert(
           (titleString != null &&
@@ -51,6 +52,8 @@ class CustomSliverAppBar extends StatelessWidget {
 
   final bool showBadge;
 
+  final String? hintText;
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -79,6 +82,7 @@ class CustomSliverAppBar extends StatelessWidget {
           ? Text(titleString!)
           : FoodsAppSearchBar(
               key: textFieldKey,
+              hintText: hintText ?? AppStrings.searchPageHintText,
             ),
     );
   }

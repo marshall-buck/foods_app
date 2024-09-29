@@ -39,7 +39,8 @@ import 'package:foods_app/common/common.dart';
 /// _textFieldKey.currentState?.clearSearch();
 /// ```
 class FoodsAppSearchBar extends StatefulWidget {
-  const FoodsAppSearchBar({super.key});
+  const FoodsAppSearchBar({required this.hintText, super.key});
+  final String hintText;
 
   @override
   State<FoodsAppSearchBar> createState() => FoodsAppSearchBarState();
@@ -79,7 +80,7 @@ class FoodsAppSearchBarState extends State<FoodsAppSearchBar> {
       controller: _controller,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(borderSide: BorderSide.none),
-        hintText: 'Search for food...',
+        hintText: widget.hintText,
         hintStyle:
             TextStyle(color: FoodsAppThemeExtension.of(context).onBackground),
       ),

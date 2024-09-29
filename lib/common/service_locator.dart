@@ -15,9 +15,9 @@ void registerDependencies() {
     ..registerSingleton<FoodDetailManager>(
       FoodDetailManager(),
     ) //FoodDetailManager
-    ..registerSingleton<SearchManager>(
-      SearchManager(),
-    ) //SearchManager
+    // ..registerSingleton<SearchManager>(
+    //   SearchManager(),
+    // ) //SearchManager
     // ignore: strict_raw_type
     ..registerSingletonAsync<PreferencesService>(
       () async {

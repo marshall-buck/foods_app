@@ -46,12 +46,12 @@ void main() {
 
       expect(prefsService, isNotNull);
     });
-    test('SearchManager should be initialized', () {
-      // ignore: strict_raw_type
-      final searchManager = di.get<SearchManager>();
+    // test('SearchManager should be initialized', () {
+    //   // ignore: strict_raw_type
+    //   final searchManager = di.get<SearchManager>();
 
-      expect(searchManager, isNotNull);
-    });
+    //   expect(searchManager, isNotNull);
+    // });
 
     test('UsdaDB should be initialized and data loaded', () async {
       final db = await di.getAsync<FoodsDB>(

@@ -5,7 +5,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 
 import 'package:foods_app/services/services.dart';
-import 'package:foods_app/widgets/widgets.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class FoodSearchManager {
@@ -37,20 +37,20 @@ class FoodSearchManager {
   }
 }
 
-class SearchManager {
-  final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
-  final _searchTerm = ValueNotifier<String>('');
+// class SearchManager {
+//   final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
+//   final _searchTerm = ValueNotifier<String>('');
 
-  GlobalKey<FoodsAppSearchBarState> get textFieldKey => _textFieldKey;
-  String get searchTerm => _searchTerm.value;
-  set searchTerm(String value) => _searchTerm.value = value;
+//   GlobalKey<FoodsAppSearchBarState> get textFieldKey => _textFieldKey;
+//   String get searchTerm => _searchTerm.value;
+//   set searchTerm(String value) => _searchTerm.value = value;
 
-  Future<void> clearSearch() async {
-    _searchTerm.value = '';
-    _textFieldKey.currentState?.clearSearch();
-  }
+//   Future<void> clearSearch() async {
+//     _searchTerm.value = '';
+//     _textFieldKey.currentState?.clearSearch();
+//   }
 
-  void dispose() {
-    _searchTerm.dispose();
-  }
-}
+//   void dispose() {
+//     _searchTerm.dispose();
+//   }
+// }
