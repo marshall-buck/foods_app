@@ -133,13 +133,10 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
 }
 
 class _QuickSearchHeader extends WatchingWidget {
-  const _QuickSearchHeader({
-    super.key,
-  });
+  const _QuickSearchHeader();
 
   @override
   Widget build(BuildContext context) {
-    final headers
     return const Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
