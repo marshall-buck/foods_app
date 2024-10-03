@@ -69,7 +69,12 @@ class FoodDetailDescription extends StatelessWidget {
         ),
         width: double.infinity,
         height: 128,
-        child: const Placeholder(),
+        child: const Row(
+          children: [
+            Expanded(child: Placeholder()),
+            Expanded(flex: 2, child: Placeholder()),
+          ],
+        ),
       ),
     );
   }

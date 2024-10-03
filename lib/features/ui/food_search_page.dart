@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
@@ -15,14 +16,12 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
   final foodManager = di.get<FoodSearchManager>();
   final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
 
-  final ScrollController _controllerScroll = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   Future<void> _clearSearch() async {
     await foodManager.clearSearch();
     _textFieldKey.currentState?.clearSearch();
   }
-
-  void _onTap() {}
 
   Future<void> _queryFoods(String searchTerm) async {
     await foodManager.queryFoods(searchTerm: searchTerm);
@@ -30,35 +29,36 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   @override
   void initState() {
-    _controllerScroll.addListener(_onTap);
     super.initState();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _textFieldKey.currentState?.dispose();
     super.dispose();
   }
 
-  late final Widget appBar = SliverPadding(
-    padding: const EdgeInsets.only(bottom: 4),
-    sliver: CustomSliverAppBar(
-      textFieldKey: _textFieldKey,
-      onClearSearch: _clearSearch,
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
-    // print('_FoodSearchPageState build');
     return NotificationListener<FoodsAppSearchBarNotification>(
       onNotification: (notification) {
         _queryFoods(notification.text);
         return true;
       },
       child: BasePage(
-        scrollController: _controllerScroll,
-        slivers: [appBar, const FoodsList()],
+        scrollController: _scrollController,
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 4),
+            sliver: CustomSliverAppBar(
+              scrollController: _scrollController,
+              textFieldKey: _textFieldKey,
+              onClearSearch: _clearSearch,
+            ),
+          ),
+          const FoodsList(),
+        ],
       ),
     );
   }

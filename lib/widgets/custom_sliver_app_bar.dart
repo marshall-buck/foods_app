@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
+import 'package:watch_it/watch_it.dart';
 
 /// A custom [SliverAppBar] that can display either a [titleString] or a
 /// [FoodsAppSearchBar] for searching, in the title property
@@ -13,7 +15,7 @@ import 'package:foods_app/widgets/widgets.dart';
 /// Providing a [titleString] will display the title in the app bar.
 /// Otherwise, a [FoodsAppSearchBar] will be displayed, along with a
 /// clear button and a  [FoodResultsCountBadge].
-class CustomSliverAppBar extends StatelessWidget {
+class CustomSliverAppBar extends StatefulWidget {
   /// Creates a [CustomSliverAppBar].
   ///
   /// Provide either a [titleString] or [textFieldKey] and [onClearSearch].
@@ -23,6 +25,7 @@ class CustomSliverAppBar extends StatelessWidget {
     this.titleString,
     this.showBadge = true,
     this.hintText,
+    this.scrollController,
     super.key,
   }) : assert(
           (titleString != null &&
@@ -55,36 +58,97 @@ class CustomSliverAppBar extends StatelessWidget {
   final bool showBadge;
 
   final String? hintText;
+  final ScrollController? scrollController;
+
+  @override
+  State<CustomSliverAppBar> createState() => _CustomSliverAppBarState();
+}
+
+class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
+  double _opacity = 0;
+
+  @override
+  void initState() {
+    widget.scrollController?.addListener(_onScrollListener);
+
+    super.initState();
+  }
+
+  void _onScrollListener() {
+    if (ScrollDirection.forward ==
+        widget.scrollController!.position.userScrollDirection) {
+      setState(() {
+        _opacity = 1;
+      });
+    } else {
+      setState(() {
+        _opacity = 0;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController?.removeListener(_onScrollListener);
+    widget.scrollController?.dispose();
+    widget.textFieldKey?.currentState?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
-      actions: titleString == null
+      actions: widget.titleString == null
           ? [
               Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: IconButton(
-                  onPressed: onClearSearch,
+                  onPressed: widget.onClearSearch,
                   icon: const Icon(Icons.clear_outlined),
                 ),
               ),
-              if (showBadge) const FoodResultsCountBadge(),
-              // else
-              //   const SizedBox.shrink(),
+              if (widget.showBadge) const FoodResultsCountBadge(),
             ]
           : null,
-      automaticallyImplyLeading: titleString == null,
-      floating: true,
+      toolbarHeight: kToolbarHeight + 16,
+      automaticallyImplyLeading: widget.titleString == null,
       pinned: true,
-      stretch: true,
       backgroundColor: FoodsAppThemeExtension.of(context).background,
-      title: titleString != null
-          ? Text(titleString!)
+      title: widget.titleString != null
+          ? Text(widget.titleString!)
           : FoodsAppSearchBar(
-              key: textFieldKey,
-              hintText: hintText ?? AppStrings.searchPageHintText,
+              key: widget.textFieldKey,
+              hintText: widget.hintText ?? AppStrings.searchPageHintText,
             ),
+      flexibleSpace: widget.titleString == null
+          ? AnimatedOpacity(
+              duration: const Duration(milliseconds: 500),
+              opacity: _opacity,
+              child: _QuickSearchHeader(),
+            )
+          : null,
+    );
+  }
+}
+
+class _QuickSearchHeader extends WatchingWidget {
+  const _QuickSearchHeader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final headers
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Row(
+          children: [
+            Text('asdfasdf'),
+          ],
+        ),
+      ],
     );
   }
 }

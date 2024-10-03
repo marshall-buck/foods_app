@@ -1,3 +1,6 @@
+import 'package:foods_app/features/model/food_model.dart';
+import 'package:foods_app/services/services.dart';
+
 class DisplayMode {
   static const String light = 'light';
 
@@ -13,4 +16,5 @@ class LocatorName {
 class AppStrings {
   static const searchPageHintText = 'Search for foods';
   static const detailsPageHintText = 'Search for comparison food';
+  static const defaultQuickSearchString = '';
 }

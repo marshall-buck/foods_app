@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
@@ -55,10 +57,9 @@ class BasePage extends StatelessWidget {
   /// The scroll controller for the [CustomScrollView].
   final ScrollController? scrollController;
 
-  // final bool showBadge;
-
   @override
   Widget build(BuildContext context) {
+    // print(scrollController?.position.userScrollDirection);
     return Scaffold(
       backgroundColor: FoodsAppThemeExtension.of(context).background,
       body: Padding(
@@ -66,16 +67,6 @@ class BasePage extends StatelessWidget {
         child: CustomScrollView(
           controller: scrollController,
           slivers: [
-            // SliverPadding(
-            //   padding: const EdgeInsets.only(bottom: 4),
-            //   sliver: CustomSliverAppBar(
-            //     titleString: title,
-            //     onClearSearch: onClearSearch,
-            //     textFieldKey: textFieldKey,
-            //     showBadge: showBadge,
-            //     hintText: hintText,
-            //   ),
-            // ),
             ...slivers,
           ],
         ),
