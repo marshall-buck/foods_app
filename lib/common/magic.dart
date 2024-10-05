@@ -1,6 +1,3 @@
-import 'package:foods_app/features/model/food_model.dart';
-import 'package:foods_app/services/services.dart';
-
 class DisplayMode {
   static const String light = 'light';
 

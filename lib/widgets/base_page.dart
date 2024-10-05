@@ -1,4 +1,4 @@
-import 'dart:async';
+// ignore_for_file: comment_references
 
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
@@ -29,12 +29,7 @@ class BasePage extends StatelessWidget {
   const BasePage({
     required this.slivers,
     super.key,
-    // this.title,
-    // this.onClearSearch,
-    // this.textFieldKey,
     this.scrollController,
-    // this.hintText,
-    // this.showBadge = true,
   });
   final List<Widget> slivers;
 
@@ -62,14 +57,11 @@ class BasePage extends StatelessWidget {
     // print(scrollController?.position.userScrollDirection);
     return Scaffold(
       backgroundColor: FoodsAppThemeExtension.of(context).background,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16),
-        child: CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            ...slivers,
-          ],
-        ),
+      body: CustomScrollView(
+        controller: scrollController,
+        slivers: [
+          ...slivers,
+        ],
       ),
     );
   }
