@@ -39,6 +39,7 @@ void main() {
     });
 
     test('SharedPreferences should be initialized', () async {
+      await di.allReady();
       // ignore: strict_raw_type
       final prefsService = await di.getAsync<PreferencesService>(
         instanceName: LocatorName.sharedPrefsService,
@@ -46,14 +47,15 @@ void main() {
 
       expect(prefsService, isNotNull);
     });
-    // test('SearchManager should be initialized', () {
-    //   // ignore: strict_raw_type
-    //   final searchManager = di.get<SearchManager>();
+    test('QuickSearchManager should be initialized', () async {
+      await di.allReady();
+      final quickSearchManager = await di.getAsync<QuickSearchManager>();
 
-    //   expect(searchManager, isNotNull);
-    // });
+      expect(quickSearchManager, isNotNull);
+    });
 
     test('UsdaDB should be initialized and data loaded', () async {
+      await di.allReady();
       final db = await di.getAsync<FoodsDB>(
         instanceName: LocatorName.foodsDBService,
       );

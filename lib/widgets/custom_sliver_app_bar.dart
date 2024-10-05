@@ -137,12 +137,18 @@ class _QuickSearchHeader extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    // final names = watchValue(selectProperty);
+    return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
           children: [
-            Text('asdfasdf'),
+            Text(
+              'asdfasdf',
+              style: AppTextStyle.m3BodySmall.copyWith(
+                color: FoodsAppThemeExtension.of(context).onSurface,
+              ),
+            ),
           ],
         ),
       ],

@@ -54,7 +54,6 @@ class BasePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(scrollController?.position.userScrollDirection);
     return Scaffold(
       backgroundColor: FoodsAppThemeExtension.of(context).background,
       body: CustomScrollView(

@@ -39,20 +39,26 @@ class FoodSearchManager {
   }
 }
 
-// class SearchManager {
-//   final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
-//   final _searchTerm = ValueNotifier<String>('');
+class QuickSearchManager {
+  final quickSearchNames = ValueNotifier<List<String>>([]);
 
-//   GlobalKey<FoodsAppSearchBarState> get textFieldKey => _textFieldKey;
-//   String get searchTerm => _searchTerm.value;
-//   set searchTerm(String value) => _searchTerm.value = value;
+  Future<void> init() async {
+    await getNames();
+  }
 
-//   Future<void> clearSearch() async {
-//     _searchTerm.value = '';
-//     _textFieldKey.currentState?.clearSearch();
-//   }
+  Future<void> getNames() async {
+    // ignore: strict_raw_type
+    final prefs = await di.getAsync<PreferencesService>(
+      instanceName: LocatorName.sharedPrefsService,
+    );
+    final quick = await prefs.getQuickSearchAmounts();
+    final names = quick.map((id) {
+      return NutrientDTO.originalNutrientTableEdit[int.parse(id)]!['name']!;
+    }).toList();
+    quickSearchNames.value = names;
+  }
 
-//   void dispose() {
-//     _searchTerm.dispose();
-//   }
-// }
+  void dispose() {
+    quickSearchNames.dispose();
+  }
+}

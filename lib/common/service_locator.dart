@@ -15,9 +15,7 @@ void registerDependencies() {
     ..registerSingleton<FoodDetailManager>(
       FoodDetailManager(),
     ) //FoodDetailManager
-    // ..registerSingleton<SearchManager>(
-    //   SearchManager(),
-    // ) //SearchManager
+
     // ignore: strict_raw_type
     ..registerSingletonAsync<PreferencesService>(
       () async {
@@ -38,5 +36,18 @@ void registerDependencies() {
       },
       instanceName: LocatorName.foodsDBService,
       dispose: (x) async => x.dispose(),
+    )
+    ..registerSingletonAsync<QuickSearchManager>(
+      () async {
+        final manager = QuickSearchManager();
+        await manager.init();
+        return manager;
+      },
+      dependsOn: [
+        InitDependency(
+          PreferencesService,
+          instanceName: LocatorName.sharedPrefsService,
+        ),
+      ],
     );
 }
