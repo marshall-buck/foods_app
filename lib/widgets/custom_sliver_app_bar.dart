@@ -125,7 +125,7 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
           ? AnimatedOpacity(
               duration: const Duration(milliseconds: 500),
               opacity: _opacity,
-              child: _QuickSearchHeader(),
+              child: const _QuickSearchHeader(),
             )
           : null,
     );
@@ -137,19 +137,27 @@ class _QuickSearchHeader extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final names = watchValue(selectProperty);
+    final namesList = watchValue((QuickSearchManager m) => m.quickSearchNames);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Row(
-          children: [
-            Text(
-              'asdfasdf',
-              style: AppTextStyle.m3BodySmall.copyWith(
-                color: FoodsAppThemeExtension.of(context).onSurface,
-              ),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Row(
+            children: namesList
+                .map(
+                  (name) => Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: Text(
+                      name,
+                      style: AppTextStyle.m3BodySmall.copyWith(
+                        color: FoodsAppThemeExtension.of(context).onSurface,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ],
     );

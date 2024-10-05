@@ -52,9 +52,14 @@ class QuickSearchManager {
       instanceName: LocatorName.sharedPrefsService,
     );
     final quick = await prefs.getQuickSearchAmounts();
-    final names = quick.map((id) {
-      return NutrientDTO.originalNutrientTableEdit[int.parse(id)]!['name']!;
-    }).toList();
+    final names = quick
+        .map((id) {
+          return NutrientDTO.originalNutrientTableEdit[int.parse(id)]!['name']!;
+        })
+        .toList()
+        .reversed
+        .toList();
+
     quickSearchNames.value = names;
   }
 
