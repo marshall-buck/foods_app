@@ -62,6 +62,7 @@ class BasePage extends StatelessWidget {
           ...slivers,
         ],
       ),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }
