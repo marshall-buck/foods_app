@@ -16,7 +16,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Main: ${MediaQuery.sizeOf(context)}');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // showSemanticsDebugger: true,

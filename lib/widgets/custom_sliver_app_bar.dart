@@ -97,7 +97,7 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    print('AppBar: ${MediaQuery.sizeOf(context)}');
+    // print('AppBar: ${MediaQuery.sizeOf(context)}');
     return SliverAppBar(
       surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
       actions: widget.titleString == null
@@ -124,7 +124,8 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
               key: widget.textFieldKey,
               hintText: widget.hintText ?? AppStrings.searchPageHintText,
             ),
-      flexibleSpace: widget.titleString == null
+      flexibleSpace: widget.titleString == null &&
+              widget.scrollController?.position.pixels != 0
           ? AnimatedOpacity(
               duration: const Duration(milliseconds: 500),
               opacity: _opacity,

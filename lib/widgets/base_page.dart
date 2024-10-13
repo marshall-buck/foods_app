@@ -57,7 +57,9 @@ class BasePage extends StatelessWidget {
       ..add(IterableProperty<Widget>('slivers', slivers))
       ..add(
         DiagnosticsProperty<ScrollController?>(
-            'scrollController', scrollController),
+          'scrollController',
+          scrollController,
+        ),
       );
     super.debugFillProperties(properties);
   }

@@ -26,7 +26,7 @@ class _FoodDetailState extends State<FoodDetail> {
   final _scrollController = ScrollController();
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    print(properties.properties);
+    // print(properties.properties);
     super.debugFillProperties(properties);
   }
 
@@ -47,6 +47,10 @@ class _FoodDetailState extends State<FoodDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+
+    final tileSize = FoodDetailTileSize.tileSize(windowSize: width);
+    // print('_FoodDetailState window tileSize: $tileSize');
     final food = watchValue((FoodDetailManager m) => m.currentFood);
     return NotificationListener<FoodsAppSearchBarNotification>(
       onNotification: (notification) {
@@ -57,14 +61,14 @@ class _FoodDetailState extends State<FoodDetail> {
           appBar,
           FoodDetailDescription(food: food!),
           SliverGrid.builder(
-            gridDelegate: FoodDetailSliverGridDelegate(minSpacing: 16),
+            gridDelegate: FoodDetailSliverGridDelegate(
+              minSpacing: tileSize.$2,
+              dimension: tileSize.$1,
+            ),
             itemCount: food.nutrients.length,
             itemBuilder: (BuildContext context, int index) {
-              print(
-                  'grid builder height: ${MediaQuery.sizeOf(context).height}');
-              print('grid builder width: ${MediaQuery.sizeOf(context).width}');
               return Placeholder(
-                child: Text('$index'),
+                child: Text(food.description),
               );
             },
           ),
@@ -100,25 +104,29 @@ class FoodDetailDescription extends StatelessWidget {
 }
 
 class FoodDetailSliverGridDelegate extends SliverGridDelegate {
-  FoodDetailSliverGridDelegate({this.minSpacing = 5});
+  FoodDetailSliverGridDelegate({
+    required this.minSpacing,
+    required this.dimension,
+  });
 
   final double minSpacing;
+  final double dimension;
   late int count;
 
   /// Returns information about the size and position of the tiles in the grid.
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     // Determine how many squares we can fit per row.
-    count = constraints.crossAxisExtent ~/ (144 + minSpacing);
+    count = constraints.crossAxisExtent ~/ (dimension + minSpacing);
     final width = constraints.crossAxisExtent;
 
     // constraints.printConstraints();
     return CustomSliverGridLayout(
       crossAxisCount: count,
-      mainAxisStride: 144 + minSpacing,
-      crossAxisStride: 144 + minSpacing,
-      childMainAxisExtent: 144,
-      childCrossAxisExtent: 144,
+      mainAxisStride: dimension + minSpacing,
+      crossAxisStride: dimension + minSpacing,
+      childMainAxisExtent: dimension,
+      childCrossAxisExtent: dimension,
       reverseCrossAxis: false,
       gridViewWidth: width,
       minSpacing: minSpacing,
@@ -127,7 +135,7 @@ class FoodDetailSliverGridDelegate extends SliverGridDelegate {
 
   @override
   bool shouldRelayout(FoodDetailSliverGridDelegate oldDelegate) {
-    return count != oldDelegate.count;
+    return dimension != oldDelegate.dimension;
   }
 }
 
