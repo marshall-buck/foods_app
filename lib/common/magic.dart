@@ -32,22 +32,23 @@ class Spacing {
   static const double s = 8;
   static const double md = 12;
   static const double lg = 16;
+  static const double xl = 24;
 }
 
 class FoodDetailTileSize {
-  static double s = 120;
-  static double md = 136;
-  static double lg = 152;
+  static double s = 128;
+  static double md = 144;
+  static double lg = 160;
   static (double, double) tileSize({required double windowSize}) {
     switch (windowSize) {
       case <= BreakPoints.xs:
-        return (s, Spacing.s);
+        return (s, Spacing.md);
       case <= BreakPoints.s:
-        return (md, Spacing.md);
+        return (md, Spacing.lg);
       case > BreakPoints.lg:
-        return (lg, Spacing.lg);
+        return (lg, Spacing.xl);
       default:
-        return (md, Spacing.md);
+        return (md, Spacing.lg);
     }
   }
 }
