@@ -23,7 +23,12 @@ class _FoodDetailState extends State<FoodDetail> {
     _textFieldKey.currentState?.clearSearch();
   }
 
-  // final _scrollController = ScrollController();
+  final _scrollController = ScrollController();
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    print(properties.properties);
+    super.debugFillProperties(properties);
+  }
 
   @override
   void initState() {
@@ -52,14 +57,12 @@ class _FoodDetailState extends State<FoodDetail> {
           appBar,
           FoodDetailDescription(food: food!),
           SliverGrid.builder(
-            // padding: const EdgeInsets.all(12.0),
-            gridDelegate: CustomSliverGridDelegate(),
-            // Try uncommenting some of these properties to see the effect on
-            //the grid:
-            itemCount:
-                50, // The default is that the number of grid tiles is infinite.
+            gridDelegate: FoodDetailSliverGridDelegate(minSpacing: 16),
+            itemCount: food.nutrients.length,
             itemBuilder: (BuildContext context, int index) {
-              // final math.Random random = math.Random(index);
+              print(
+                  'grid builder height: ${MediaQuery.sizeOf(context).height}');
+              print('grid builder width: ${MediaQuery.sizeOf(context).width}');
               return Placeholder(
                 child: Text('$index'),
               );
@@ -96,33 +99,35 @@ class FoodDetailDescription extends StatelessWidget {
   }
 }
 
-class CustomSliverGridDelegate extends SliverGridDelegate {
-  CustomSliverGridDelegate({this.minSpacing = 5});
+class FoodDetailSliverGridDelegate extends SliverGridDelegate {
+  FoodDetailSliverGridDelegate({this.minSpacing = 5});
 
   final double minSpacing;
+  late int count;
 
   /// Returns information about the size and position of the tiles in the grid.
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
     // Determine how many squares we can fit per row.
-    final count = constraints.crossAxisExtent ~/ (144 + minSpacing);
+    count = constraints.crossAxisExtent ~/ (144 + minSpacing);
     final width = constraints.crossAxisExtent;
 
-    constraints.printConstraints();
+    // constraints.printConstraints();
     return CustomSliverGridLayout(
-        crossAxisCount: count,
-        mainAxisStride: 144 + minSpacing,
-        crossAxisStride: 144 + minSpacing,
-        childMainAxisExtent: 144,
-        childCrossAxisExtent: 144,
-        reverseCrossAxis: false,
-        gridViewWidth: width,
-        minSpacing: minSpacing);
+      crossAxisCount: count,
+      mainAxisStride: 144 + minSpacing,
+      crossAxisStride: 144 + minSpacing,
+      childMainAxisExtent: 144,
+      childCrossAxisExtent: 144,
+      reverseCrossAxis: false,
+      gridViewWidth: width,
+      minSpacing: minSpacing,
+    );
   }
 
   @override
-  bool shouldRelayout(CustomSliverGridDelegate oldDelegate) {
-    return true;
+  bool shouldRelayout(FoodDetailSliverGridDelegate oldDelegate) {
+    return count != oldDelegate.count;
   }
 }
 
@@ -150,7 +155,8 @@ class CustomSliverGridLayout extends SliverGridLayout {
           childCrossAxisExtent >= 0,
           'Error in CustomGridLayout childCrossAxisExtent',
         ),
-        assert(gridViewWidth >= 0, 'Error in CustomGridLayout gridViewWidth');
+        assert(gridViewWidth >= 0, 'Error in CustomGridLayout gridViewWidth'),
+        assert(minSpacing >= 0, 'Error in CustomGridLayout minSpacing');
 
   /// The number of children in the cross axis.
   final int crossAxisCount;
@@ -186,7 +192,8 @@ class CustomSliverGridLayout extends SliverGridLayout {
 
   final double minSpacing;
 
-  /// The minimum child index that intersects with (or is after) this scroll offset.
+  /// The minimum child index that intersects with (or is after)
+  /// this scroll offset.
   @override
   int getMinChildIndexForScrollOffset(double scrollOffset) {
     return mainAxisStride > precisionErrorTolerance
@@ -194,11 +201,12 @@ class CustomSliverGridLayout extends SliverGridLayout {
         : 0;
   }
 
-  /// The maximum child index that intersects with (or is before) this scroll offset.
+  /// The maximum child index that intersects with (or is before)
+  /// this scroll offset.
   @override
   int getMaxChildIndexForScrollOffset(double scrollOffset) {
     if (mainAxisStride > 0.0) {
-      final int mainAxisCount = (scrollOffset / mainAxisStride).ceil();
+      final mainAxisCount = (scrollOffset / mainAxisStride).ceil();
       return math.max(0, crossAxisCount * mainAxisCount - 1);
     }
     return 0;
@@ -218,11 +226,12 @@ class CustomSliverGridLayout extends SliverGridLayout {
   @override
   SliverGridGeometry getGeometryForChildIndex(int index) {
     final leftover = ((mainAxisStride * crossAxisCount) - gridViewWidth) / 2;
-    final double crossAxisStart = (index % crossAxisCount) * crossAxisStride +
+    final crossAxisStart = (index % crossAxisCount) * crossAxisStride +
         (leftover.abs() + (minSpacing / 2));
-    print(
-        'INDEX MOD crossAxisCount: ${index % crossAxisCount} \n ${leftover.abs()}');
-    //final double crossAxisStart = (index % crossAxisCount) * crossAxisStride;
+    // print(
+    //   // ignore: lines_longer_than_80_chars
+    //   'INDEX MOD crossAxisCount: ${index % crossAxisCount} \n ${leftover.abs()}',
+    // );
 
     final geo = SliverGridGeometry(
       scrollOffset: (index ~/ crossAxisCount) * mainAxisStride,
@@ -231,21 +240,23 @@ class CustomSliverGridLayout extends SliverGridLayout {
       crossAxisExtent: childCrossAxisExtent,
     );
 
-    print('getGeometryForChildIndex - INDEX: $index');
-    print('getGeometryForChildIndex - crossAxisCount: $crossAxisCount');
+    // print('getGeometryForChildIndex - INDEX: $index');
+    // print('getGeometryForChildIndex - crossAxisCount: $crossAxisCount');
 
-    print('getGeometryForChildIndex - mainAxisStride: $mainAxisStride');
+    // print('getGeometryForChildIndex - mainAxisStride: $mainAxisStride');
 
-    print('getGeometryForChildIndex - crossAxisStride: $crossAxisStride');
+    // print('getGeometryForChildIndex - crossAxisStride: $crossAxisStride');
 
-    print(
-        'getGeometryForChildIndex - childMainAxisExtent: $childMainAxisExtent');
+    // print(
+    //   'getGeometryForChildIndex - childMainAxisExtent: $childMainAxisExtent',
+    // );
 
-    print(
-        'getGeometryForChildIndex - childCrossAxisExtent: $childCrossAxisExtent');
+    // print(
+    //   'getGeometryForChildIndex - childCrossAxisExtent: $childCrossAxisExtent',
+    // );
 
-    print('getGeometryForChildIndex - reverseCrossAxis: $reverseCrossAxis');
-    print('GEO: $geo');
+    // print('getGeometryForChildIndex - reverseCrossAxis: $reverseCrossAxis');
+    // print('GEO: $geo');
     return geo;
   }
 
@@ -258,10 +269,10 @@ class CustomSliverGridLayout extends SliverGridLayout {
     if (childCount == 0) {
       // There are no children in the grid. The max scroll offset should be
       // zero.
-      return 0.0;
+      return 0;
     }
-    final int mainAxisCount = ((childCount - 1) ~/ crossAxisCount) + 1;
-    final double mainAxisSpacing = mainAxisStride - childMainAxisExtent;
+    final mainAxisCount = ((childCount - 1) ~/ crossAxisCount) + 1;
+    final mainAxisSpacing = mainAxisStride - childMainAxisExtent;
     return mainAxisStride * mainAxisCount - mainAxisSpacing;
   }
 }

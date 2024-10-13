@@ -16,11 +16,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Main: ${MediaQuery.sizeOf(context)}');
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // showSemanticsDebugger: true,
       theme: ThemeData.light().copyWith(
         extensions: <ThemeExtension<dynamic>>[lightColors],
         textTheme: lightColors.applyToTextTheme(appTextTheme),
-        // appBarTheme: const AppBarTheme().copyWith(tit)
       ),
       darkTheme: ThemeData.dark().copyWith(
         extensions: <ThemeExtension<dynamic>>[darkColors],

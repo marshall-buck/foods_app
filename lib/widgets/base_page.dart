@@ -1,5 +1,6 @@
 // ignore_for_file: comment_references
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
@@ -33,22 +34,6 @@ class BasePage extends StatelessWidget {
   });
   final List<Widget> slivers;
 
-  // /// The title to display in the app bar.
-  // ///
-  // /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
-  // final String? title;
-  // final String? hintText;
-
-  // /// The global key of the [FoodsAppSearchBar] used for searching.
-  // ///
-  // /// This is only used if no [title] is provided.
-  // final GlobalKey<FoodsAppSearchBarState>? textFieldKey;
-
-  // /// A callback that is called when the clear button is pressed.
-  // ///
-  // /// This is only used if no [title] is provided.
-  // final VoidCallback? onClearSearch;
-
   /// The scroll controller for the [CustomScrollView].
   final ScrollController? scrollController;
 
@@ -64,5 +49,16 @@ class BasePage extends StatelessWidget {
       ),
       bottomNavigationBar: const BottomNavBar(),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(IterableProperty<Widget>('slivers', slivers))
+      ..add(
+        DiagnosticsProperty<ScrollController?>(
+            'scrollController', scrollController),
+      );
+    super.debugFillProperties(properties);
   }
 }

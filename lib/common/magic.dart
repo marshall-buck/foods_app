@@ -15,3 +15,14 @@ class AppStrings {
   static const detailsPageHintText = 'Search for comparison food';
   static const defaultQuickSearchString = '';
 }
+
+class AppNumbers {
+  static const double foodDetailNutrientTile = 144;
+}
+
+class BreakPoints {
+  static const double xs = 360;
+  static const double s = 600;
+  static const double md = 840;
+  static const double lg = 1200;
+}

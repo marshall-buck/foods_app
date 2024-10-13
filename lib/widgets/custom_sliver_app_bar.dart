@@ -97,6 +97,7 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    print('AppBar: ${MediaQuery.sizeOf(context)}');
     return SliverAppBar(
       surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
       actions: widget.titleString == null
@@ -113,7 +114,9 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
           : null,
       toolbarHeight: kToolbarHeight + 16,
       automaticallyImplyLeading: widget.titleString == null,
-      pinned: true,
+      // pinned: true,
+      floating: true,
+      snap: true,
       backgroundColor: FoodsAppThemeExtension.of(context).background,
       title: widget.titleString != null
           ? Text(widget.titleString!)
