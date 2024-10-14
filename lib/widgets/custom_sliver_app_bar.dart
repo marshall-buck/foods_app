@@ -120,9 +120,12 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
       backgroundColor: FoodsAppThemeExtension.of(context).background,
       title: widget.titleString != null
           ? Text(widget.titleString!)
-          : FoodsAppSearchBar(
-              key: widget.textFieldKey,
-              hintText: widget.hintText ?? AppStrings.searchPageHintText,
+          : Hero(
+              tag: MagicStrings.searchBarHeroTag,
+              child: FoodsAppSearchBar(
+                key: widget.textFieldKey,
+                hintText: widget.hintText ?? MagicStrings.searchPageHintText,
+              ),
             ),
       flexibleSpace: widget.titleString == null &&
               widget.scrollController?.position.pixels != 0

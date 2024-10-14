@@ -10,14 +10,15 @@ class LocatorName {
   static const String sharedPrefsService = 'sharedPrefsService';
 }
 
-class AppStrings {
+class MagicStrings {
   static const searchPageHintText = 'Search for foods';
   static const detailsPageHintText = 'Search for comparison food';
   static const defaultQuickSearchString = '';
+  static const searchBarHeroTag = 'search-bar';
 }
 
-class AppNumbers {
-  static const double foodDetailNutrientTile = 144;
+class MagicNumbers {
+  static const double maxSearchBarWidth = 590;
 }
 
 class BreakPoints {

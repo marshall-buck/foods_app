@@ -41,24 +41,25 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<FoodsAppSearchBarNotification>(
-      onNotification: (notification) {
-        _queryFoods(notification.text);
-        return true;
-      },
-      child: BasePage(
-        scrollController: _scrollController,
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 4),
-            sliver: CustomSliverAppBar(
-              scrollController: _scrollController,
-              textFieldKey: _textFieldKey,
-              onClearSearch: _clearSearch,
+    return BasePage(
+      child: NotificationListener<FoodsAppSearchBarNotification>(
+        onNotification: (notification) {
+          _queryFoods(notification.text);
+          return true;
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 4),
+              sliver: CustomSliverAppBar(
+                scrollController: _scrollController,
+                textFieldKey: _textFieldKey,
+                onClearSearch: _clearSearch,
+              ),
             ),
-          ),
-          const FoodsList(),
-        ],
+            const FoodsList(),
+          ],
+        ),
       ),
     );
   }

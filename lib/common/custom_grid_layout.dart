@@ -111,22 +111,6 @@ class CustomSliverGridLayout extends SliverGridLayout {
       crossAxisExtent: childCrossAxisExtent,
     );
 
-    // print('getGeometryForChildIndex - INDEX: $index');
-    // print('getGeometryForChildIndex - crossAxisCount: $crossAxisCount');
-
-    // print('getGeometryForChildIndex - mainAxisStride: $mainAxisStride');
-
-    // print('getGeometryForChildIndex - crossAxisStride: $crossAxisStride');
-
-    // print(
-    //   'getGeometryForChildIndex - childMainAxisExtent: $childMainAxisExtent',
-    // );
-
-    // print(
-    //   'getGeometryForChildIndex - childCrossAxisExtent: $childCrossAxisExtent',
-    // );
-
-    // print('getGeometryForChildIndex - reverseCrossAxis: $reverseCrossAxis');
     // print('GEO: $geo');
     return geo;
   }

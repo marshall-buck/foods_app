@@ -39,8 +39,9 @@ import 'package:foods_app/common/common.dart';
 /// _textFieldKey.currentState?.clearSearch();
 /// ```
 class FoodsAppSearchBar extends StatefulWidget {
-  const FoodsAppSearchBar({required this.hintText, super.key});
+  const FoodsAppSearchBar({required this.hintText, this.onTap, super.key});
   final String hintText;
+  final GestureTapCallback? onTap;
 
   @override
   State<FoodsAppSearchBar> createState() => FoodsAppSearchBarState();
@@ -74,15 +75,18 @@ class FoodsAppSearchBarState extends State<FoodsAppSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      style: AppTextStyle.m3BodyLarge
-          .copyWith(color: FoodsAppThemeExtension.of(context).onSurface),
-      controller: _controller,
-      decoration: InputDecoration(
-        border: const UnderlineInputBorder(borderSide: BorderSide.none),
-        hintText: widget.hintText,
-        hintStyle:
-            TextStyle(color: FoodsAppThemeExtension.of(context).onBackground),
+    return Material(
+      child: TextField(
+        style: AppTextStyle.m3BodyLarge
+            .copyWith(color: FoodsAppThemeExtension.of(context).onSurface),
+        controller: _controller,
+        decoration: InputDecoration(
+          // border: const UnderlineInputBorder(borderSide: BorderSide.),
+          hintText: widget.hintText,
+          hintStyle:
+              TextStyle(color: FoodsAppThemeExtension.of(context).onBackground),
+        ),
+        onTap: widget.onTap,
       ),
     );
   }

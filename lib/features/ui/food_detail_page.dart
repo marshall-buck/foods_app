@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:foods_app/common/common.dart';
@@ -41,7 +39,7 @@ class _FoodDetailState extends State<FoodDetail> {
       textFieldKey: _textFieldKey,
       onClearSearch: _clearSearch,
       showBadge: false,
-      hintText: AppStrings.detailsPageHintText,
+      hintText: MagicStrings.detailsPageHintText,
     ),
   );
 
@@ -52,25 +50,30 @@ class _FoodDetailState extends State<FoodDetail> {
     final tileSize = FoodDetailTileSize.tileSize(windowSize: width);
     // print('_FoodDetailState window tileSize: $tileSize');
     final food = watchValue((FoodDetailManager m) => m.currentFood);
-    return NotificationListener<FoodsAppSearchBarNotification>(
-      onNotification: (notification) {
-        return true;
-      },
-      child: BasePage(
-        slivers: [
-          appBar,
-          FoodDetailDescription(food: food!),
-          SliverGrid.builder(
-            gridDelegate: FoodDetailSliverGridDelegate(
-                minSpacing: tileSize.$2, dimension: tileSize.$1, center: true),
-            itemCount: food.nutrients.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Placeholder(
-                child: Text(food.description),
-              );
-            },
-          ),
-        ],
+    return BasePage(
+      child: NotificationListener<FoodsAppSearchBarNotification>(
+        onNotification: (notification) {
+          return true;
+        },
+        child: CustomScrollView(
+          slivers: [
+            appBar,
+            FoodDetailDescription(food: food!),
+            SliverGrid.builder(
+              gridDelegate: FoodDetailSliverGridDelegate(
+                minSpacing: tileSize.$2,
+                dimension: tileSize.$1,
+                center: true,
+              ),
+              itemCount: food.nutrients.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Placeholder(
+                  child: Text(food.description),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

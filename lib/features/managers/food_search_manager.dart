@@ -11,7 +11,7 @@ import 'package:watch_it/watch_it.dart';
 class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
   final currentQuickSearchString =
-      ValueNotifier<String>(AppStrings.defaultQuickSearchString);
+      ValueNotifier<String>(MagicStrings.defaultQuickSearchString);
 
   Future<void> queryFoods({required String searchTerm}) async {
     final db =
