@@ -41,6 +41,7 @@ class FoodSearchManager {
 
 class QuickSearchManager {
   final quickSearchNames = ValueNotifier<List<String>>([]);
+  final opacity = ValueNotifier<double>(0);
 
   Future<void> init() async {
     await getNames();
@@ -62,6 +63,9 @@ class QuickSearchManager {
 
     quickSearchNames.value = names;
   }
+
+  // ignore: use_setters_to_change_properties
+  void setOpacity(double value) => opacity.value = value;
 
   void dispose() {
     quickSearchNames.dispose();

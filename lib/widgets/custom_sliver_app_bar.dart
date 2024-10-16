@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
@@ -25,7 +27,7 @@ class CustomSliverAppBar extends StatefulWidget {
     this.titleString,
     this.showBadge = true,
     this.hintText,
-    this.scrollController,
+    // this.scrollController,
     super.key,
   }) : assert(
           (titleString != null &&
@@ -58,46 +60,66 @@ class CustomSliverAppBar extends StatefulWidget {
   final bool showBadge;
 
   final String? hintText;
-  final ScrollController? scrollController;
+  // final ScrollController? scrollController;
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<GlobalKey<FoodsAppSearchBarState>?>(
+          'textFieldKey',
+          textFieldKey,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<VoidCallback>.has('onClearSearch', onClearSearch),
+      )
+      ..add(StringProperty('titleString', titleString))
+      ..add(
+        FlagProperty(
+          'showBadge',
+          value: showBadge,
+          ifTrue: 'showing badge',
+          ifFalse: 'not showing badge',
+        ),
+      )
+      ..add(StringProperty('hintText', hintText));
+  }
 
   @override
   State<CustomSliverAppBar> createState() => _CustomSliverAppBarState();
 }
 
 class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
-  double _opacity = 0;
-
   @override
   void initState() {
-    widget.scrollController?.addListener(_onScrollListener);
+    // widget.scrollController?.addListener(_onScrollListener);
 
     super.initState();
   }
 
-  void _onScrollListener() {
-    if (ScrollDirection.forward ==
-        widget.scrollController!.position.userScrollDirection) {
-      setState(() {
-        _opacity = 1;
-      });
-    } else {
-      setState(() {
-        _opacity = 0;
-      });
-    }
-  }
+  // void _onScrollListener() {
+  //   if (ScrollDirection.forward ==
+  //       widget.scrollController?.position.userScrollDirection) {
+  //     setState(() {
+  //       _opacity = 1;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _opacity = 0;
+  //     });
+  //   }
+
+  // }
 
   @override
   void dispose() {
-    widget.scrollController?.removeListener(_onScrollListener);
-    widget.scrollController?.dispose();
     widget.textFieldKey?.currentState?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // print('AppBar: ${MediaQuery.sizeOf(context)}');
     return SliverAppBar(
       surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
       actions: widget.titleString == null
@@ -112,9 +134,8 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
               if (widget.showBadge) const FoodResultsCountBadge(),
             ]
           : null,
-      toolbarHeight: kToolbarHeight + 16,
+      expandedHeight: kToolbarHeight + 32,
       automaticallyImplyLeading: widget.titleString == null,
-      // pinned: true,
       floating: true,
       snap: true,
       backgroundColor: FoodsAppThemeExtension.of(context).background,
@@ -127,14 +148,8 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
                 hintText: widget.hintText ?? MagicStrings.searchPageHintText,
               ),
             ),
-      flexibleSpace: widget.titleString == null &&
-              widget.scrollController?.position.pixels != 0
-          ? AnimatedOpacity(
-              duration: const Duration(milliseconds: 500),
-              opacity: _opacity,
-              child: const _QuickSearchHeader(),
-            )
-          : null,
+      flexibleSpace:
+          widget.titleString == null ? const _QuickSearchHeader() : null,
     );
   }
 }
@@ -145,28 +160,33 @@ class _QuickSearchHeader extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     final namesList = watchValue((QuickSearchManager m) => m.quickSearchNames);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Row(
-            children: namesList
-                .map(
-                  (name) => Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Text(
-                      name,
-                      style: AppTextStyle.m3BodySmall.copyWith(
-                        color: FoodsAppThemeExtension.of(context).onSurface,
+    final opacity = watchValue((QuickSearchManager m) => m.opacity);
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 1000),
+      opacity: opacity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Row(
+              children: namesList
+                  .map(
+                    (name) => Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: Text(
+                        name,
+                        style: AppTextStyle.m3BodySmall.copyWith(
+                          color: FoodsAppThemeExtension.of(context).onSurface,
+                        ),
                       ),
                     ),
-                  ),
-                )
-                .toList(),
+                  )
+                  .toList(),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -81,7 +81,6 @@ class FoodsAppSearchBarState extends State<FoodsAppSearchBar> {
             .copyWith(color: FoodsAppThemeExtension.of(context).onSurface),
         controller: _controller,
         decoration: InputDecoration(
-          // border: const UnderlineInputBorder(borderSide: BorderSide.),
           hintText: widget.hintText,
           hintStyle:
               TextStyle(color: FoodsAppThemeExtension.of(context).onBackground),

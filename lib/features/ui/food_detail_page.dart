@@ -21,7 +21,6 @@ class _FoodDetailState extends State<FoodDetail> {
     _textFieldKey.currentState?.clearSearch();
   }
 
-  final _scrollController = ScrollController();
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     // print(properties.properties);
