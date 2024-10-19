@@ -12,12 +12,18 @@ class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
   final currentQuickSearchString =
       ValueNotifier<String>(MagicStrings.defaultQuickSearchString);
+  final searchQueryString = ValueNotifier<String>('');
 
-  Future<void> queryFoods({required String searchTerm}) async {
+  // ignore: use_setters_to_change_properties
+  void updateSearch(String string) => searchQueryString.value = string;
+
+  void clearSearchTerm() => searchQueryString.value = '';
+
+  Future<void> queryFoods() async {
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
-    final foods = await db.queryFoods(searchTerm: searchTerm);
+    final foods = await db.queryFoods(searchTerm: searchQueryString.value);
 
     if (foods.isNotEmpty) {
       final newItems = <FoodListItemModel?>[];
@@ -30,7 +36,8 @@ class FoodSearchManager {
     }
   }
 
-  Future<void> clearSearch() async {
+  void clearSearch() {
+    clearSearchTerm();
     currentResults.value = [];
   }
 

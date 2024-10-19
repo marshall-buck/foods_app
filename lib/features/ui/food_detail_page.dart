@@ -14,13 +14,6 @@ class FoodDetail extends WatchingStatefulWidget {
 }
 
 class _FoodDetailState extends State<FoodDetail> {
-  final _textFieldKey = GlobalKey<FoodsAppSearchBarState>();
-
-  Future<void> _clearSearch() async {
-    // await foodManager.clearSearch();
-    _textFieldKey.currentState?.clearSearch();
-  }
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     // print(properties.properties);
@@ -32,11 +25,9 @@ class _FoodDetailState extends State<FoodDetail> {
     super.initState();
   }
 
-  late final Widget appBar = SliverPadding(
-    padding: const EdgeInsets.only(bottom: 4),
+  late final Widget appBar = const SliverPadding(
+    padding: EdgeInsets.only(bottom: 4),
     sliver: CustomSliverAppBar(
-      textFieldKey: _textFieldKey,
-      onClearSearch: _clearSearch,
       showBadge: false,
       hintText: MagicStrings.detailsPageHintText,
     ),
@@ -50,29 +41,24 @@ class _FoodDetailState extends State<FoodDetail> {
     // print('_FoodDetailState window tileSize: $tileSize');
     final food = watchValue((FoodDetailManager m) => m.currentFood);
     return BasePage(
-      child: NotificationListener<FoodsAppSearchBarNotification>(
-        onNotification: (notification) {
-          return true;
-        },
-        child: CustomScrollView(
-          slivers: [
-            appBar,
-            FoodDetailDescription(food: food!),
-            SliverGrid.builder(
-              gridDelegate: FoodDetailSliverGridDelegate(
-                minSpacing: tileSize.$2,
-                dimension: tileSize.$1,
-                center: true,
-              ),
-              itemCount: food.nutrients.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Placeholder(
-                  child: Text(food.description),
-                );
-              },
+      child: CustomScrollView(
+        slivers: [
+          appBar,
+          FoodDetailDescription(food: food!),
+          SliverGrid.builder(
+            gridDelegate: FoodDetailSliverGridDelegate(
+              minSpacing: tileSize.$2,
+              dimension: tileSize.$1,
+              center: true,
             ),
-          ],
-        ),
+            itemCount: food.nutrients.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Placeholder(
+                child: Text(food.description),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -24,6 +24,7 @@ void main() {
 
       expect(di.isRegistered<FoodSearchManager>(), true);
     });
+
     test('FoodDetailManager should be initialized', () async {
       await di.allReady();
 

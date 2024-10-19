@@ -3,19 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
+import 'package:watch_it/watch_it.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
   });
 
-  void _navigateAway(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<FoodDetail>(
-        builder: (context) => const FoodSearchPage(),
-      ),
-    );
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _controller = TextEditingController();
+
+  Future<void> _onChanged(BuildContext context, String string) async {
+    di.get<FoodSearchManager>().updateSearch(string);
+    final searchTerm = di.get<FoodSearchManager>().searchQueryString.value;
+
+    if (searchTerm.length > 1) {
+      await di.get<FoodSearchManager>().queryFoods();
+      if (context.mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute<FoodDetail>(
+            builder: (context) => const FoodSearchPage(),
+          ),
+        );
+      }
+    }
+  }
+
+  
+
+  void _onClearSearch() {
+    di.get<FoodSearchManager>().clearSearch();
   }
 
   @override
@@ -30,7 +52,11 @@ class HomePage extends StatelessWidget {
               tag: MagicStrings.searchBarHeroTag,
               child: FoodsAppSearchBar(
                 hintText: MagicStrings.searchPageHintText,
-                onTap: () => _navigateAway(context),
+                showBadge: false,
+                onClearSearch: _onClearSearch,
+                onChanged: (String string) {
+                  _onChanged(context, string);
+                },
               ),
             ),
           ),
@@ -40,13 +66,13 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomeSearch extends StatelessWidget {
-  const HomeSearch({super.key});
+// class HomeSearch extends StatelessWidget {
+//   const HomeSearch({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: FoodsAppSearchBar(hintText: MagicStrings.searchPageHintText),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: FoodsAppSearchBar(hintText: MagicStrings.searchPageHintText),
+//     );
+//   }
+// }

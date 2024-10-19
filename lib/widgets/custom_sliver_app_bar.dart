@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -7,73 +6,33 @@ import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 import 'package:watch_it/watch_it.dart';
 
-/// A custom [SliverAppBar] that can display either a [titleString] or a
-/// [FoodsAppSearchBar] for searching, in the title property
-/// of the [SliverAppBar].
-///
-/// This widget enforces that either a [titleString] is provided, or both
-/// [onClearSearch] and [textFieldKey] are provided.
-///
-/// Providing a [titleString] will display the title in the app bar.
-/// Otherwise, a [FoodsAppSearchBar] will be displayed, along with a
-/// clear button and a  [FoodResultsCountBadge].
-class CustomSliverAppBar extends StatefulWidget {
-  /// Creates a [CustomSliverAppBar].
-  ///
-  /// Provide either a [titleString] or [textFieldKey] and [onClearSearch].
+class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({
-    this.onClearSearch,
-    this.textFieldKey,
+    required this.showBadge,
     this.titleString,
-    this.showBadge = true,
     this.hintText,
-    // this.scrollController,
+    this.onTap,
+    this.onClearSearch,
+    this.onChanged,
+    this.searchController,
     super.key,
-  }) : assert(
-          (titleString != null &&
-                  onClearSearch == null &&
-                  textFieldKey == null) ||
-              (titleString == null &&
-                  onClearSearch != null &&
-                  textFieldKey != null),
-          '''
-                Either titleString must be provided, or both onClearSearch and
-                  textFieldKey must be provided.
-          ''',
-        );
-
-  /// The global key of the [FoodsAppSearchBar] used for searching.
-  ///
-  /// This is only used if no [titleString] is provided.
-  final GlobalKey<FoodsAppSearchBarState>? textFieldKey;
-
-  /// A callback that is called when the clear button is pressed.
-  ///
-  /// This is only used if no [titleString] is provided.
-  final VoidCallback? onClearSearch;
-
-  /// The title to display in the app bar.
-  ///
-  /// If this is provided, [onClearSearch] and [textFieldKey] must be null.
+  });
+  final TextEditingController? searchController;
   final String? titleString;
 
   final bool showBadge;
 
   final String? hintText;
-  // final ScrollController? scrollController;
+
+  final GestureTapCallback? onTap;
+  final VoidCallback? onClearSearch;
+
+  final ValueChanged<String>? onChanged;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(
-        DiagnosticsProperty<GlobalKey<FoodsAppSearchBarState>?>(
-          'textFieldKey',
-          textFieldKey,
-        ),
-      )
-      ..add(
-        ObjectFlagProperty<VoidCallback>.has('onClearSearch', onClearSearch),
-      )
       ..add(StringProperty('titleString', titleString))
       ..add(
         FlagProperty(
@@ -87,69 +46,28 @@ class CustomSliverAppBar extends StatefulWidget {
   }
 
   @override
-  State<CustomSliverAppBar> createState() => _CustomSliverAppBarState();
-}
-
-class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
-  @override
-  void initState() {
-    // widget.scrollController?.addListener(_onScrollListener);
-
-    super.initState();
-  }
-
-  // void _onScrollListener() {
-  //   if (ScrollDirection.forward ==
-  //       widget.scrollController?.position.userScrollDirection) {
-  //     setState(() {
-  //       _opacity = 1;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _opacity = 0;
-  //     });
-  //   }
-
-  // }
-
-  @override
-  void dispose() {
-    widget.textFieldKey?.currentState?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
-      actions: widget.titleString == null
-          ? [
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: IconButton(
-                  onPressed: widget.onClearSearch,
-                  icon: const Icon(Icons.clear_outlined),
-                ),
-              ),
-              if (widget.showBadge) const FoodResultsCountBadge(),
-            ]
-          : null,
       expandedHeight: kToolbarHeight + 32,
-      automaticallyImplyLeading: widget.titleString == null,
+      automaticallyImplyLeading: false,
       floating: true,
-      snap: true,
-      backgroundColor: FoodsAppThemeExtension.of(context).background,
-      title: widget.titleString != null
-          ? Text(widget.titleString!)
+      // snap: true,
+      // backgroundColor: Colors.transparent,
+      title: titleString != null
+          ? Text(titleString!)
           : Hero(
               tag: MagicStrings.searchBarHeroTag,
               child: FoodsAppSearchBar(
-                key: widget.textFieldKey,
-                hintText: widget.hintText ?? MagicStrings.searchPageHintText,
+                showBadge: showBadge,
+                hintText: hintText ?? MagicStrings.searchPageHintText,
+                onTap: onTap,
+                onClearSearch: onClearSearch,
+                onChanged: onChanged,
+                controller: searchController,
               ),
             ),
-      flexibleSpace:
-          widget.titleString == null ? const _QuickSearchHeader() : null,
+      flexibleSpace: titleString == null ? const _QuickSearchHeader() : null,
     );
   }
 }
