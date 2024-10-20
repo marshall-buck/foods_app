@@ -67,7 +67,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
                 onClearSearch: _onClearSearch,
               ),
             ),
-            FoodsList(),
+            const FoodsList(),
           ],
         ),
       ),
