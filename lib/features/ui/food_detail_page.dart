@@ -15,12 +15,6 @@ class FoodDetail extends WatchingStatefulWidget {
 
 class _FoodDetailState extends State<FoodDetail> {
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    // print(properties.properties);
-    super.debugFillProperties(properties);
-  }
-
-  @override
   void initState() {
     super.initState();
   }
@@ -30,12 +24,23 @@ class _FoodDetailState extends State<FoodDetail> {
     final width = MediaQuery.sizeOf(context).width;
 
     final tileSize = FoodDetailTileSize.tileSize(windowSize: width);
-    // print('_FoodDetailState window tileSize: $tileSize');
+
     final food = watchValue((FoodDetailManager m) => m.currentFood);
     return BasePage(
       child: CustomScrollView(
         slivers: [
-          CustomSliverAppBar(titleWidget: FoodDetailDescription(food: food!)),
+          SliverAppBar(
+            actions: const [
+              Icon(Icons.save_as),
+              Icon(Icons.edit),
+              Icon(Icons.refresh),
+            ],
+            pinned: true,
+            bottom: PreferredSize(
+              preferredSize: Size(double.infinity, tileSize.$1),
+              child: FoodDetailDescription(food: food!),
+            ),
+          ),
           SliverGrid.builder(
             gridDelegate: FoodDetailSliverGridDelegate(
               minSpacing: tileSize.$2,
@@ -61,13 +66,16 @@ class FoodDetailDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+
+    final tileSize = FoodDetailTileSize.tileSize(windowSize: width);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
       width: double.infinity,
-      height: 128,
+      height: tileSize.$1,
       child: const Row(
         children: [
           Expanded(child: Placeholder()),

@@ -45,6 +45,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     final searchString = di.get<FoodSearchManager>().searchQueryString.value;
 
     _scrollController.addListener(_onScrollListener);
+    print(searchString);
     _searchController = TextEditingController(text: searchString);
     // _searchController.addListener(_onClearSearch);
     super.initState();
@@ -69,17 +70,18 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
         slivers: [
           SliverPadding(
             padding: const EdgeInsets.only(bottom: 4),
-            sliver: CustomSliverAppBar(
-              titleWidget: Hero(
+            sliver: SliverAppBar(
+              title: Hero(
                 tag: MagicStrings.searchBarHeroTag,
                 child: FoodsAppSearchBar(
                   showBadge: true,
                   hintText: MagicStrings.searchPageHintText,
                   onChanged: _onChanged,
                   onClearSearch: _onClearSearch,
+                  controller: _searchController,
                 ),
               ),
-              flexSpaceWidget: const _QuickSearchHeader(),
+              flexibleSpace: const _QuickSearchHeader(),
             ),
           ),
           const FoodsList(),

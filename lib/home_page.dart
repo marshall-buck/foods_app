@@ -12,10 +12,9 @@ class HomePage extends StatelessWidget {
 
   Future<void> _onChanged(BuildContext context, String string) async {
     di.get<FoodSearchManager>().updateSearch(string);
-    // final searchTerm = di.get<FoodSearchManager>().searchQueryString.value;
 
     await di.get<FoodSearchManager>().queryFoods();
-    // print(di.get<FoodSearchManager>().searchQueryString.value);
+
     final lengthOfResults =
         di.get<FoodSearchManager>().currentResults.value.length;
     if (lengthOfResults > 0) {
