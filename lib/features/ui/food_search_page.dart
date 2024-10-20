@@ -69,21 +69,20 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
       child: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 4),
-            sliver: SliverAppBar(
-              title: Hero(
-                tag: MagicStrings.searchBarHeroTag,
-                child: FoodsAppSearchBar(
-                  showBadge: true,
-                  hintText: MagicStrings.searchPageHintText,
-                  onChanged: _onChanged,
-                  onClearSearch: _onClearSearch,
-                  controller: _searchController,
-                ),
+          SliverAppBar(
+            toolbarHeight: kTextTabBarHeight + 16,
+            floating: true,
+            title: Hero(
+              tag: MagicStrings.searchBarHeroTag,
+              child: FoodsAppSearchBar(
+                showBadge: true,
+                hintText: MagicStrings.searchPageHintText,
+                onChanged: _onChanged,
+                onClearSearch: _onClearSearch,
+                controller: _searchController,
               ),
-              flexibleSpace: const _QuickSearchHeader(),
             ),
+            flexibleSpace: const _QuickSearchHeader(),
           ),
           const FoodsList(),
         ],

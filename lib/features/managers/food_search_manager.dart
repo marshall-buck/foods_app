@@ -10,8 +10,7 @@ import 'package:watch_it/watch_it.dart';
 
 class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
-  // final currentQuickSearchString =
-  //     ValueNotifier<String>(MagicStrings.defaultQuickSearchString);
+
   final searchQueryString = ValueNotifier<String>('');
 
   // ignore: use_setters_to_change_properties

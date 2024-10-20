@@ -38,21 +38,37 @@ class _FoodDetailState extends State<FoodDetail> {
             pinned: true,
             bottom: PreferredSize(
               preferredSize: Size(double.infinity, tileSize.$1),
-              child: FoodDetailDescription(food: food!),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FoodDetailDescription(food: food!),
+              ),
             ),
           ),
-          SliverGrid.builder(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: tileSize.$1,
-              crossAxisSpacing: tileSize.$2,
-              mainAxisSpacing: tileSize.$2,
+          SliverPadding(
+            padding: const EdgeInsets.all(8.0),
+            sliver: SliverGrid.builder(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: tileSize.$1,
+                crossAxisSpacing: tileSize.$2,
+                mainAxisSpacing: tileSize.$2,
+              ),
+              itemCount: food.nutrientList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Text(
+                    food.nutrientList[index].name,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                  ),
+                );
+              },
             ),
-            itemCount: food.nutrients.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Placeholder(
-                child: Text(food.description),
-              );
-            },
           ),
         ],
       ),
@@ -75,11 +91,26 @@ class FoodDetailDescription extends StatelessWidget {
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
       width: double.infinity,
-      height: tileSize.$1,
-      child: const Row(
+      height: FoodDetailTileSize.sm,
+      child: Row(
         children: [
-          Expanded(child: Placeholder()),
-          Expanded(flex: 2, child: Placeholder()),
+          Expanded(
+            child: Text(
+              '100 g',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+            ),
+          ),
+          Expanded(
+              flex: 2,
+              child: Text(
+                food.description,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+              )),
         ],
       ),
     );

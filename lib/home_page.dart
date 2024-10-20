@@ -39,18 +39,15 @@ class HomePage extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-          child: SizedBox(
-            width: MagicNumbers.maxSearchBarWidth,
-            child: Hero(
-              tag: MagicStrings.searchBarHeroTag,
-              child: FoodsAppSearchBar(
-                hintText: MagicStrings.searchPageHintText,
-                showBadge: false,
-                onClearSearch: _onClearSearch,
-                onChanged: (String string) {
-                  _onChanged(context, string);
-                },
-              ),
+          child: Hero(
+            tag: MagicStrings.searchBarHeroTag,
+            child: FoodsAppSearchBar(
+              hintText: MagicStrings.searchPageHintText,
+              showBadge: false,
+              onClearSearch: _onClearSearch,
+              onChanged: (String string) {
+                _onChanged(context, string);
+              },
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/common.dart';
 
 import 'package:foods_app/features/features.dart';
 
@@ -23,21 +24,24 @@ class FoodsAppSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: SearchBar(
-        hintText: hintText,
-        trailing: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: IconButton(
-              onPressed: onClearSearch,
-              icon: const Icon(Icons.clear_outlined),
+      child: SizedBox(
+        width: MagicNumbers.maxSearchBarWidth,
+        child: SearchBar(
+          hintText: hintText,
+          trailing: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: IconButton(
+                onPressed: onClearSearch,
+                icon: const Icon(Icons.clear_outlined),
+              ),
             ),
-          ),
-          if (showBadge) const FoodResultsCountBadge(),
-        ],
-        controller: controller,
-        onChanged: onChanged,
-        onTap: onTap,
+            if (showBadge) const FoodResultsCountBadge(),
+          ],
+          controller: controller,
+          onChanged: onChanged,
+          onTap: onTap,
+        ),
       ),
     );
   }

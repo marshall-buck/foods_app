@@ -18,8 +18,9 @@ class FoodsList extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foodResults = di.get<FoodSearchManager>().currentResults;
-    if (foodResults.value.isEmpty) {
+    final foodResults = watchValue((FoodSearchManager x) => x.currentResults);
+
+    if (foodResults.isEmpty) {
       return SliverToBoxAdapter(
         child: Text(
           'No results found.',
@@ -33,7 +34,7 @@ class FoodsList extends WatchingWidget {
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              final food = foodResults.value[index];
+              final food = foodResults[index];
 
               final id = ValueKey<int>(food!.id);
               return GestureDetector(
@@ -44,7 +45,7 @@ class FoodsList extends WatchingWidget {
                 ),
               );
             },
-            childCount: foodResults.value.length,
+            childCount: foodResults.length,
           ),
         ),
       );

@@ -2,30 +2,34 @@ import 'package:equatable/equatable.dart';
 import 'package:foods_app/services/services.dart';
 
 class Food extends Equatable {
-  const Food({
-    required this.id,
-    required this.description,
-    required this.nutrients,
-  });
+  const Food(
+      {required this.id,
+      required this.description,
+      required this.nutrientMap,
+      required this.nutrientList});
   factory Food.fromFoodDTO(FoodDTO food) {
-    final nutrient = <int, Nutrient>{};
+    final nutrientMap = <int, Nutrient>{};
+    final nutrientList = <Nutrient>[];
     for (final entry in food.nutrients.entries) {
-      nutrient[entry.key] = Nutrient.fromMapEntry(entry);
+      final nutrient = Nutrient.fromMapEntry(entry);
+      nutrientMap[entry.key] = nutrient;
+      nutrientList.add(nutrient);
     }
     return Food(
-      id: food.id,
-      description: food.description,
-      nutrients: nutrient,
-    );
+        id: food.id,
+        description: food.description,
+        nutrientMap: nutrientMap,
+        nutrientList: nutrientList);
   }
   final int id;
 
   final String description;
 
-  final Map<int, Nutrient> nutrients;
+  final Map<int, Nutrient> nutrientMap;
+  final List<Nutrient> nutrientList;
 
   @override
-  List<Object?> get props => [id, description, nutrients];
+  List<Object?> get props => [id, description, nutrientMap, nutrientList];
 }
 
 class Nutrient extends Equatable {
