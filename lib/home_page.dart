@@ -5,26 +5,24 @@ import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 import 'package:watch_it/watch_it.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
   });
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   Future<void> _onChanged(BuildContext context, String string) async {
     di.get<FoodSearchManager>().updateSearch(string);
-    final searchTerm = di.get<FoodSearchManager>().searchQueryString.value;
+    // final searchTerm = di.get<FoodSearchManager>().searchQueryString.value;
 
-    if (searchTerm.length > 1) {
-      await di.get<FoodSearchManager>().queryFoods();
+    await di.get<FoodSearchManager>().queryFoods();
+    // print(di.get<FoodSearchManager>().searchQueryString.value);
+    final lengthOfResults =
+        di.get<FoodSearchManager>().currentResults.value.length;
+    if (lengthOfResults > 0) {
       if (context.mounted) {
-        await Navigator.push(
+        await Navigator.pushReplacement(
           context,
-          MaterialPageRoute<FoodDetail>(
+          MaterialPageRoute<FoodSearchPage>(
             builder: (context) => const FoodSearchPage(),
           ),
         );
@@ -38,20 +36,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Spacing.xl),
-        child: SizedBox(
-          width: MagicNumbers.maxSearchBarWidth,
-          child: Hero(
-            tag: MagicStrings.searchBarHeroTag,
-            child: FoodsAppSearchBar(
-              hintText: MagicStrings.searchPageHintText,
-              showBadge: false,
-              onClearSearch: _onClearSearch,
-              onChanged: (String string) {
-                _onChanged(context, string);
-              },
+    return Material(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+          child: SizedBox(
+            width: MagicNumbers.maxSearchBarWidth,
+            child: Hero(
+              tag: MagicStrings.searchBarHeroTag,
+              child: FoodsAppSearchBar(
+                hintText: MagicStrings.searchPageHintText,
+                showBadge: false,
+                onClearSearch: _onClearSearch,
+                onChanged: (String string) {
+                  _onChanged(context, string);
+                },
+              ),
             ),
           ),
         ),
@@ -59,14 +59,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// class HomeSearch extends StatelessWidget {
-//   const HomeSearch({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Center(
-//       child: FoodsAppSearchBar(hintText: MagicStrings.searchPageHintText),
-//     );
-//   }
-// }

@@ -25,14 +25,6 @@ class _FoodDetailState extends State<FoodDetail> {
     super.initState();
   }
 
-  late final Widget appBar = const SliverPadding(
-    padding: EdgeInsets.only(bottom: 4),
-    sliver: CustomSliverAppBar(
-      showBadge: false,
-      hintText: MagicStrings.detailsPageHintText,
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -43,8 +35,7 @@ class _FoodDetailState extends State<FoodDetail> {
     return BasePage(
       child: CustomScrollView(
         slivers: [
-          appBar,
-          FoodDetailDescription(food: food!),
+          CustomSliverAppBar(titleWidget: FoodDetailDescription(food: food!)),
           SliverGrid.builder(
             gridDelegate: FoodDetailSliverGridDelegate(
               minSpacing: tileSize.$2,
@@ -70,20 +61,18 @@ class FoodDetailDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Theme.of(context).colorScheme.primaryContainer,
-        ),
-        width: double.infinity,
-        height: 128,
-        child: const Row(
-          children: [
-            Expanded(child: Placeholder()),
-            Expanded(flex: 2, child: Placeholder()),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Theme.of(context).colorScheme.primaryContainer,
+      ),
+      width: double.infinity,
+      height: 128,
+      child: const Row(
+        children: [
+          Expanded(child: Placeholder()),
+          Expanded(flex: 2, child: Placeholder()),
+        ],
       ),
     );
   }

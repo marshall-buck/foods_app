@@ -23,7 +23,7 @@ class MagicNumbers {
 
 class BreakPoints {
   static const double xs = 450;
-  static const double s = 600;
+  static const double sm = 600;
   static const double md = 840;
   static const double lg = 1200;
 }
@@ -44,7 +44,7 @@ class FoodDetailTileSize {
     switch (windowSize) {
       case <= BreakPoints.xs:
         return (s, Spacing.md);
-      case <= BreakPoints.s:
+      case <= BreakPoints.sm:
         return (md, Spacing.lg);
       case > BreakPoints.lg:
         return (lg, Spacing.xl);
