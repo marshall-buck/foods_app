@@ -74,7 +74,7 @@ class FoodDetailDescription extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: FoodsAppThemeExtension.of(context).primaryContainer,
+          color: Theme.of(context).colorScheme.primaryContainer,
         ),
         width: double.infinity,
         height: 128,

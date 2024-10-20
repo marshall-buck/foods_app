@@ -48,7 +48,7 @@ class CustomSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      surfaceTintColor: FoodsAppThemeExtension.of(context).surfaceTint,
+      // surfaceTintColor: FAppThemeExt.of(context).surfaceTint,
       expandedHeight: kToolbarHeight + 32,
       automaticallyImplyLeading: false,
       floating: true,
@@ -95,7 +95,7 @@ class _QuickSearchHeader extends WatchingWidget {
                       child: Text(
                         name,
                         style: AppTextStyle.m3BodySmall.copyWith(
-                          color: FoodsAppThemeExtension.of(context).onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),

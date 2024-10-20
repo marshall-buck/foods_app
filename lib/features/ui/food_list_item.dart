@@ -23,7 +23,7 @@ class FoodListItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: FoodsAppThemeExtension.of(context).outlineVariant,
+            color: Theme.of(context).colorScheme.outlineVariant,
           ),
         ),
       ),
@@ -100,7 +100,7 @@ class QuickResults extends StatelessWidget {
           child: Text(
             quickResult,
             style: AppTextStyle.m3BodyMedium.copyWith(
-              color: FoodsAppThemeExtension.of(context).onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         );

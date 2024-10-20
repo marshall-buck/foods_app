@@ -1,5 +1,5 @@
 //GENERATED BARREL FILE
-export 'colors.dart';
+
 export 'custom_grid_layout.dart';
 export 'exceptions.dart';
 export 'logo_string.dart';

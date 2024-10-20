@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = TextEditingController();
-
   Future<void> _onChanged(BuildContext context, String string) async {
     di.get<FoodSearchManager>().updateSearch(string);
     final searchTerm = di.get<FoodSearchManager>().searchQueryString.value;
@@ -34,30 +32,26 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  
-
   void _onClearSearch() {
     di.get<FoodSearchManager>().clearSearch();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BasePage(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Spacing.xl),
-          child: SizedBox(
-            width: MagicNumbers.maxSearchBarWidth,
-            child: Hero(
-              tag: MagicStrings.searchBarHeroTag,
-              child: FoodsAppSearchBar(
-                hintText: MagicStrings.searchPageHintText,
-                showBadge: false,
-                onClearSearch: _onClearSearch,
-                onChanged: (String string) {
-                  _onChanged(context, string);
-                },
-              ),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Spacing.xl),
+        child: SizedBox(
+          width: MagicNumbers.maxSearchBarWidth,
+          child: Hero(
+            tag: MagicStrings.searchBarHeroTag,
+            child: FoodsAppSearchBar(
+              hintText: MagicStrings.searchPageHintText,
+              showBadge: false,
+              onClearSearch: _onClearSearch,
+              onChanged: (String string) {
+                _onChanged(context, string);
+              },
             ),
           ),
         ),

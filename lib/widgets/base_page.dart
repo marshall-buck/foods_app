@@ -16,7 +16,6 @@ class BasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FoodsAppThemeExtension.of(context).background,
       body: child,
       bottomNavigationBar: const BottomNavBar(),
     );
