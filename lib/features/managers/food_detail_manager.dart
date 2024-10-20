@@ -7,7 +7,7 @@ import 'package:watch_it/watch_it.dart';
 class FoodDetailManager {
   final currentFood = ValueNotifier<Food?>(null);
 
-  String get description => currentFood.value!.description;
+  String? get description => currentFood.value?.description;
 
   Future<void> queryFood(int id) async {
     final foodsDB = di.get<FoodsDB>(instanceName: LocatorName.foodsDBService);

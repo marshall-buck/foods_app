@@ -30,7 +30,7 @@ class BreakPoints {
 
 class Spacing {
   static const double xs = 4;
-  static const double s = 8;
+  static const double sm = 8;
   static const double md = 12;
   static const double lg = 16;
   static const double xl = 24;
@@ -46,7 +46,7 @@ class FoodDetailTileSize {
       case <= BreakPoints.xs:
         return (xs, Spacing.xs);
       case <= BreakPoints.sm:
-        return (sm, Spacing.lg);
+        return (sm, Spacing.sm);
       case > BreakPoints.lg:
         return (lg, Spacing.xl);
       default:

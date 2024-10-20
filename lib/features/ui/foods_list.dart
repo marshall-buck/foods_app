@@ -3,7 +3,7 @@ import 'package:foods_app/features/features.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodsList extends StatelessWidget {
+class FoodsList extends WatchingWidget {
   const FoodsList({super.key});
 
   Future<void> _onTap(BuildContext context, ValueKey<int> id) async {
@@ -18,42 +18,36 @@ class FoodsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foodManager = di.get<FoodSearchManager>();
+    final foodResults = di.get<FoodSearchManager>().currentResults;
+    if (foodResults.value.isEmpty) {
+      return SliverToBoxAdapter(
+        child: Text(
+          'No results found.',
+          style: Theme.of(context).textTheme.titleSmall,
+          textAlign: TextAlign.center,
+        ),
+      );
+    } else {
+      return SliverPadding(
+        padding: const EdgeInsets.only(left: 8, right: 8),
+        sliver: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              final food = foodResults.value[index];
 
-    return ValueListenableBuilder<List<FoodListItemModel?>>(
-      valueListenable: foodManager.currentResults,
-      builder: (BuildContext context, value, Widget? child) {
-        if (value.isEmpty) {
-          return SliverToBoxAdapter(
-            child: Text(
-              'No results found.',
-              style: Theme.of(context).textTheme.titleSmall,
-              textAlign: TextAlign.center,
-            ),
-          );
-        } else {
-          return SliverPadding(
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  final food = value[index];
-
-                  final id = ValueKey<int>(food!.id);
-                  return GestureDetector(
-                    onTap: () => _onTap(context, id),
-                    child: FoodListItem(
-                      key: id,
-                      food: food,
-                    ),
-                  );
-                },
-                childCount: value.length,
-              ),
-            ),
-          );
-        }
-      },
-    );
+              final id = ValueKey<int>(food!.id);
+              return GestureDetector(
+                onTap: () => _onTap(context, id),
+                child: FoodListItem(
+                  key: id,
+                  food: food,
+                ),
+              );
+            },
+            childCount: foodResults.value.length,
+          ),
+        ),
+      );
+    }
   }
 }

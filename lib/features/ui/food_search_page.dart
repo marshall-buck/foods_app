@@ -7,6 +7,7 @@ import 'package:foods_app/widgets/widgets.dart';
 
 import 'package:watch_it/watch_it.dart';
 
+// TODO: keep keyboard up if there is a search term, and disappear on scroll
 class FoodSearchPage extends StatefulWidget {
   const FoodSearchPage({super.key});
 
@@ -45,7 +46,7 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
     final searchString = di.get<FoodSearchManager>().searchQueryString.value;
 
     _scrollController.addListener(_onScrollListener);
-    print(searchString);
+
     _searchController = TextEditingController(text: searchString);
     // _searchController.addListener(_onClearSearch);
     super.initState();

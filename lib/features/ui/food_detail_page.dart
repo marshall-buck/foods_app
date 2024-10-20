@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
@@ -42,10 +42,10 @@ class _FoodDetailState extends State<FoodDetail> {
             ),
           ),
           SliverGrid.builder(
-            gridDelegate: FoodDetailSliverGridDelegate(
-              minSpacing: tileSize.$2,
-              dimension: tileSize.$1,
-              center: true,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: tileSize.$1,
+              crossAxisSpacing: tileSize.$2,
+              mainAxisSpacing: tileSize.$2,
             ),
             itemCount: food.nutrients.length,
             itemBuilder: (BuildContext context, int index) {
@@ -83,51 +83,5 @@ class FoodDetailDescription extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class FoodDetailSliverGridDelegate extends SliverGridDelegate {
-  FoodDetailSliverGridDelegate({
-    required this.minSpacing,
-    required this.dimension,
-    this.center = false,
-  });
-
-  final double minSpacing;
-  final double dimension;
-  late int count;
-  bool center;
-
-  /// Returns information about the size and position of the tiles in the grid.
-  @override
-  SliverGridLayout getLayout(SliverConstraints constraints) {
-    // Determine how many squares we can fit per row.
-    count = constraints.crossAxisExtent ~/ (dimension + minSpacing);
-    final width = constraints.crossAxisExtent;
-
-    final totalFilledSpace = count * dimension;
-    final leftOverSpace = width - totalFilledSpace;
-    final centeredSpacing = leftOverSpace / (count + 1);
-
-    // constraints.printConstraints();
-    return CustomSliverGridLayout(
-      crossAxisCount: count,
-      mainAxisStride: center == false
-          ? dimension + minSpacing
-          : dimension + centeredSpacing,
-      crossAxisStride: center == false
-          ? dimension + minSpacing
-          : dimension + centeredSpacing,
-      childMainAxisExtent: dimension,
-      childCrossAxisExtent: dimension,
-      reverseCrossAxis: false,
-      gridViewWidth: width,
-      minSpacing: center == false ? minSpacing : centeredSpacing,
-    );
-  }
-
-  @override
-  bool shouldRelayout(FoodDetailSliverGridDelegate oldDelegate) {
-    return dimension != oldDelegate.dimension;
   }
 }

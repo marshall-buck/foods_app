@@ -2,6 +2,52 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
+class CustomFoodDetailSliverGridDelegate extends SliverGridDelegate {
+  CustomFoodDetailSliverGridDelegate({
+    required this.minSpacing,
+    required this.dimension,
+    this.center = false,
+  });
+
+  final double minSpacing;
+  final double dimension;
+  late int count;
+  bool center;
+
+  /// Returns information about the size and position of the tiles in the grid.
+  @override
+  SliverGridLayout getLayout(SliverConstraints constraints) {
+    // Determine how many squares we can fit per row.
+    count = constraints.crossAxisExtent ~/ (dimension + minSpacing);
+    final width = constraints.crossAxisExtent;
+
+    final totalFilledSpace = count * dimension;
+    final leftOverSpace = width - totalFilledSpace;
+    final centeredSpacing = leftOverSpace / (count + 1);
+
+    // constraints.printConstraints();
+    return CustomSliverGridLayout(
+      crossAxisCount: count,
+      mainAxisStride: center == false
+          ? dimension + minSpacing
+          : dimension + centeredSpacing,
+      crossAxisStride: center == false
+          ? dimension + minSpacing
+          : dimension + centeredSpacing,
+      childMainAxisExtent: dimension,
+      childCrossAxisExtent: dimension,
+      reverseCrossAxis: false,
+      gridViewWidth: width,
+      minSpacing: center == false ? minSpacing : centeredSpacing,
+    );
+  }
+
+  @override
+  bool shouldRelayout(CustomFoodDetailSliverGridDelegate oldDelegate) {
+    return dimension != oldDelegate.dimension;
+  }
+}
+
 class CustomSliverGridLayout extends SliverGridLayout {
   const CustomSliverGridLayout({
     required this.crossAxisCount,
