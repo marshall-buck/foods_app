@@ -51,20 +51,22 @@ class _FoodDetailState extends State<FoodDetail> {
                 maxCrossAxisExtent: tileSize.$1,
                 crossAxisSpacing: tileSize.$2,
                 mainAxisSpacing: tileSize.$2,
+                mainAxisExtent: tileSize.$1 / 2,
               ),
               itemCount: food.nutrientList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 0.25,
+                    ),
                     borderRadius: BorderRadius.circular(16),
-                    color: Theme.of(context).colorScheme.primaryContainer,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   child: Text(
                     food.nutrientList[index].name,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
-                        ),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 );
               },
@@ -87,8 +89,12 @@ class FoodDetailDescription extends StatelessWidget {
     final tileSize = FoodDetailTileSize.tileSize(windowSize: width);
     return Container(
       decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primary,
+          width: 0.25,
+        ),
         borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.surfaceContainer,
       ),
       width: double.infinity,
       height: FoodDetailTileSize.sm,
@@ -98,18 +104,14 @@ class FoodDetailDescription extends StatelessWidget {
             child: Text(
               '100 g',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           Expanded(
               flex: 2,
               child: Text(
                 food.description,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
+                style: Theme.of(context).textTheme.bodySmall,
               )),
         ],
       ),
