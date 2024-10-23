@@ -5,27 +5,27 @@ import 'package:foods_app/features/features.dart';
 import 'package:foods_app/widgets/widgets.dart';
 import 'package:watch_it/watch_it.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
   });
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _hasSearchResults = false;
 
   Future<void> _onChanged(BuildContext context, String string) async {
     di.get<FoodSearchManager>().updateSearch(string);
 
     await di.get<FoodSearchManager>().queryFoods();
 
-    final lengthOfResults =
-        di.get<FoodSearchManager>().currentResults.value.length;
-    if (lengthOfResults > 0) {
-      if (context.mounted) {
-        await Navigator.pushReplacement(
-          context,
-          MaterialPageRoute<FoodSearchPage>(
-            builder: (context) => const FoodSearchPage(),
-          ),
-        );
-      }
+    if (di.get<FoodSearchManager>().currentResults.value.isNotEmpty) {
+      setState(() {
+        _hasSearchResults = true;
+      });
     }
   }
 
@@ -34,20 +34,56 @@ class HomePage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    if (di.get<FoodSearchManager>().currentResults.value.isNotEmpty) {
+      _hasSearchResults = true;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-          child: Hero(
-            tag: MagicStrings.searchBarHeroTag,
-            child: FoodsAppSearchBar(
-              hintText: MagicStrings.searchPageHintText,
-              showBadge: false,
-              onClearSearch: _onClearSearch,
-              onChanged: (String string) {
-                _onChanged(context, string);
-              },
+          child: Align(
+            child: AnimatedContainer(
+              height: _hasSearchResults
+                  ? MediaQuery.sizeOf(context).height
+                  : MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                borderRadius: BorderRadius.circular(32),
+              ),
+              duration: const Duration(milliseconds: 330),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+                child: AnimatedAlign(
+                  duration: const Duration(milliseconds: 330),
+                  alignment: _hasSearchResults
+                      ? Alignment.topCenter
+                      : Alignment.center,
+                  child: SearchBar(
+                    constraints: Theme.of(context).searchBarTheme.constraints,
+                    hintText: MagicStrings.searchPageHintText,
+                    trailing: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: IconButton(
+                          onPressed: _onClearSearch,
+                          icon: const Icon(Icons.clear_outlined),
+                        ),
+                      ),
+                    ],
+                    // showBadge: false,
+                    // onClearSearch: _onClearSearch,
+                    onChanged: (String string) {
+                      _onChanged(context, string);
+                    },
+                  ),
+                ),
+              ),
             ),
           ),
         ),

@@ -44,9 +44,9 @@ class FoodDetailTileSize {
   static (double, double) tileSize({required double windowSize}) {
     switch (windowSize) {
       case <= BreakPoints.xs:
-        return (sm, Spacing.xs);
+        return (md, Spacing.xs);
       case <= BreakPoints.sm:
-        return (sm, Spacing.sm);
+        return (md, Spacing.sm);
       case > BreakPoints.lg:
         return (lg, Spacing.xl);
       default:

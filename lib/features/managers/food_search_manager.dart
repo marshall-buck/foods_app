@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:developer' as dev;
 import 'package:flutter/widgets.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
@@ -33,6 +33,8 @@ class FoodSearchManager {
     } else {
       currentResults.value = [];
     }
+    dev.log('FoodSearchREsults.length: ${currentResults.value.length}',
+        time: DateTime.now(), name: 'FoodSearchManager.queryFoods()');
   }
 
   void clearSearch() {

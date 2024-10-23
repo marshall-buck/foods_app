@@ -23,25 +23,23 @@ class FoodsAppSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SizedBox(
-        width: MagicNumbers.maxSearchBarWidth,
-        child: SearchBar(
-          hintText: hintText,
-          trailing: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: IconButton(
-                onPressed: onClearSearch,
-                icon: const Icon(Icons.clear_outlined),
-              ),
+    return SizedBox(
+      width: MagicNumbers.maxSearchBarWidth,
+      child: SearchBar(
+        hintText: hintText,
+        trailing: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: IconButton(
+              onPressed: onClearSearch,
+              icon: const Icon(Icons.clear_outlined),
             ),
-            if (showBadge) const FoodResultsCountBadge(),
-          ],
-          controller: controller,
-          onChanged: onChanged,
-          onTap: onTap,
-        ),
+          ),
+          if (showBadge) const FoodResultsCountBadge(),
+        ],
+        controller: controller,
+        onChanged: onChanged,
+        // onTap: onTap,
       ),
     );
   }

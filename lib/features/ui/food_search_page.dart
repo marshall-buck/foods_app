@@ -8,6 +8,7 @@ import 'package:foods_app/widgets/widgets.dart';
 import 'package:watch_it/watch_it.dart';
 
 // TODO: keep keyboard up if there is a search term, and disappear on scroll
+// BUG: search for lamb trimmed
 class FoodSearchPage extends StatefulWidget {
   const FoodSearchPage({super.key});
 
@@ -17,7 +18,9 @@ class FoodSearchPage extends StatefulWidget {
 
 class _FoodSearchPageState extends State<FoodSearchPage> {
   final ScrollController _scrollController = ScrollController();
-  late final TextEditingController _searchController;
+  final TextEditingController _searchController = TextEditingController(
+    text: di.get<FoodSearchManager>().searchQueryString.value,
+  );
 
   void _onClearSearch() {
     di.get<FoodSearchManager>().clearSearch();
@@ -43,12 +46,10 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
 
   @override
   void initState() {
-    final searchString = di.get<FoodSearchManager>().searchQueryString.value;
-
+    print(di.get<FoodSearchManager>().searchQueryString.value);
     _scrollController.addListener(_onScrollListener);
 
-    _searchController = TextEditingController(text: searchString);
-    // _searchController.addListener(_onClearSearch);
+    _searchController.addListener(_onClearSearch);
     super.initState();
   }
 
@@ -72,15 +73,12 @@ class _FoodSearchPageState extends State<FoodSearchPage> {
           SliverAppBar(
             toolbarHeight: kTextTabBarHeight + 16,
             floating: true,
-            title: Hero(
-              tag: MagicStrings.searchBarHeroTag,
-              child: FoodsAppSearchBar(
-                showBadge: true,
-                hintText: MagicStrings.searchPageHintText,
-                onChanged: _onChanged,
-                onClearSearch: _onClearSearch,
-                controller: _searchController,
-              ),
+            title: FoodsAppSearchBar(
+              showBadge: true,
+              hintText: MagicStrings.searchPageHintText,
+              onChanged: _onChanged,
+              onClearSearch: _onClearSearch,
+              controller: _searchController,
             ),
             flexibleSpace: const _QuickSearchHeader(),
           ),

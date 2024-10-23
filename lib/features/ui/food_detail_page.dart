@@ -39,7 +39,7 @@ class _FoodDetailState extends State<FoodDetail> {
             bottom: PreferredSize(
               preferredSize: Size(double.infinity, tileSize.$1),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: FoodDetailDescription(food: food!),
               ),
             ),
