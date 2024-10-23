@@ -64,23 +64,26 @@ class _HomePageState extends State<HomePage> {
                   alignment: _hasSearchResults
                       ? Alignment.topCenter
                       : Alignment.center,
-                  child: SearchBar(
-                    constraints: Theme.of(context).searchBarTheme.constraints,
-                    hintText: MagicStrings.searchPageHintText,
-                    trailing: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: IconButton(
-                          onPressed: _onClearSearch,
-                          icon: const Icon(Icons.clear_outlined),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: _hasSearchResults ? 24 : 0),
+                    child: SearchBar(
+                      constraints: Theme.of(context).searchBarTheme.constraints,
+                      hintText: MagicStrings.searchPageHintText,
+                      trailing: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: IconButton(
+                            onPressed: _onClearSearch,
+                            icon: const Icon(Icons.clear_outlined),
+                          ),
                         ),
-                      ),
-                    ],
-                    // showBadge: false,
-                    // onClearSearch: _onClearSearch,
-                    onChanged: (String string) {
-                      _onChanged(context, string);
-                    },
+                      ],
+                      // showBadge: false,
+                      // onClearSearch: _onClearSearch,
+                      onChanged: (String string) {
+                        _onChanged(context, string);
+                      },
+                    ),
                   ),
                 ),
               ),
