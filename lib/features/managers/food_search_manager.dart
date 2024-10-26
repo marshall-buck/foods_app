@@ -11,18 +11,19 @@ import 'package:watch_it/watch_it.dart';
 class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
 
-  final searchQueryString = ValueNotifier<String>('');
 
-  // ignore: use_setters_to_change_properties
-  void updateSearch(String string) => searchQueryString.value = string;
+  bool _isFirstSearch = true;
 
-  void clearSearchTerm() => searchQueryString.value = '';
 
-  Future<void> queryFoods() async {
+  bool get isFirstSearch => _isFirstSearch;
+
+  Future<void> queryFoods(String string) async {
+    _isFirstSearch = false;
+  
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
-    final foods = await db.queryFoods(searchTerm: searchQueryString.value);
+    final foods = await db.queryFoods(searchTerm: string);
 
     if (foods.isNotEmpty) {
       final newItems = <FoodListItemModel?>[];
@@ -38,7 +39,7 @@ class FoodSearchManager {
   }
 
   void clearSearch() {
-    clearSearchTerm();
+  
     currentResults.value = [];
   }
 
@@ -72,8 +73,8 @@ class QuickSearchManager {
     quickSearchNames.value = names;
   }
 
-  // ignore: use_setters_to_change_properties
-  void setOpacity(double value) => opacity.value = value;
+ 
+
 
   void dispose() {
     quickSearchNames.dispose();

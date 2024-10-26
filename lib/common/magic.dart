@@ -36,6 +36,12 @@ class Spacing {
   static const double xl = 24;
 }
 
+class AppDurations {
+  static const base0 = Duration(milliseconds: 200);
+  static const base1 = Duration(milliseconds: 330);
+  static const base2 = Duration(milliseconds: 460);
+}
+
 class FoodDetailTileSize {
   static double xs = 112;
   static double sm = 128;

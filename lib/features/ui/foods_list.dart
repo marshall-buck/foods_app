@@ -20,35 +20,20 @@ class FoodsList extends WatchingWidget {
   Widget build(BuildContext context) {
     final foodResults = watchValue((FoodSearchManager x) => x.currentResults);
 
-    if (foodResults.isEmpty) {
-      return SliverToBoxAdapter(
-        child: Text(
-          'No results found.',
-          style: Theme.of(context).textTheme.titleSmall,
-          textAlign: TextAlign.center,
-        ),
-      );
-    } else {
-      return SliverPadding(
-        padding: const EdgeInsets.only(left: 8, right: 8),
-        sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              final food = foodResults[index];
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        final food = foodResults[index];
 
-              final id = ValueKey<int>(food!.id);
-              return GestureDetector(
-                onTap: () => _onTap(context, id),
-                child: FoodListItem(
-                  key: id,
-                  food: food,
-                ),
-              );
-            },
-            childCount: foodResults.length,
+        final id = ValueKey<int>(food!.id);
+        return GestureDetector(
+          onTap: () => _onTap(context, id),
+          child: FoodListItem(
+            key: id,
+            food: food,
           ),
-        ),
-      );
-    }
+        );
+      },
+      itemCount: foodResults.length,
+    );
   }
 }

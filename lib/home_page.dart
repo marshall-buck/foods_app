@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
-import 'package:foods_app/widgets/widgets.dart';
+
 import 'package:watch_it/watch_it.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends WatchingStatefulWidget {
   const HomePage({
     super.key,
   });
@@ -15,80 +15,62 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _hasSearchResults = false;
-
-  Future<void> _onChanged(BuildContext context, String string) async {
-    di.get<FoodSearchManager>().updateSearch(string);
-
-    await di.get<FoodSearchManager>().queryFoods();
-
-    if (di.get<FoodSearchManager>().currentResults.value.isNotEmpty) {
-      setState(() {
-        _hasSearchResults = true;
-      });
-    }
+  //
+  final _searchBarController = TextEditingController();
+  //
+  Future<void> _onChanged(String string) async {
+    await di.get<FoodSearchManager>().queryFoods(_searchBarController.text);
   }
 
   void _onClearSearch() {
+    _searchBarController.clear();
     di.get<FoodSearchManager>().clearSearch();
   }
 
   @override
   void initState() {
-    if (di.get<FoodSearchManager>().currentResults.value.isNotEmpty) {
-      _hasSearchResults = true;
-    }
     super.initState();
   }
 
   @override
+  void dispose() {
+    _searchBarController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final results = watchValue((FoodSearchManager e) => e.currentResults);
     return Material(
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-          child: Align(
-            child: AnimatedContainer(
-              height: _hasSearchResults
-                  ? MediaQuery.sizeOf(context).height
-                  : MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(32),
-              ),
-              duration: const Duration(milliseconds: 330),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-                child: AnimatedAlign(
-                  duration: const Duration(milliseconds: 330),
-                  alignment: _hasSearchResults
-                      ? Alignment.topCenter
-                      : Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: _hasSearchResults ? 24 : 0),
-                    child: SearchBar(
-                      constraints: Theme.of(context).searchBarTheme.constraints,
-                      hintText: MagicStrings.searchPageHintText,
-                      trailing: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: IconButton(
-                            onPressed: _onClearSearch,
-                            icon: const Icon(Icons.clear_outlined),
-                          ),
-                        ),
-                      ],
-                      // showBadge: false,
-                      // onClearSearch: _onClearSearch,
-                      onChanged: (String string) {
-                        _onChanged(context, string);
-                      },
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+              child: AnimatedAlign(
+                duration: AppDurations.base1,
+                alignment:
+                    results.isNotEmpty ? Alignment.topCenter : Alignment.center,
+                child: SearchBar(
+                  controller: _searchBarController,
+                  constraints: Theme.of(context).searchBarTheme.constraints,
+                  hintText: MagicStrings.searchPageHintText,
+                  trailing: [
+                    IconButton(
+                      onPressed: _onClearSearch,
+                      icon: const Icon(Icons.clear_outlined),
                     ),
-                  ),
+                  ],
+                  onChanged: _onChanged,
                 ),
               ),
             ),
-          ),
+            const Expanded(
+                child: Padding(
+              padding: EdgeInsets.only(top: 56),
+              child: FoodsList(),
+            ))
+          ],
         ),
       ),
     );
