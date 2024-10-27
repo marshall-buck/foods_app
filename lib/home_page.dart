@@ -28,9 +28,9 @@ class _HomePageState extends State<HomePage> {
     if (isEmpty) return;
     if (context.mounted) {
       await Navigator.of(context).pushReplacement(
-        MaterialPageRoute<FoodsList>(
+        MaterialPageRoute<SearchResultsPage>(
           builder: (context) =>
-              FoodsList(termFromHome: _searchBarController.text),
+              SearchResultsPage(termFromHome: _searchBarController.text),
         ),
       );
     }

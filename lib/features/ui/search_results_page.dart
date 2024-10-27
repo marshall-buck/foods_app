@@ -4,15 +4,15 @@ import 'package:foods_app/features/features.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodsList extends WatchingStatefulWidget {
-  const FoodsList({super.key, this.termFromHome});
+class SearchResultsPage extends WatchingStatefulWidget {
+  const SearchResultsPage({super.key, this.termFromHome});
   final String? termFromHome;
 
   @override
-  State<FoodsList> createState() => _FoodsListState();
+  State<SearchResultsPage> createState() => _FoodsListState();
 }
 
-class _FoodsListState extends State<FoodsList> {
+class _FoodsListState extends State<SearchResultsPage> {
   final _searchBarController = TextEditingController();
   Future<void> _onTap(BuildContext context, ValueKey<int> id) async {
     await di.get<FoodDetailManager>().queryFood(id.value);
