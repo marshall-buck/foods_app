@@ -18,7 +18,9 @@ class MagicStrings {
 }
 
 class MagicNumbers {
-  static const double maxSearchBarWidth = 590;
+  static const double maxSearchBarWidth = 720;
+  static const double minSearchBarWidth = 720;
+  static const double searchBarHeight = 56;
 }
 
 class BreakPoints {

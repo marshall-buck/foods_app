@@ -11,15 +11,13 @@ import 'package:watch_it/watch_it.dart';
 class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
 
-
   bool _isFirstSearch = true;
-
 
   bool get isFirstSearch => _isFirstSearch;
 
   Future<void> queryFoods(String string) async {
     _isFirstSearch = false;
-  
+
     final db =
         await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
 
@@ -34,12 +32,11 @@ class FoodSearchManager {
     } else {
       currentResults.value = [];
     }
-    dev.log('FoodSearchREsults.length: ${currentResults.value.length}',
+    dev.log('FoodSearchResults.length: ${currentResults.value.length}',
         time: DateTime.now(), name: 'FoodSearchManager.queryFoods()');
   }
 
   void clearSearch() {
-  
     currentResults.value = [];
   }
 
@@ -72,9 +69,6 @@ class QuickSearchManager {
 
     quickSearchNames.value = names;
   }
-
- 
-
 
   void dispose() {
     quickSearchNames.dispose();
