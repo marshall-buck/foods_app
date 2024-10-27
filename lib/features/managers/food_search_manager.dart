@@ -32,8 +32,11 @@ class FoodSearchManager {
     } else {
       currentResults.value = [];
     }
-    dev.log('FoodSearchResults.length: ${currentResults.value.length}',
-        time: DateTime.now(), name: 'FoodSearchManager.queryFoods()');
+    dev.log(
+      'FoodSearchResults.length: ${currentResults.value.length}',
+      time: DateTime.now(),
+      name: 'FoodSearchManager.queryFoods()',
+    );
   }
 
   void clearSearch() {

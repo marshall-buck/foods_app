@@ -2,11 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:foods_app/services/services.dart';
 
 class Food extends Equatable {
-  const Food(
-      {required this.id,
-      required this.description,
-      required this.nutrientMap,
-      required this.nutrientList});
+  const Food({
+    required this.id,
+    required this.description,
+    required this.nutrientMap,
+    required this.nutrientList,
+  });
   factory Food.fromFoodDTO(FoodDTO food) {
     final nutrientMap = <int, Nutrient>{};
     final nutrientList = <Nutrient>[];
@@ -16,10 +17,11 @@ class Food extends Equatable {
       nutrientList.add(nutrient);
     }
     return Food(
-        id: food.id,
-        description: food.description,
-        nutrientMap: nutrientMap,
-        nutrientList: nutrientList);
+      id: food.id,
+      description: food.description,
+      nutrientMap: nutrientMap,
+      nutrientList: nutrientList,
+    );
   }
   final int id;
 

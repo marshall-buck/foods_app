@@ -59,13 +59,13 @@ class _HomePageState extends State<HomePage> {
         child: Hero(
           tag: MagicStrings.searchBarHeroTag,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+            padding: const EdgeInsets.symmetric(horizontal: MagicSpacing.sp_3),
             child: ConstrainedBox(
               constraints: const BoxConstraints(
-                maxWidth: MagicNumbers.maxSearchBarWidth,
-                minWidth: MagicNumbers.minSearchBarWidth,
-                maxHeight: MagicNumbers.searchBarHeight,
-                minHeight: MagicNumbers.searchBarHeight,
+                maxWidth: MagicDimensions.maxSearchBarWidth,
+                minWidth: MagicDimensions.minSearchBarWidth,
+                maxHeight: MagicDimensions.searchBarHeight,
+                minHeight: MagicDimensions.searchBarHeight,
               ),
               child: SearchBar(
                 controller: _searchBarController,
