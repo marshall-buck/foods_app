@@ -27,56 +27,58 @@ class _FoodDetailState extends State<FoodDetail> {
 
     ///(dimension of a side, spacing)
     final tileSize = MagicTileDimension.tileSize(windowSize: width);
-    print('tileSize.dimension: ${tileSize.dimension}');
-    print('tileSize.spacing: ${tileSize.spacing}');
 
     final food = watchValue((FoodDetailManager m) => m.currentFood);
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            actions: const [
-              Icon(Icons.save_as),
-              Icon(Icons.edit),
-              Icon(Icons.refresh),
-            ],
-            pinned: true,
-            bottom: PreferredSize(
-                child: Padding(
-                  padding: const EdgeInsets.all(MagicSpacing.sp_4),
-                  child: FoodDescriptionCard(tileSize: tileSize),
-                ),
-                preferredSize: Size(double.infinity, tileSize.dimension)),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.all(tileSize.spacing),
-            sliver: SliverGrid.builder(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: tileSize.dimension,
-                crossAxisSpacing: tileSize.spacing,
-                mainAxisSpacing: tileSize.spacing,
-                // mainAxisExtent: tileSize.dimension / 2,
+      child: Material(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(MagicSpacing.sp_4),
+              child: FoodDescriptionCard(
+                tileSize: tileSize,
+                food: food!,
               ),
-              itemCount: food?.nutrientList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.primary,
-                      width: 0.25,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    color: Theme.of(context).colorScheme.surfaceContainer,
-                  ),
-                  child: Text(
-                    food!.nutrientList[index].name,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                );
-              },
             ),
-          ),
-        ],
+            Expanded(
+              child: CustomScrollView(
+                slivers: [
+                  // SliverAppBar(
+
+                  SliverPadding(
+                    padding: EdgeInsets.all(tileSize.spacing),
+                    sliver: SliverGrid.builder(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: tileSize.dimension,
+                        crossAxisSpacing: tileSize.spacing,
+                        mainAxisSpacing: tileSize.spacing,
+                        // mainAxisExtent: tileSize.dimension / 2,
+                      ),
+                      itemCount: food.nutrientList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 0.25,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            color:
+                                Theme.of(context).colorScheme.surfaceContainer,
+                          ),
+                          child: Text(
+                            food.nutrientList[index].name,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -85,33 +87,51 @@ class _FoodDetailState extends State<FoodDetail> {
 class FoodDescriptionCard extends StatelessWidget {
   const FoodDescriptionCard({
     required this.tileSize,
+    required this.food,
     super.key,
   });
 
   final MagicTileDimension tileSize;
+  final Food food;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: MagicDimensions.maxSearchBarWidth),
+      constraints:
+          const BoxConstraints(maxWidth: MagicDimensions.maxSearchBarWidth),
       child: Container(
-        color: Colors.amber,
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(MagicSpacing.sp_4)),
+
         // width: double.infinity,
         height: tileSize.dimension - MagicSpacing.sp_6,
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
+            const Padding(
+              padding: EdgeInsets.all(16),
               child: AmountIndicator(),
             ),
             Expanded(
-              child: Container(
-                color: Colors.cyan,
+              child: Padding(
+                padding: const EdgeInsets.all(MagicSpacing.sp_2),
                 child: Column(
-                  children: [Text('data datadatadatadatadatadatadatadatadata')],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      food.description,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(Icons.save_as),
+                        Icon(Icons.edit),
+                        Icon(Icons.refresh),
+                      ],
+                    ),
+                  ],
                 ),
-                // height: tileSize.dimension,
-                // width: double.infinity,
               ),
             )
           ],
@@ -133,16 +153,17 @@ class _AmountIndicatorState extends State<AmountIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        onPanUpdate: (details) {
-          setState(() {
-            _value =
-                (_value + details.delta.dy / 100).clamp(0.0, double.infinity);
-            dev.log('$_value', name: 'AmountIndicator: _value: ');
-          });
-        },
+    return GestureDetector(
+      onPanUpdate: (details) {
+        setState(() {
+          _panHandler(details, context.size!.width);
+          _value =
+              (_value + details.delta.dy / 100).clamp(0.0, double.infinity);
+          dev.log('$_value', name: 'AmountIndicator: _value: ');
+        });
+      },
+      child: AspectRatio(
+        aspectRatio: 1,
         child: CustomPaint(
           painter: _CircularRangeSliderPainter(_value),
           child: Center(
@@ -169,32 +190,12 @@ class _CircularRangeSliderPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2;
 
-    // Draw the background circle
-    final backgroundPaint = Paint()
-      ..color = Colors.transparent
-      ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, radius, backgroundPaint);
-
     // Draw the stroke
     final strokePaint = Paint()
       ..color = Colors.black
-      ..strokeWidth = 8.0
+      ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
     canvas.drawCircle(center, radius, strokePaint);
-
-    // Draw the arc representing the value
-    final arcPaint = Paint()
-      ..color = Colors.black // You can customize the arc color
-      ..strokeWidth = 6
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-    canvas.drawArc(
-      Rect.fromCircle(center: center, radius: radius),
-      -math.pi / 2, // Start angle at the top
-      2 * math.pi * value, // Sweep angle based on value
-      false,
-      arcPaint,
-    );
 
     // Draw the handle
     final handleAngle = -math.pi / 2 + 2 * math.pi * value;
@@ -202,6 +203,8 @@ class _CircularRangeSliderPainter extends CustomPainter {
       center.dx + radius * math.cos(handleAngle),
       center.dy + radius * math.sin(handleAngle),
     );
+
+    // handle
     canvas.drawCircle(handleOffset, 4, strokePaint);
   }
 
@@ -211,68 +214,51 @@ class _CircularRangeSliderPainter extends CustomPainter {
   }
 }
 
+void _panHandler(DragUpdateDetails d, double radius) {
+  /// Pan location on the wheel
+  final onTop = d.localPosition.dy <= radius;
+  final onLeftSide = d.localPosition.dx <= radius;
+  final onRightSide = !onLeftSide;
+  final onBottom = !onTop;
 
-// class AmountIndicator extends StatelessWidget {
-//   const AmountIndicator({
-//     super.key,
-//   });
+  /// Pan movements
+  final panUp = d.delta.dy <= 0.0;
+  final panLeft = d.delta.dx <= 0.0;
+  final panRight = !panLeft;
+  final panDown = !panUp;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return AspectRatio(
-//       aspectRatio: 1,
-//       child: Padding(
-//         padding: const EdgeInsets.all(MagicSpacing.sp_2),
-//         child: Container(
-//             // height: tileSize.dimension,
-//             // width: tileSize.dimension - MagicSpacing.sp_6,
-//             decoration: BoxDecoration(
-//           shape: BoxShape.circle,
-//           color: Colors.red,
-//         )),
-//       ),
-//     );
-//   }
-// }
+  /// Absoulte change on axis
+  final yChange = d.delta.dy.abs();
+  final xChange = d.delta.dx.abs();
 
-// class FoodDetailDescription extends StatelessWidget {
-//   const FoodDetailDescription({required this.food, super.key});
-//   final Food food;
+  /// Directional change on wheel
+  final verticalRotation = (onRightSide && panDown) || (onLeftSide && panUp)
+      ? yChange
+      : yChange * -1;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final width = MediaQuery.sizeOf(context).width;
+  final horizontalRotation =
+      (onTop && panRight) || (onBottom && panLeft) ? xChange : xChange * -1;
 
-//     final tileSize = MagicTileSize.tileSize(windowSize: width);
-//     return Container(
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: Theme.of(context).colorScheme.primary,
-//           width: 0.25,
-//         ),
-//         borderRadius: BorderRadius.circular(16),
-//         color: Theme.of(context).colorScheme.surfaceContainer,
-//       ),
-//       width: double.infinity,
-//       height: MagicTileSize.sm,
-//       child: Row(
-//         children: [
-//           Expanded(
-//             child: Text(
-//               '100 g',
-//               textAlign: TextAlign.center,
-//               style: Theme.of(context).textTheme.titleMedium,
-//             ),
-//           ),
-//           Expanded(
-//             flex: 2,
-//             child: Text(
-//               food.description,
-//               style: Theme.of(context).textTheme.bodySmall,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  // Total computed change
+  final rotationalChange = verticalRotation + horizontalRotation;
+
+  final movingClockwise = rotationalChange > 0;
+  final movingCounterClockwise = rotationalChange < 0;
+
+  dev.log('onTop: $onTop', name: '_panHandler');
+  dev.log('onLeftSide: $onLeftSide', name: '_panHandler');
+  dev.log('onRightSide: $onRightSide', name: '_panHandler');
+  dev.log('onBottom: $onBottom', name: '_panHandler');
+  dev.log('panUp: $panUp', name: '_panHandler');
+  dev.log('panLeft: $panLeft', name: '_panHandler');
+  dev.log('panRight: $panRight', name: '_panHandler');
+  dev.log('panDown: $panDown', name: '_panHandler');
+  dev.log('yChange: $yChange', name: '_panHandler');
+  dev.log('xChange: $xChange', name: '_panHandler');
+  dev.log('verticalRotation: $verticalRotation', name: '_panHandler');
+  dev.log('horizontalRotation: $horizontalRotation', name: '_panHandler');
+  dev.log('rotationalChange: $rotationalChange', name: '_panHandler');
+  dev.log('movingClockwise: $movingClockwise', name: '_panHandler');
+  dev.log('movingCounterClockwise: $movingCounterClockwise',
+      name: '_panHandler');
+}
