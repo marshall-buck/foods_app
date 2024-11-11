@@ -91,9 +91,26 @@ class NutrientListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
-      child: Text(
-        food.nutrientList[index].name,
-        style: Theme.of(context).textTheme.bodySmall,
+      child: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                textAlign: TextAlign.center,
+                food.nutrientList[index].name,
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+            ),
+          ),
+          Text(
+              // ignore: lines_longer_than_80_chars
+              '${food.nutrientList[index].amount}, ${food.nutrientList[index].unit}',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .copyWith(fontWeight: FontWeight.bold)),
+        ],
       ),
     );
   }
@@ -111,44 +128,53 @@ class FoodDescriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints:
-          const BoxConstraints(maxWidth: MagicDimensions.maxSearchBarWidth),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context)
+                .colorScheme
+                .shadow
+                .withOpacity(MagicOpacity.op_50),
+            blurRadius: MagicBlurRadius.blur_5,
+            offset: const Offset(
+              0,
+              1,
+            ),
+          ),
+        ],
+      ),
 
-        // width: double.infinity,
-        height: tileSize.dimension - MagicSpacing.sp_6,
-        child: Row(
-          children: [
-            const CircularRangeSliderDetector(isAdjustable: false),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(MagicSpacing.sp_2),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      food.description,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.save_as),
-                        Icon(Icons.edit),
-                        Icon(Icons.refresh),
-                      ],
-                    ),
-                  ],
-                ),
+      // width: double.infinity,
+      height: tileSize.dimension,
+      child: Row(
+        children: [
+          const CircularRangeSliderDetector(isAdjustable: false),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(MagicSpacing.sp_2),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    food.description,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(Icons.save_as),
+                      Icon(Icons.edit),
+                      Icon(Icons.refresh),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -170,8 +196,12 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return SizedBox.expand(
-      child: child,
+    return Center(
+      child: ConstrainedBox(
+        constraints:
+            const BoxConstraints(maxWidth: MagicDimensions.maxFoodDetailWidth),
+        child: child,
+      ),
     );
   }
 

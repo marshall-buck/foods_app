@@ -14,6 +14,7 @@ dependencies:
   geekyants_flutter_gauges: 1.0.4
   mocktail: ^1.0.4
   shared_preferences: ^2.3.2
+  units_converter: ^3.0.2
   usda_db_package:
     git:
       url: https://github.com/marshall-buck/usda_db_package.git

@@ -19,7 +19,8 @@ class MagicStrings {
 
 class MagicDimensions {
   static const double maxSearchBarWidth = 720;
-  static const double minSearchBarWidth = 720;
+  static const double minSearchBarWidth = 360;
+  static const double maxFoodDetailWidth = 360;
   static const double searchBarHeight = 56;
   static const double baseRadius = 16;
 }
@@ -64,20 +65,58 @@ class MagicTileDimension {
   factory MagicTileDimension.tileSize({required double windowSize}) {
     switch (windowSize) {
       case <= MagicBreakPoints.xs:
-        return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_3);
+        return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_1);
       case <= MagicBreakPoints.sm:
-        return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_2);
+        return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_3);
       case > MagicBreakPoints.lg:
         return MagicTileDimension(dimension: lg, spacing: MagicSpacing.sp_6);
       default:
         return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_4);
     }
   }
-  static double xs = 112;
-  static double sm = 128;
+  static double xs = 120;
+  static double sm = 136;
   static double md = 144;
   static double lg = 160;
 
   final double dimension;
   final double spacing;
+}
+
+class MagicOpacity {
+  static const double op_0 = 0;
+  static const double op_5 = 0.05;
+  static const double op_10 = 0.1;
+  static const double op_20 = 0.2;
+  static const double op_25 = 0.25;
+  static const double op_30 = 0.3;
+  static const double op_40 = 0.4;
+  static const double op_50 = 0.5;
+  static const double op_60 = 0.6;
+  static const double op_70 = 0.7;
+  static const double op_75 = 0.75;
+  static const double op_80 = 0.8;
+  static const double op_90 = 0.9;
+  static const double op_95 = 0.95;
+  static const double op_100 = 1;
+}
+
+class MagicBlurRadius {
+  static const double blur_0 = 0;
+  static const double blur_1 = 1;
+  static const double blur_2 = 2;
+  static const double blur_3 = 3;
+  static const double blur_4 = 4;
+  static const double blur_5 = 5;
+  static const double blur_6 = 6;
+  static const double blur_7 = 7;
+  static const double blur_8 = 8;
+  static const double blur_9 = 9;
+  static const double blur_10 = 10;
+  static const double blur_11 = 11;
+  static const double blur_12 = 12;
+  static const double blur_14 = 14;
+  static const double blur_16 = 16;
+  static const double blur_20 = 20;
+  static const double blur_24 = 24;
 }
