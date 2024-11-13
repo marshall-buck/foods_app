@@ -7,6 +7,7 @@ class Food extends Equatable {
     required this.description,
     required this.nutrientMap,
     required this.nutrientList,
+    required this.foodAmount,
   });
   factory Food.fromFoodDTO(FoodDTO food) {
     final nutrientMap = <int, Nutrient>{};
@@ -21,6 +22,7 @@ class Food extends Equatable {
       description: food.description,
       nutrientMap: nutrientMap,
       nutrientList: nutrientList,
+      foodAmount: 100,
     );
   }
   final int id;
@@ -30,8 +32,26 @@ class Food extends Equatable {
   final Map<int, Nutrient> nutrientMap;
   final List<Nutrient> nutrientList;
 
+  final double foodAmount;
+
+  Food copyWith({
+    int? id,
+    String? description,
+    double? foodAmount,
+    Map<int, Nutrient>? nutrientMap,
+    List<Nutrient>? nutrientList,
+  }) {
+    return Food(
+      id: id ?? this.id,
+      description: description ?? this.description,
+      foodAmount: foodAmount ?? this.foodAmount,
+      nutrientMap: nutrientMap ?? this.nutrientMap,
+      nutrientList: nutrientList ?? this.nutrientList,
+    );
+  }
+
   @override
-  List<Object?> get props => [id, description, nutrientMap, nutrientList];
+  List<Object?> get props => [id, description, foodAmount, nutrientList];
 }
 
 class Nutrient extends Equatable {
@@ -58,6 +78,20 @@ class Nutrient extends Equatable {
   final String name;
   final num amount;
   final String unit;
+
+  Nutrient copyWith({
+    int? id,
+    String? name,
+    num? amount,
+    String? unit,
+  }) {
+    return Nutrient(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      amount: amount ?? this.amount,
+      unit: unit ?? this.unit,
+    );
+  }
 
   @override
   List<Object?> get props => [id, name, amount, unit];

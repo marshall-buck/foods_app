@@ -4,27 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
-import 'package:foods_app/widgets/circular_range_slider_detector.dart';
+import 'package:foods_app/widgets/widgets.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodDetail extends WatchingStatefulWidget {
-  const FoodDetail({super.key});
-
-  @override
-  State<FoodDetail> createState() => _FoodDetailState();
-}
-
-class _FoodDetailState extends State<FoodDetail> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+class FoodDetailPage extends WatchingWidget {
+  const FoodDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,23 +37,37 @@ class _FoodDetailState extends State<FoodDetail> {
                 minHeight: 100,
               ),
             ),
-            SliverPadding(
-              padding: EdgeInsets.all(tileSize.spacing * 2),
-              sliver: SliverGrid.builder(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: tileSize.dimension,
-                  crossAxisSpacing: tileSize.spacing,
-                  mainAxisSpacing: tileSize.spacing,
-                  // mainAxisExtent: tileSize.dimension / 2,
-                ),
-                itemCount: food.nutrientList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return NutrientListItem(food: food, index: index);
-                },
-              ),
-            ),
+            _NutrientGrid(tileSize: tileSize, food: food),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _NutrientGrid extends StatelessWidget {
+  const _NutrientGrid({
+    required this.tileSize,
+    required this.food,
+  });
+
+  final MagicTileDimension tileSize;
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: EdgeInsets.all(tileSize.spacing * 2),
+      sliver: SliverGrid.builder(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: tileSize.dimension,
+          crossAxisSpacing: tileSize.spacing,
+          mainAxisSpacing: tileSize.spacing,
+        ),
+        itemCount: food.nutrientList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return NutrientListItem(food: food, index: index);
+        },
       ),
     );
   }
@@ -91,25 +90,25 @@ class NutrientListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                textAlign: TextAlign.center,
-                food.nutrientList[index].name,
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    food.nutrientList[index].name,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ),
+              ],
             ),
           ),
-          Text(
-              // ignore: lines_longer_than_80_chars
-              '${food.nutrientList[index].amount}, ${food.nutrientList[index].unit}',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(fontWeight: FontWeight.bold)),
+          const Center(
+            child: AmountWidgetWrapperTrigger(),
+          ),
         ],
       ),
     );
@@ -146,12 +145,13 @@ class FoodDescriptionCard extends StatelessWidget {
           ),
         ],
       ),
-
-      // width: double.infinity,
       height: tileSize.dimension,
       child: Row(
         children: [
-          const CircularRangeSliderDetector(isAdjustable: false),
+          const AspectRatio(
+            aspectRatio: 1,
+            child: AmountWidgetWrapperTrigger(),
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(MagicSpacing.sp_2),
@@ -214,5 +214,21 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return true;
+  }
+}
+
+class AmountWidget extends WatchingWidget {
+  const AmountWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final amount = watchPropertyValue((FoodDetailManager m) => m.amount);
+    return Center(
+      child: Text(amount.toString(),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(color: Theme.of(context).colorScheme.onInverseSurface)),
+    );
   }
 }

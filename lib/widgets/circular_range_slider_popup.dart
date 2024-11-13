@@ -26,14 +26,12 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
         child: UnconstrainedBox(
           child: Container(
             width: 200,
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.inverseSurface,
             ),
-            child: const CircularRangeSliderDetector(
-              isAdjustable: true,
-            ),
+            child: const CircularRangeSlider(),
           ),
         ),
       ),

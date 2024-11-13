@@ -19,7 +19,9 @@ class _FoodsListState extends State<SearchResultsPage> {
     if (context.mounted) {
       await Navigator.push(
         context,
-        MaterialPageRoute<FoodDetail>(builder: (context) => const FoodDetail()),
+        MaterialPageRoute<FoodDetailPage>(
+          builder: (context) => const FoodDetailPage(),
+        ),
       );
     }
   }
