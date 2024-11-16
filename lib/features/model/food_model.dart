@@ -32,12 +32,12 @@ class Food extends Equatable {
   final Map<int, Nutrient> nutrientMap;
   final List<Nutrient> nutrientList;
 
-  final double foodAmount;
+  final num foodAmount;
 
   Food copyWith({
     int? id,
     String? description,
-    double? foodAmount,
+    num? foodAmount,
     Map<int, Nutrient>? nutrientMap,
     List<Nutrient>? nutrientList,
   }) {

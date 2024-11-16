@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/ui/food_detail_page.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
-  CircularRangeSliderPopUp({required this.context});
-  late final BuildContext context;
+  CircularRangeSliderPopUp({required this.context, required this.id});
+  final BuildContext context;
+  final num id;
   @override
   Color? get barrierColor =>
       Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7);
@@ -26,12 +28,18 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
         child: UnconstrainedBox(
           child: Container(
             width: 200,
-            padding: const EdgeInsets.all(20),
+            // padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.inverseSurface,
+              color: Theme.of(context).colorScheme.surface,
             ),
-            child: const CircularRangeSlider(),
+            child: CircularRangeSlider(
+              id: id,
+              child: AmountWidget(
+                textColor: Theme.of(context).colorScheme.onSurface,
+                id: id,
+              ),
+            ),
           ),
         ),
       ),

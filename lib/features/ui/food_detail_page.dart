@@ -1,4 +1,4 @@
-// import 'dart:developer' as dev;
+import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 
@@ -45,6 +45,121 @@ class FoodDetailPage extends WatchingWidget {
   }
 }
 
+class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
+  const _MySliverHeaderDelegate({
+    required this.child,
+    required this.maxHeight,
+    required this.minHeight,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Center(
+      child: ConstrainedBox(
+        constraints:
+            const BoxConstraints(maxWidth: MagicDimensions.maxFoodDetailWidth),
+        child: child,
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+}
+
+class FoodDescriptionCard extends StatelessWidget {
+  const FoodDescriptionCard({
+    required this.tileSize,
+    required this.food,
+    super.key,
+  });
+
+  final MagicTileDimension tileSize;
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context)
+                .colorScheme
+                .shadow
+                .withOpacity(MagicOpacity.op_50),
+            blurRadius: MagicBlurRadius.blur_5,
+            offset: const Offset(
+              0,
+              1,
+            ),
+          ),
+        ],
+      ),
+      height: tileSize.dimension,
+      child: Row(
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: GestureDetector(
+              onLongPress: () {
+                Navigator.of(context).push(
+                  CircularRangeSliderPopUp<void>(
+                    context: context,
+                    id: food.id,
+                  ),
+                );
+              },
+              child: AmountWidget(
+                id: food.id,
+                textColor: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(MagicSpacing.sp_2),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    food.description,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(Icons.save_as),
+                      Icon(Icons.edit),
+                      Icon(Icons.refresh),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NutrientGrid extends StatelessWidget {
   const _NutrientGrid({
     required this.tileSize,
@@ -66,7 +181,8 @@ class _NutrientGrid extends StatelessWidget {
         ),
         itemCount: food.nutrientList.length,
         itemBuilder: (BuildContext context, int index) {
-          return NutrientListItem(food: food, index: index);
+          final nutrientKey = Key('${food.id}:${food.nutrientList[index].id}');
+          return NutrientListItem(key: nutrientKey, food: food, index: index);
         },
       ),
     );
@@ -106,71 +222,19 @@ class NutrientListItem extends StatelessWidget {
               ],
             ),
           ),
-          const Center(
-            child: AmountWidgetWrapperTrigger(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FoodDescriptionCard extends StatelessWidget {
-  const FoodDescriptionCard({
-    required this.tileSize,
-    required this.food,
-    super.key,
-  });
-
-  final MagicTileDimension tileSize;
-  final Food food;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context)
-                .colorScheme
-                .shadow
-                .withOpacity(MagicOpacity.op_50),
-            blurRadius: MagicBlurRadius.blur_5,
-            offset: const Offset(
-              0,
-              1,
-            ),
-          ),
-        ],
-      ),
-      height: tileSize.dimension,
-      child: Row(
-        children: [
-          const AspectRatio(
-            aspectRatio: 1,
-            child: AmountWidgetWrapperTrigger(),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(MagicSpacing.sp_2),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    food.description,
-                    style: Theme.of(context).textTheme.bodySmall,
+          Center(
+            child: GestureDetector(
+              onLongPress: () {
+                Navigator.of(context).push(
+                  CircularRangeSliderPopUp<void>(
+                    context: context,
+                    id: food.nutrientList[index].id,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.save_as),
-                      Icon(Icons.edit),
-                      Icon(Icons.refresh),
-                    ],
-                  ),
-                ],
+                );
+              },
+              child: AmountWidget(
+                id: food.nutrientList[index].id,
+                textColor: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
             ),
           ),
@@ -180,55 +244,33 @@ class FoodDescriptionCard extends StatelessWidget {
   }
 }
 
-class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
-  const _MySliverHeaderDelegate({
-    required this.child,
-    required this.maxHeight,
-    required this.minHeight,
-  });
-
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Center(
-      child: ConstrainedBox(
-        constraints:
-            const BoxConstraints(maxWidth: MagicDimensions.maxFoodDetailWidth),
-        child: child,
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
-}
-
 class AmountWidget extends WatchingWidget {
-  const AmountWidget({super.key});
+  const AmountWidget({
+    required this.textColor,
+    required this.id,
+    super.key,
+  });
+  final Color textColor;
+  final num id;
 
   @override
   Widget build(BuildContext context) {
+    // dev.log(
+    //   '$id : ${id.runtimeType}',
+    //   name: 'AmountWidget id : id.runtimeType',
+    // );
+
     final amount = watchPropertyValue((FoodDetailManager m) => m.amount);
+    // dev.log(
+    //   '$id :  ${amount[id]}',
+    //   name: 'AmountWidget amount[id] : value',
+    // );
     return Center(
-      child: Text(amount.toString(),
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: Theme.of(context).colorScheme.onInverseSurface)),
+      child: Text(
+        amount[id]?.toStringAsFixed(2) ?? '',
+        style:
+            Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
+      ),
     );
   }
 }

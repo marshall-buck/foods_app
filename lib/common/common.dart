@@ -2,6 +2,7 @@
 
 export 'custom_grid_layout.dart';
 export 'exceptions.dart';
+export 'helpers.dart';
 export 'logo_string.dart';
 
 export 'magic.dart';

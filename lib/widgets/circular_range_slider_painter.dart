@@ -1,35 +1,62 @@
+import 'dart:developer' as dev;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-class CircularRangeSliderPainter extends CustomPainter {
-  CircularRangeSliderPainter(this.value);
-  final double value;
+class CircularRangeSliderTrackPainter extends CustomPainter {
+  CircularRangeSliderTrackPainter({required this.color});
+
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
+    final radius = (size.width / 2);
 
     // Draw the stroke
-    final strokePaint = Paint()
-      ..color = Colors.black
+    final circularTrackPaint = Paint()
+      ..color = color
       ..strokeWidth = 4
       ..style = PaintingStyle.stroke;
-    canvas.drawCircle(center, radius, strokePaint);
+
+    // Outline
+    canvas.drawCircle(center, radius, circularTrackPaint);
+  }
+
+  @override
+  bool shouldRepaint(CircularRangeSliderTrackPainter oldDelegate) {
+    return false;
+  }
+}
+
+class CircularRangeSliderHandlePainter extends CustomPainter {
+  CircularRangeSliderHandlePainter({required this.delta, required this.color});
+  final double delta;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width / 2);
+
+    final handlePaint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
 
     // Draw the handle
-    final handleAngle = -math.pi / 2 + 2 * math.pi * value;
+    final handleAngle = -math.pi / 2 + 2 * math.pi * delta;
     final handleOffset = Offset(
       center.dx + radius * math.cos(handleAngle),
       center.dy + radius * math.sin(handleAngle),
     );
 
     // handle
-    canvas.drawCircle(handleOffset, 4, strokePaint);
+    canvas.drawCircle(handleOffset, 16, handlePaint);
+    dev.log('$handleAngle', name: 'CircularRangeSliderPainter handleAngle');
+    dev.log('$handleOffset', name: 'CircularRangeSliderPainter handleOffsets');
   }
 
   @override
-  bool shouldRepaint(CircularRangeSliderPainter oldDelegate) {
-    return oldDelegate.value != value;
+  bool shouldRepaint(CircularRangeSliderHandlePainter oldDelegate) {
+    return oldDelegate.delta != delta;
   }
 }
