@@ -17,7 +17,7 @@ class CircularRangeSlider extends WatchingStatefulWidget {
 }
 
 class _CircularRangeSliderState extends State<CircularRangeSlider> {
-  double? _currentValue = 0;
+  double _currentValue = 0;
   bool _isPanningHandle = false;
 
   @override
@@ -40,9 +40,9 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
             ),
             GestureDetector(
               onPanStart: (DragStartDetails details) {
-                final radius = (context.size!.width / 2);
+                final radius = context.size!.width / 2;
                 final center = Offset(radius, radius);
-                final handleAngle = -math.pi / 2 + 2 * math.pi * _currentValue!;
+                final handleAngle = -math.pi / 2 + 2 * math.pi * _currentValue;
                 final handleOffset = Offset(
                   center.dx + radius * math.cos(handleAngle),
                   center.dy + radius * math.sin(handleAngle),
@@ -59,7 +59,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
               },
               onPanUpdate: (DragUpdateDetails details) {
                 if (!_isPanningHandle) return;
-                final radius = (context.size!.width / 2);
+                final radius = context.size!.width / 2;
                 final center = Offset(radius, radius);
                 final direction = panHandler(details, radius);
 
@@ -80,7 +80,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
                 _currentValue = angle / (2 * math.pi);
 
                 // Update the amount based on the new value
-                di.get<FoodDetailManager>().changeUnits(_currentValue!);
+                di.get<FoodDetailManager>().changeUnits(_currentValue);
 
                 setState(() {});
                 // _currentValue = _currentValue! + details.delta.dy / 100;
@@ -91,7 +91,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
               },
               child: CustomPaint(
                 painter: CircularRangeSliderHandlePainter(
-                  delta: _currentValue!,
+                  delta: _currentValue,
                   color: color,
                 ),
                 child: widget.child,

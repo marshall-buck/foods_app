@@ -10,7 +10,7 @@ class CircularRangeSliderTrackPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = (size.width / 2);
+    final radius = size.width / 2;
 
     // Draw the stroke
     final circularTrackPaint = Paint()
@@ -36,7 +36,7 @@ class CircularRangeSliderHandlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = (size.width / 2);
+    final radius = size.width / 2;
 
     final handlePaint = Paint()
       ..color = color
