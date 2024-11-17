@@ -15,7 +15,7 @@ class CircularRangeSliderTrackPainter extends CustomPainter {
     // Draw the stroke
     final circularTrackPaint = Paint()
       ..color = color
-      ..strokeWidth = 4
+      ..strokeWidth = 8
       ..style = PaintingStyle.stroke;
 
     // Outline
@@ -36,7 +36,7 @@ class CircularRangeSliderHandlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
+    final radius = (size.width / 2) - 16;
 
     final handlePaint = Paint()
       ..color = color
@@ -51,7 +51,10 @@ class CircularRangeSliderHandlePainter extends CustomPainter {
 
     // handle
     canvas.drawCircle(handleOffset, 16, handlePaint);
+    dev.log('$size', name: 'CircularRangeSliderHandlePainter : size');
+    dev.log('$radius', name: 'CircularRangeSliderHandlePainter : radius');
     dev.log('$handleAngle', name: 'CircularRangeSliderPainter handleAngle');
+    // ignore: lines_longer_than_80_chars
     dev.log('$handleOffset', name: 'CircularRangeSliderPainter handleOffsets');
   }
 

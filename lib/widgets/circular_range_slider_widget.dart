@@ -25,7 +25,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
     final color = Theme.of(context).colorScheme.onSurface;
 
     final amount =
-        watchPropertyValue((FoodDetailManager m) => m.amount)[widget.id];
+        watchPropertyValue((FoodDetailManager m) => m.amountsActual)[widget.id];
     assert(amount != null, ' CircularRangeSlider amount is null');
 
     return Padding(
@@ -40,7 +40,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
             ),
             GestureDetector(
               onPanStart: (DragStartDetails details) {
-                final radius = context.size!.width / 2;
+                final radius = (context.size!.width / 2) - 32;
                 final center = Offset(radius, radius);
                 final handleAngle = -math.pi / 2 + 2 * math.pi * _currentValue;
                 final handleOffset = Offset(
@@ -56,12 +56,17 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
                     handleBounds.contains(details.localPosition); // Hit test
 
                 dev.log('$_isPanningHandle', name: '_isPAnningHAndle');
+                dev.log('${context.size}', name: 'onPanStart');
+                dev.log('$radius', name: 'onPanStart  - radius');
+                dev.log('$handleBounds', name: 'onPanStart  - handleBounds');
               },
               onPanUpdate: (DragUpdateDetails details) {
                 if (!_isPanningHandle) return;
-                final radius = context.size!.width / 2;
+                final radius = (context.size!.width / 2) - 16;
                 final center = Offset(radius, radius);
                 final direction = panHandler(details, radius);
+                dev.log('$direction : $radius',
+                    name: 'onPAnUpdate: RotationDirection : radius');
 
                 final mod = direction == RotationDirection.clockwise
                     ? (amount! + details.delta.dy).clamp(0.0, double.infinity)

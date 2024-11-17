@@ -8,15 +8,17 @@ import 'package:watch_it/watch_it.dart';
 class FoodDetailManager extends ChangeNotifier {
   final currentFood = ValueNotifier<Food?>(null);
 
-  String? get description => currentFood.value?.description;
-  num? get id => currentFood.value?.id;
-  num? get foodAmount => currentFood.value?.foodAmount;
-  Map<int, Nutrient>? get nutrientMap => currentFood.value?.nutrientMap;
-  List<Nutrient>? get nutrientList => currentFood.value?.nutrientList;
+  // String? get description => currentFood.value?.description;
+  // num? get id => currentFood.value?.id;
+  // num? get foodAmount => currentFood.value?.foodAmount;
+  // Map<int, Nutrient>? get nutrientMap => currentFood.value?.nutrientMap;
+  // List<Nutrient>? get nutrientList => currentFood.value?.nutrientList;
 
-  late Map<num, num> _amounts;
+  late Map<num, num> _amountsActual;
+  late Map<num, String> _amountsString;
 
-  Map<num, num> get amount => _amounts;
+  Map<num, String> get amountString => _amountsString;
+  Map<num, num> get amountsActual => _amountsActual;
 
   Future<void> queryFood(int id) async {
     final foodsDB = di.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
@@ -27,21 +29,25 @@ class FoodDetailManager extends ChangeNotifier {
 
   void changeUnits(double modifier) {
     dev.log(
-      '${_amounts.entries.first}',
-      name: 'FoodDetailManager - changeUnits amounts before:  ',
+      '$modifier',
+      name: 'FoodDetailManager - changeUnits modifier:  ',
     );
-    final newMap = <num, num>{};
-    for (final en in _amounts.entries) {
+    final newActual = <num, num>{};
+    final newString = <num, String>{};
+    for (final en in _amountsActual.entries) {
       final key = en.key;
       final value = en.value;
+      final newValue = value + (modifier / 100);
 
-      newMap[key] = value + (modifier / 100);
+      newActual[key] = newValue;
+      newString[key] = newValue.toStringAsFixed(1);
     }
-    _amounts = Map.unmodifiable(newMap);
-    dev.log(
-      '${_amounts.entries.first}',
-      name: 'FoodDetailManager - changeUnits amounts after:  ',
-    );
+    _amountsActual = Map.unmodifiable(newActual);
+    _amountsString = Map.unmodifiable(newString);
+    // dev.log(
+    //   '${_amounts.entries.first}',
+    //   name: 'FoodDetailManager - changeUnits amounts after:  ',
+    // );
 
     notifyListeners();
   }
@@ -56,9 +62,17 @@ class FoodDetailManager extends ChangeNotifier {
       currentFood.value != null,
       'FoodDetailManager _populateAmounts() - There is no current food',
     );
-    _amounts = {currentFood.value!.id: currentFood.value!.foodAmount};
+    _amountsActual = {currentFood.value!.id: currentFood.value!.foodAmount};
+    _amountsString = {
+      currentFood.value!.id: currentFood.value!.foodAmount.toStringAsFixed(1),
+    };
     for (final item in currentFood.value!.nutrientList) {
-      _amounts[item.id] = item.amount;
+      _amountsActual[item.id] = item.amount;
+      _amountsString[item.id] = item.amount.toStringAsFixed(1);
+      dev.log(
+        '$item',
+        name: 'FoodDetailManager - _populateAmounts amounts:  ',
+      );
     }
   }
 
