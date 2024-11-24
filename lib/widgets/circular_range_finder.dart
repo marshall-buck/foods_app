@@ -1,12 +1,17 @@
 import 'dart:developer' as dev;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/features.dart';
+import 'package:watch_it/watch_it.dart';
 
-class CircularRangeFinder extends StatefulWidget {
+class CircularRangeFinder extends WatchingStatefulWidget {
   const CircularRangeFinder({
     required this.trackStroke,
     required this.handleRadius,
     required this.trackDiameter,
+    required this.trackColor,
+    required this.handleColor,
+    required this.id,
     required this.child,
     super.key,
   });
@@ -14,7 +19,10 @@ class CircularRangeFinder extends StatefulWidget {
   final double trackStroke;
   final double handleRadius;
   final double trackDiameter;
+  final Color trackColor;
+  final Color handleColor;
   final Widget child;
+  final num id;
 
   @override
   State<CircularRangeFinder> createState() => _CircularRangeFinderState();
@@ -35,6 +43,10 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
   @override
   Widget build(BuildContext context) {
     final wrapperSize = widget.trackDiameter + (widget.handleRadius * 2);
+
+    final amount =
+        watchPropertyValue((FoodDetailManager m) => m.amountsActual)[widget.id];
+    assert(amount != null, ' CircularRangeSlider amount is null');
 
     return SizedBox.square(
       dimension: wrapperSize,
@@ -73,6 +85,14 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
           final dy = details.localPosition.dy - center.dy;
           final newAngle = math.atan2(dy, dx);
 
+          final direction = panHandler(details, widget.trackDiameter / 2);
+
+          final mod = direction == RotationDirection.clockwise
+              ? (amount! + details.delta.dy).clamp(0.0, double.infinity)
+              : -(amount! + details.delta.dy).clamp(0.0, double.infinity);
+
+          di.get<FoodDetailManager>().changeUnits(mod / 100);
+          dev.log('$mod', name: 'onPanUpdate: mod');
           setState(() {
             _angle = newAngle;
           });
@@ -89,7 +109,7 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
             CustomPaint(
               size: Size.square(widget.trackDiameter),
               painter: CircularRangeSliderTrackPainter(
-                color: Colors.cyan,
+                color: widget.trackColor,
                 trackStroke: widget.trackStroke,
               ),
             ),
@@ -97,7 +117,7 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
               size: Size.square(widget.trackDiameter),
               painter: CircularRangeSliderHandlePainter(
                 angle: _angle,
-                color: Colors.cyan,
+                color: widget.handleColor,
                 handleRadius: widget.handleRadius,
               ),
             ),
