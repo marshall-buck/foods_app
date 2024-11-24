@@ -27,14 +27,14 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
         style: Theme.of(context).textTheme.titleLarge!,
         child: UnconstrainedBox(
           child: Container(
-            width: 200,
-            // padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Theme.of(context).colorScheme.surface,
             ),
-            child: CircularRangeSlider(
-              id: id,
+            child: CircularRangeFinder(
+              trackStroke: 8,
+              handleRadius: 16,
+              trackDiameter: 200,
               child: AmountWidget(
                 textColor: Theme.of(context).colorScheme.onSurface,
                 id: id,

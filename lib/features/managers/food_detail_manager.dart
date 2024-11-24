@@ -44,10 +44,6 @@ class FoodDetailManager extends ChangeNotifier {
     }
     _amountsActual = Map.unmodifiable(newActual);
     _amountsString = Map.unmodifiable(newString);
-    // dev.log(
-    //   '${_amounts.entries.first}',
-    //   name: 'FoodDetailManager - changeUnits amounts after:  ',
-    // );
 
     notifyListeners();
   }
