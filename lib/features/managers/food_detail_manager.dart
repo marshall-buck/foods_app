@@ -1,70 +1,120 @@
 import 'dart:developer' as dev;
-import 'package:flutter/foundation.dart';
+import 'dart:math' as math;
+
+import 'package:flutter/widgets.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:foods_app/services/services.dart';
+import 'package:foods_app/widgets/widgets.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class FoodDetailManager extends ChangeNotifier {
   final currentFood = ValueNotifier<Food?>(null);
 
-  // String? get description => currentFood.value?.description;
-  // num? get id => currentFood.value?.id;
-  // num? get foodAmount => currentFood.value?.foodAmount;
-  // Map<int, Nutrient>? get nutrientMap => currentFood.value?.nutrientMap;
-  // List<Nutrient>? get nutrientList => currentFood.value?.nutrientList;
+  final Map<num, (num, String)> _adjustedNutrientAmounts = {};
+  final Map<num, (num, String)> _adjustedFoodAmount = {};
 
-  late Map<num, num> _amountsActual;
-  late Map<num, String> _amountsString;
+  Map<num, (num, String)> get adjustedNutrientAmounts =>
+      _adjustedNutrientAmounts;
 
-  Map<num, String> get amountString => _amountsString;
-  Map<num, num> get amountsActual => _amountsActual;
+  Map<num, (num, String)> get adjustedFoodAmount => _adjustedFoodAmount;
+
+  Map<num, (num, String)> get amountStrings => {
+        ..._adjustedFoodAmount,
+        ..._adjustedNutrientAmounts,
+      };
 
   Future<void> queryFood(int id) async {
     final foodsDB = di.get<FoodsDB>(instanceName: LocatorName.foodsDBService);
     final food = await foodsDB.queryFood(id: id);
     currentFood.value = Food.fromFoodDTO(food!);
-    _populateAmounts();
+    await _initAdjustedAmounts();
   }
 
-  void changeUnits(double modifier) {
-    dev.log(
-      '$modifier',
-      name: 'FoodDetailManager - changeUnits modifier:  ',
-    );
-    final newActual = <num, num>{};
-    final newString = <num, String>{};
-    for (final en in _amountsActual.entries) {
-      final key = en.key;
-      final value = en.value;
-      final newValue = value + (modifier / 100);
+  // /// Returns the percentage difference of the new food amount from the
+  // /// original (100) as decimal percentage.
+  // num _calculatePercentageChange(num newFoodAmount) =>
+  //     (newFoodAmount - originalFoodAmount) / 100;
 
-      newActual[key] = newValue;
-      newString[key] = newValue.toStringAsFixed(1);
+  // num applyPercentageChange(num percentageChange, num oldValue) =>
+  //     oldValue + (oldValue * percentageChange);
+
+  void _adjustFoodValue(RotationDirection direction) {
+    final oldValue = _adjustedFoodAmount[currentFood.value!.id]!.$1;
+    // dev.log('$oldValue', name: ' adjustFoodValue - oldValue');
+
+    final newValue = direction == RotationDirection.clockwise
+        ? oldValue * (1 + (circularRangeFinderPercentChange / 100))
+        : oldValue * (1 - (circularRangeFinderPercentChange / 100));
+
+    dev.log('$newValue', name: ' adjustFoodValue - newValue');
+
+    _adjustedFoodAmount[currentFood.value!.id] =
+        (newValue, _convertAmountToString(newValue));
+
+    // return newValue;
+  }
+
+  void _adjustNutrientValues(RotationDirection direction) {
+    for (final en in _adjustedNutrientAmounts.entries) {
+      final key = en.key;
+      final oldValue = en.value.$1;
+
+      final newValue = direction == RotationDirection.clockwise
+          ? oldValue * (1 + (circularRangeFinderPercentChange / 100))
+          : oldValue * (1 - (circularRangeFinderPercentChange / 100));
+
+      _adjustedNutrientAmounts[key] =
+          (newValue, _convertAmountToString(newValue));
     }
-    _amountsActual = Map.unmodifiable(newActual);
-    _amountsString = Map.unmodifiable(newString);
+  }
+
+  void changeUnits(RotationDirection direction) {
+    _adjustFoodValue(direction);
+    _adjustNutrientValues(direction);
 
     notifyListeners();
   }
 
   void resetToOriginalAmounts() {
-    _populateAmounts();
+    _initAdjustedAmounts();
     notifyListeners();
   }
 
-  void _populateAmounts() {
+  String _convertAmountToString(num amount) {
+    if (amount >= 10) {
+      return amount.toStringAsFixed(0);
+    }
+    if (amount < 10 && amount >= 1) {
+      return amount.toStringAsFixed(2);
+    }
+    return amount.toStringAsFixed(3);
+  }
+
+  /// Populate the late properties _adjustedFoodAmount,_adjustedNutrientAmounts.
+  /// Called in queryFoods and resetToOriginalAmounts.
+  Future<void> _initAdjustedAmounts() async {
     assert(
-      currentFood.value != null,
+      currentFood.value?.foodAmount != null,
       'FoodDetailManager _populateAmounts() - There is no current food',
     );
-    _amountsActual = {currentFood.value!.id: currentFood.value!.foodAmount};
-    _amountsString = {
-      currentFood.value!.id: currentFood.value!.foodAmount.toStringAsFixed(1),
-    };
+    assert(
+      currentFood.value?.nutrientList != null,
+      'FoodDetailManager _populateAmounts() - There is no current nutrientList',
+    );
+    // init _adjustedFoodAmount
+    _adjustedFoodAmount[currentFood.value!.id] = (
+      currentFood.value!.foodAmount,
+      _convertAmountToString(currentFood.value!.foodAmount)
+    );
+
+    // init _adjustedNutrientAmounts
     for (final item in currentFood.value!.nutrientList) {
-      _amountsActual[item.id] = item.amount;
-      _amountsString[item.id] = item.amount.toStringAsFixed(1);
+      final amount = item.amount;
+      final displayString = _convertAmountToString(amount);
+      _adjustedNutrientAmounts[item.id] = (item.amount, displayString);
+
       dev.log(
         '$item',
         name: 'FoodDetailManager - _populateAmounts amounts:  ',

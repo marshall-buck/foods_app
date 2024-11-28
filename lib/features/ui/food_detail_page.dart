@@ -260,15 +260,15 @@ class AmountWidget extends WatchingWidget {
     //   name: 'AmountWidget id : id.runtimeType',
     // );
 
-    final amountString =
-        watchPropertyValue((FoodDetailManager m) => m.amountString);
+    final amountStrings =
+        watchPropertyValue((FoodDetailManager m) => m.amountStrings);
     // dev.log(
     //   '$id :  ${amount[id]}',
     //   name: 'AmountWidget amount[id] : value',
     // );
     return Center(
       child: Text(
-        amountString[id] ?? '',
+        amountStrings[id]?.$2 ?? '',
         style:
             Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
       ),

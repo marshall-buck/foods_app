@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:watch_it/watch_it.dart';
 
-class CircularRangeFinder extends WatchingStatefulWidget {
+class CircularRangeFinder extends StatefulWidget {
   const CircularRangeFinder({
     required this.trackStroke,
     required this.handleRadius,
@@ -32,7 +32,7 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
   double _angle = math.pi * 1.5;
   bool _shouldPan = false;
 
-  bool isPointInsideHandle(Offset circleCenter, double radius, Offset point) {
+  bool _isPointInsideHandle(Offset circleCenter, double radius, Offset point) {
     final distance = math.sqrt(
       math.pow(point.dx - circleCenter.dx, 2) +
           math.pow(point.dy - circleCenter.dy, 2),
@@ -44,9 +44,10 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
   Widget build(BuildContext context) {
     final wrapperSize = widget.trackDiameter + (widget.handleRadius * 2);
 
-    final amount =
-        watchPropertyValue((FoodDetailManager m) => m.amountsActual)[widget.id];
-    assert(amount != null, ' CircularRangeSlider amount is null');
+    // final amount =
+    // ignore: lines_longer_than_80_chars
+    //     watchPropertyValue((FoodDetailManager m) => m.amountsActual)[widget.id];
+    // assert(amount != null, ' CircularRangeSlider amount is null');
 
     return SizedBox.square(
       dimension: wrapperSize,
@@ -64,7 +65,7 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
             center.dy + radius * math.sin(_angle),
           );
 
-          if (isPointInsideHandle(
+          if (_isPointInsideHandle(
             handleOffset,
             widget.handleRadius,
             details.localPosition,
@@ -87,12 +88,8 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
 
           final direction = panHandler(details, widget.trackDiameter / 2);
 
-          final mod = direction == RotationDirection.clockwise
-              ? (amount! + details.delta.dy).clamp(0.0, double.infinity)
-              : -(amount! + details.delta.dy).clamp(0.0, double.infinity);
+          di.get<FoodDetailManager>().changeUnits(direction);
 
-          di.get<FoodDetailManager>().changeUnits(mod / 100);
-          dev.log('$mod', name: 'onPanUpdate: mod');
           setState(() {
             _angle = newAngle;
           });
@@ -138,7 +135,7 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
   ) {
     dev.log(
       // ignore: lines_longer_than_80_chars
-      '${isPointInsideHandle(handleOffset, widget.handleRadius, details.localPosition)}',
+      '${_isPointInsideHandle(handleOffset, widget.handleRadius, details.localPosition)}',
       name: 'onPanStart: isPointInsideCircle',
     );
     dev.log('$handleOffset', name: 'onPanStart : handleOffset');
