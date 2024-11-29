@@ -1,5 +1,4 @@
 import 'dart:developer' as dev;
-import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:foods_app/common/common.dart';
@@ -9,18 +8,17 @@ import 'package:foods_app/widgets/widgets.dart';
 
 import 'package:watch_it/watch_it.dart';
 
+// TODO:use force touch to change circularRangeFinderPercentChange
+
 class FoodDetailManager extends ChangeNotifier {
   final currentFood = ValueNotifier<Food?>(null);
+  static const originalFoodAmount = 100.0;
+  static const circularRangeFinderPercentChange = .05;
 
-  final Map<num, (num, String)> _adjustedNutrientAmounts = {};
-  final Map<num, (num, String)> _adjustedFoodAmount = {};
+  final Map<num, (num, String, String)> _adjustedNutrientAmounts = {};
+  final Map<num, (num, String, String)> _adjustedFoodAmount = {};
 
-  Map<num, (num, String)> get adjustedNutrientAmounts =>
-      _adjustedNutrientAmounts;
-
-  Map<num, (num, String)> get adjustedFoodAmount => _adjustedFoodAmount;
-
-  Map<num, (num, String)> get amountStrings => {
+  Map<num, (num, String, String)> get amountStrings => {
         ..._adjustedFoodAmount,
         ..._adjustedNutrientAmounts,
       };
@@ -32,17 +30,8 @@ class FoodDetailManager extends ChangeNotifier {
     await _initAdjustedAmounts();
   }
 
-  // /// Returns the percentage difference of the new food amount from the
-  // /// original (100) as decimal percentage.
-  // num _calculatePercentageChange(num newFoodAmount) =>
-  //     (newFoodAmount - originalFoodAmount) / 100;
-
-  // num applyPercentageChange(num percentageChange, num oldValue) =>
-  //     oldValue + (oldValue * percentageChange);
-
   void _adjustFoodValue(RotationDirection direction) {
     final oldValue = _adjustedFoodAmount[currentFood.value!.id]!.$1;
-    // dev.log('$oldValue', name: ' adjustFoodValue - oldValue');
 
     final newValue = direction == RotationDirection.clockwise
         ? oldValue * (1 + (circularRangeFinderPercentChange / 100))
@@ -51,22 +40,21 @@ class FoodDetailManager extends ChangeNotifier {
     dev.log('$newValue', name: ' adjustFoodValue - newValue');
 
     _adjustedFoodAmount[currentFood.value!.id] =
-        (newValue, _convertAmountToString(newValue));
-
-    // return newValue;
+        (newValue, _convertAmountToString(newValue), 'g');
   }
 
   void _adjustNutrientValues(RotationDirection direction) {
     for (final en in _adjustedNutrientAmounts.entries) {
       final key = en.key;
       final oldValue = en.value.$1;
+      final unit = en.value.$3;
 
       final newValue = direction == RotationDirection.clockwise
           ? oldValue * (1 + (circularRangeFinderPercentChange / 100))
           : oldValue * (1 - (circularRangeFinderPercentChange / 100));
 
       _adjustedNutrientAmounts[key] =
-          (newValue, _convertAmountToString(newValue));
+          (newValue, _convertAmountToString(newValue), unit);
     }
   }
 
@@ -83,8 +71,11 @@ class FoodDetailManager extends ChangeNotifier {
   }
 
   String _convertAmountToString(num amount) {
-    if (amount >= 10) {
+    if (amount >= 50) {
       return amount.toStringAsFixed(0);
+    }
+    if (amount < 50 && amount >= 10) {
+      return amount.toStringAsFixed(1);
     }
     if (amount < 10 && amount >= 1) {
       return amount.toStringAsFixed(2);
@@ -92,8 +83,6 @@ class FoodDetailManager extends ChangeNotifier {
     return amount.toStringAsFixed(3);
   }
 
-  /// Populate the late properties _adjustedFoodAmount,_adjustedNutrientAmounts.
-  /// Called in queryFoods and resetToOriginalAmounts.
   Future<void> _initAdjustedAmounts() async {
     assert(
       currentFood.value?.foodAmount != null,
@@ -106,19 +95,21 @@ class FoodDetailManager extends ChangeNotifier {
     // init _adjustedFoodAmount
     _adjustedFoodAmount[currentFood.value!.id] = (
       currentFood.value!.foodAmount,
-      _convertAmountToString(currentFood.value!.foodAmount)
+      _convertAmountToString(currentFood.value!.foodAmount),
+      'g'
     );
 
     // init _adjustedNutrientAmounts
     for (final item in currentFood.value!.nutrientList) {
       final amount = item.amount;
+      final unit = item.unit;
       final displayString = _convertAmountToString(amount);
-      _adjustedNutrientAmounts[item.id] = (item.amount, displayString);
+      _adjustedNutrientAmounts[item.id] = (item.amount, displayString, unit);
 
-      dev.log(
-        '$item',
-        name: 'FoodDetailManager - _populateAmounts amounts:  ',
-      );
+      // dev.log(
+      //   '$item',
+      //   name: 'FoodDetailManager - _populateAmounts amounts:  ',
+      // );
     }
   }
 
@@ -126,5 +117,7 @@ class FoodDetailManager extends ChangeNotifier {
   void dispose() {
     super.dispose();
     currentFood.dispose();
+    _adjustedFoodAmount.clear();
+    _adjustedNutrientAmounts.clear();
   }
 }

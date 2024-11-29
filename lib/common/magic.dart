@@ -1,6 +1,3 @@
-const originalFoodAmount = 100.0;
-const circularRangeFinderPercentChange = .05;
-
 class DisplayMode {
   static const String light = 'light';
 

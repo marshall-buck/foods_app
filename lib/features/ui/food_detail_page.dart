@@ -96,7 +96,7 @@ class FoodDescriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
         boxShadow: [
           BoxShadow(
@@ -127,9 +127,8 @@ class FoodDescriptionCard extends StatelessWidget {
                 );
               },
               child: AmountWidget(
-                id: food.id,
-                textColor: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
+                  id: food.id,
+                  textColor: Theme.of(context).colorScheme.onSurface),
             ),
           ),
           Expanded(
@@ -204,7 +203,7 @@ class NutrientListItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.surfaceContainer,
       ),
       child: Stack(
         children: [
@@ -234,7 +233,7 @@ class NutrientListItem extends StatelessWidget {
               },
               child: AmountWidget(
                 id: food.nutrientList[index].id,
-                textColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                textColor: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ),
@@ -255,20 +254,13 @@ class AmountWidget extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    // dev.log(
-    //   '$id : ${id.runtimeType}',
-    //   name: 'AmountWidget id : id.runtimeType',
-    // );
-
     final amountStrings =
         watchPropertyValue((FoodDetailManager m) => m.amountStrings);
-    // dev.log(
-    //   '$id :  ${amount[id]}',
-    //   name: 'AmountWidget amount[id] : value',
-    // );
+    assert(amountStrings[id]?.$2 != null, 'The string is empty');
+
     return Center(
       child: Text(
-        amountStrings[id]?.$2 ?? '',
+        '${amountStrings[id]!.$2} ${amountStrings[id]!.$3}',
         style:
             Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
       ),
