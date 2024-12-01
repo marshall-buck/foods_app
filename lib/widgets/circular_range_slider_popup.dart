@@ -26,21 +26,23 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
       child: DefaultTextStyle(
         style: Theme.of(context).textTheme.titleLarge!,
         child: UnconstrainedBox(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.surface,
-            ),
-            child: CircularRangeFinder(
-              id: id,
-              trackStroke: 8,
-              handleRadius: 16,
-              handleColor: Theme.of(context).colorScheme.primary,
-              trackDiameter: 200,
-              trackColor: Theme.of(context).colorScheme.onSurface,
-              child: AmountWidget(
-                textColor: Theme.of(context).colorScheme.onSurface,
+          child: ClipOval(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Theme.of(context).colorScheme.surface,
+              ),
+              child: CircularRangeFinder(
                 id: id,
+                trackStroke: 8,
+                handleRadius: 16,
+                handleColor: Theme.of(context).colorScheme.primary,
+                trackDiameter: 200,
+                trackColor: Theme.of(context).colorScheme.onSurface,
+                child: AmountWidget(
+                  textColor: Theme.of(context).colorScheme.onSurface,
+                  id: id,
+                ),
               ),
             ),
           ),

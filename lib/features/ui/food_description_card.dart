@@ -22,7 +22,7 @@ class FoodDescriptionCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
+        borderRadius: BorderRadius.circular(MagicSpacing.sp_8),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context)
@@ -40,33 +40,48 @@ class FoodDescriptionCard extends StatelessWidget {
       height: tileSize.dimension,
       child: Row(
         children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onLongPress: () {
-                Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(
-                    context: context,
-                    id: food.id,
+          Padding(
+            padding: const EdgeInsets.all(MagicSpacing.sp_4),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onLongPress: () {
+                  Navigator.of(context).push(
+                    CircularRangeSliderPopUp<void>(
+                      context: context,
+                      id: food.id,
+                    ),
+                  );
+                },
+                child: ClipOval(
+                  child: ColoredBox(
+                    color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                    child: Center(
+                      child: AmountWidget(
+                        id: food.id,
+                        textColor: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                   ),
-                );
-              },
-              child: AmountWidget(
-                id: food.id,
-                textColor: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(MagicSpacing.sp_2),
+              padding: const EdgeInsets.only(
+                top: MagicSpacing.sp_4,
+                right: MagicSpacing.sp_4,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    food.description,
-                    style: Theme.of(context).textTheme.bodySmall,
+                  Expanded(
+                    child: Text(
+                      food.description,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
