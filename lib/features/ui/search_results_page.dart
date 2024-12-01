@@ -4,9 +4,9 @@ import 'package:foods_app/features/features.dart';
 
 import 'package:watch_it/watch_it.dart';
 
+// TODO: Put in quicksearchresults
 class SearchResultsPage extends WatchingStatefulWidget {
-  const SearchResultsPage({super.key, this.termFromHome});
-  final String? termFromHome;
+  const SearchResultsPage({super.key});
 
   @override
   State<SearchResultsPage> createState() => _FoodsListState();
@@ -36,14 +36,6 @@ class _FoodsListState extends State<SearchResultsPage> {
   }
 
   @override
-  void initState() {
-    if (widget.termFromHome != null) {
-      _searchBarController.text = widget.termFromHome!;
-    }
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _searchBarController.dispose();
     super.dispose();
@@ -52,35 +44,42 @@ class _FoodsListState extends State<SearchResultsPage> {
   @override
   Widget build(BuildContext context) {
     final foodResults = watchValue((FoodSearchManager x) => x.currentResults);
+    final height = MediaQuery.sizeOf(context).height;
+    final padding = MediaQuery.paddingOf(context);
+    final centeredSearchBarTop =
+        (height / 2) - (MagicDimensions.searchBarHeight / 2) - (padding.top);
 
     return Material(
       child: SafeArea(
         child: Column(
           children: [
-            Hero(
-              tag: MagicStrings.searchBarHeroTag,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: MagicSpacing.sp_3),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: MagicDimensions.maxSearchBarWidth,
-                    minWidth: MagicDimensions.minSearchBarWidth,
-                    maxHeight: MagicDimensions.searchBarHeight,
-                    minHeight: MagicDimensions.searchBarHeight,
-                  ),
-                  child: SearchBar(
-                    controller: _searchBarController,
-                    constraints: Theme.of(context).searchBarTheme.constraints,
-                    hintText: MagicStrings.searchPageHintText,
-                    trailing: [
-                      IconButton(
-                        onPressed: _onClearSearch,
-                        icon: const Icon(Icons.clear_outlined),
-                      ),
-                    ],
-                    onChanged: (string) => _onChanged(),
-                  ),
+            AnimatedPadding(
+              duration: MagicDurations.base2,
+              padding: foodResults.isEmpty
+                  ? EdgeInsets.only(
+                      top: centeredSearchBarTop,
+                      right: MagicSpacing.sp_3,
+                      left: MagicSpacing.sp_3,
+                    )
+                  : const EdgeInsets.symmetric(horizontal: MagicSpacing.sp_3),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: MagicDimensions.maxSearchBarWidth,
+                  minWidth: MagicDimensions.minSearchBarWidth,
+                  maxHeight: MagicDimensions.searchBarHeight,
+                  minHeight: MagicDimensions.searchBarHeight,
+                ),
+                child: SearchBar(
+                  controller: _searchBarController,
+                  constraints: Theme.of(context).searchBarTheme.constraints,
+                  hintText: MagicStrings.searchPageHintText,
+                  trailing: [
+                    IconButton(
+                      onPressed: _onClearSearch,
+                      icon: const Icon(Icons.clear_outlined),
+                    ),
+                  ],
+                  onChanged: (string) => _onChanged(),
                 ),
               ),
             ),

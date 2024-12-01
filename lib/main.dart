@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/home_page.dart';
+import 'package:foods_app/features/ui/search_results_page.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
             if (snapshot.error != null) {
               return ErrorScreen(snapshot: snapshot);
             } else {
-              return const HomePage();
+              return const SearchResultsPage();
               // return const LoadingScreen();
             }
           }
