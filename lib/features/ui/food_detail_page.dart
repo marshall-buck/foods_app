@@ -1,11 +1,9 @@
-// import 'dart:developer' as dev;
-
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
-
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
+import 'package:foods_app/features/ui/food_description_card.dart';
 import 'package:foods_app/widgets/widgets.dart';
-
 import 'package:watch_it/watch_it.dart';
 
 class FoodDetailPage extends WatchingWidget {
@@ -19,25 +17,39 @@ class FoodDetailPage extends WatchingWidget {
     final tileSize = MagicTileDimension.tileSize(windowSize: width);
 
     final food = watchValue((FoodDetailManager m) => m.currentFood);
+    // dev.log('$food');
     return Material(
       child: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-              floating: true,
-              delegate: _MySliverHeaderDelegate(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: tileSize.spacing),
-                  child: FoodDescriptionCard(
-                    tileSize: tileSize,
-                    food: food!,
+        child: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  floating: true,
+                  delegate: _MySliverHeaderDelegate(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: tileSize.spacing),
+                      child: FoodDescriptionCard(
+                        tileSize: tileSize,
+                        food: food!,
+                      ),
+                    ),
+                    maxHeight: tileSize.dimension,
+                    minHeight: 100,
                   ),
                 ),
-                maxHeight: tileSize.dimension,
-                minHeight: 100,
+                _NutrientGrid(tileSize: tileSize, food: food),
+              ],
+            ),
+            Positioned(
+              bottom: 16,
+              right: 16,
+              child: FloatingActionButton(
+                child: const Icon(Icons.compare),
+                onPressed: () {},
               ),
             ),
-            _NutrientGrid(tileSize: tileSize, food: food),
           ],
         ),
       ),
@@ -82,83 +94,6 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-class FoodDescriptionCard extends StatelessWidget {
-  const FoodDescriptionCard({
-    required this.tileSize,
-    required this.food,
-    super.key,
-  });
-
-  final MagicTileDimension tileSize;
-  final Food food;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(MagicSpacing.sp_4),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context)
-                .colorScheme
-                .shadow
-                .withOpacity(MagicOpacity.op_50),
-            blurRadius: MagicBlurRadius.blur_5,
-            offset: const Offset(
-              0,
-              1,
-            ),
-          ),
-        ],
-      ),
-      height: tileSize.dimension,
-      child: Row(
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: GestureDetector(
-              onLongPress: () {
-                Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(
-                    context: context,
-                    id: food.id,
-                  ),
-                );
-              },
-              child: AmountWidget(
-                  id: food.id,
-                  textColor: Theme.of(context).colorScheme.onSurface),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(MagicSpacing.sp_2),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    food.description,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.save_as),
-                      Icon(Icons.edit),
-                      Icon(Icons.refresh),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _NutrientGrid extends StatelessWidget {
   const _NutrientGrid({
     required this.tileSize,
@@ -181,7 +116,9 @@ class _NutrientGrid extends StatelessWidget {
         itemCount: food.nutrientList.length,
         itemBuilder: (BuildContext context, int index) {
           final nutrientKey = Key('${food.id}:${food.nutrientList[index].id}');
-          return NutrientListItem(key: nutrientKey, food: food, index: index);
+          return ClipOval(
+            child: NutrientListItem(key: nutrientKey, food: food, index: index),
+          );
         },
       ),
     );
@@ -202,42 +139,44 @@ class NutrientListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        // borderRadius: BorderRadius.circular(16),
         color: Theme.of(context).colorScheme.surfaceContainer,
       ),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onLongPress: () {
+          Navigator.of(context).push(
+            CircularRangeSliderPopUp<void>(
+              context: context,
+              id: food.nutrientList[index].id,
+            ),
+          );
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
               children: [
                 Expanded(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    food.nutrientList[index].name,
-                    style: Theme.of(context).textTheme.labelSmall,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: MagicSpacing.sp_4),
+                    child: AutoHyphenatingText(
+                      textAlign: TextAlign.center,
+                      food.nutrientList[index].name,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-          Center(
-            child: GestureDetector(
-              onLongPress: () {
-                Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(
-                    context: context,
-                    id: food.nutrientList[index].id,
-                  ),
-                );
-              },
-              child: AmountWidget(
-                id: food.nutrientList[index].id,
-                textColor: Theme.of(context).colorScheme.onSurface,
-              ),
+            AmountWidget(
+              id: food.nutrientList[index].id,
+              textColor: Theme.of(context).colorScheme.onSurface,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -258,12 +197,11 @@ class AmountWidget extends WatchingWidget {
         watchPropertyValue((FoodDetailManager m) => m.amountStrings);
     assert(amountStrings[id]?.$2 != null, 'The string is empty');
 
-    return Center(
-      child: Text(
-        '${amountStrings[id]!.$2} ${amountStrings[id]!.$3}',
-        style:
-            Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
-      ),
+    return Text(
+      '${amountStrings[id]!.$2} ${amountStrings[id]!.$3}',
+      textAlign: TextAlign.center,
+      style:
+          Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
     );
   }
 }

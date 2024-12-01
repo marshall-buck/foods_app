@@ -7,6 +7,7 @@ environment:
   sdk: ">=3.2.6 <4.0.0"
 
 dependencies:
+  auto_hyphenating_text: ^0.3.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter

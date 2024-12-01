@@ -10,15 +10,18 @@ import 'package:watch_it/watch_it.dart';
 
 // TODO:use force touch to change circularRangeFinderPercentChange
 
+// (id, displayAmount, units)
+typedef AmountRecord = (num, String, String);
+
 class FoodDetailManager extends ChangeNotifier {
   final currentFood = ValueNotifier<Food?>(null);
   static const originalFoodAmount = 100.0;
   static const circularRangeFinderPercentChange = .05;
 
-  final Map<num, (num, String, String)> _adjustedNutrientAmounts = {};
-  final Map<num, (num, String, String)> _adjustedFoodAmount = {};
+  final Map<num, AmountRecord> _adjustedNutrientAmounts = {};
+  final Map<num, AmountRecord> _adjustedFoodAmount = {};
 
-  Map<num, (num, String, String)> get amountStrings => {
+  Map<num, AmountRecord> get amountStrings => {
         ..._adjustedFoodAmount,
         ..._adjustedNutrientAmounts,
       };
@@ -28,6 +31,13 @@ class FoodDetailManager extends ChangeNotifier {
     final food = await foodsDB.queryFood(id: id);
     currentFood.value = Food.fromFoodDTO(food!);
     await _initAdjustedAmounts();
+  }
+
+  void changeUnits(RotationDirection direction) {
+    _adjustFoodValue(direction);
+    _adjustNutrientValues(direction);
+
+    notifyListeners();
   }
 
   void _adjustFoodValue(RotationDirection direction) {
@@ -56,13 +66,6 @@ class FoodDetailManager extends ChangeNotifier {
       _adjustedNutrientAmounts[key] =
           (newValue, _convertAmountToString(newValue), unit);
     }
-  }
-
-  void changeUnits(RotationDirection direction) {
-    _adjustFoodValue(direction);
-    _adjustNutrientValues(direction);
-
-    notifyListeners();
   }
 
   void resetToOriginalAmounts() {

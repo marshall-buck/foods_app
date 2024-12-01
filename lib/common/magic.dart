@@ -74,8 +74,8 @@ class MagicTileDimension {
         return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_4);
     }
   }
-  static double xs = 120;
-  static double sm = 136;
+  // static double xs = 120;
+  // static double sm = 136;
   static double md = 144;
   static double lg = 160;
 

@@ -1,3 +1,4 @@
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 
@@ -29,6 +30,8 @@ void registerDependencies() {
     ) //PreferencesService
     ..registerSingletonAsync<FoodsDB>(
       () async {
+        // initializes auto_hyphenating_text package,
+        await initHyphenation();
         final usdaDB = UsdaDB();
         await usdaDB.init();
         assert(usdaDB.isDataLoaded == true, 'usdaDB is not loaded');
