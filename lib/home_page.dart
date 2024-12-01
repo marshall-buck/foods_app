@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+//BUG: the typing experience is broken when navigating pages.
   @override
   Widget build(BuildContext context) {
     return Material(
