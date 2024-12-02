@@ -1,10 +1,11 @@
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-// TODO: Put in quicksearchresults
 class SearchResultsPage extends WatchingStatefulWidget {
   const SearchResultsPage({super.key});
 
@@ -14,7 +15,12 @@ class SearchResultsPage extends WatchingStatefulWidget {
 
 class _FoodsListState extends State<SearchResultsPage> {
   final _searchBarController = TextEditingController();
-  Future<void> _onTap(BuildContext context, ValueKey<int> id) async {
+  final _scrollController = ScrollController();
+
+  bool _showQuickResults = false;
+
+  Future<void> _onTapFoodListItem(
+      BuildContext context, ValueKey<int> id) async {
     await di.get<FoodDetailManager>().queryFood(id.value);
     if (context.mounted) {
       await Navigator.push(
@@ -32,12 +38,40 @@ class _FoodsListState extends State<SearchResultsPage> {
 
   void _onClearSearch() {
     _searchBarController.clear();
+
     di.get<FoodSearchManager>().clearSearch();
+  }
+
+  void _onScroll() {
+    // dev.log('_showQuickResults : $_showQuickResults',
+    //     name: '_onScrollCalled top');
+    if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.forward) {
+      setState(() {
+        _showQuickResults = true;
+      });
+
+      return;
+    }
+    setState(() {
+      _showQuickResults = false;
+    });
+    // dev.log('_showQuickResults : $_showQuickResults',
+    //     name: '_onScrollCalled bottom');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
     _searchBarController.dispose();
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
     super.dispose();
   }
 
@@ -48,6 +82,7 @@ class _FoodsListState extends State<SearchResultsPage> {
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
         (height / 2) - (MagicDimensions.searchBarHeight / 2) - (padding.top);
+    final quickResultsList = di.get<QuickSearchManager>().quickSearchNames;
 
     return Material(
       child: SafeArea(
@@ -83,14 +118,33 @@ class _FoodsListState extends State<SearchResultsPage> {
                 ),
               ),
             ),
+            AnimatedContainer(
+              // color: Colors.amber,
+              duration: MagicDurations.base1,
+              height: _showQuickResults ? 32 : 0,
+              child: Row(
+                children: quickResultsList.value.map((quickResult) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: Text(
+                      quickResult,
+                      style: AppTextStyle.m3LabelSmall.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
             Expanded(
               child: ListView.builder(
+                controller: _scrollController,
                 itemBuilder: (BuildContext context, int index) {
                   final food = foodResults[index];
 
                   final id = ValueKey<int>(food!.id);
                   return GestureDetector(
-                    onTap: () => _onTap(context, id),
+                    onTap: () => _onTapFoodListItem(context, id),
                     child: FoodListItem(
                       key: id,
                       food: food,
