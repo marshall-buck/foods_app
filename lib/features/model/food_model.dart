@@ -1,5 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/services/services.dart';
+
+// TODO: check if Nutrient map is needed
+// (id, formatted amount to display, units)
+typedef AmountRecord = (num, String, String);
 
 class Food extends Equatable {
   const Food({
@@ -12,6 +17,7 @@ class Food extends Equatable {
   factory Food.fromFoodDTO(FoodDTO food) {
     final nutrientMap = <int, Nutrient>{};
     final nutrientList = <Nutrient>[];
+
     for (final entry in food.nutrients.entries) {
       final nutrient = Nutrient.fromMapEntry(entry);
       nutrientMap[entry.key] = nutrient;
@@ -22,7 +28,7 @@ class Food extends Equatable {
       description: food.description,
       nutrientMap: nutrientMap,
       nutrientList: nutrientList,
-      foodAmount: 100,
+      foodAmount: defaultFoodAmount,
     );
   }
   final int id;
@@ -33,6 +39,37 @@ class Food extends Equatable {
   final List<Nutrient> nutrientList;
 
   final num foodAmount;
+
+  Future<Map<num, AmountRecord>> createAmountStrings() async {
+    final adjustedNutrientAmounts = <num, AmountRecord>{};
+    final adjustedFoodAmount = <num, AmountRecord>{};
+    adjustedFoodAmount[id] =
+        (foodAmount, convertAmountToString(foodAmount), 'g');
+
+    for (final item in nutrientList) {
+      final amount = item.amount;
+      final unit = item.unit;
+      final displayString = convertAmountToString(amount);
+      adjustedNutrientAmounts[item.id] = (item.amount, displayString, unit);
+    }
+    return {
+      ...adjustedFoodAmount,
+      ...adjustedNutrientAmounts,
+    };
+  }
+
+  static String convertAmountToString(num amount) {
+    if (amount >= 50) {
+      return amount.toStringAsFixed(0);
+    }
+    if (amount < 50 && amount >= 10) {
+      return amount.toStringAsFixed(1);
+    }
+    if (amount < 10 && amount >= 1) {
+      return amount.toStringAsFixed(2);
+    }
+    return amount.toStringAsFixed(3);
+  }
 
   Food copyWith({
     int? id,

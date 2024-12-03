@@ -26,7 +26,7 @@ void registerDependencies() {
         await settings.init();
         return settings;
       },
-      instanceName: LocatorName.sharedPrefsService,
+      instanceName: LocatorInstanceNames.sharedPrefsService,
     ) //PreferencesService
     ..registerSingletonAsync<FoodsDB>(
       () async {
@@ -37,7 +37,7 @@ void registerDependencies() {
         assert(usdaDB.isDataLoaded == true, 'usdaDB is not loaded');
         return FoodsDBService(usdaDB);
       },
-      instanceName: LocatorName.foodsDBService,
+      instanceName: LocatorInstanceNames.foodsDBService,
       dispose: (x) async => x.dispose(),
     )
     ..registerSingletonAsync<QuickSearchManager>(
@@ -49,7 +49,7 @@ void registerDependencies() {
       dependsOn: [
         InitDependency(
           PreferencesService,
-          instanceName: LocatorName.sharedPrefsService,
+          instanceName: LocatorInstanceNames.sharedPrefsService,
         ),
       ],
     );

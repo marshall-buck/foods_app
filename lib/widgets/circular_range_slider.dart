@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:watch_it/watch_it.dart';
 
-class CircularRangeFinder extends StatefulWidget {
-  const CircularRangeFinder({
+class CircularRangeSlider extends StatefulWidget {
+  const CircularRangeSlider({
     required this.trackStroke,
     required this.handleRadius,
     required this.trackDiameter,
@@ -25,10 +25,10 @@ class CircularRangeFinder extends StatefulWidget {
   final num id;
 
   @override
-  State<CircularRangeFinder> createState() => _CircularRangeFinderState();
+  State<CircularRangeSlider> createState() => _CircularRangeSliderState();
 }
 
-class _CircularRangeFinderState extends State<CircularRangeFinder> {
+class _CircularRangeSliderState extends State<CircularRangeSlider> {
   double _angle = math.pi * 1.5;
   bool _shouldPan = false;
 
@@ -43,11 +43,6 @@ class _CircularRangeFinderState extends State<CircularRangeFinder> {
   @override
   Widget build(BuildContext context) {
     final wrapperSize = widget.trackDiameter + (widget.handleRadius * 2);
-
-    // final amount =
-    // ignore: lines_longer_than_80_chars
-    //     watchPropertyValue((FoodDetailManager m) => m.amountsActual)[widget.id];
-    // assert(amount != null, ' CircularRangeSlider amount is null');
 
     return SizedBox.square(
       dimension: wrapperSize,

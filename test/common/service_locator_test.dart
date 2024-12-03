@@ -34,7 +34,9 @@ void main() {
       await di.allReady();
 
       expect(
-        di.isRegistered<FoodsDB>(instanceName: LocatorName.foodsDBService),
+        di.isRegistered<FoodsDB>(
+          instanceName: LocatorInstanceNames.foodsDBService,
+        ),
         true,
       );
     });
@@ -43,7 +45,7 @@ void main() {
       await di.allReady();
       // ignore: strict_raw_type
       final prefsService = await di.getAsync<PreferencesService>(
-        instanceName: LocatorName.sharedPrefsService,
+        instanceName: LocatorInstanceNames.sharedPrefsService,
       );
 
       expect(prefsService, isNotNull);
@@ -58,7 +60,7 @@ void main() {
     test('UsdaDB should be initialized and data loaded', () async {
       await di.allReady();
       final db = await di.getAsync<FoodsDB>(
-        instanceName: LocatorName.foodsDBService,
+        instanceName: LocatorInstanceNames.foodsDBService,
       );
 
       expect(db, isNotNull);

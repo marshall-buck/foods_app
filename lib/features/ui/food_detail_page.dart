@@ -2,12 +2,23 @@ import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/features/features.dart';
-import 'package:foods_app/features/ui/food_description_card.dart';
+
 import 'package:foods_app/widgets/widgets.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodDetailPage extends WatchingWidget {
   const FoodDetailPage({super.key});
+
+  void _floatingButtonPressed(BuildContext context) {
+    if (context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute<FoodDetailPage>(
+          builder: (context) => const FoodComparisonPage(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +58,7 @@ class FoodDetailPage extends WatchingWidget {
               right: 16,
               child: FloatingActionButton(
                 child: const Icon(Icons.compare),
-                onPressed: () {},
+                onPressed: () => _floatingButtonPressed(context),
               ),
             ),
           ],
@@ -161,7 +172,8 @@ class NutrientListItem extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: MagicSpacing.sp_4),
+                      horizontal: MagicSpacing.sp_4,
+                    ),
                     child: AutoHyphenatingText(
                       textAlign: TextAlign.center,
                       food.nutrientList[index].name,
@@ -178,30 +190,6 @@ class NutrientListItem extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class AmountWidget extends WatchingWidget {
-  const AmountWidget({
-    required this.textColor,
-    required this.id,
-    super.key,
-  });
-  final Color textColor;
-  final num id;
-
-  @override
-  Widget build(BuildContext context) {
-    final amountStrings =
-        watchPropertyValue((FoodDetailManager m) => m.amountStrings);
-    assert(amountStrings[id]?.$2 != null, 'The string is empty');
-
-    return Text(
-      '${amountStrings[id]!.$2} ${amountStrings[id]!.$3}',
-      textAlign: TextAlign.center,
-      style:
-          Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
     );
   }
 }

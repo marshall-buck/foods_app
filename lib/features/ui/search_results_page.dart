@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -20,7 +21,9 @@ class _FoodsListState extends State<SearchResultsPage> {
   bool _showQuickResults = false;
 
   Future<void> _onTapFoodListItem(
-      BuildContext context, ValueKey<int> id) async {
+    BuildContext context,
+    ValueKey<int> id,
+  ) async {
     await di.get<FoodDetailManager>().queryFood(id.value);
     if (context.mounted) {
       await Navigator.push(
@@ -34,6 +37,7 @@ class _FoodsListState extends State<SearchResultsPage> {
 
   Future<void> _onChanged() async {
     await di.get<FoodSearchManager>().queryFoods(_searchBarController.text);
+    setState(() {});
   }
 
   void _onClearSearch() {
@@ -109,6 +113,10 @@ class _FoodsListState extends State<SearchResultsPage> {
                   constraints: Theme.of(context).searchBarTheme.constraints,
                   hintText: MagicStrings.searchPageHintText,
                   trailing: [
+                    if (foodResults.isNotEmpty)
+                      const FoodResultsCountBadge()
+                    else
+                      const Spacer(),
                     IconButton(
                       onPressed: _onClearSearch,
                       icon: const Icon(Icons.clear_outlined),

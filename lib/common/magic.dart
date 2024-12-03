@@ -1,3 +1,5 @@
+const defaultFoodAmount = 100;
+
 class DisplayMode {
   static const String light = 'light';
 
@@ -5,7 +7,7 @@ class DisplayMode {
   static const String system = 'system';
 }
 
-class LocatorName {
+class LocatorInstanceNames {
   static const String foodsDBService = 'foodsDBService';
   static const String sharedPrefsService = 'sharedPrefsService';
 }

@@ -11,15 +11,10 @@ import 'package:watch_it/watch_it.dart';
 class FoodSearchManager {
   final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
 
-  bool _isFirstSearch = true;
-
-  bool get isFirstSearch => _isFirstSearch;
-
   Future<void> queryFoods(String string) async {
-    _isFirstSearch = false;
-
-    final db =
-        await di.getAsync<FoodsDB>(instanceName: LocatorName.foodsDBService);
+    final db = await di.getAsync<FoodsDB>(
+      instanceName: LocatorInstanceNames.foodsDBService,
+    );
 
     final foods = await db.queryFoods(searchTerm: string);
 
@@ -59,7 +54,7 @@ class QuickSearchManager {
   Future<void> getNames() async {
     // ignore: strict_raw_type
     final prefs = await di.getAsync<PreferencesService>(
-      instanceName: LocatorName.sharedPrefsService,
+      instanceName: LocatorInstanceNames.sharedPrefsService,
     );
     final quick = await prefs.getQuickSearchAmounts();
     final names = quick

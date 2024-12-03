@@ -14,7 +14,7 @@ class FoodResultsCountBadge extends WatchingWidget {
       count: count.length,
       backgroundColor: Colors.transparent,
       textColor: Theme.of(context).colorScheme.onSurface,
-      padding: const EdgeInsets.only(right: 8),
+      // padding: const EdgeInsets.only(right: 8),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/ui/food_detail_page.dart';
+
 import 'package:foods_app/widgets/widgets.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
@@ -31,7 +31,7 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
               ),
-              child: CircularRangeFinder(
+              child: CircularRangeSlider(
                 id: id,
                 trackStroke: 8,
                 handleRadius: 16,

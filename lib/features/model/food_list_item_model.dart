@@ -44,7 +44,7 @@ class FoodListItemModel extends Equatable {
   static Future<List<String>> _quickSearchNutrientAmounts(FoodDTO food) async {
     // ignore: strict_raw_type
     final prefs = di.get<PreferencesService>(
-      instanceName: LocatorName.sharedPrefsService,
+      instanceName: LocatorInstanceNames.sharedPrefsService,
     );
     final quickPrefs = await prefs.getQuickSearchAmounts();
     final nutrients = food.nutrients;

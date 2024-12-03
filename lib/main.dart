@@ -34,7 +34,6 @@ class MainApp extends StatelessWidget {
               return ErrorScreen(snapshot: snapshot);
             } else {
               return const SearchResultsPage();
-              // return const LoadingScreen();
             }
           }
         },

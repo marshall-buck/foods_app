@@ -1,6 +1,5 @@
 import 'dart:async';
 
-///
 abstract interface class PreferencesService<T>
     implements
         DisplayModePrefs<String, String>,

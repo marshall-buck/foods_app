@@ -1,88 +1,32 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [ExpansionPanelList].
-
-void main() => runApp(const ExpansionPanelListExampleApp());
-
-class ExpansionPanelListExampleApp extends StatelessWidget {
-  const ExpansionPanelListExampleApp({super.key});
+class FoodComparisonPage extends StatelessWidget {
+  const FoodComparisonPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('ExpansionPanelList Sample')),
-        body: const ExpansionPanelListExample(),
-      ),
-    );
-  }
-}
+    final size = MediaQuery.sizeOf(context);
+    final isPort = size.width < size.height;
 
-// stores ExpansionPanel state information
-class Item {
-  Item({
-    required this.expandedValue,
-    required this.headerValue,
-    this.isExpanded = false,
-  });
+    dev.log('$isPort', name: '_isPort');
 
-  String expandedValue;
-  String headerValue;
-  bool isExpanded;
-}
-
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: 'Panel $index',
-      expandedValue: 'This is item number $index',
-    );
-  });
-}
-
-class ExpansionPanelListExample extends StatefulWidget {
-  const ExpansionPanelListExample({super.key});
-
-  @override
-  State<ExpansionPanelListExample> createState() =>
-      _ExpansionPanelListExampleState();
-}
-
-class _ExpansionPanelListExampleState extends State<ExpansionPanelListExample> {
-  final List<Item> _data = generateItems(80);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ExpansionPanelList(
-        animationDuration: const Duration(milliseconds: 1000),
-        expansionCallback: (int index, bool isExpanded) {
-          setState(() {
-            _data[index].isExpanded = isExpanded;
-          });
-        },
-        children: _data.map<ExpansionPanel>((Item item) {
-          return ExpansionPanel(
-            headerBuilder: (BuildContext context, bool isExpanded) {
-              return ListTile(
-                title: Text(item.headerValue),
-              );
-            },
-            body: ListTile(
-              title: Text(item.expandedValue),
-              subtitle:
-                  const Text('To delete this panel, tap the trash can icon'),
-              trailing: const Icon(Icons.delete),
-              onTap: () {
-                setState(() {
-                  _data.removeWhere((Item currentItem) => item == currentItem);
-                });
-              },
-            ),
-            isExpanded: item.isExpanded,
+    return isPort == false
+        ? const Row(
+            children: [
+              Expanded(child: Placeholder()),
+              Expanded(child: Placeholder()),
+            ],
+          )
+        : const Column(
+            children: [
+              Expanded(child: Placeholder()),
+              Expanded(child: Placeholder()),
+              Expanded(child: Placeholder()),
+            ],
           );
-        }).toList(),
-      ),
-    );
   }
 }
