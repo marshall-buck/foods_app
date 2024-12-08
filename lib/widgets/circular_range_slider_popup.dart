@@ -5,7 +5,7 @@ import 'package:foods_app/widgets/widgets.dart';
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
   CircularRangeSliderPopUp({required this.context, required this.id});
   final BuildContext context;
-  final num id;
+  final int id;
   @override
   Color? get barrierColor =>
       Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7);

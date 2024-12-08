@@ -22,9 +22,9 @@ class FoodHistoryManager {
 
 class FoodDetailManager extends ChangeNotifier {
   final currentFood = ValueNotifier<Food?>(null);
-  Map<num, AmountRecord> _amountStrings = {};
+  Map<int, AmountRecord> _amountStrings = {};
 
-  Map<num, AmountRecord> get amountStrings => _amountStrings;
+  Map<int, AmountRecord> get amountStrings => _amountStrings;
 
   static const circularRangeFinderPercentChange = .05;
 
@@ -41,7 +41,7 @@ class FoodDetailManager extends ChangeNotifier {
   }
 
   void changeUnits(RotationDirection direction) {
-    final newMap = <num, AmountRecord>{};
+    final newMap = <int, AmountRecord>{};
     for (final en in _amountStrings.entries) {
       final key = en.key;
       final oldValue = en.value.$1;

@@ -16,7 +16,7 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// instance from a [SrLegacyNutrientModel] object.
 ///
 /// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDTO]
-/// instance from a [MapEntry<int, num>] object, which represents a single
+/// instance from a [MapEntry<int, double>] object, which represents a single
 /// entry in the [FoodDTO.nutrients] map.
 class NutrientDTO extends Equatable {
   /// Creates a [NutrientDTO].

@@ -23,7 +23,7 @@ class CircularRangeSlider extends StatefulWidget {
   final Color trackColor;
   final Color handleColor;
   final Widget child;
-  final num id;
+  final int id;
 
   @override
   State<CircularRangeSlider> createState() => _CircularRangeSliderState();

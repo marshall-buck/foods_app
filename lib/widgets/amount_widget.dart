@@ -9,7 +9,7 @@ class AmountWidget extends WatchingWidget {
     super.key,
   });
   final Color textColor;
-  final num id;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
