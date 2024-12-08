@@ -1,4 +1,4 @@
-// import 'dart:collection';
+import 'dart:collection';
 // ignore: unused_import
 import 'dart:developer' as dev;
 
@@ -10,17 +10,15 @@ import 'package:foods_app/widgets/widgets.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-// TODO:use force touch to change circularRangeFinderPercentChange
+class FoodHistoryManager {
+  final _foodsHistory = Queue<Food?>();
+  Food? get currentFood => _foodsHistory.last;
+  List<Food?> get foodsHistory => _foodsHistory.toList();
 
-// class FoodHistoryManager {
-//   final _foodsHistory = Queue<Food?>();
-//   Food? get currentFood => _foodsHistory.last;
-//   List<Food?> get foodsHistory => _foodsHistory.toList();
+  void addFoodToHistory(Food food) => _foodsHistory.addLast(food);
 
-//   void addFoodToHistory(Food food) => _foodsHistory.addLast(food);
-
-//   void clearFoods() => _foodsHistory.clear();
-// }
+  void clearFoods() => _foodsHistory.clear();
+}
 
 class FoodDetailManager extends ChangeNotifier {
   final currentFood = ValueNotifier<Food?>(null);

@@ -1,4 +1,4 @@
-const defaultFoodAmount = 100;
+const double defaultFoodAmount = 100;
 
 class DisplayMode {
   static const String light = 'light';

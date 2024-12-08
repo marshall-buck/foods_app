@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/features/features.dart';
 import 'package:watch_it/watch_it.dart';
 
+// TODO:use speed indicator icons to adjust speed.
 class CircularRangeSlider extends StatefulWidget {
   const CircularRangeSlider({
     required this.trackStroke,

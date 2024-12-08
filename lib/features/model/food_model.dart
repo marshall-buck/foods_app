@@ -3,7 +3,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/services/services.dart';
 
 // TODO: check if Nutrient map is needed
-// (id, formatted amount to display, units)
+// (double amount, formatted amount to display, units)
 typedef AmountRecord = (num, String, String);
 
 class Food extends Equatable {
