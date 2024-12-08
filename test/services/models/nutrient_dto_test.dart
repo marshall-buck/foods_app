@@ -36,10 +36,11 @@ void main() {
     });
     group('NutrientDTO.fromId', () {
       test('initializes correctly form an Map entry', () {
-        const entry = MapEntry(1003, .55 as num);
+        const entry = MapEntry(1003, 10.0);
         final nutrient = NutrientDTO.fromMapEntry(entry);
         expect(nutrient.name, 'Protein');
-        expect(nutrient.amount, .55);
+        expect(nutrient.amount, 10.0);
+        expect(nutrient.amount, isA<double>());
         expect(nutrient.unit, 'g');
         expect(nutrient.id, 1003);
       });

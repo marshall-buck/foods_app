@@ -11,7 +11,7 @@ void main() {
             id: 167516,
             description: 'Waffles, buttermilk, frozen, ready-to-heat',
             nutrients: {
-              1258: 1.9,
+              1258: 10.0,
               1003: 6.58,
               1079: 2.2,
               1008: 273,
@@ -25,7 +25,7 @@ void main() {
         expect(food, isA<FoodDTO>());
         expect(food.id, 167516);
         expect(food.description, 'Waffles, buttermilk, frozen, ready-to-heat');
-        expect(food.nutrients, isA<Map<int, num>>());
+        expect(food.nutrients, isA<Map<int, double>>());
       });
     });
     group('allNutrientDTOs getter', () {

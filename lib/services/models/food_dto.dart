@@ -40,7 +40,7 @@ class FoodDTO extends Equatable {
 
   final int id;
   final String description;
-  final Map<int, num> nutrients;
+  final Map<int, double> nutrients;
 
   @override
   List<Object?> get props => [id, description, nutrients, allNutrientDTOs];

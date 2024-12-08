@@ -4,7 +4,7 @@ import 'package:foods_app/services/services.dart';
 
 // TODO: check if Nutrient map is needed
 // (double amount, formatted amount to display, units)
-typedef AmountRecord = (num, String, String);
+typedef AmountRecord = (double, String, String);
 
 class Food extends Equatable {
   const Food({
@@ -38,11 +38,13 @@ class Food extends Equatable {
   final Map<int, Nutrient> nutrientMap;
   final List<Nutrient> nutrientList;
 
-  final num foodAmount;
+  final double foodAmount;
 
-  Future<Map<num, AmountRecord>> createAmountStrings() async {
-    final adjustedNutrientAmounts = <num, AmountRecord>{};
-    final adjustedFoodAmount = <num, AmountRecord>{};
+  /// Creates {id: [AmountRecord]}
+  /// where id is the id of the nutrient or food item.
+  Future<Map<int, AmountRecord>> createAmountStrings() async {
+    final adjustedNutrientAmounts = <int, AmountRecord>{};
+    final adjustedFoodAmount = <int, AmountRecord>{};
     adjustedFoodAmount[id] =
         (foodAmount, convertAmountToString(foodAmount), 'g');
 
@@ -58,7 +60,7 @@ class Food extends Equatable {
     };
   }
 
-  static String convertAmountToString(num amount) {
+  static String convertAmountToString(double amount) {
     if (amount >= 50) {
       return amount.toStringAsFixed(0);
     }
@@ -74,7 +76,7 @@ class Food extends Equatable {
   Food copyWith({
     int? id,
     String? description,
-    num? foodAmount,
+    double? foodAmount,
     Map<int, Nutrient>? nutrientMap,
     List<Nutrient>? nutrientList,
   }) {
@@ -99,8 +101,8 @@ class Nutrient extends Equatable {
     required this.unit,
   });
 
-  /// Creates a [Nutrient] instance from a MapEntry<int, num> object.
-  factory Nutrient.fromMapEntry(MapEntry<int, num> entry) {
+  /// Creates a [Nutrient] instance from a MapEntry<int, double> object.
+  factory Nutrient.fromMapEntry(MapEntry<int, double> entry) {
     final id = entry.key;
     final amount = entry.value;
     return Nutrient(
@@ -113,13 +115,13 @@ class Nutrient extends Equatable {
 
   final int id;
   final String name;
-  final num amount;
+  final double amount;
   final String unit;
 
   Nutrient copyWith({
     int? id,
     String? name,
-    num? amount,
+    double? amount,
     String? unit,
   }) {
     return Nutrient(

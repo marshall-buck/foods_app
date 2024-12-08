@@ -39,8 +39,8 @@ class NutrientDTO extends Equatable {
     );
   }
 
-  /// Creates a [NutrientDTO] instance from a MapEntry<int, num> object.
-  factory NutrientDTO.fromMapEntry(MapEntry<int, num> entry) {
+  /// Creates a [NutrientDTO] instance from a MapEntry<int, double> object.
+  factory NutrientDTO.fromMapEntry(MapEntry<int, double> entry) {
     final id = entry.key;
     final amount = entry.value;
     return NutrientDTO(
@@ -53,7 +53,7 @@ class NutrientDTO extends Equatable {
 
   final int id;
   final String name;
-  final num amount;
+  final double amount;
   final String unit;
 
   @override
