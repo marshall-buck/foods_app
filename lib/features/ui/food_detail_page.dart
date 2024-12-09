@@ -27,7 +27,7 @@ class FoodDetailPage extends WatchingWidget {
     ///(dimension of a side, spacing)
     final tileSize = MagicTileDimension.tileSize(windowSize: width);
 
-    final food = watchValue((FoodDetailManager m) => m.currentFood);
+    final food = watchPropertyValue((FoodDetailManager m) => m.currentFood);
     // dev.log('$food');
     return Material(
       child: SafeArea(

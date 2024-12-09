@@ -9,9 +9,9 @@ class FoodResultsCountBadge extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    final count = watchValue((FoodSearchManager m) => m.currentResults);
+    final count = watchPropertyValue((FoodSearchManager m) => m.resultsCount);
     return Badge.count(
-      count: count.length,
+      count: count,
       backgroundColor: Colors.transparent,
       textColor: Theme.of(context).colorScheme.onSurface,
       // padding: const EdgeInsets.only(right: 8),

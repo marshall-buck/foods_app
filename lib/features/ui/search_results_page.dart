@@ -76,12 +76,15 @@ class _FoodsListState extends State<SearchResultsPage> {
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
+    // watchIt<FoodSearchManager>().dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final foodResults = watchValue((FoodSearchManager x) => x.currentResults);
+    // final foodResults =
+    //     watchPropertyValue((FoodSearchManager x) => x.currentResults);
+    final foodManager = watchIt<FoodSearchManager>();
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
@@ -94,7 +97,7 @@ class _FoodsListState extends State<SearchResultsPage> {
           children: [
             AnimatedPadding(
               duration: MagicDurations.base2,
-              padding: foodResults.isEmpty
+              padding: !foodManager.hasResults
                   ? EdgeInsets.only(
                       top: centeredSearchBarTop,
                       right: MagicSpacing.sp_3,
@@ -113,7 +116,7 @@ class _FoodsListState extends State<SearchResultsPage> {
                   constraints: Theme.of(context).searchBarTheme.constraints,
                   hintText: MagicStrings.searchPageHintText,
                   trailing: [
-                    if (foodResults.isNotEmpty)
+                    if (foodManager.hasResults)
                       const FoodResultsCountBadge()
                     else
                       const Spacer(),
@@ -148,7 +151,7 @@ class _FoodsListState extends State<SearchResultsPage> {
               child: ListView.builder(
                 controller: _scrollController,
                 itemBuilder: (BuildContext context, int index) {
-                  final food = foodResults[index];
+                  final food = foodManager.currentResults[index];
 
                   final id = ValueKey<int>(food!.id);
                   return GestureDetector(
@@ -159,7 +162,7 @@ class _FoodsListState extends State<SearchResultsPage> {
                     ),
                   );
                 },
-                itemCount: foodResults.length,
+                itemCount: foodManager.resultsCount,
               ),
             ),
           ],

@@ -10,34 +10,55 @@ import 'package:foods_app/widgets/widgets.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodHistoryManager {
+class FoodHistoryManager extends ChangeNotifier {
   final _foodsHistory = Queue<Food?>();
   Food? get currentFood => _foodsHistory.last;
   List<Food?> get foodsHistory => _foodsHistory.toList();
 
-  void addFoodToHistory(Food food) => _foodsHistory.addLast(food);
+  void addFoodToHistory(Food food) {
+    _foodsHistory.addLast(food);
+    notifyListeners();
+  }
 
-  void clearFoods() => _foodsHistory.clear();
+  @override
+  void dispose() {
+    super.dispose();
+    _foodsHistory.clear();
+    notifyListeners();
+  }
 }
 
 class FoodDetailManager extends ChangeNotifier {
-  final currentFood = ValueNotifier<Food?>(null);
+  // final currentFood = ValueNotifier<Food?>(null);
   Map<int, AmountRecord> _amountStrings = {};
+  Food? _currentFood;
+
+  Food? get currentFood => _currentFood;
 
   Map<int, AmountRecord> get amountStrings => _amountStrings;
 
   static const circularRangeFinderPercentChange = .05;
 
   Future<void> queryFood(int id) async {
-    final foodsDB =
-        di.get<FoodsDB>(instanceName: LocatorInstanceNames.foodsDBService);
+    Food? food;
+    try {
+      final foodsDB =
+          di.get<FoodsDB>(instanceName: LocatorInstanceNames.foodsDBService);
 
-    final foodDTO = await foodsDB.queryFood(id: id);
-    final food = Food.fromFoodDTO(foodDTO!);
+      final foodDTO = await foodsDB.queryFood(id: id);
+      food = Food.fromFoodDTO(foodDTO!);
 
-    currentFood.value = food;
-
-    _amountStrings = await food.createAmountStrings();
+      _amountStrings = await food.createAmountStrings();
+    } catch (e) {
+      dev.log(
+        'queryFood throws',
+        name: 'FoodDetailManager - queryFood',
+        error: e,
+      );
+    } finally {
+      _currentFood = food;
+      notifyListeners();
+    }
   }
 
   void changeUnits(RotationDirection direction) {
@@ -58,7 +79,7 @@ class FoodDetailManager extends ChangeNotifier {
   }
 
   Future<void> resetToOriginalAmounts() async {
-    final amounts = await currentFood.value!.createAmountStrings();
+    final amounts = await _currentFood!.createAmountStrings();
     _amountStrings = amounts;
     notifyListeners();
   }
@@ -66,7 +87,7 @@ class FoodDetailManager extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
-    currentFood.dispose();
+    _currentFood = null;
     _amountStrings.clear();
   }
 }

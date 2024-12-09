@@ -8,8 +8,14 @@ import 'package:foods_app/services/services.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodSearchManager {
-  final currentResults = ValueNotifier<List<FoodListItemModel?>>([]);
+class FoodSearchManager extends ChangeNotifier {
+  List<FoodListItemModel?> _currentResults = [];
+
+  List<FoodListItemModel?> get currentResults => _currentResults;
+
+  int get resultsCount => _currentResults.length;
+
+  bool get hasResults => _currentResults.isNotEmpty;
 
   Future<void> queryFoods(String string) async {
     final db = await di.getAsync<FoodsDB>(
@@ -23,23 +29,28 @@ class FoodSearchManager {
       for (final food in foods) {
         newItems.add(await FoodListItemModel.fromFoodDTO(food!));
       }
-      currentResults.value = newItems;
+      _currentResults = newItems;
     } else {
-      currentResults.value = [];
+      _currentResults = [];
     }
     dev.log(
-      'FoodSearchResults.length: ${currentResults.value.length}',
+      'FoodSearchResults.length: ${_currentResults.length}',
       time: DateTime.now(),
       name: 'FoodSearchManager.queryFoods()',
     );
+    notifyListeners();
   }
 
   void clearSearch() {
-    currentResults.value = [];
+    _currentResults = [];
+    notifyListeners();
   }
 
+  @override
   void dispose() {
-    currentResults.dispose();
+    super.dispose();
+    currentResults.clear();
+    notifyListeners();
   }
 }
 
