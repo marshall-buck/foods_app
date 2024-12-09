@@ -1,5 +1,5 @@
 import 'dart:collection';
-// ignore: unused_import
+
 import 'dart:developer' as dev;
 
 import 'package:flutter/widgets.dart';
@@ -29,7 +29,6 @@ class FoodHistoryManager extends ChangeNotifier {
 }
 
 class FoodDetailManager extends ChangeNotifier {
-  // final currentFood = ValueNotifier<Food?>(null);
   Map<int, AmountRecord> _amountStrings = {};
   Food? _currentFood;
 
@@ -53,6 +52,7 @@ class FoodDetailManager extends ChangeNotifier {
       dev.log(
         'queryFood throws',
         name: 'FoodDetailManager - queryFood',
+        time: DateTime.now(),
         error: e,
       );
     } finally {
@@ -87,7 +87,7 @@ class FoodDetailManager extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
-    _currentFood = null;
-    _amountStrings.clear();
+
+    notifyListeners();
   }
 }

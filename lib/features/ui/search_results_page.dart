@@ -44,6 +44,7 @@ class _FoodsListState extends State<SearchResultsPage> {
     _searchBarController.clear();
 
     di.get<FoodSearchManager>().clearSearch();
+    _showQuickResults = false;
   }
 
   void _onScroll() {
@@ -89,7 +90,7 @@ class _FoodsListState extends State<SearchResultsPage> {
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
         (height / 2) - (MagicDimensions.searchBarHeight / 2) - (padding.top);
-    final quickResultsList = di.get<QuickSearchManager>().quickSearchNames;
+    final quickResultsList = watchIt<QuickSearchManager>().quickSearchNames;
 
     return Material(
       child: SafeArea(
@@ -134,7 +135,7 @@ class _FoodsListState extends State<SearchResultsPage> {
               duration: MagicDurations.base1,
               height: _showQuickResults ? 32 : 0,
               child: Row(
-                children: quickResultsList.value.map((quickResult) {
+                children: quickResultsList.map((quickResult) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 16),
                     child: Text(
