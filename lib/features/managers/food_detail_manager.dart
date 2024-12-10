@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'dart:developer' as dev;
 
 import 'package:flutter/widgets.dart';
@@ -9,24 +7,6 @@ import 'package:foods_app/services/services.dart';
 import 'package:foods_app/widgets/widgets.dart';
 
 import 'package:watch_it/watch_it.dart';
-
-class FoodHistoryManager extends ChangeNotifier {
-  final _foodsHistory = Queue<Food?>();
-  Food? get currentFood => _foodsHistory.last;
-  List<Food?> get foodsHistory => _foodsHistory.toList();
-
-  void addFoodToHistory(Food food) {
-    _foodsHistory.addLast(food);
-    notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _foodsHistory.clear();
-    notifyListeners();
-  }
-}
 
 class FoodDetailManager extends ChangeNotifier {
   Map<int, AmountRecord> _amountStrings = {};

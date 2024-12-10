@@ -56,6 +56,12 @@ void main() {
 
       expect(quickSearchManager, isNotNull);
     });
+    test('FoodSearchState should be initialized', () async {
+      await di.allReady();
+      final foodSearchState = di.get<FoodSearchState>();
+
+      expect(foodSearchState, isNotNull);
+    });
 
     test('UsdaDB should be initialized and data loaded', () async {
       await di.allReady();

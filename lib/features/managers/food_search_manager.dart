@@ -8,8 +8,13 @@ import 'package:foods_app/services/services.dart';
 
 import 'package:watch_it/watch_it.dart';
 
+/// Manages the searching of foods by a search term.
 class FoodSearchManager extends ChangeNotifier {
   List<FoodListItemModel?> _currentResults = [];
+
+  String _currentTerm = '';
+
+  String get currentTerm => _currentTerm;
 
   List<FoodListItemModel?> get currentResults => _currentResults;
 
@@ -18,6 +23,7 @@ class FoodSearchManager extends ChangeNotifier {
   bool get hasResults => _currentResults.isNotEmpty;
 
   Future<void> queryFoods(String string) async {
+    _currentTerm = string;
     try {
       final db = await di.getAsync<FoodsDB>(
         instanceName: LocatorInstanceNames.foodsDBService,
