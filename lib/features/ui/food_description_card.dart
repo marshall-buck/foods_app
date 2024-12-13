@@ -28,7 +28,7 @@ class FoodDescriptionCard extends StatelessWidget {
             color: Theme.of(context)
                 .colorScheme
                 .shadow
-                .withOpacity(MagicOpacity.op_50),
+                .withValues(alpha: MagicOpacity.op_50),
             blurRadius: MagicBlurRadius.blur_2,
             offset: const Offset(
               0,

@@ -89,7 +89,7 @@ class _FoodsListState extends State<SearchResultsPage> {
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
-        (height / 2) - (MagicDimensions.searchBarHeight / 2) - (padding.top);
+        (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
     final quickResultsList = watchIt<QuickSearchManager>().quickSearchNames;
 
     return Material(
@@ -107,10 +107,10 @@ class _FoodsListState extends State<SearchResultsPage> {
                   : const EdgeInsets.symmetric(horizontal: MagicSpacing.sp_3),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxWidth: MagicDimensions.maxSearchBarWidth,
-                  minWidth: MagicDimensions.minSearchBarWidth,
-                  maxHeight: MagicDimensions.searchBarHeight,
-                  minHeight: MagicDimensions.searchBarHeight,
+                  maxWidth: MagicNumbers.maxSearchBarWidth,
+                  minWidth: MagicNumbers.minSearchBarWidth,
+                  maxHeight: MagicNumbers.searchBarHeight,
+                  minHeight: MagicNumbers.searchBarHeight,
                 ),
                 child: SearchBar(
                   controller: _searchBarController,

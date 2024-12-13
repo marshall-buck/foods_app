@@ -58,7 +58,7 @@ void main() {
     });
     test('FoodSearchState should be initialized', () async {
       await di.allReady();
-      final foodSearchState = di.get<FoodSearchState>();
+      final foodSearchState = di.get<AppHistoryState>();
 
       expect(foodSearchState, isNotNull);
     });

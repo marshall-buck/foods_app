@@ -1,11 +1,12 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/features.dart';
 
 class FoodComparisonPage extends StatelessWidget {
-  const FoodComparisonPage({
-    super.key,
-  });
+  const FoodComparisonPage({required this.foods, super.key});
+
+  final List<Food> foods;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-const double defaultFoodAmount = 100;
-
 class DisplayMode {
   static const String light = 'light';
 
@@ -19,12 +17,14 @@ class MagicStrings {
   static const searchBarHeroTag = 'search-bar';
 }
 
-class MagicDimensions {
+class MagicNumbers {
   static const double maxSearchBarWidth = 720;
   static const double minSearchBarWidth = 360;
   static const double maxFoodDetailWidth = 360;
   static const double searchBarHeight = 56;
   static const double baseRadius = 16;
+  static const double defaultFoodAmount = 100;
+  static const int defaultSearchHistory = 10;
 }
 
 class MagicBreakPoints {

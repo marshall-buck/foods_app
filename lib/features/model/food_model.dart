@@ -28,7 +28,7 @@ class Food extends Equatable {
       description: food.description,
       nutrientMap: nutrientMap,
       nutrientList: nutrientList,
-      foodAmount: defaultFoodAmount,
+      foodAmount: MagicNumbers.defaultFoodAmount,
     );
   }
   final int id;

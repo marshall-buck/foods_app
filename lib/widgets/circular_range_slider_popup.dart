@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/magic.dart';
 
 import 'package:foods_app/widgets/widgets.dart';
 
@@ -7,8 +8,10 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
   final BuildContext context;
   final int id;
   @override
-  Color? get barrierColor =>
-      Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7);
+  Color? get barrierColor => Theme.of(context)
+      .colorScheme
+      .primaryContainer
+      .withValues(alpha: MagicOpacity.op_70);
 
   @override
   bool get barrierDismissible => true;

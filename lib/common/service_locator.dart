@@ -16,8 +16,8 @@ void registerDependencies() {
     ..registerSingleton<FoodDetailManager>(
       FoodDetailManager(),
     ) //FoodDetailManager
-    ..registerSingleton<FoodSearchState>(
-      FoodSearchState(),
+    ..registerSingleton<AppHistoryState>(
+      AppHistoryState(),
     )
     // FoodSearchState
     // ignore: strict_raw_type

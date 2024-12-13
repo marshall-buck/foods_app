@@ -12,10 +12,6 @@ import 'package:watch_it/watch_it.dart';
 class FoodSearchManager extends ChangeNotifier {
   List<FoodListItemModel?> _currentResults = [];
 
-  String _currentTerm = '';
-
-  String get currentTerm => _currentTerm;
-
   List<FoodListItemModel?> get currentResults => _currentResults;
 
   int get resultsCount => _currentResults.length;
@@ -23,7 +19,7 @@ class FoodSearchManager extends ChangeNotifier {
   bool get hasResults => _currentResults.isNotEmpty;
 
   Future<void> queryFoods(String string) async {
-    _currentTerm = string;
+    di.get<AppHistoryState>().addTermToHistory(string);
     try {
       final db = await di.getAsync<FoodsDB>(
         instanceName: LocatorInstanceNames.foodsDBService,

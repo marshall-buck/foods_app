@@ -87,7 +87,7 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     return Center(
       child: ConstrainedBox(
         constraints:
-            const BoxConstraints(maxWidth: MagicDimensions.maxFoodDetailWidth),
+            const BoxConstraints(maxWidth: MagicNumbers.maxFoodDetailWidth),
         child: child,
       ),
     );

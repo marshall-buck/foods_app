@@ -28,6 +28,7 @@ class FoodDetailManager extends ChangeNotifier {
       food = Food.fromFoodDTO(foodDTO!);
 
       _amountStrings = await food.createAmountStrings();
+      di.get<AppHistoryState>().addFoodToHistory(food);
     } catch (e) {
       dev.log(
         'queryFood throws',
@@ -37,6 +38,7 @@ class FoodDetailManager extends ChangeNotifier {
       );
     } finally {
       _currentFood = food;
+
       notifyListeners();
     }
   }
