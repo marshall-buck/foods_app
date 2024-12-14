@@ -11,11 +11,11 @@ import 'package:watch_it/watch_it.dart';
 /// Registers all get_it dependencies.
 void registerDependencies() {
   di
-    ..registerSingleton<FoodSearchVM>(
-      FoodSearchVM(),
+    ..registerSingleton<FoodSearchManager>(
+      FoodSearchManager(),
     ) //FoodSearchVM
-    ..registerSingleton<FoodDetailVM>(
-      FoodDetailVM(),
+    ..registerSingleton<FoodDetailManager>(
+      FoodDetailManager(),
     ) //FoodDetailVM
     ..registerSingleton<AppHistoryState>(
       AppHistoryState(),

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer' as dev;
 
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
@@ -26,11 +27,13 @@ class AppHistoryState {
     if (food != null) {
       _foodsHistory.addLast(food.id);
     }
+    dev.log('$_foodsHistory', name: 'AppHistoryState: addFoodToHistory');
   }
 
   void addTermToHistory(String term) {
     _trimHistory();
     _searchTermHistory.addLast(term);
+    dev.log('$_searchTermHistory', name: 'AppHistoryState: addTermToHistory');
   }
 
   /// Keeps the Queue a max length.

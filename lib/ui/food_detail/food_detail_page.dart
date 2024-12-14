@@ -20,6 +20,7 @@ class FoodDetailPage extends WatchingWidget {
     }
   }
 
+//TODO: Populate from history state
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -27,7 +28,7 @@ class FoodDetailPage extends WatchingWidget {
     ///(dimension of a side, spacing)
     final tileSize = MagicTileDimension.tileSize(windowSize: width);
 
-    final food = watchPropertyValue((FoodDetailVM m) => m.currentFood);
+    final food = watchPropertyValue((FoodDetailManager m) => m.currentFood);
     // dev.log('$food');
     return Material(
       child: SafeArea(

@@ -9,7 +9,7 @@ import 'package:foods_app/ui/core/core.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodDetailVM extends ChangeNotifier {
+class FoodDetailManager extends ChangeNotifier {
   Map<int, AmountRecord> _amountStrings = {};
   Food? _currentFood;
 

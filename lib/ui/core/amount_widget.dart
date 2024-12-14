@@ -15,7 +15,7 @@ class AmountWidget extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     final amountStrings =
-        watchPropertyValue((FoodDetailVM m) => m.amountStrings);
+        watchPropertyValue((FoodDetailManager m) => m.amountStrings);
     assert(amountStrings[id]?.$2 != null, 'The string is empty');
 
     return Text(

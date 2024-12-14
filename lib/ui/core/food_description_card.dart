@@ -96,7 +96,7 @@ class FoodDescriptionCard extends StatelessWidget {
                       // ),
                       IconButton(
                         onPressed: () {
-                          di.get<FoodDetailVM>().resetToOriginalAmounts();
+                          di.get<FoodDetailManager>().resetToOriginalAmounts();
                         },
                         icon: const Icon(Icons.refresh),
                       ),

@@ -24,7 +24,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
     BuildContext context,
     ValueKey<int> id,
   ) async {
-    await di.get<FoodDetailVM>().queryFood(id.value);
+    await di.get<FoodDetailManager>().queryFood(id.value);
     if (context.mounted) {
       await Navigator.push(
         context,
@@ -36,14 +36,14 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   }
 
   Future<void> _onChanged() async {
-    await di.get<FoodSearchVM>().queryFoods(_searchBarController.text);
+    await di.get<FoodSearchManager>().queryFoods(_searchBarController.text);
     setState(() {});
   }
 
   void _onClearSearch() {
     _searchBarController.clear();
 
-    di.get<FoodSearchVM>().clearSearch();
+    di.get<FoodSearchManager>().clearSearch();
     _showQuickResults = false;
   }
 
@@ -85,7 +85,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   Widget build(BuildContext context) {
     // final foodResults =
     //     watchPropertyValue((FoodSearchVM x) => x.currentResults);
-    final foodManager = watchIt<FoodSearchVM>();
+    final foodManager = watchIt<FoodSearchManager>();
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =

@@ -23,13 +23,13 @@ void main() {
     test('FoodSearchVM should be initialized', () async {
       await di.allReady();
 
-      expect(di.isRegistered<FoodSearchVM>(), true);
+      expect(di.isRegistered<FoodSearchManager>(), true);
     });
 
     test('FoodDetailVM should be initialized', () async {
       await di.allReady();
 
-      expect(di.isRegistered<FoodDetailVM>(), true);
+      expect(di.isRegistered<FoodDetailManager>(), true);
     });
     test('FoodsDB should be initialized', () async {
       await di.allReady();
