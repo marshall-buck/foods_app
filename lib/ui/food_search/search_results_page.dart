@@ -11,10 +11,10 @@ class SearchResultsPage extends WatchingStatefulWidget {
   const SearchResultsPage({super.key});
 
   @override
-  State<SearchResultsPage> createState() => _FoodsListState();
+  State<SearchResultsPage> createState() => _SearchResultsPage();
 }
 
-class _FoodsListState extends State<SearchResultsPage> {
+class _SearchResultsPage extends State<SearchResultsPage> {
   final _searchBarController = TextEditingController();
   final _scrollController = ScrollController();
 
