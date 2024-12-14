@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/ui/search_results_page.dart';
+import 'package:foods_app/ui/ui.dart';
 
 import 'package:watch_it/watch_it.dart';
 

@@ -1,9 +1,9 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/domain/domain.dart';
 
-import 'package:foods_app/widgets/widgets.dart';
+import 'package:foods_app/ui/ui.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodDetailPage extends WatchingWidget {
@@ -27,7 +27,7 @@ class FoodDetailPage extends WatchingWidget {
     ///(dimension of a side, spacing)
     final tileSize = MagicTileDimension.tileSize(windowSize: width);
 
-    final food = watchPropertyValue((FoodDetailManager m) => m.currentFood);
+    final food = watchPropertyValue((FoodDetailVM m) => m.currentFood);
     // dev.log('$food');
     return Material(
       child: SafeArea(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
-
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/domain/domain.dart';
 
 /// Displays a single food item in a list.
 ///

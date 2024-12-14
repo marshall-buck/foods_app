@@ -3,7 +3,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/ui/ui.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -19,12 +19,13 @@ class _FoodsListState extends State<SearchResultsPage> {
   final _scrollController = ScrollController();
 
   bool _showQuickResults = false;
+  final FoodDetailVM viewModel = di.get<FoodDetailVM>();
 
   Future<void> _onTapFoodListItem(
     BuildContext context,
     ValueKey<int> id,
   ) async {
-    await di.get<FoodDetailManager>().queryFood(id.value);
+    await di.get<FoodDetailVM>().queryFood(id.value);
     if (context.mounted) {
       await Navigator.push(
         context,
@@ -36,14 +37,14 @@ class _FoodsListState extends State<SearchResultsPage> {
   }
 
   Future<void> _onChanged() async {
-    await di.get<FoodSearchManager>().queryFoods(_searchBarController.text);
+    await di.get<FoodSearchVM>().queryFoods(_searchBarController.text);
     setState(() {});
   }
 
   void _onClearSearch() {
     _searchBarController.clear();
 
-    di.get<FoodSearchManager>().clearSearch();
+    di.get<FoodSearchVM>().clearSearch();
     _showQuickResults = false;
   }
 
@@ -77,15 +78,15 @@ class _FoodsListState extends State<SearchResultsPage> {
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
-    // watchIt<FoodSearchManager>().dispose();
+    // watchIt<FoodSearchVM>().dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     // final foodResults =
-    //     watchPropertyValue((FoodSearchManager x) => x.currentResults);
-    final foodManager = watchIt<FoodSearchManager>();
+    //     watchPropertyValue((FoodSearchVM x) => x.currentResults);
+    final foodManager = watchIt<FoodSearchVM>();
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
@@ -95,6 +96,7 @@ class _FoodsListState extends State<SearchResultsPage> {
     return Material(
       child: SafeArea(
         child: Column(
+          spacing: MagicSpacing.sp_2,
           children: [
             AnimatedPadding(
               duration: MagicDurations.base2,

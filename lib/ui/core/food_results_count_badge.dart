@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/ui/ui.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -9,7 +8,7 @@ class FoodResultsCountBadge extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    final count = watchPropertyValue((FoodSearchManager m) => m.resultsCount);
+    final count = watchPropertyValue((FoodSearchVM m) => m.resultsCount);
     return Badge.count(
       count: count,
       backgroundColor: Colors.transparent,

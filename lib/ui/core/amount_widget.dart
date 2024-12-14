@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/ui/ui.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class AmountWidget extends WatchingWidget {
@@ -14,7 +15,7 @@ class AmountWidget extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     final amountStrings =
-        watchPropertyValue((FoodDetailManager m) => m.amountStrings);
+        watchPropertyValue((FoodDetailVM m) => m.amountStrings);
     assert(amountStrings[id]?.$2 != null, 'The string is empty');
 
     return Text(

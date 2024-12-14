@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/domain/domain.dart';
 
 import 'package:foods_app/services/services.dart';
+import 'package:foods_app/ui/ui.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -19,16 +20,16 @@ void main() {
   });
 
   group('registerDependencies()', () {
-    test('FoodSearchManager should be initialized', () async {
+    test('FoodSearchVM should be initialized', () async {
       await di.allReady();
 
-      expect(di.isRegistered<FoodSearchManager>(), true);
+      expect(di.isRegistered<FoodSearchVM>(), true);
     });
 
-    test('FoodDetailManager should be initialized', () async {
+    test('FoodDetailVM should be initialized', () async {
       await di.allReady();
 
-      expect(di.isRegistered<FoodDetailManager>(), true);
+      expect(di.isRegistered<FoodDetailVM>(), true);
     });
     test('FoodsDB should be initialized', () async {
       await di.allReady();

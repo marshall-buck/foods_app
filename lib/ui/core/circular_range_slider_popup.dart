@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/magic.dart';
 
-import 'package:foods_app/widgets/widgets.dart';
+import 'package:foods_app/ui/core/core.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
   CircularRangeSliderPopUp({required this.context, required this.id});

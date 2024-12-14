@@ -2,13 +2,14 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/widgets.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/domain/domain.dart';
+
 import 'package:foods_app/services/services.dart';
-import 'package:foods_app/widgets/widgets.dart';
+import 'package:foods_app/ui/core/core.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-class FoodDetailManager extends ChangeNotifier {
+class FoodDetailVM extends ChangeNotifier {
   Map<int, AmountRecord> _amountStrings = {};
   Food? _currentFood;
 
@@ -32,7 +33,7 @@ class FoodDetailManager extends ChangeNotifier {
     } catch (e) {
       dev.log(
         'queryFood throws',
-        name: 'FoodDetailManager - queryFood',
+        name: 'FoodDetailVM - queryFood',
         time: DateTime.now(),
         error: e,
       );

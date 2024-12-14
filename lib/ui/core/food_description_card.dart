@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/domain/domain.dart';
 
-import 'package:foods_app/widgets/widgets.dart';
+import 'package:foods_app/ui/ui.dart';
 import 'package:watch_it/watch_it.dart';
 
 class FoodDescriptionCard extends StatelessWidget {
@@ -96,7 +96,7 @@ class FoodDescriptionCard extends StatelessWidget {
                       // ),
                       IconButton(
                         onPressed: () {
-                          di.get<FoodDetailManager>().resetToOriginalAmounts();
+                          di.get<FoodDetailVM>().resetToOriginalAmounts();
                         },
                         icon: const Icon(Icons.refresh),
                       ),

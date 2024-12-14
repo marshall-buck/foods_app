@@ -1,7 +1,7 @@
 import 'dart:developer' as dev;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/ui/ui.dart';
 import 'package:watch_it/watch_it.dart';
 
 // TODO:use speed indicator icons to adjust speed.
@@ -84,7 +84,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
 
           final direction = panHandler(details, widget.trackDiameter / 2);
 
-          di.get<FoodDetailManager>().changeUnits(direction);
+          di.get<FoodDetailVM>().changeUnits(direction);
 
           setState(() {
             _angle = newAngle;

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/features/features.dart';
+import 'package:foods_app/domain/domain.dart';
 
 /// The source of truth showing the history of user interactions
 /// throut the app.
