@@ -4,7 +4,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
 /// The source of truth showing the history of user interactions
-/// throut the app.
+/// throughout the app.
 ///
 /// For example the history of recent foods clicked.
 class AppHistoryState {

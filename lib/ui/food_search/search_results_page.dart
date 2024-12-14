@@ -19,7 +19,6 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   final _scrollController = ScrollController();
 
   bool _showQuickResults = false;
-  final FoodDetailVM viewModel = di.get<FoodDetailVM>();
 
   Future<void> _onTapFoodListItem(
     BuildContext context,
