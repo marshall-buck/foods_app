@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:foods_app/common/common.dart';
+import 'package:foods_app/domain/domain.dart';
 import 'package:foods_app/ui/ui.dart';
 
 import 'package:watch_it/watch_it.dart';
@@ -24,7 +25,8 @@ class _SearchResultsPage extends State<SearchResultsPage> {
     BuildContext context,
     ValueKey<int> id,
   ) async {
-    await di.get<FoodDetailManager>().queryFood(id.value);
+    di.get<AppHistoryState>().addTermToHistory(_searchBarController.text);
+    await di.get<FoodSearchManager>().queryFood(id.value);
     if (context.mounted) {
       await Navigator.push(
         context,

@@ -29,7 +29,7 @@ void main() {
     test('FoodDetailVM should be initialized', () async {
       await di.allReady();
 
-      expect(di.isRegistered<FoodDetailManager>(), true);
+      expect(di.isRegistered<FoodAmountManager>(), true);
     });
     test('FoodsDB should be initialized', () async {
       await di.allReady();

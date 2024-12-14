@@ -42,7 +42,7 @@ class Food extends Equatable {
 
   /// Creates {id: [AmountRecord]}
   /// where id is the id of the nutrient or food item.
-  Future<Map<int, AmountRecord>> createAmountStrings() async {
+  Map<int, AmountRecord> createAmountStrings() {
     final adjustedNutrientAmounts = <int, AmountRecord>{};
     final adjustedFoodAmount = <int, AmountRecord>{};
     adjustedFoodAmount[id] =

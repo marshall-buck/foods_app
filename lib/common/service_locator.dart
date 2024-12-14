@@ -14,8 +14,8 @@ void registerDependencies() {
     ..registerSingleton<FoodSearchManager>(
       FoodSearchManager(),
     ) //FoodSearchVM
-    ..registerSingleton<FoodDetailManager>(
-      FoodDetailManager(),
+    ..registerSingleton<FoodAmountManager>(
+      FoodAmountManager(),
     ) //FoodDetailVM
     ..registerSingleton<AppHistoryState>(
       AppHistoryState(),

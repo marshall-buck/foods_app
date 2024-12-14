@@ -84,7 +84,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
 
           final direction = panHandler(details, widget.trackDiameter / 2);
 
-          di.get<FoodDetailManager>().changeUnits(direction);
+          di.get<FoodAmountManager>().changeUnits(direction);
 
           setState(() {
             _angle = newAngle;

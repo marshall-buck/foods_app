@@ -12,27 +12,33 @@ class AppHistoryState {
   static int maxHistory = MagicNumbers.defaultSearchHistory;
 
   // Will always insert most recent id as addLast.
-  final _foodsHistory = Queue<int?>();
+  final _foodsHistory = Queue<Food?>();
   final _searchTermHistory = Queue<String?>();
 
-  int? get lastFood => _foodsHistory.last;
+  Food? get lastFood => _foodsHistory.last;
   String? get lastTerm => _searchTermHistory.last;
 
   Queue<String?> get searchTermHistory => _searchTermHistory;
 
-  Queue<int?> get foodsHistory => _foodsHistory;
+  Queue<Food?> get foodsHistory => _foodsHistory;
 
   void addFoodToHistory(Food? food) {
     _trimHistory();
     if (food != null) {
-      _foodsHistory.addLast(food.id);
+      _foodsHistory.addLast(food);
     }
-    dev.log('$_foodsHistory', name: 'AppHistoryState: addFoodToHistory');
+    dev.log(
+      '${_foodsHistory.length}  ${_foodsHistory.last!.description}',
+      name: ' AppHistoryState: addFoodToHistory Count',
+    );
   }
 
   void addTermToHistory(String term) {
-    _trimHistory();
-    _searchTermHistory.addLast(term);
+    if (term.isNotEmpty) {
+      _trimHistory();
+      _searchTermHistory.addLast(term);
+    }
+
     dev.log('$_searchTermHistory', name: 'AppHistoryState: addTermToHistory');
   }
 

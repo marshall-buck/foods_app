@@ -19,8 +19,28 @@ class FoodSearchManager extends ChangeNotifier {
 
   bool get hasResults => _currentResults.isNotEmpty;
 
+  Future<void> queryFood(int id) async {
+    Food? food;
+    try {
+      final foodsDB =
+          di.get<FoodsDB>(instanceName: LocatorInstanceNames.foodsDBService);
+
+      final foodDTO = await foodsDB.queryFood(id: id);
+      food = Food.fromFoodDTO(foodDTO!);
+
+      // _amountStrings = await food.createAmountStrings();
+      di.get<AppHistoryState>().addFoodToHistory(food);
+    } catch (e) {
+      dev.log(
+        'queryFood throws',
+        name: 'FoodDetailVM - queryFood',
+        time: DateTime.now(),
+        error: e,
+      );
+    }
+  }
+
   Future<void> queryFoods(String string) async {
-    di.get<AppHistoryState>().addTermToHistory(string);
     try {
       final db = await di.getAsync<FoodsDB>(
         instanceName: LocatorInstanceNames.foodsDBService,
