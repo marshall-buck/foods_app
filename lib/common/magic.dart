@@ -22,9 +22,12 @@ class MagicNumbers {
   static const double minSearchBarWidth = 360;
   static const double maxFoodDetailWidth = 360;
   static const double searchBarHeight = 56;
-  static const double baseRadius = 16;
+
   static const double defaultFoodAmount = 100;
   static const int defaultSearchHistory = 10;
+  static const double circularRangeSliderTrackStroke = 8;
+  static const double circularRangeSliderHandleRadius = 16;
+  static const double circularRangeSliderTrackDiameter = 200;
 }
 
 class MagicBreakPoints {

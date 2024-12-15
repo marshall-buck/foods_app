@@ -3,7 +3,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/services/services.dart';
 
 // TODO: check if Nutrient map is needed
-// (double amount, formatted amount to display, units)
+// (double amount, formatted amount to display, unit String)
 typedef AmountRecord = (double, String, String);
 
 class Food extends Equatable {
@@ -60,17 +60,18 @@ class Food extends Equatable {
     };
   }
 
+  // static String convertAmountToString(double amount) {
+
   static String convertAmountToString(double amount) {
     if (amount >= 50) {
       return amount.toStringAsFixed(0);
-    }
-    if (amount < 50 && amount >= 10) {
+    } else if (amount >= 10) {
       return amount.toStringAsFixed(1);
-    }
-    if (amount < 10 && amount >= 1) {
+    } else if (amount >= 1) {
       return amount.toStringAsFixed(2);
+    } else {
+      return amount.toStringAsFixed(3);
     }
-    return amount.toStringAsFixed(3);
   }
 
   Food copyWith({

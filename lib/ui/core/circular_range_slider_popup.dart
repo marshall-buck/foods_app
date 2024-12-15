@@ -37,13 +37,13 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
               ),
               child: CircularRangeSlider(
                 onPanUpdate: (direction, details) {
-                  di.get<FoodAmountManager>().changeUnits(direction);
+                  di.get<FoodAmountManager>().changeUnits(direction, id);
                 },
                 // id: id,
-                trackStroke: 8,
-                handleRadius: 16,
+                trackStroke: MagicNumbers.circularRangeSliderTrackStroke,
+                handleRadius: MagicNumbers.circularRangeSliderHandleRadius,
                 handleColor: Theme.of(context).colorScheme.primary,
-                trackDiameter: 200,
+                trackDiameter: MagicNumbers.circularRangeSliderTrackDiameter,
                 trackColor: Theme.of(context).colorScheme.onSurface,
                 child: AmountWidget(
                   textColor: Theme.of(context).colorScheme.onSurface,

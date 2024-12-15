@@ -20,16 +20,39 @@ class FoodAmountManager extends ChangeNotifier {
     _amountStrings = food.createAmountStrings();
   }
 
-  void changeUnits(RotationDirection direction) {
+  double _adjustAmountModifier(double amount) {
+    if (amount >= 50) {
+      return circularRangeFinderPercentChange * 2;
+    } else if (amount >= 10) {
+      return circularRangeFinderPercentChange * 2.1;
+    } else if (amount >= 1) {
+      return circularRangeFinderPercentChange * 2.3;
+    } else {
+      return circularRangeFinderPercentChange * 2.5;
+    }
+  }
+
+  void changeUnits(RotationDirection direction, int id) {
+    assert(
+      _amountStrings.isNotEmpty,
+      'FoodAmountManager: _amountStrings is empty',
+    );
     final newMap = <int, AmountRecord>{};
+    final currentItem = _amountStrings[id]?.$1;
     for (final en in _amountStrings.entries) {
       final key = en.key;
       final oldValue = en.value.$1;
       final unit = en.value.$3;
 
+      final amountModifier = _adjustAmountModifier(currentItem!);
+
+      // (amountModifier / 100) calculates a percentage based on the amountModifier.
+      // Adding/Subtracting 1 to this percentage and multiplying it by the oldValue
+      // effectively increases/decreases the oldValue by the specified percentage.
+
       final newValue = direction == RotationDirection.clockwise
-          ? oldValue * (1 + (circularRangeFinderPercentChange / 100))
-          : oldValue * (1 - (circularRangeFinderPercentChange / 100));
+          ? oldValue * (1 + (amountModifier / 100))
+          : oldValue * (1 - (amountModifier / 100));
 
       newMap[key] = (newValue, Food.convertAmountToString(newValue), unit);
     }

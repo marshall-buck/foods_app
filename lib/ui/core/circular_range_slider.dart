@@ -90,10 +90,10 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           final newAngle = math.atan2(dy, dx);
 
           final direction = panHandler(details, widget.trackDiameter / 2);
-          if (widget.onPanUpdate != null) {
-            widget.onPanUpdate!(direction, details);
-          }
-
+          // if (widget.onPanUpdate != null) {
+          //   widget.onPanUpdate!(direction, details);
+          // }
+          widget.onPanUpdate?.call(direction, details);
           if (widget.logging) {
             _logOnPanUpdate(details, dx, dy, newAngle);
           }
@@ -114,17 +114,19 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
             CustomPaint(
               size: Size.square(widget.trackDiameter),
               painter: _CircularRangeSliderTrackPainter(
-                  color: widget.trackColor,
-                  trackStroke: widget.trackStroke,
-                  logging: widget.logging),
+                color: widget.trackColor,
+                trackStroke: widget.trackStroke,
+                logging: widget.logging,
+              ),
             ),
             CustomPaint(
               size: Size.square(widget.trackDiameter),
               painter: _CircularRangeSliderHandlePainter(
-                  angle: _angle,
-                  color: widget.handleColor,
-                  handleRadius: widget.handleRadius,
-                  logging: widget.logging),
+                angle: _angle,
+                color: widget.handleColor,
+                handleRadius: widget.handleRadius,
+                logging: widget.logging,
+              ),
             ),
             if (widget.child != null) widget.child!,
           ],
@@ -176,8 +178,11 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
 }
 
 class _CircularRangeSliderTrackPainter extends CustomPainter {
-  const _CircularRangeSliderTrackPainter(
-      {required this.color, required this.trackStroke, required this.logging});
+  const _CircularRangeSliderTrackPainter({
+    required this.color,
+    required this.trackStroke,
+    required this.logging,
+  });
 
   final Color color;
   final double trackStroke;
@@ -198,8 +203,10 @@ class _CircularRangeSliderTrackPainter extends CustomPainter {
       dev.log('$size', name: 'CircularRangeSliderTrackPainter: size');
       dev.log('$radius', name: 'CircularRangeSliderTrackPainter: radius');
       dev.log('$center', name: 'CircularRangeSliderTrackPainter: center');
-      dev.log('$trackStroke',
-          name: 'CircularRangeSliderTrackPainter: trackStroke');
+      dev.log(
+        '$trackStroke',
+        name: 'CircularRangeSliderTrackPainter: trackStroke',
+      );
     }
   }
 
@@ -210,11 +217,12 @@ class _CircularRangeSliderTrackPainter extends CustomPainter {
 }
 
 class _CircularRangeSliderHandlePainter extends CustomPainter {
-  const _CircularRangeSliderHandlePainter(
-      {required this.angle,
-      required this.color,
-      required this.handleRadius,
-      required this.logging});
+  const _CircularRangeSliderHandlePainter({
+    required this.angle,
+    required this.color,
+    required this.handleRadius,
+    required this.logging,
+  });
   final double angle;
   final Color color;
   final double handleRadius;
