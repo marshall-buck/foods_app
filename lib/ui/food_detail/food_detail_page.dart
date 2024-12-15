@@ -43,6 +43,7 @@ class FoodDetailPage extends WatchingWidget {
               slivers: [
                 SliverPersistentHeader(
                   floating: true,
+                  pinned: true,
                   delegate: _MySliverHeaderDelegate(
                     child: Padding(
                       padding:
