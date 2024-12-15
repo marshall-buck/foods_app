@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/magic.dart';
 
-import 'package:foods_app/ui/core/core.dart';
+import 'package:foods_app/ui/ui.dart';
+import 'package:watch_it/watch_it.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
   CircularRangeSliderPopUp({required this.context, required this.id});
@@ -35,7 +36,10 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                 color: Theme.of(context).colorScheme.surface,
               ),
               child: CircularRangeSlider(
-                id: id,
+                onPanUpdate: (direction, details) {
+                  di.get<FoodAmountManager>().changeUnits(direction);
+                },
+                // id: id,
                 trackStroke: 8,
                 handleRadius: 16,
                 handleColor: Theme.of(context).colorScheme.primary,

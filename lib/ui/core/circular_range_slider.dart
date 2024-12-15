@@ -1,8 +1,9 @@
 import 'dart:developer' as dev;
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
-import 'package:foods_app/ui/ui.dart';
-import 'package:watch_it/watch_it.dart';
+
+import 'package:flutter/widgets.dart';
+
+enum RotationDirection { clockwise, counterclockwise }
 
 // TODO:use speed indicator icons to adjust speed.
 class CircularRangeSlider extends StatefulWidget {
@@ -12,8 +13,10 @@ class CircularRangeSlider extends StatefulWidget {
     required this.trackDiameter,
     required this.trackColor,
     required this.handleColor,
-    required this.id,
-    required this.child,
+    // this.id,
+    this.child,
+    this.onPanUpdate,
+    this.logging = false,
     super.key,
   });
 
@@ -22,8 +25,10 @@ class CircularRangeSlider extends StatefulWidget {
   final double trackDiameter;
   final Color trackColor;
   final Color handleColor;
-  final Widget child;
-  final int id;
+  final Widget? child;
+  // final int? id;
+  final void Function(RotationDirection, DragUpdateDetails)? onPanUpdate;
+  final bool logging;
 
   @override
   State<CircularRangeSlider> createState() => _CircularRangeSliderState();
@@ -70,7 +75,9 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
               _shouldPan = true;
             });
           }
-          // _logOnPanStart(details, center, radius, handleOffset);
+          if (widget.logging) {
+            _logOnPanStart(details, center, radius, handleOffset);
+          }
         },
         onPanUpdate: (DragUpdateDetails details) {
           if (!_shouldPan) return;
@@ -83,8 +90,13 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           final newAngle = math.atan2(dy, dx);
 
           final direction = panHandler(details, widget.trackDiameter / 2);
+          if (widget.onPanUpdate != null) {
+            widget.onPanUpdate!(direction, details);
+          }
 
-          di.get<FoodAmountManager>().changeUnits(direction);
+          if (widget.logging) {
+            _logOnPanUpdate(details, dx, dy, newAngle);
+          }
 
           setState(() {
             _angle = newAngle;
@@ -101,28 +113,28 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           children: [
             CustomPaint(
               size: Size.square(widget.trackDiameter),
-              painter: CircularRangeSliderTrackPainter(
-                color: widget.trackColor,
-                trackStroke: widget.trackStroke,
-              ),
+              painter: _CircularRangeSliderTrackPainter(
+                  color: widget.trackColor,
+                  trackStroke: widget.trackStroke,
+                  logging: widget.logging),
             ),
             CustomPaint(
               size: Size.square(widget.trackDiameter),
-              painter: CircularRangeSliderHandlePainter(
-                angle: _angle,
-                color: widget.handleColor,
-                handleRadius: widget.handleRadius,
-              ),
+              painter: _CircularRangeSliderHandlePainter(
+                  angle: _angle,
+                  color: widget.handleColor,
+                  handleRadius: widget.handleRadius,
+                  logging: widget.logging),
             ),
-            widget.child,
+            if (widget.child != null) widget.child!,
           ],
         ),
       ),
     );
   }
 
-  // helper logging method for onPanStart.
-  // ignore: unused_element
+  /// helper logging method for onPanStart.
+
   void _logOnPanStart(
     DragStartDetails details,
     Offset center,
@@ -146,7 +158,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
   }
 
   // helper logging method for onPanUpdate.
-  // ignore: unused_element
+
   void _logOnPanUpdate(
     DragUpdateDetails details,
     double dx,
@@ -160,18 +172,16 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
     dev.log('$dx', name: 'onPanUpdate: dx');
     dev.log('$dy', name: 'onPanUpdate: dy');
     dev.log('$newAngle', name: 'onPanUpdate: newAngle');
-    // dev.log('$constrainedAngle', name: 'onPanUpdate: constrainedAngle');
   }
 }
 
-class CircularRangeSliderTrackPainter extends CustomPainter {
-  const CircularRangeSliderTrackPainter({
-    required this.color,
-    required this.trackStroke,
-  });
+class _CircularRangeSliderTrackPainter extends CustomPainter {
+  const _CircularRangeSliderTrackPainter(
+      {required this.color, required this.trackStroke, required this.logging});
 
   final Color color;
   final double trackStroke;
+  final bool logging;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -184,26 +194,31 @@ class CircularRangeSliderTrackPainter extends CustomPainter {
 
     canvas.drawCircle(center, radius, circularTrackPaint);
 
-    // dev.log('$sie', name: 'CirularRangeSliderTrackPainter: size');
-    // dev.log('$radius', name: 'CircularRangeSliderTrackPainter: radius');
-    // dev.log('$center', name: 'CircularRangeSliderTrackPainter: center');
+    if (logging) {
+      dev.log('$size', name: 'CircularRangeSliderTrackPainter: size');
+      dev.log('$radius', name: 'CircularRangeSliderTrackPainter: radius');
+      dev.log('$center', name: 'CircularRangeSliderTrackPainter: center');
+      dev.log('$trackStroke',
+          name: 'CircularRangeSliderTrackPainter: trackStroke');
+    }
   }
 
   @override
-  bool shouldRepaint(CircularRangeSliderTrackPainter oldDelegate) {
+  bool shouldRepaint(_CircularRangeSliderTrackPainter oldDelegate) {
     return false;
   }
 }
 
-class CircularRangeSliderHandlePainter extends CustomPainter {
-  const CircularRangeSliderHandlePainter({
-    required this.angle,
-    required this.color,
-    required this.handleRadius,
-  });
+class _CircularRangeSliderHandlePainter extends CustomPainter {
+  const _CircularRangeSliderHandlePainter(
+      {required this.angle,
+      required this.color,
+      required this.handleRadius,
+      required this.logging});
   final double angle;
   final Color color;
   final double handleRadius;
+  final bool logging;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -214,28 +229,26 @@ class CircularRangeSliderHandlePainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill;
 
-    final handleOffset = Offset(
+    final offset = Offset(
       center.dx + radius * math.cos(angle),
       center.dy + radius * math.sin(angle),
     );
 
     // handle
-    canvas.drawCircle(handleOffset, handleRadius, handlePaint);
+    canvas.drawCircle(offset, handleRadius, handlePaint);
+    if (logging) {
+      dev.log('$size', name: 'CircularRangeSliderTrackPainter: size');
+      dev.log('$radius', name: 'CircularRangeSliderTrackPainter: radius');
+      dev.log('$center', name: 'CircularRangeSliderTrackPainter: center');
+      dev.log('$offset', name: 'CircularRangeSliderTrackPainter: offset');
+    }
   }
 
   @override
-  bool shouldRepaint(CircularRangeSliderHandlePainter oldDelegate) {
+  bool shouldRepaint(_CircularRangeSliderHandlePainter oldDelegate) {
     return oldDelegate.angle != angle;
   }
-  // dev.log('$size', name: 'CircularRangeSliderHandlePainter: size');
-  // dev.log('$radius', name: 'CircularRangeSliderHandlePainter: radius');
-  // dev.log('$center', name: 'CircularRangeSliderHandlePainter: center');
-
-  // dev.log('$handleOffset',
-  //     name: 'CircularRangeSliderHandlePainter handleOffsets');
 }
-
-enum RotationDirection { clockwise, counterclockwise }
 
 RotationDirection panHandler(DragUpdateDetails d, double radius) {
   /// Location of the pointer
