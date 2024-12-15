@@ -3,6 +3,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
 import 'package:foods_app/services/services.dart';
+
 import 'package:foods_app/ui/ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
@@ -14,24 +15,30 @@ void registerDependencies() {
     ..registerSingleton<FoodSearchManager>(
       FoodSearchManager(),
     ) //FoodSearchVM
+
     ..registerSingleton<FoodAmountManager>(
       FoodAmountManager(),
     ) //FoodDetailVM
+
     ..registerSingleton<AppHistoryState>(
       AppHistoryState(),
-    )
-    // FoodSearchState
+    ) //AppHistoryState
+
+    ..registerSingleton<FoodCompareManager>(
+      FoodCompareManager(),
+    ) //FoodCompareManager
+
     // ignore: strict_raw_type
     ..registerSingletonAsync<PreferencesService>(
       () async {
         final shared = SharedPreferencesAsync();
-
         final settings = SharedUserPrefsServiceImp(shared);
         await settings.init();
         return settings;
       },
       instanceName: LocatorInstanceNames.sharedPrefsService,
     ) //PreferencesService
+
     ..registerSingletonAsync<FoodsDB>(
       () async {
         // initializes auto_hyphenating_text package,
@@ -43,7 +50,8 @@ void registerDependencies() {
       },
       instanceName: LocatorInstanceNames.foodsDBService,
       dispose: (x) async => x.dispose(),
-    )
+    ) //FoodsDB
+    //
     ..registerSingletonAsync<QuickSearchManager>(
       () async {
         final manager = QuickSearchManager();
@@ -56,5 +64,5 @@ void registerDependencies() {
           instanceName: LocatorInstanceNames.sharedPrefsService,
         ),
       ],
-    );
+    ); //QuickSearchManager
 }

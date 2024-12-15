@@ -8,7 +8,6 @@ import 'package:foods_app/services/services.dart';
 
 import 'package:watch_it/watch_it.dart';
 
-//TODO: add queryFood to this class
 /// Manages the searching of foods by a search term.
 class FoodSearchManager extends ChangeNotifier {
   List<FoodListItemModel?> _currentResults = [];

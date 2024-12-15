@@ -20,16 +20,30 @@ void main() {
   });
 
   group('registerDependencies()', () {
-    test('FoodSearchVM should be initialized', () async {
+    test('FoodSearchManager should be initialized', () async {
       await di.allReady();
 
       expect(di.isRegistered<FoodSearchManager>(), true);
     });
+    test('FoodCompareManager should be initialized', () async {
+      await di.allReady();
 
-    test('FoodDetailVM should be initialized', () async {
+      expect(di.isRegistered<FoodCompareManager>(), true);
+    });
+
+    test('FoodAmountManager should be initialized', () async {
       await di.allReady();
 
       expect(di.isRegistered<FoodAmountManager>(), true);
+    });
+    test('PreferencesService should be initialized', () async {
+      await di.allReady();
+      // ignore: strict_raw_type
+      final prefsService = await di.getAsync<PreferencesService>(
+        instanceName: LocatorInstanceNames.sharedPrefsService,
+      );
+
+      expect(prefsService, isNotNull);
     });
     test('FoodsDB should be initialized', () async {
       await di.allReady();
@@ -42,15 +56,6 @@ void main() {
       );
     });
 
-    test('SharedPreferences should be initialized', () async {
-      await di.allReady();
-      // ignore: strict_raw_type
-      final prefsService = await di.getAsync<PreferencesService>(
-        instanceName: LocatorInstanceNames.sharedPrefsService,
-      );
-
-      expect(prefsService, isNotNull);
-    });
     test('QuickSearchManager should be initialized', () async {
       await di.allReady();
       final quickSearchManager = await di.getAsync<QuickSearchManager>();

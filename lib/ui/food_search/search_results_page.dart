@@ -50,8 +50,6 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   }
 
   void _onScroll() {
-    // dev.log('_showQuickResults : $_showQuickResults',
-    //     name: '_onScrollCalled top');
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
       setState(() {
