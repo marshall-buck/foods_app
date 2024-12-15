@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
-
-import 'package:foods_app/ui/ui.dart';
+import 'package:foods_app/ui/core/nutrient_list_item.dart';
 
 class NutrientGrid extends StatelessWidget {
   const NutrientGrid({

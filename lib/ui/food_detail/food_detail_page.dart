@@ -1,7 +1,7 @@
-import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
+import 'package:foods_app/ui/core/nutrient_list_item.dart';
 
 import 'package:foods_app/ui/ui.dart';
 import 'package:watch_it/watch_it.dart';
@@ -11,16 +11,20 @@ class FoodDetailPage extends WatchingWidget {
 
   void _floatingButtonPressed(BuildContext context) {
     if (context.mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute<FoodDetailPage>(
-          builder: (context) => const FoodComparisonPage(),
-        ),
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute<FoodComparisonPage>(
+      //     builder: (context) => const FoodComparisonPage(),
+      //   ),
+      // );
+
+      Navigator.of(context).push(
+        CompareSearchPopup<void>(
+            context: context, foodSearchManager: di.get<FoodSearchManager>()),
       );
     }
   }
 
-//TODO: Populate from history state
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -138,64 +142,6 @@ class _NutrientGrid extends StatelessWidget {
             child: NutrientListItem(key: nutrientKey, food: food, index: index),
           );
         },
-      ),
-    );
-  }
-}
-
-class NutrientListItem extends StatelessWidget {
-  const NutrientListItem({
-    required this.food,
-    required this.index,
-    super.key,
-  });
-
-  final Food food;
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(16),
-        color: Theme.of(context).colorScheme.surfaceContainer,
-      ),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onLongPress: () {
-          Navigator.of(context).push(
-            CircularRangeSliderPopUp<void>(
-              context: context,
-              id: food.nutrientList[index].id,
-            ),
-          );
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: MagicSpacing.sp_4,
-                    ),
-                    child: AutoHyphenatingText(
-                      textAlign: TextAlign.center,
-                      food.nutrientList[index].name,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            AmountWidget(
-              id: food.nutrientList[index].id,
-              textColor: Theme.of(context).colorScheme.onSurface,
-            ),
-          ],
-        ),
       ),
     );
   }

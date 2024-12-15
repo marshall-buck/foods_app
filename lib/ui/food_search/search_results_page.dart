@@ -90,7 +90,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
         (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
-    final quickResultsList = watchIt<QuickSearchManager>().quickSearchNames;
+    // final quickResultsList = watchIt<QuickSearchManager>().quickSearchNames;
 
     return Material(
       child: SafeArea(
@@ -135,19 +135,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
               // color: Colors.amber,
               duration: MagicDurations.base1,
               height: _showQuickResults ? 32 : 0,
-              child: Row(
-                children: quickResultsList.map((quickResult) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Text(
-                      quickResult,
-                      style: AppTextStyle.m3LabelSmall.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
+              child: const QuickResultsContainer(),
             ),
             Expanded(
               child: ListView.builder(
