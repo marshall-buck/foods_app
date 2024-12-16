@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/ui/ui.dart';
+import 'package:foods_app/ui/core/quick_search_manager.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class QuickResultsContainer extends WatchingWidget {

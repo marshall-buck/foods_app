@@ -9,18 +9,15 @@ import 'package:watch_it/watch_it.dart';
 class FoodDetailPage extends WatchingWidget {
   const FoodDetailPage({super.key});
 
-  void _floatingButtonPressed(BuildContext context) {
+  void _floatingButtonPressed(BuildContext context, Food food) {
     if (context.mounted) {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute<FoodComparisonPage>(
-      //     builder: (context) => const FoodComparisonPage(),
-      //   ),
-      // );
-
-      Navigator.of(context).push(
-        CompareSearchPopup<void>(
-            context: context, foodSearchManager: di.get<FoodSearchManager>()),
+      di.get<FoodCompareManager>().addFoodToCompare(food: food);
+      di.get<FoodSearchManager>().clearSearch();
+      Navigator.push(
+        context,
+        MaterialPageRoute<FoodComparisonPage>(
+          builder: (context) => const FoodComparisonPage(),
+        ),
       );
     }
   }
@@ -69,7 +66,7 @@ class FoodDetailPage extends WatchingWidget {
               right: 16,
               child: FloatingActionButton(
                 child: const Icon(Icons.compare),
-                onPressed: () => _floatingButtonPressed(context),
+                onPressed: () => _floatingButtonPressed(context, food),
               ),
             ),
           ],

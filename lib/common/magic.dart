@@ -12,7 +12,7 @@ class LocatorInstanceNames {
 
 class MagicStrings {
   static const searchPageHintText = 'Search for foods';
-  static const detailsPageHintText = 'Search for comparison food';
+  static const compareSearchBarText = 'Search for food to compare';
   static const defaultQuickSearchString = '';
   static const searchBarHeroTag = 'search-bar';
 }
