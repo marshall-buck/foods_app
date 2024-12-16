@@ -99,7 +99,12 @@ class _FoodComparisonPageState extends State<FoodComparisonPage> {
           child: Column(
             spacing: MagicSpacing.sp_2,
             children: [
-              ListView.builder(itemBuilder: itemBuilder),
+              ListView(
+                physics: const NeverScrollableScrollPhysics(),
+                children: foodCompareManager.compareList.map((food) {
+                  return FoodDescriptionCard(tileSize: tileSize, food: food!);
+                }).toList(),
+              ),
               ConstrainedBox(
                 constraints: const BoxConstraints(
                   maxWidth: MagicNumbers.maxSearchBarWidth,
