@@ -27,12 +27,11 @@ class FoodSearchManager extends ChangeNotifier {
       final foodDTO = await foodsDB.queryFood(id: id);
       food = Food.fromFoodDTO(foodDTO!);
 
-      // _amountStrings = await food.createAmountStrings();
       di.get<AppHistoryState>().addFoodToHistory(food);
     } catch (e) {
       dev.log(
         'queryFood throws',
-        name: 'FoodDetailVM - queryFood',
+        name: 'FoodSearchManager - queryFood',
         time: DateTime.now(),
         error: e,
       );
@@ -58,9 +57,9 @@ class FoodSearchManager extends ChangeNotifier {
       }
     } catch (e) {
       dev.log(
-        'error',
+        'queryFoods throws',
         time: DateTime.now(),
-        name: 'FoodSearchVM.queryFoods()',
+        name: 'FoodSearchManager - queryFoods()',
         error: e,
       );
       _currentResults = [];
@@ -68,7 +67,7 @@ class FoodSearchManager extends ChangeNotifier {
       dev.log(
         'FoodSearchResults.length: ${_currentResults.length}',
         time: DateTime.now(),
-        name: 'FoodSearchVM.queryFoods()',
+        name: 'FoodSearchManager.queryFoods()',
       );
       notifyListeners();
     }

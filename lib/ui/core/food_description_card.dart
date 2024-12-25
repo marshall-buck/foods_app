@@ -7,7 +7,7 @@ import 'package:foods_app/domain/domain.dart';
 import 'package:foods_app/ui/ui.dart';
 import 'package:watch_it/watch_it.dart';
 
-class FoodDescriptionCard extends StatelessWidget {
+class FoodDescriptionCard extends WatchingWidget {
   const FoodDescriptionCard({
     required this.tileSize,
     required this.food,
@@ -19,6 +19,10 @@ class FoodDescriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    callOnce(
+      (_) => di.get<FoodAmountManager>().initAmountStrings(food),
+      dispose: () => di.get<FoodAmountManager>().clearAmounts(),
+    );
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainer,

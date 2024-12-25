@@ -61,8 +61,6 @@ class _SearchResultsPage extends State<SearchResultsPage> {
     setState(() {
       _showQuickResults = false;
     });
-    // dev.log('_showQuickResults : $_showQuickResults',
-    //     name: '_onScrollCalled bottom');
   }
 
   @override
@@ -83,14 +81,11 @@ class _SearchResultsPage extends State<SearchResultsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final foodResults =
-    //     watchPropertyValue((FoodSearchVM x) => x.currentResults);
     final foodManager = watchIt<FoodSearchManager>();
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
         (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
-    // final quickResultsList = watchIt<QuickSearchManager>().quickSearchNames;
 
     return Material(
       child: SafeArea(

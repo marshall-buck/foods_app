@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
-import 'package:foods_app/ui/core/nutrient_list_item.dart';
 
 import 'package:foods_app/ui/ui.dart';
 import 'package:watch_it/watch_it.dart';
@@ -31,11 +30,11 @@ class FoodDetailPage extends WatchingWidget {
 
     // final food = watchPropertyValue((FoodDetailManager m) => m.currentFood);
     final food = di.get<AppHistoryState>().lastFood;
-    callOnce(
-      (_) => di.get<FoodAmountManager>().initAmountStrings(food!),
-      dispose: () => di.get<FoodAmountManager>().clearAmounts(),
-    );
-    // dev.log('$food');
+    // callOnce(
+    //   (_) => di.get<FoodAmountManager>().initAmountStrings(food!),
+    //   dispose: () => di.get<FoodAmountManager>().clearAmounts(),
+    // );
+
     return Material(
       child: SafeArea(
         child: Stack(
@@ -58,7 +57,7 @@ class FoodDetailPage extends WatchingWidget {
                     minHeight: 100,
                   ),
                 ),
-                _NutrientGrid(tileSize: tileSize, food: food),
+                NutrientGrid(tileSize: tileSize, food: food),
               ],
             ),
             Positioned(
@@ -110,36 +109,5 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return true;
-  }
-}
-
-class _NutrientGrid extends StatelessWidget {
-  const _NutrientGrid({
-    required this.tileSize,
-    required this.food,
-  });
-
-  final MagicTileDimension tileSize;
-  final Food food;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: EdgeInsets.all(tileSize.spacing * 2),
-      sliver: SliverGrid.builder(
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: tileSize.dimension,
-          crossAxisSpacing: tileSize.spacing,
-          mainAxisSpacing: tileSize.spacing,
-        ),
-        itemCount: food.nutrientList.length,
-        itemBuilder: (BuildContext context, int index) {
-          final nutrientKey = Key('${food.id}:${food.nutrientList[index].id}');
-          return ClipOval(
-            child: NutrientListItem(key: nutrientKey, food: food, index: index),
-          );
-        },
-      ),
-    );
   }
 }
