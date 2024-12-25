@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/data/services.dart';
+import 'package:foods_app/data/data.dart';
 
 // TODO: check if Nutrient map is needed
 // (double amount, formatted amount to display, unit String)

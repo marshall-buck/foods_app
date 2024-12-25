@@ -1,10 +1,8 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:foods_app/common/common.dart';
+import 'package:foods_app/data/data.dart';
 import 'package:foods_app/domain/domain.dart';
-
-import 'package:foods_app/data/services.dart';
 import 'package:foods_app/ui/core/quick_search_manager.dart';
-
 import 'package:foods_app/ui/ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
@@ -47,7 +45,7 @@ void registerDependencies() {
         final usdaDB = UsdaDB();
         await usdaDB.init();
         assert(usdaDB.isDataLoaded == true, 'usdaDB is not loaded');
-        return FoodsDBService(usdaDB);
+        return FoodsDBRepo(usdaDB);
       },
       instanceName: LocatorInstanceNames.foodsDBService,
       dispose: (x) async => x.dispose(),

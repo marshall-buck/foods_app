@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/data/services.dart';
+import 'package:foods_app/data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _PreferenceKeys {

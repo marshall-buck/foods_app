@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
-import 'package:foods_app/data/services.dart';
+import 'package:foods_app/data/data.dart';
 import 'package:foods_app/ui/core/quick_search_manager.dart';
 import 'package:foods_app/ui/ui.dart';
 
