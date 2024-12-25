@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:foods_app/services/models/food_dto.dart';
+import 'package:foods_app/data/models/food_dto.dart';
 
 /// Interface for for a foods database.
 

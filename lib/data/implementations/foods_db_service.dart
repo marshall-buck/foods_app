@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:foods_app/services/services.dart';
+import 'package:foods_app/data/services.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 /// A service class that interacts with a foods database both local and

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:foods_app/services/services.dart';
+import 'package:foods_app/data/services.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 void main() {

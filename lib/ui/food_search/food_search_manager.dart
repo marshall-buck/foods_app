@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
-import 'package:foods_app/services/services.dart';
+import 'package:foods_app/data/services.dart';
 
 import 'package:watch_it/watch_it.dart';
 

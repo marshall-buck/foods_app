@@ -2,7 +2,7 @@ import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
-import 'package:foods_app/services/services.dart';
+import 'package:foods_app/data/services.dart';
 import 'package:foods_app/ui/core/quick_search_manager.dart';
 
 import 'package:foods_app/ui/ui.dart';

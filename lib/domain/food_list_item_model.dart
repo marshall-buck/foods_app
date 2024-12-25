@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:foods_app/common/common.dart';
 
-import 'package:foods_app/services/services.dart';
+import 'package:foods_app/data/services.dart';
 import 'package:watch_it/watch_it.dart';
 
 /// A class that represents the data for a food list item.
