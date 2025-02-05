@@ -1,18 +1,47 @@
+import 'dart:developer';
+
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:foods_app/app_bloc_observer.dart';
 
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/ui/ui.dart';
+import 'package:foods_app/data/data.dart';
 
-import 'package:watch_it/watch_it.dart';
+import 'package:usda_db_package/usda_db_package.dart';
+
+//
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  registerDependencies();
+  FlutterError.onError = (details) {
+    log(details.exceptionAsString(), stackTrace: details.stack);
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    log(error.toString(), stackTrace: stack);
+    return true;
+  };
+  Bloc.observer = const AppBlocObserver();
+  final localDatabase = UsdaDB();
+  await localDatabase.init();
+
+  // initializes auto_hyphenating_text package,
+  await initHyphenation();
+
   runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
+
+  Future<void> init() async {
+    Future.delayed(const Duration(seconds: 1), () {
+      print('One second has passed.'); // Prints after 1 second.
+    });
+    return;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +54,7 @@ class MainApp extends StatelessWidget {
       darkTheme: const AppTheme(appTextTheme).dark(),
 
       home: FutureBuilder(
-        future: di.allReady(),
+        future: init(),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingScreen();
@@ -33,7 +62,8 @@ class MainApp extends StatelessWidget {
             if (snapshot.error != null) {
               return ErrorScreen(snapshot: snapshot);
             } else {
-              return const SearchResultsPage();
+              return const Text('text');
+              // return const SearchResultsPage();
             }
           }
         },

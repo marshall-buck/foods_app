@@ -1,5 +1,5 @@
-class PreferencesNotInitializedException implements Exception {
-  PreferencesNotInitializedException(this.message);
+class PreferencesNotInitialized implements Exception {
+  PreferencesNotInitialized(this.message);
   final String message;
 
   @override

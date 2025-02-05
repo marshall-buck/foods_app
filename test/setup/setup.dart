@@ -1,15 +1,13 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// ignore: depend_on_referenced_packages
-import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
-// ignore: depend_on_referenced_packages
-import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
-// ignore: depend_on_referenced_packages
-import 'package:shared_preferences_platform_interface/types.dart';
-import 'package:watch_it/watch_it.dart';
 
-GetIt? instance;
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
+
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+
+import 'package:shared_preferences_platform_interface/types.dart';
 
 FakeSharedPreferencesAsync? preferences;
 void startUpOnce() {

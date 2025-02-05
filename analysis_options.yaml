@@ -6,6 +6,7 @@ analyzer:
   errors:
 
     # avoid_print: ignore
+    document_ignores: ignore
     flutter_style_todos: ignore
     prefer_int_literals: ignore
     public_member_api_docs: ignore
