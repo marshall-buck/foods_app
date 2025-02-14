@@ -12,26 +12,26 @@ class FoodsDBRepository implements FoodsDBApi {
   FoodsDBRepository({required UsdaDB localDBApi}) : _localDBApi = localDBApi;
   final UsdaDB _localDBApi;
 
-  /// Provides a [FoodDTO] object from the database.
+  /// Provides a [FoodDAO] object from the database.
   /// If the food ID is not found in the database, the Future returns null.
   @override
-  Future<FoodDTO?> queryFood({required int id}) async {
+  Future<FoodDAO?> queryFood({required int id}) async {
     final food = await _localDBApi.queryFood(id: id);
     if (food == null) {
       return null;
     }
-    return FoodDTO.fromUsdaDB(food);
+    return FoodDAO.fromUsdaDB(food);
   }
 
-  /// Provides a List [FoodDTO] objects from the database.
+  /// Provides a List [FoodDAO] objects from the database.
   /// If no foods are found in the database, the Future returns an empty list.
   @override
-  Future<List<FoodDTO?>> queryFoods({required String searchTerm}) async {
+  Future<List<FoodDAO?>> queryFoods({required String searchTerm}) async {
     final foods = await _localDBApi.queryFoods(searchString: searchTerm);
 
     return foods.isEmpty
         ? []
-        : foods.map((food) => FoodDTO.fromUsdaDB(food!)).toList();
+        : foods.map((food) => FoodDAO.fromUsdaDB(food!)).toList();
   }
 
   /// The  [dispose] method closes the database connection and releases any

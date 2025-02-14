@@ -1,8 +1,11 @@
 // ignore: unused_import
-import 'dart:developer' as dev;
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
+import 'package:foods_app/food_search/food_search.dart';
+import 'package:foods_app/widgets/widgets.dart';
 
 class SearchResultsPage extends StatefulWidget {
   const SearchResultsPage({super.key});
@@ -12,38 +15,10 @@ class SearchResultsPage extends StatefulWidget {
 }
 
 class _SearchResultsPage extends State<SearchResultsPage> {
-  final _searchBarController = TextEditingController();
+  // final _searchBarController = TextEditingController();
   final _scrollController = ScrollController();
 
   bool _showQuickResults = false;
-
-  Future<void> _onTapFoodListItem(
-    BuildContext context,
-    ValueKey<int> id,
-  ) async {
-    di.get<AppHistoryState>().addTermToHistory(_searchBarController.text);
-    await di.get<FoodSearchManager>().queryFood(id.value);
-    if (context.mounted) {
-      await Navigator.push(
-        context,
-        MaterialPageRoute<FoodDetailPage>(
-          builder: (context) => const FoodDetailPage(),
-        ),
-      );
-    }
-  }
-
-  Future<void> _onChanged() async {
-    await di.get<FoodSearchManager>().queryFoods(_searchBarController.text);
-    setState(() {});
-  }
-
-  void _onClearSearch() {
-    _searchBarController.clear();
-
-    di.get<FoodSearchManager>().clearSearch();
-    _showQuickResults = false;
-  }
 
   void _onScroll() {
     if (_scrollController.position.userScrollDirection ==
@@ -67,21 +42,23 @@ class _SearchResultsPage extends State<SearchResultsPage> {
 
   @override
   void dispose() {
-    _searchBarController.dispose();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
-    // watchIt<FoodSearchVM>().dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final foodManager = watchIt<FoodSearchManager>();
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
     final centeredSearchBarTop =
         (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
+
+    final hasResults = context.select<FoodSearchBloc, bool>(
+      (bloc) => bloc.state is FoodSearchSuccessState,
+    );
 
     return Material(
       child: SafeArea(
@@ -90,7 +67,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
           children: [
             AnimatedPadding(
               duration: MagicDurations.base2,
-              padding: !foodManager.hasResults
+              padding: !hasResults
                   ? EdgeInsets.only(
                       top: centeredSearchBarTop,
                       right: MagicSpacing.sp_3,
@@ -104,51 +81,81 @@ class _SearchResultsPage extends State<SearchResultsPage> {
                   maxHeight: MagicNumbers.searchBarHeight,
                   minHeight: MagicNumbers.searchBarHeight,
                 ),
-                child: SearchBar(
-                  controller: _searchBarController,
-                  constraints: Theme.of(context).searchBarTheme.constraints,
-                  hintText: MagicStrings.searchPageHintText,
-                  trailing: [
-                    if (foodManager.hasResults)
-                      const FoodResultsCountBadge()
-                    else
-                      const Spacer(),
-                    IconButton(
-                      onPressed: _onClearSearch,
-                      icon: const Icon(Icons.clear_outlined),
-                    ),
-                  ],
-                  onChanged: (string) => _onChanged(),
-                ),
+                child: _SearchBar(),
               ),
             ),
             AnimatedContainer(
               // color: Colors.amber,
               duration: MagicDurations.base1,
               height: _showQuickResults ? 32 : 0,
-              child: const QuickResultsContainer(),
+              child: const QuickResultsNamesContainer(),
             ),
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemBuilder: (BuildContext context, int index) {
-                  final food = foodManager.currentResults[index];
-
-                  final id = ValueKey<int>(food!.id);
-                  return GestureDetector(
-                    onTap: () => _onTapFoodListItem(context, id),
-                    child: FoodListItem(
-                      key: id,
-                      food: food,
-                    ),
-                  );
-                },
-                itemCount: foodManager.resultsCount,
-              ),
-            ),
+            _SearchResults(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SearchResults extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final foods =
+        context.select<FoodSearchBloc, Iterable<FoodListItemModel>>((bloc) {
+      final state = bloc.state;
+      if (state is FoodSearchSuccessState) {
+        return state.foods;
+      }
+      return [];
+    });
+    return Expanded(
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          final food = foods.elementAt(index);
+
+          final id = ValueKey<int>(food.id);
+          return GestureDetector(
+            onTap: () => {},
+            child: FoodListItem(
+              key: id,
+              food: food,
+            ),
+          );
+        },
+        itemCount: foods.length,
+      ),
+    );
+  }
+}
+
+class _SearchBar extends StatefulWidget {
+  // bool showQuickResults = false;
+
+  @override
+  State<_SearchBar> createState() => __SearchBarState();
+}
+
+class __SearchBarState extends State<_SearchBar> {
+  final _searchBarController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final hasResults = context.select<FoodSearchBloc, bool>(
+      (bloc) => bloc.state is FoodSearchSuccessState,
+    );
+    return SearchBar(
+      controller: _searchBarController,
+      constraints: Theme.of(context).searchBarTheme.constraints,
+      hintText: MagicStrings.searchPageHintText,
+      trailing: [
+        if (hasResults) const FoodResultsCountBadge() else const Spacer(),
+        IconButton(
+          onPressed: () => {},
+          icon: const Icon(Icons.clear_outlined),
+        ),
+      ],
+      onChanged: (string) => {},
     );
   }
 }

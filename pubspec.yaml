@@ -4,7 +4,7 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ">=3.2.6 <4.0.0"
+  sdk: ">=3.2.7 <4.0.0"
 
 dependencies:
   auto_hyphenating_text: ^0.3.0
@@ -21,7 +21,7 @@ dependencies:
   usda_db_package:
     git:
       url: https://github.com/marshall-buck/usda_db_package.git
-  # watch_it: ^1.5.0
+
 
 
 dev_dependencies:

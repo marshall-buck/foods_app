@@ -1,13 +1,18 @@
 import 'dart:developer';
 
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
-import 'package:bloc/bloc.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foods_app/app.dart';
 import 'package:foods_app/app_bloc_observer.dart';
 
-import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
+import 'package:foods_app/food_search/food_search.dart';
+
+import 'package:foods_app/user_preferences/user_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
 
@@ -26,47 +31,61 @@ void main() async {
   Bloc.observer = const AppBlocObserver();
   final localDatabase = UsdaDB();
   await localDatabase.init();
-
+  final localDbRepository = FoodsDBRepository(localDBApi: localDatabase);
+  final asyncPrefs = SharedPreferencesAsync();
+  final userPreferences = UserPrefsRepository(prefProvider: asyncPrefs);
+  await userPreferences.init();
   // initializes auto_hyphenating_text package,
   await initHyphenation();
 
-  runApp(const MainApp());
+  runApp(
+    EntryPoint(
+      localDbRepository: localDbRepository,
+      userPreferencesRepo: userPreferences,
+    ),
+  );
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class EntryPoint extends StatelessWidget {
+  const EntryPoint({
+    required this.localDbRepository,
+    required this.userPreferencesRepo,
+    super.key,
+  });
+  final FoodsDBRepository localDbRepository;
 
-  Future<void> init() async {
-    Future.delayed(const Duration(seconds: 1), () {
-      print('One second has passed.'); // Prints after 1 second.
-    });
-    return;
-  }
+  final UserPrefsRepository userPreferencesRepo;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-
-      // showSemanticsDebugger: true,
-      theme: const AppTheme(appTextTheme).light(),
-
-      darkTheme: const AppTheme(appTextTheme).dark(),
-
-      home: FutureBuilder(
-        future: init(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingScreen();
-          } else {
-            if (snapshot.error != null) {
-              return ErrorScreen(snapshot: snapshot);
-            } else {
-              return const Text('text');
-              // return const SearchResultsPage();
-            }
-          }
-        },
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(
+          value: localDbRepository,
+        ),
+        RepositoryProvider.value(
+          value: userPreferencesRepo,
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<FoodSearchBloc>(
+            lazy: false,
+            create: (BuildContext context) => FoodSearchBloc(
+              foodsDBRepo: localDbRepository,
+              userPreferences: userPreferencesRepo,
+            ),
+          ),
+          BlocProvider<UserPreferencesBloc>(
+            lazy: false,
+            create: (BuildContext context) => UserPreferencesBloc(
+              userPreferencesRepo: userPreferencesRepo,
+            )..add(
+                const UserPreferencesInitialized(),
+              ),
+          ),
+        ],
+        child: const App(),
       ),
     );
   }

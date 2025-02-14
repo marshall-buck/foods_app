@@ -16,9 +16,9 @@
 //   Future<void> getNames() async {
 //     try {
 //       // ignore: strict_raw_type
-//       final prefs = await di.getAsync<UserPreferences>(
-//         instanceName: LocatorInstanceNames.sharedPrefsService,
-//       );
+//       // final prefs = await di.getAsync<UserPreferences>(
+//       //   instanceName: LocatorInstanceNames.sharedPrefsService,
+//       // );
 //       final quick = await prefs.getQuickSearchAmounts();
 //       final names = quick
 //           .map((id) {

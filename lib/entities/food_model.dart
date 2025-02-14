@@ -15,7 +15,7 @@ class Food extends Equatable {
     required this.nutrientList,
     required this.foodAmount,
   });
-  factory Food.fromFoodDTO(FoodDTO food) {
+  factory Food.fromFoodDTO(FoodDAO food) {
     final nutrientMap = <int, Nutrient>{};
     final nutrientList = <Nutrient>[];
 

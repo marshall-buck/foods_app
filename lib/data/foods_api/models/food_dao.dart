@@ -2,45 +2,46 @@ import 'package:equatable/equatable.dart';
 import 'package:foods_app/data/data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
+//TODO: Integrate external api factory's here
+
 // A class that represents the data for foods.
 ///
 /// This class is responsible for storing food data, including its
 /// ID, description, and nutrients.
 ///
-/// The [FoodDTO] class is initialized by providing the food's
+/// The [FoodDAO] class is initialized by providing the food's
 /// [id], [description], and [nutrients].
 ///
 /// The [allNutrientDTOs] getter returns a map of all nutrients for the food,
-/// with the nutrient ID as the key and the [NutrientDTO] object as the value.
+/// with the nutrient ID as the key and the [NutrientDAO] object as the value.
 
-class FoodDTO extends Equatable {
-  const FoodDTO({
+class FoodDAO extends Equatable {
+  const FoodDAO({
     required this.id,
     required this.description,
     required this.nutrients,
   });
 
-  /// Creates a [FoodDTO] instance from a [SrLegacyFoodModel] object.
-  factory FoodDTO.fromUsdaDB(SrLegacyFoodModel food) {
-    return FoodDTO(
+  /// Creates a [FoodDAO] instance from a Usda DB [FoodDTO] object.
+  factory FoodDAO.fromUsdaDB(FoodDTO food) {
+    return FoodDAO(
       id: food.id,
       description: food.description,
       nutrients: food.nutrients,
     );
   }
-
-  /// Returns a map of all nutrients for the food.
-  Map<int, NutrientDTO> get allNutrientDTOs {
-    final map = <int, NutrientDTO>{};
-    for (final entry in nutrients.entries) {
-      map[entry.key] = NutrientDTO.fromMapEntry(entry);
-    }
-    return map;
-  }
-
   final int id;
   final String description;
   final Map<int, double> nutrients;
+
+  /// Returns a map of all nutrients for a food instance.
+  Map<int, NutrientDAO> get allNutrientDTOs {
+    final map = <int, NutrientDAO>{};
+    for (final entry in nutrients.entries) {
+      map[entry.key] = NutrientDAO.fromMapEntry(entry);
+    }
+    return map;
+  }
 
   @override
   List<Object?> get props => [id, description, nutrients, allNutrientDTOs];

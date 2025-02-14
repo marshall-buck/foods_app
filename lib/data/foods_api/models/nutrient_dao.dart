@@ -3,35 +3,34 @@ import 'package:foods_app/data/data.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
 
+//TODO: Integrate external api factory's here
+
 /// A class that represents the data for a single nutrient.
 ///
 /// This class is responsible for storing nutrient data, including its
 /// ID, name, amount, and unit.
 ///
-/// The [NutrientDTO] class can be initialized by providing the nutrient's
+/// The [NutrientDAO] class can be initialized by providing the nutrient's
 /// [id], [name], [amount], and [unit], or by using the
-/// [NutrientDTO.fromUsdaDB] or [NutrientDTO.fromMapEntry] factory constructors.
+/// [NutrientDAO.fromUsdaDB] or [NutrientDAO.fromMapEntry] factory constructors.
 ///
-/// The [NutrientDTO.fromUsdaDB] factory constructor creates a [NutrientDTO]
-/// instance from a [SrLegacyNutrientModel] object.
+/// The [NutrientDAO.fromUsdaDB] factory constructor creates a [NutrientDAO]
+/// instance from a Usda DB  [NutrientDTO] object.
 ///
-/// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDTO]
+/// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDAO]
 /// instance from a [MapEntry<int, double>] object, which represents a single
-/// entry in the [FoodDTO.nutrients] map.
-class NutrientDTO extends Equatable {
-  /// Creates a [NutrientDTO].
-  ///
-  /// The [id], [name], [amount], and [unit] arguments are required.
-  const NutrientDTO({
+/// entry in the [FoodDAO.nutrients] map.
+class NutrientDAO extends Equatable {
+  const NutrientDAO({
     required this.id,
     required this.name,
     required this.amount,
     required this.unit,
   });
 
-  /// Creates a [NutrientDTO] instance from a [SrLegacyNutrientModel] object.
-  factory NutrientDTO.fromUsdaDB(SrLegacyNutrientModel nutrient) {
-    return NutrientDTO(
+  /// Creates a [NutrientDAO] instance from a [NutrientDTO] object.
+  factory NutrientDAO.fromUsdaDB(NutrientDTO nutrient) {
+    return NutrientDAO(
       id: nutrient.id,
       name: nutrient.name,
       amount: nutrient.amount,
@@ -39,11 +38,11 @@ class NutrientDTO extends Equatable {
     );
   }
 
-  /// Creates a [NutrientDTO] instance from a MapEntry`int, double` object.
-  factory NutrientDTO.fromMapEntry(MapEntry<int, double> entry) {
+  /// Creates a [NutrientDAO] instance from a MapEntry `int, double` object.
+  factory NutrientDAO.fromMapEntry(MapEntry<int, double> entry) {
     final id = entry.key;
     final amount = entry.value;
-    return NutrientDTO(
+    return NutrientDAO(
       id: id,
       name: originalNutrientTableEdit[id]?['name'] ?? '',
       amount: amount,
@@ -312,5 +311,5 @@ class NutrientDTO extends Equatable {
   };
 
   static const usdaDBNutrientLookupTable =
-      SrLegacyNutrientModel.originalNutrientTableEdit;
+      NutrientDTO.originalNutrientTableEdit;
 }

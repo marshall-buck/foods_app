@@ -36,7 +36,7 @@ class FoodListItem extends StatelessWidget {
                 children: [
                   FoodDescription(food: food),
                   QuickResults(
-                    quickResultsList: food.quickResultsList,
+                    quickResultsList: food.quickResultsAmountsList,
                   ),
                 ],
               ),

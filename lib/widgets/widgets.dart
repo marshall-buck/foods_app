@@ -5,4 +5,4 @@ export 'circular_range_slider_popup.dart';
 export 'food_description_card.dart';
 export 'food_results_count_badge.dart';
 export 'nutrient_list_item.dart';
-export 'quick_results_container.dart';
+export 'quick_results_names_container.dart';

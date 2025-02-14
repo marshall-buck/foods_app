@@ -9,15 +9,15 @@ class Nutrient extends Equatable {
     required this.unit,
   });
 
-  /// Creates a [Nutrient] instance from a MapEntry<int, double> object.
+  /// Creates a [Nutrient] instance from a `MapEntry<int, double>` object.
   factory Nutrient.fromMapEntry(MapEntry<int, double> entry) {
     final id = entry.key;
     final amount = entry.value;
     return Nutrient(
       id: id,
-      name: NutrientDTO.originalNutrientTableEdit[id]?['name'] ?? '',
+      name: NutrientDAO.originalNutrientTableEdit[id]?['name'] ?? '',
       amount: amount,
-      unit: NutrientDTO.originalNutrientTableEdit[id]?['unit'] ?? '',
+      unit: NutrientDAO.originalNutrientTableEdit[id]?['unit'] ?? '',
     );
   }
 

@@ -1,2 +1,2 @@
-export 'food_dto.dart';
-export 'nutrient_dto.dart';
+export 'food_dao.dart';
+export 'nutrient_dao.dart';

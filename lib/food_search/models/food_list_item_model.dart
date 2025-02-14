@@ -9,74 +9,50 @@ import 'package:foods_app/data/data.dart';
 /// amounts of 4 nutrients based on user preferences.
 ///
 /// The [FoodListItemModel] class can be initialized by providing the food's
-/// [id], [description], and [quickResultsList], or by using the
+/// [id], [description], and [quickResultsAmountsList], or by using the
 /// [fromFoodDTO]  constructor.
 ///
 /// The [fromFoodDTO] factory constructor creates a [FoodListItemModel]
-/// instance from a [FoodDTO] object.
+/// instance from a [FoodDAO] object.
 
 class FoodListItemModel extends Equatable {
   const FoodListItemModel({
     required this.id,
     required this.description,
-    required this.quickResultsList,
+    required this.quickResultsAmountsList,
   });
 
-  static Future<FoodListItemModel> fromFoodDTO(
-    FoodDTO food,
-    LocalUserPrefsRepo quickPrefs,
-  ) async {
+  static Future<FoodListItemModel> fromFoodDTO({
+    required FoodDAO food,
+    required List<String> nutrientAmounts,
+  }) async {
     return FoodListItemModel(
       id: food.id,
       description: food.description,
-      quickResultsList: await _quickSearchNutrientAmounts(
-        food,
-        quickPrefs,
-      ),
+      quickResultsAmountsList: nutrientAmounts,
     );
   }
 
   final int id;
   final String description;
-  final List<String> quickResultsList;
+  final List<String> quickResultsAmountsList;
 
   FoodListItemModel copyWith({
     int? id,
     String? description,
-    List<String>? quickResultsList,
+    List<String>? quickResultsAmountsList,
   }) {
     return FoodListItemModel(
       id: id ?? this.id,
       description: description ?? this.description,
-      quickResultsList: quickResultsList ?? this.quickResultsList,
+      quickResultsAmountsList:
+          quickResultsAmountsList ?? this.quickResultsAmountsList,
     );
-  }
-
-  // Returns a list of nutrient amounts for the food, based on the user's
-  // quick search preferences.
-  static Future<List<String>> _quickSearchNutrientAmounts(
-    FoodDTO food,
-    LocalUserPrefsRepo quickPrefs,
-  ) async {
-    final prefs = await quickPrefs.getQuickSearchAmounts();
-    final nutrients = food.nutrients;
-    final matches = <String>[];
-    for (final string in prefs) {
-      final id = int.parse(string);
-
-      if (nutrients.containsKey(id)) {
-        matches.add(nutrients[id].toString());
-      } else {
-        matches.add('0');
-      }
-    }
-
-    return matches.reversed.toList();
   }
 
   @override
   bool? get stringify => true;
 
   @override
-  List<Object?> get props => [id, description, quickResultsList];
+  List<Object?> get props => [id, description, quickResultsAmountsList];
 }
