@@ -33,7 +33,7 @@ void main() async {
   await localDatabase.init();
   final localDbRepository = FoodsDBRepository(localDBApi: localDatabase);
   final asyncPrefs = SharedPreferencesAsync();
-  final userPreferences = UserPrefsRepository(prefProvider: asyncPrefs);
+  final userPreferences = UserPrefsRepository(prefPlugin: asyncPrefs);
   await userPreferences.init();
   // initializes auto_hyphenating_text package,
   await initHyphenation();

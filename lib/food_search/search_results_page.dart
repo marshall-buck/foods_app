@@ -1,5 +1,3 @@
-// ignore: unused_import
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +13,6 @@ class SearchResultsPage extends StatefulWidget {
 }
 
 class _SearchResultsPage extends State<SearchResultsPage> {
-  // final _searchBarController = TextEditingController();
   final _scrollController = ScrollController();
 
   bool _showQuickResults = false;
@@ -59,7 +56,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
     final hasResults = context.select<FoodSearchBloc, bool>(
       (bloc) => bloc.state is FoodSearchSuccessState,
     );
-
+    print('SearchResultsPage" $hasResults');
     return Material(
       child: SafeArea(
         child: Column(
@@ -102,7 +99,7 @@ class _SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final foods =
-        context.select<FoodSearchBloc, Iterable<FoodListItemModel>>((bloc) {
+        context.select<FoodSearchBloc, List<FoodListItemModel>>((bloc) {
       final state = bloc.state;
       if (state is FoodSearchSuccessState) {
         return state.foods;
@@ -130,14 +127,25 @@ class _SearchResults extends StatelessWidget {
 }
 
 class _SearchBar extends StatefulWidget {
-  // bool showQuickResults = false;
-
   @override
-  State<_SearchBar> createState() => __SearchBarState();
+  State<_SearchBar> createState() => _SearchBarState();
 }
 
-class __SearchBarState extends State<_SearchBar> {
+class _SearchBarState extends State<_SearchBar> {
   final _searchBarController = TextEditingController();
+  late FoodSearchBloc _foodSearchBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _foodSearchBloc = context.read<FoodSearchBloc>();
+  }
+
+  @override
+  void dispose() {
+    _searchBarController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +163,8 @@ class __SearchBarState extends State<_SearchBar> {
           icon: const Icon(Icons.clear_outlined),
         ),
       ],
-      onChanged: (string) => {},
+      onChanged: (string) => _foodSearchBloc
+          .add(TextChanged(searchTerm: _searchBarController.text)),
     );
   }
 }

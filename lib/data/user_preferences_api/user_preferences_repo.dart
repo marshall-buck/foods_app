@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:foods_app/common/common.dart';
+import 'package:rxdart/subjects.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,29 +27,25 @@ class _DefaultPreferences {
 }
 
 class UserPrefsRepository {
-  UserPrefsRepository({required SharedPreferencesAsync prefProvider})
-      : _prefProvider = prefProvider;
+  UserPrefsRepository({required SharedPreferencesAsync prefPlugin})
+      : _prefPlugin = prefPlugin;
+  late final SharedPreferencesAsync _prefPlugin;
 
-  late final SharedPreferencesAsync _prefProvider;
+  // final StreamController<List<String>> _savedFoodsController =
+  //     StreamController<List<String>>();
 
-  final StreamController<List<String>> _savedFoodsController =
-      StreamController<List<String>>.broadcast();
+  final _quickSearchIdsController = BehaviorSubject<List<String>>();
 
-  final StreamController<List<String>> _quickSearchIdsController =
-      StreamController<List<String>>.broadcast();
+  // Stream<List<String>> get quickSearchIdsStream =>
+  //     _quickSearchIdsController.stream.asBroadcastStream();
 
-  final StreamController<String> _displayModeController =
-      StreamController<String>.broadcast();
+  List<String> get currentQuickSearchIds =>
+      _quickSearchIdsController.valueOrNull ??
+      _DefaultPreferences.defaultQuickSearchIds;
 
-  Stream<List<String>> get savedFoodsStream => _savedFoodsController.stream;
-  Stream<List<String>> get quickSearchIdsStream =>
-      _quickSearchIdsController.stream;
-  Stream<String> get displayModeStream => _displayModeController.stream;
+  // final StreamController<String> _displayModeController =
+  //     StreamController<String>();
 
-  List<String> get quickSearchIds =>
-      _quickSearchIdsController.stream.toList() as List<String>;
-
-  @override
   Future<void> init() async {
     try {
       await _initQuickSearchIds();
@@ -66,9 +63,9 @@ class UserPrefsRepository {
   Future<void> _initQuickSearchIds() async {
     try {
       final quickSearchPrefs =
-          await _prefProvider.getStringList(_PreferenceKeys.quickSearchIds);
+          await _prefPlugin.getStringList(_PreferenceKeys.quickSearchIds);
       if (quickSearchPrefs == null) {
-        await _prefProvider.setStringList(
+        await _prefPlugin.setStringList(
           _PreferenceKeys.quickSearchIds,
           _DefaultPreferences.defaultQuickSearchIds,
         );
@@ -85,14 +82,13 @@ class UserPrefsRepository {
         stackTrace: st,
         name: 'getQuickSearchAmounts()',
       );
-      // return _DefaultPreferences.defaultQuickSearchIds;
     }
   }
 
   Future<String> getDisplayMode() async {
     try {
       final colorMode =
-          await _prefProvider.getString(_PreferenceKeys.displayMode);
+          await _prefPlugin.getString(_PreferenceKeys.displayMode);
 
       return colorMode ?? _DefaultPreferences.defaultDisplayMode;
     } catch (e, st) {
@@ -109,7 +105,7 @@ class UserPrefsRepository {
 
   Future<void> setDisplayMode(String value) async {
     try {
-      await _prefProvider.setString(_PreferenceKeys.displayMode, value);
+      await _prefPlugin.setString(_PreferenceKeys.displayMode, value);
     } catch (e, st) {
       log(
         runtimeType.toString(),
@@ -141,7 +137,7 @@ class UserPrefsRepository {
 
   Future<void> setQuickSearchIds(List<String> value) async {
     try {
-      await _prefProvider.setStringList(
+      await _prefPlugin.setStringList(
         _PreferenceKeys.quickSearchIds,
         value,
       );
@@ -159,7 +155,7 @@ class UserPrefsRepository {
   Future<List<String>> getSavedFoods() async {
     try {
       final savedFoods =
-          await _prefProvider.getStringList(_PreferenceKeys.savedFoods);
+          await _prefPlugin.getStringList(_PreferenceKeys.savedFoods);
       return savedFoods ?? _DefaultPreferences.defaultSavedFoods;
     } catch (e, st) {
       log(
@@ -175,7 +171,7 @@ class UserPrefsRepository {
 
   Future<void> setSavedFoods(List<String> value) async {
     try {
-      await _prefProvider.setStringList(_PreferenceKeys.savedFoods, value);
+      await _prefPlugin.setStringList(_PreferenceKeys.savedFoods, value);
     } catch (e, st) {
       log(
         runtimeType.toString(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/food_search/food_search.dart';
+
 import 'package:foods_app/user_preferences/user_preferences.dart';
 
 class QuickResultsNamesContainer extends StatelessWidget {

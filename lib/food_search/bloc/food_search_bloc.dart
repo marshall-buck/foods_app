@@ -14,7 +14,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     required UserPrefsRepository userPreferences,
   })  : _foodsDBRepo = foodsDBRepo,
         _userPreferences = userPreferences,
-        super(const FoodSearchInitialState()) {
+        super(const FoodSearchEmptyState()) {
     on<TextChanged>(_onTextChanged);
   }
 
@@ -27,75 +27,86 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   ) async {
     final searchTerm = event.searchTerm;
 
-    if (searchTerm.isEmpty) return emit(const FoodSearchEmptyState());
-    try {
-      final foodsList = await _queryFoods(searchTerm);
-      if (foodsList.isEmpty) {
-        emit(const FoodSearchEmptyState());
-      } else {
-        emit(FoodSearchSuccessState(foodsList as Iterable<FoodListItemModel>));
+    if (searchTerm.isEmpty) {
+      return emit(const FoodSearchEmptyState());
+    } else {
+      try {
+        final foodsList = await _queryFoods(searchTerm);
+        if (foodsList == null) {
+          emit(const FoodSearchEmptyState());
+        } else {
+          emit(FoodSearchSuccessState(foodsList));
+        }
+      } catch (e) {
+        log(
+          'Error in _onTextChanged',
+          name: 'FoodSearchBloc',
+          error: e,
+          stackTrace: StackTrace.current,
+        );
+        emit(
+          const FoodsSearchErrorState(
+            'Error searching for foods ion _onTextChanged',
+          ),
+        );
       }
-    } catch (e) {
-      log(
-        'Error in _onTextChanged',
-        name: 'FoodSearchBloc',
-        error: e,
-        stackTrace: StackTrace.current,
-      );
-      emit(const FoodsSearchErrorState('Error searching for foods'));
     }
   }
 
-  Future<Iterable<FoodListItemModel?>> _queryFoods(
+  Future<List<FoodListItemModel>?> _queryFoods(
     String string,
   ) async {
+    final foodListItems = <FoodListItemModel>[];
     try {
       final foods = await _foodsDBRepo.queryFoods(searchTerm: string);
-
+      final quickSearchIds = _userPreferences.currentQuickSearchIds;
+      // print(foods.length);
       if (foods.isNotEmpty) {
-        final foodListItems = <FoodListItemModel>[];
         for (final food in foods) {
           final nutrientAmounts = await _createNutrientQuickSearchAmounts(
             food!,
-            _userPreferences.quickSearchIds,
+            quickSearchIds,
           );
-          final foodItem = await FoodListItemModel.fromFoodDTO(
-            food: food,
-            nutrientAmounts: nutrientAmounts,
+
+          final foodItem = await FoodListItemModel.fromFoodDAO(
+            food: food, nutrientAmounts: nutrientAmounts, //nutrientAmounts,
           );
 
           foodListItems.add(foodItem);
         }
-
         return foodListItems;
-      } else {
-        return [];
       }
     } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> _getNames() async {
-    try {
-      final quick = _userPreferences.quickSearchIds;
-      final names = quick
-          .map((id) {
-            return NutrientDAO
-                .originalNutrientTableEdit[int.parse(id)]!['name']!;
-          })
-          .toList()
-          .reversed
-          .toList();
-    } catch (e) {
       log(
-        'error',
-        time: DateTime.now(),
-        name: 'QuickSearchManager.getNames()',
+        'Error in _queryFoods',
+        name: 'FoodSearchBloc',
         error: e,
+        stackTrace: StackTrace.current,
       );
     }
+    return null;
   }
+
+  // Future<void> _getNames() async {
+  //   try {
+  //     final quick = await _userPreferences.quickSearchIds;
+  //     final names = quick
+  //         .map((id) {
+  //           return NutrientDAO
+  //               .originalNutrientTableEdit[int.parse(id)]!['name']!;
+  //         })
+  //         .toList()
+  //         .reversed
+  //         .toList();
+  //   } catch (e) {
+  //     log(
+  //       'error',
+  //       time: DateTime.now(),
+  //       name: 'QuickSearchManager.getNames()',
+  //       error: e,
+  //     );
+  //   }
+  // }
 
   // Returns a list of nutrient amounts for the food, based on the user's
   // quick search preferences.

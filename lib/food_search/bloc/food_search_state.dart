@@ -6,13 +6,6 @@ sealed class FoodSearchState extends Equatable {
   List<Object> get props => [];
 }
 
-final class FoodSearchInitialState extends FoodSearchState {
-  const FoodSearchInitialState();
-
-  @override
-  List<Object> get props => [];
-}
-
 final class FoodSearchEmptyState extends FoodSearchState {
   const FoodSearchEmptyState();
 
@@ -23,7 +16,7 @@ final class FoodSearchEmptyState extends FoodSearchState {
 final class FoodSearchSuccessState extends FoodSearchState {
   const FoodSearchSuccessState(this.foods);
 
-  final Iterable<FoodListItemModel> foods;
+  final List<FoodListItemModel> foods;
 
   @override
   List<Object> get props => [foods];

@@ -10,9 +10,9 @@ import 'package:foods_app/data/data.dart';
 ///
 /// The [FoodListItemModel] class can be initialized by providing the food's
 /// [id], [description], and [quickResultsAmountsList], or by using the
-/// [fromFoodDTO]  constructor.
+/// [fromFoodDAO]  constructor.
 ///
-/// The [fromFoodDTO] factory constructor creates a [FoodListItemModel]
+/// The [fromFoodDAO] factory constructor creates a [FoodListItemModel]
 /// instance from a [FoodDAO] object.
 
 class FoodListItemModel extends Equatable {
@@ -22,7 +22,7 @@ class FoodListItemModel extends Equatable {
     required this.quickResultsAmountsList,
   });
 
-  static Future<FoodListItemModel> fromFoodDTO({
+  static Future<FoodListItemModel> fromFoodDAO({
     required FoodDAO food,
     required List<String> nutrientAmounts,
   }) async {
