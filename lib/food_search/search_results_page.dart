@@ -56,7 +56,8 @@ class _SearchResultsPage extends State<SearchResultsPage> {
     final hasResults = context.select<FoodSearchBloc, bool>(
       (bloc) => bloc.state is FoodSearchSuccessState,
     );
-    print('SearchResultsPage" $hasResults');
+    // print('SearchResultsPage" $hasResults');
+    // print('_showQuickResults: $_showQuickResults');
     return Material(
       child: SafeArea(
         child: Column(
@@ -87,7 +88,9 @@ class _SearchResultsPage extends State<SearchResultsPage> {
               height: _showQuickResults ? 32 : 0,
               child: const QuickResultsNamesContainer(),
             ),
-            _SearchResults(),
+            _SearchResultsList(
+              scrollController: _scrollController,
+            ),
           ],
         ),
       ),
@@ -95,7 +98,11 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   }
 }
 
-class _SearchResults extends StatelessWidget {
+class _SearchResultsList extends StatelessWidget {
+  const _SearchResultsList({required this.scrollController});
+
+  final ScrollController scrollController;
+
   @override
   Widget build(BuildContext context) {
     final foods =
@@ -106,8 +113,10 @@ class _SearchResults extends StatelessWidget {
       }
       return [];
     });
+
     return Expanded(
       child: ListView.builder(
+        controller: scrollController,
         itemBuilder: (BuildContext context, int index) {
           final food = foods.elementAt(index);
 

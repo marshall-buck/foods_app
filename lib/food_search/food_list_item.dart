@@ -18,7 +18,6 @@ class FoodListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: const EdgeInsets.only(bottom: ),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(

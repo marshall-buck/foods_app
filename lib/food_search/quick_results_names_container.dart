@@ -14,6 +14,7 @@ class QuickResultsNamesContainer extends StatelessWidget {
     final quickResults = context.select<UserPreferencesBloc, List<String>>(
       (bloc) => bloc.state.quickSearchIds,
     );
+    print('QuickResultsNamesContainer: $quickResults');
     return Row(
       children: quickResults.map((quickResult) {
         return Padding(

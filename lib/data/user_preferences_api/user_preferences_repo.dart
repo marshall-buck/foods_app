@@ -36,8 +36,8 @@ class UserPrefsRepository {
 
   final _quickSearchIdsController = BehaviorSubject<List<String>>();
 
-  // Stream<List<String>> get quickSearchIdsStream =>
-  //     _quickSearchIdsController.stream.asBroadcastStream();
+  Stream<List<String>> get quickSearchIdsStream =>
+      _quickSearchIdsController.stream.asBroadcastStream();
 
   List<String> get currentQuickSearchIds =>
       _quickSearchIdsController.valueOrNull ??
