@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/food_search/food_search.dart';
 
@@ -34,8 +35,14 @@ class FoodListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FoodDescription(food: food),
-                  QuickResults(
-                    quickResultsList: food.quickResultsAmountsList,
+                  BlocBuilder<FoodSearchBloc, FoodSearchState>(
+                    buildWhen: (previous, current) =>
+                        previous.quickSearchIds != current.quickSearchIds,
+                    builder: (context, state) {
+                      return QuickResults(
+                        quickResultsList: food.quickResultsAmountsList,
+                      );
+                    },
                   ),
                 ],
               ),

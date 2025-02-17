@@ -9,7 +9,7 @@ class FoodResultsCountBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
       builder: (context, state) {
-        if (state is FoodSearchSuccessState) {
+        if (state.status == FoodSearchStatus.success) {
           return Badge.count(
             count: state.foods.length,
             backgroundColor: Colors.transparent,

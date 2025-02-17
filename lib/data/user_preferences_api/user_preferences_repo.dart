@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:foods_app/common/common.dart';
+
 import 'package:rxdart/subjects.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,6 +61,11 @@ class UserPrefsRepository {
     }
   }
 
+  // List<String> createQuickSearchNames(List<String> ids) => ids
+  //   ..map((id) {
+  //     return NutrientDAO.originalNutrientTableEdit[int.parse(id)]!['name']!;
+  //   }).toList().reversed.toList();
+
   Future<void> _initQuickSearchIds() async {
     try {
       final quickSearchPrefs =
@@ -116,24 +122,6 @@ class UserPrefsRepository {
       );
     }
   }
-
-  // Future<void> getQuickSearchIds() async {
-  //   try {
-  //     final quickSearchPrefs =
-  //         await prefProvider.getStringList(_PreferenceKeys.quickSearchIds);
-  //     _quickSearchIdsController
-  //         .add(quickSearchPrefs ?? _DefaultPreferences.defaultQuickSearchIds);
-  //   } catch (e, st) {
-  //     log(
-  //       runtimeType.toString(),
-  //       time: DateTime.now(),
-  //       error: e,
-  //       stackTrace: st,
-  //       name: 'getQuickSearchAmounts()',
-  //     );
-  //     // return _DefaultPreferences.defaultQuickSearchIds;
-  //   }
-  // }
 
   Future<void> setQuickSearchIds(List<String> value) async {
     try {

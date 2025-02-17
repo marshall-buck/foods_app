@@ -1,3 +1,2 @@
-export 'food_amount_manager.dart';
-export 'food_detail_page.dart';
-export 'nutrient_grid.dart';
+export 'ui/food_detail_page.dart';
+export 'ui/nutrient_grid.dart';

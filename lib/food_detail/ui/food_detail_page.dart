@@ -1,24 +1,21 @@
 // import 'package:flutter/material.dart';
 // import 'package:foods_app/common/common.dart';
-// import 'package:foods_app/domain/domain.dart';
 
-// import 'package:foods_app/ui/ui.dart';
-
-// class FoodDetailPage extends WatchingWidget {
+// class FoodDetailPage extends StatelessWidget {
 //   const FoodDetailPage({super.key});
 
-//   void _floatingButtonPressed(BuildContext context, Food food) {
-//     if (context.mounted) {
-//       di.get<FoodCompareManager>().addFoodToCompare(food: food);
-//       di.get<FoodSearchManager>().clearSearch();
-//       Navigator.push(
-//         context,
-//         MaterialPageRoute<FoodComparisonPage>(
-//           builder: (context) => const FoodComparisonPage(),
-//         ),
-//       );
-//     }
-//   }
+//   // void _floatingButtonPressed(BuildContext context, Food food) {
+//   //   if (context.mounted) {
+//   //     di.get<FoodCompareManager>().addFoodToCompare(food: food);
+//   //     di.get<FoodSearchManager>().clearSearch();
+//   //     Navigator.push(
+//   //       context,
+//   //       MaterialPageRoute<FoodComparisonPage>(
+//   //         builder: (context) => const FoodComparisonPage(),
+//   //       ),
+//   //     );
+//   //   }
+//   // }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -29,10 +26,6 @@
 
 //     // final food = watchPropertyValue((FoodDetailManager m) => m.currentFood);
 //     final food = di.get<AppHistoryState>().lastFood;
-//     // callOnce(
-//     //   (_) => di.get<FoodAmountManager>().initAmountStrings(food!),
-//     //   dispose: () => di.get<FoodAmountManager>().clearAmounts(),
-//     // );
 
 //     return Material(
 //       child: SafeArea(

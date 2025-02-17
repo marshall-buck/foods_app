@@ -16,10 +16,11 @@ class UserPreferencesBloc
       await emit.onEach(
         _userPreferencesRepository.quickSearchIdsStream,
         onData: (quickSearch) {
-          final names = _createQuickSearchNames(quickSearch);
+          // final names =
+          //     _userPreferencesRepository.createQuickSearchNames(quickSearch);
           emit(
             state.copyWith(
-              quickSearchIds: names,
+              quickSearchIds: quickSearch,
             ),
           );
         },
@@ -47,8 +48,8 @@ class UserPreferencesBloc
 
   final UserPrefsRepository _userPreferencesRepository;
 
-  List<String> _createQuickSearchNames(List<String> ids) => ids
-    ..map((id) {
-      return NutrientDAO.originalNutrientTableEdit[int.parse(id)]!['name']!;
-    }).toList().reversed.toList();
+  // List<String> _createQuickSearchNames(List<String> ids) => ids
+  //   ..map((id) {
+  //     return NutrientDAO.originalNutrientTableEdit[int.parse(id)]!['name']!;
+  //   }).toList().reversed.toList();
 }

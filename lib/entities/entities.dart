@@ -1,2 +1,3 @@
-export 'food_model.dart';
-export 'nutrient_model.dart';
+export 'food.dart';
+export 'foods.dart';
+export 'nutrient.dart';

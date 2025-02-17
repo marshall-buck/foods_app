@@ -12,26 +12,41 @@ class FoodsDBRepository implements FoodsDBApi {
   FoodsDBRepository({required UsdaDB localDBApi}) : _localDBApi = localDBApi;
   final UsdaDB _localDBApi;
 
+  final FoodsCache _cache = FoodsCache();
+
   /// Provides a [FoodDAO] object from the database.
   /// If the food ID is not found in the database, the Future returns null.
   @override
   Future<FoodDAO?> queryFood({required int id}) async {
-    final food = await _localDBApi.queryFood(id: id);
-    if (food == null) {
-      return null;
+    if (_cache.contains(id)) {
+      return _cache.get(id);
+    } else {
+      final food = await _localDBApi.queryFood(id: id);
+      if (food == null) {
+        return null;
+      }
+      return FoodDAO.fromUsdaDB(food);
     }
-    return FoodDAO.fromUsdaDB(food);
   }
 
   /// Provides a List [FoodDAO] objects from the database.
   /// If no foods are found in the database, the Future returns an empty list.
   @override
-  Future<List<FoodDAO?>> queryFoods({required String searchTerm}) async {
+  Future<List<FoodDAO>?> queryFoods({required String searchTerm}) async {
     final foods = await _localDBApi.queryFoods(searchString: searchTerm);
 
-    return foods.isEmpty
-        ? []
-        : foods.map((food) => FoodDAO.fromUsdaDB(food!)).toList();
+    if (foods.isEmpty) {
+      // _cache.clear();
+      return null;
+    } else {
+      return foods.map((food) {
+        final convertedFood = FoodDAO.fromUsdaDB(food!);
+        final id = convertedFood.id;
+        _cache.set(id, convertedFood);
+        return convertedFood;
+      }).toList();
+      // return foods.map((food) => FoodDAO.fromUsdaDB(food!)).toList();
+    }
   }
 
   /// The  [dispose] method closes the database connection and releases any

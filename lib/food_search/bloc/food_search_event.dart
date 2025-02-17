@@ -7,8 +7,12 @@ sealed class FoodSearchEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class TextChanged extends FoodSearchEvent {
-  const TextChanged({required this.searchTerm});
+final class FoodSearchInitialized extends FoodSearchEvent {}
+
+final class FoodSearchTextCleared extends FoodSearchEvent {}
+
+final class FoodSearchTextChanged extends FoodSearchEvent {
+  const FoodSearchTextChanged({required this.searchTerm});
 
   final String searchTerm;
 
@@ -18,3 +22,5 @@ class TextChanged extends FoodSearchEvent {
   @override
   String toString() => 'TextChanged { text: $searchTerm }';
 }
+
+final class FoodSearchEnded extends FoodSearchEvent {}

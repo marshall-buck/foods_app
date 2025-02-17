@@ -6,6 +6,7 @@ analyzer:
   errors:
 
     # avoid_print: ignore
+    avoid_catches_without_on_clauses: ignore
     document_ignores: ignore
     flutter_style_todos: ignore
     prefer_int_literals: ignore

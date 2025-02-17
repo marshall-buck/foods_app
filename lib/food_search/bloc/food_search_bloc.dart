@@ -13,29 +13,68 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     required FoodsDBRepository foodsDBRepo,
     required UserPrefsRepository userPreferences,
   })  : _foodsDBRepo = foodsDBRepo,
-        _userPreferences = userPreferences,
-        super(const FoodSearchEmptyState()) {
-    on<TextChanged>(_onTextChanged);
+        _userPreferencesRepository = userPreferences,
+        super(const FoodSearchState()) {
+    on<FoodSearchTextChanged>(_onTextChanged);
+    on<FoodSearchTextCleared>(_onClearText);
+    // on<FoodSearchInitialized>((event, emit) async {
+    //   await emit.onEach(
+    //     _userPreferencesRepository.quickSearchIdsStream,
+    //     onData: (quickSearch) {
+    //       emit(state.copyWith(quickSearchIds: quickSearch));
+    //     },
+    //   );
+    // });
   }
 
   final FoodsDBRepository _foodsDBRepo;
-  final UserPrefsRepository _userPreferences;
+  final UserPrefsRepository _userPreferencesRepository;
+
+  // Future<void> _onQuickSearchPrefsChange(
+  //   Emitter<FoodSearchState> emit,
+  //   List<String> quickSearch,
+  // ) async {
+  //   emit(state.copyWith(quickSearchIds: quickSearch));
+  //   final oldFoods = state.foods;
+  // }
+
+  void _onClearText(
+    FoodSearchTextCleared event,
+    Emitter<FoodSearchState> emit,
+  ) =>
+      emit(
+        state.copyWith(
+          foods: const [],
+        ),
+      );
 
   Future<void> _onTextChanged(
-    TextChanged event,
+    FoodSearchTextChanged event,
     Emitter<FoodSearchState> emit,
   ) async {
     final searchTerm = event.searchTerm;
 
     if (searchTerm.isEmpty) {
-      return emit(const FoodSearchEmptyState());
+      return;
     } else {
       try {
-        final foodsList = await _queryFoods(searchTerm);
-        if (foodsList == null) {
-          emit(const FoodSearchEmptyState());
+        final results = await _queryFoods(searchTerm);
+
+        if (results == null) {
+          emit(
+            state.copyWith(
+              foods: const [],
+              status: FoodSearchStatus.success,
+            ),
+          );
         } else {
-          emit(FoodSearchSuccessState(foodsList));
+          emit(
+            state.copyWith(
+              status: FoodSearchStatus.success,
+              foods: results.$1,
+              quickSearchIds: results.$2,
+            ),
+          );
         }
       } catch (e) {
         log(
@@ -45,26 +84,24 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
           stackTrace: StackTrace.current,
         );
         emit(
-          const FoodsSearchErrorState(
-            'Error searching for foods ion _onTextChanged',
-          ),
+          state.copyWith(error: 'Error in _onTextChanged'),
         );
       }
     }
   }
 
-  Future<List<FoodListItemModel>?> _queryFoods(
+  Future<(List<FoodListItemModel>, List<String>)?> _queryFoods(
     String string,
   ) async {
     final foodListItems = <FoodListItemModel>[];
     try {
-      final foods = await _foodsDBRepo.queryFoods(searchTerm: string);
-      final quickSearchIds = _userPreferences.currentQuickSearchIds;
-      // print(foods.length);
-      if (foods.isNotEmpty) {
-        for (final food in foods) {
+      final results = await _foodsDBRepo.queryFoods(searchTerm: string);
+      final quickSearchIds = _userPreferencesRepository.currentQuickSearchIds;
+
+      if (results != null) {
+        for (final food in results) {
           final nutrientAmounts = await _createNutrientQuickSearchAmounts(
-            food!,
+            food,
             quickSearchIds,
           );
 
@@ -74,7 +111,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
 
           foodListItems.add(foodItem);
         }
-        return foodListItems;
+        return (foodListItems, quickSearchIds);
       }
     } catch (e) {
       log(

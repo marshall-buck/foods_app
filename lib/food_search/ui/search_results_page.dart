@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/food_search/food_search.dart';
-import 'package:foods_app/widgets/widgets.dart';
 
 class SearchResultsPage extends StatefulWidget {
   const SearchResultsPage({super.key});
@@ -50,14 +49,13 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
-    final centeredSearchBarTop =
+    final centeredSearchBarTopPadding =
         (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
 
-    final hasResults = context.select<FoodSearchBloc, bool>(
-      (bloc) => bloc.state is FoodSearchSuccessState,
+    final centerSearchBarOnPage = context.select<FoodSearchBloc, bool>(
+      (bloc) => bloc.state.status == FoodSearchStatus.initiated,
     );
-    // print('SearchResultsPage" $hasResults');
-    // print('_showQuickResults: $_showQuickResults');
+
     return Material(
       child: SafeArea(
         child: Column(
@@ -65,9 +63,9 @@ class _SearchResultsPage extends State<SearchResultsPage> {
           children: [
             AnimatedPadding(
               duration: MagicDurations.base2,
-              padding: !hasResults
+              padding: centerSearchBarOnPage
                   ? EdgeInsets.only(
-                      top: centeredSearchBarTop,
+                      top: centeredSearchBarTopPadding,
                       right: MagicSpacing.sp_3,
                       left: MagicSpacing.sp_3,
                     )
@@ -83,9 +81,11 @@ class _SearchResultsPage extends State<SearchResultsPage> {
               ),
             ),
             AnimatedContainer(
-              // color: Colors.amber,
               duration: MagicDurations.base1,
-              height: _showQuickResults ? 32 : 0,
+              height: _showQuickResults &&
+                      context.read<FoodSearchBloc>().state.hasResults
+                  ? 32
+                  : 0,
               child: const QuickResultsNamesContainer(),
             ),
             _SearchResultsList(
@@ -105,17 +105,13 @@ class _SearchResultsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foods =
-        context.select<FoodSearchBloc, List<FoodListItemModel>>((bloc) {
-      final state = bloc.state;
-      if (state is FoodSearchSuccessState) {
-        return state.foods;
-      }
-      return [];
-    });
+    final foods = context.select<FoodSearchBloc, List<FoodListItemModel>>(
+      (bloc) => bloc.state.foods,
+    );
 
     return Expanded(
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: scrollController,
         itemBuilder: (BuildContext context, int index) {
           final food = foods.elementAt(index);
@@ -144,6 +140,11 @@ class _SearchBarState extends State<_SearchBar> {
   final _searchBarController = TextEditingController();
   late FoodSearchBloc _foodSearchBloc;
 
+  void _onClear() {
+    _searchBarController.clear();
+    _foodSearchBloc.add(FoodSearchTextCleared());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -158,22 +159,22 @@ class _SearchBarState extends State<_SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final hasResults = context.select<FoodSearchBloc, bool>(
-      (bloc) => bloc.state is FoodSearchSuccessState,
+    final showBadge = context.select<FoodSearchBloc, bool>(
+      (bloc) => bloc.state.status == FoodSearchStatus.success,
     );
     return SearchBar(
       controller: _searchBarController,
       constraints: Theme.of(context).searchBarTheme.constraints,
       hintText: MagicStrings.searchPageHintText,
       trailing: [
-        if (hasResults) const FoodResultsCountBadge() else const Spacer(),
+        if (showBadge) const FoodResultsCountBadge() else const Spacer(),
         IconButton(
-          onPressed: () => {},
+          onPressed: _onClear,
           icon: const Icon(Icons.clear_outlined),
         ),
       ],
       onChanged: (string) => _foodSearchBloc
-          .add(TextChanged(searchTerm: _searchBarController.text)),
+          .add(FoodSearchTextChanged(searchTerm: _searchBarController.text)),
     );
   }
 }

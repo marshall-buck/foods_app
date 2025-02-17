@@ -1,7 +1,6 @@
 // import 'package:flutter/material.dart';
-// import 'package:foods_app/ui/ui.dart';
 
-// class AmountWidget extends WatchingWidget {
+// class AmountWidget extends StatelessWidget {
 //   const AmountWidget({
 //     required this.textColor,
 //     required this.id,
@@ -12,9 +11,9 @@
 
 //   @override
 //   Widget build(BuildContext context) {
-//     final amountStrings =
-//         watchPropertyValue((FoodAmountManager m) => m.amountStrings);
-//     assert(amountStrings[id]?.$2 != null, 'The string is empty');
+//     // final amountStrings =
+//     //     watchPropertyValue((FoodAmountManager m) => m.amountStrings);
+//     // assert(amountStrings[id]?.$2 != null, 'The string is empty');
 
 //     return Text(
 //       '${amountStrings[id]!.$2} ${amountStrings[id]!.$3}',

@@ -6,6 +6,6 @@ import 'package:foods_app/data/foods_api/models/food_dao.dart';
 
 abstract interface class FoodsDBApi {
   Future<FoodDAO?> queryFood({required int id});
-  Future<List<FoodDAO?>> queryFoods({required String searchTerm});
+  Future<List<FoodDAO>?> queryFoods({required String searchTerm});
   Future<void> dispose();
 }

@@ -13,7 +13,6 @@ class CircularRangeSlider extends StatefulWidget {
     required this.trackDiameter,
     required this.trackColor,
     required this.handleColor,
-    // this.id,
     this.child,
     this.onPanUpdate,
     this.logging = false,
