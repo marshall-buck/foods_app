@@ -11,8 +11,7 @@ class QuickResultsNamesContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
-      buildWhen: (previous, current) =>
-          previous.quickSearchIds != current.quickSearchIds,
+      buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
       builder: (context, state) {
         final names = state.quickSearchNames;
         return Row(

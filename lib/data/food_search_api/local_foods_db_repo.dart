@@ -7,12 +7,14 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// {@template foods_db_repo}
 /// A repository that handles searching for foods.
 /// {@endtemplate}
-class FoodsDBRepository implements FoodsDBApi {
+class LocalFoodsDBRepo implements FoodSearchApiInterface {
   /// {@macro foods_db_repo}
-  FoodsDBRepository({required UsdaDB localDBApi}) : _localDBApi = localDBApi;
+  LocalFoodsDBRepo({required UsdaDB localDBApi, required FoodsSearchCache cache})
+      : _localDBApi = localDBApi,
+        _cache = cache;
   final UsdaDB _localDBApi;
 
-  final FoodsCache _cache = FoodsCache();
+  final FoodsSearchCache _cache;
 
   /// Provides a [FoodDAO] object from the database.
   /// If the food ID is not found in the database, the Future returns null.

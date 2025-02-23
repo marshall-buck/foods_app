@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
+import 'package:foods_app/food_detail/food_detail.dart';
 import 'package:foods_app/food_search/food_search.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -17,8 +18,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   bool _showQuickResults = false;
 
   void _onScroll() {
-    if (_scrollController.position.userScrollDirection ==
-        ScrollDirection.forward) {
+    if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
       setState(() {
         _showQuickResults = true;
       });
@@ -49,8 +49,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final padding = MediaQuery.paddingOf(context);
-    final centeredSearchBarTopPadding =
-        (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
+    final centeredSearchBarTopPadding = (height / 2) - (MagicNumbers.searchBarHeight / 2) - (padding.top);
 
     final centerSearchBarOnPage = context.select<FoodSearchBloc, bool>(
       (bloc) => bloc.state.status == FoodSearchStatus.initiated,
@@ -82,10 +81,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
             ),
             AnimatedContainer(
               duration: MagicDurations.base1,
-              height: _showQuickResults &&
-                      context.read<FoodSearchBloc>().state.hasResults
-                  ? 32
-                  : 0,
+              height: _showQuickResults && context.read<FoodSearchBloc>().state.hasResults ? 32 : 0,
               child: const QuickResultsNamesContainer(),
             ),
             _SearchResultsList(
@@ -118,7 +114,15 @@ class _SearchResultsList extends StatelessWidget {
 
           final id = ValueKey<int>(food.id);
           return GestureDetector(
-            onTap: () => {},
+            onTap: () {
+              context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(food.id));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FoodDetailPage(),
+                ),
+              );
+            },
             child: FoodListItem(
               key: id,
               food: food,
@@ -173,8 +177,7 @@ class _SearchBarState extends State<_SearchBar> {
           icon: const Icon(Icons.clear_outlined),
         ),
       ],
-      onChanged: (string) => _foodSearchBloc
-          .add(FoodSearchTextChanged(searchTerm: _searchBarController.text)),
+      onChanged: (string) => _foodSearchBloc.add(FoodSearchTextChanged(searchTerm: _searchBarController.text)),
     );
   }
 }

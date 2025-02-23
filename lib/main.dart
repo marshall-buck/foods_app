@@ -9,6 +9,7 @@ import 'package:foods_app/app.dart';
 import 'package:foods_app/app_bloc_observer.dart';
 
 import 'package:foods_app/data/data.dart';
+
 import 'package:foods_app/food_search/food_search.dart';
 
 import 'package:foods_app/user_preferences/user_preferences.dart';
@@ -31,10 +32,12 @@ void main() async {
   Bloc.observer = const AppBlocObserver();
   final localDatabase = UsdaDB();
   await localDatabase.init();
-  final localDbRepository = FoodsDBRepository(localDBApi: localDatabase);
+  final cache = FoodsSearchCache();
+  final localDbRepository = LocalFoodsDBRepo(localDBApi: localDatabase, cache: cache);
   final asyncPrefs = SharedPreferencesAsync();
   final userPreferences = UserPrefsRepository(prefPlugin: asyncPrefs);
   await userPreferences.init();
+  final activeFoods = ActiveFoods();
   // initializes auto_hyphenating_text package,
   await initHyphenation();
 
@@ -42,6 +45,7 @@ void main() async {
     EntryPoint(
       localDbRepository: localDbRepository,
       userPreferencesRepo: userPreferences,
+      activeFoods: activeFoods,
     ),
   );
 }
@@ -50,11 +54,14 @@ class EntryPoint extends StatelessWidget {
   const EntryPoint({
     required this.localDbRepository,
     required this.userPreferencesRepo,
+    required this.activeFoods,
     super.key,
   });
-  final FoodsDBRepository localDbRepository;
+  final LocalFoodsDBRepo localDbRepository;
 
   final UserPrefsRepository userPreferencesRepo;
+
+  final ActiveFoods activeFoods;
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +73,18 @@ class EntryPoint extends StatelessWidget {
         RepositoryProvider.value(
           value: userPreferencesRepo,
         ),
+        RepositoryProvider.value(
+          value: activeFoods,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<FoodSearchBloc>(
             lazy: false,
             create: (BuildContext context) => FoodSearchBloc(
-              foodsDBRepo: localDbRepository,
+              localFoodsDBRepo: localDbRepository,
               userPreferences: userPreferencesRepo,
+              activeFoods: activeFoods,
             ),
           ),
           BlocProvider<UserPreferencesBloc>(

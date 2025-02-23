@@ -4,8 +4,7 @@ import 'package:foods_app/data/data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 const protein = NutrientDAO(id: 1003, amount: 20, unit: 'g', name: 'Protein');
-const totalFat =
-    NutrientDAO(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
+const totalFat = NutrientDAO(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
 const totalCarbs = NutrientDAO(
   id: 1005,
   amount: 30,
@@ -22,8 +21,7 @@ const totalSugars = NutrientDAO(
 
 const food1 = FoodDAO(
   id: 167512,
-  description:
-      'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
+  description: 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
   nutrients: {
     1003: 5.88,
     1079: 1.2,
@@ -53,8 +51,7 @@ final food2 = FoodDAO.fromUsdaDB(
 
 const mockFoodsData = {
   167512: {
-    'description':
-        'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
+    'description': 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
     'nutrients': {
       1003: 5.88,
       1079: 1.2,
@@ -78,8 +75,7 @@ const mockFoodsData = {
     },
   },
   167514: {
-    'description':
-        'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
+    'description': 'Kraft Foods, Shake N Bake Original Recipe, Coating for Pork, dry',
     'nutrients': {
       1004: 3.7,
       1005: 79.8,

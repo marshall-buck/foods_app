@@ -28,8 +28,7 @@ class _DefaultPreferences {
 }
 
 class UserPrefsRepository {
-  UserPrefsRepository({required SharedPreferencesAsync prefPlugin})
-      : _prefPlugin = prefPlugin;
+  UserPrefsRepository({required SharedPreferencesAsync prefPlugin}) : _prefPlugin = prefPlugin;
   late final SharedPreferencesAsync _prefPlugin;
 
   // final StreamController<List<String>> _savedFoodsController =
@@ -37,12 +36,10 @@ class UserPrefsRepository {
 
   final _quickSearchIdsController = BehaviorSubject<List<String>>();
 
-  Stream<List<String>> get quickSearchIdsStream =>
-      _quickSearchIdsController.stream.asBroadcastStream();
+  Stream<List<String>> get quickSearchIdsStream => _quickSearchIdsController.stream.asBroadcastStream();
 
   List<String> get currentQuickSearchIds =>
-      _quickSearchIdsController.valueOrNull ??
-      _DefaultPreferences.defaultQuickSearchIds;
+      _quickSearchIdsController.valueOrNull ?? _DefaultPreferences.defaultQuickSearchIds;
 
   // final StreamController<String> _displayModeController =
   //     StreamController<String>();
@@ -68,15 +65,13 @@ class UserPrefsRepository {
 
   Future<void> _initQuickSearchIds() async {
     try {
-      final quickSearchPrefs =
-          await _prefPlugin.getStringList(_PreferenceKeys.quickSearchIds);
+      final quickSearchPrefs = await _prefPlugin.getStringList(_PreferenceKeys.quickSearchIds);
       if (quickSearchPrefs == null) {
         await _prefPlugin.setStringList(
           _PreferenceKeys.quickSearchIds,
           _DefaultPreferences.defaultQuickSearchIds,
         );
-        _quickSearchIdsController
-            .add(_DefaultPreferences.defaultQuickSearchIds);
+        _quickSearchIdsController.add(_DefaultPreferences.defaultQuickSearchIds);
       } else {
         _quickSearchIdsController.add(quickSearchPrefs);
       }
@@ -93,8 +88,7 @@ class UserPrefsRepository {
 
   Future<String> getDisplayMode() async {
     try {
-      final colorMode =
-          await _prefPlugin.getString(_PreferenceKeys.displayMode);
+      final colorMode = await _prefPlugin.getString(_PreferenceKeys.displayMode);
 
       return colorMode ?? _DefaultPreferences.defaultDisplayMode;
     } catch (e, st) {
@@ -142,8 +136,7 @@ class UserPrefsRepository {
 
   Future<List<String>> getSavedFoods() async {
     try {
-      final savedFoods =
-          await _prefPlugin.getStringList(_PreferenceKeys.savedFoods);
+      final savedFoods = await _prefPlugin.getStringList(_PreferenceKeys.savedFoods);
       return savedFoods ?? _DefaultPreferences.defaultSavedFoods;
     } catch (e, st) {
       log(

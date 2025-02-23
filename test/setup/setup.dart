@@ -22,8 +22,7 @@ FakeSharedPreferencesAsync getPreferences() {
 }
 
 base class FakeSharedPreferencesAsync extends SharedPreferencesAsyncPlatform {
-  final InMemorySharedPreferencesAsync backend =
-      InMemorySharedPreferencesAsync.empty();
+  final InMemorySharedPreferencesAsync backend = InMemorySharedPreferencesAsync.empty();
   final List<MethodCall> log = <MethodCall>[];
 
   @override

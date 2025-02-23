@@ -44,6 +44,5 @@ final class FoodSearchState extends Equatable {
   }
 
   @override
-  List<Object> get props =>
-      [status, foods, quickSearchIds, quickSearchNames, error, hasResults];
+  List<Object> get props => [status, foods, quickSearchIds, error];
 }

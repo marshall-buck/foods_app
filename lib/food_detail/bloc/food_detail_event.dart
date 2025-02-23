@@ -6,3 +6,11 @@ sealed class FoodDetailEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class AddFoodDetailEvent extends FoodDetailEvent {
+  const AddFoodDetailEvent({required this.id});
+  final int id;
+
+  @override
+  List<Object> get props => [id];
+}

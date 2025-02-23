@@ -6,8 +6,7 @@ import 'package:foods_app/data/data.dart';
 part 'user_preferences_event.dart';
 part 'user_preferences_state.dart';
 
-class UserPreferencesBloc
-    extends Bloc<UserPreferencesEvent, UserPreferencesState> {
+class UserPreferencesBloc extends Bloc<UserPreferencesEvent, UserPreferencesState> {
   UserPreferencesBloc({
     required UserPrefsRepository userPreferencesRepo,
   })  : _userPreferencesRepository = userPreferencesRepo,

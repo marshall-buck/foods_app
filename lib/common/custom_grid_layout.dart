@@ -28,12 +28,8 @@ class CustomFoodDetailSliverGridDelegate extends SliverGridDelegate {
     // constraints.printConstraints();
     return CustomSliverGridLayout(
       crossAxisCount: count,
-      mainAxisStride: center == false
-          ? dimension + minSpacing
-          : dimension + centeredSpacing,
-      crossAxisStride: center == false
-          ? dimension + minSpacing
-          : dimension + centeredSpacing,
+      mainAxisStride: center == false ? dimension + minSpacing : dimension + centeredSpacing,
+      crossAxisStride: center == false ? dimension + minSpacing : dimension + centeredSpacing,
       childMainAxisExtent: dimension,
       childCrossAxisExtent: dimension,
       reverseCrossAxis: false,
@@ -113,9 +109,7 @@ class CustomSliverGridLayout extends SliverGridLayout {
   /// this scroll offset.
   @override
   int getMinChildIndexForScrollOffset(double scrollOffset) {
-    return mainAxisStride > precisionErrorTolerance
-        ? crossAxisCount * (scrollOffset ~/ mainAxisStride)
-        : 0;
+    return mainAxisStride > precisionErrorTolerance ? crossAxisCount * (scrollOffset ~/ mainAxisStride) : 0;
   }
 
   /// The maximum child index that intersects with (or is before)
@@ -143,8 +137,7 @@ class CustomSliverGridLayout extends SliverGridLayout {
   @override
   SliverGridGeometry getGeometryForChildIndex(int index) {
     final leftover = ((mainAxisStride * crossAxisCount) - gridViewWidth) / 2;
-    final crossAxisStart = (index % crossAxisCount) * crossAxisStride +
-        (leftover.abs() + (minSpacing / 2));
+    final crossAxisStart = (index % crossAxisCount) * crossAxisStride + (leftover.abs() + (minSpacing / 2));
     // print(
     //   // ignore: lines_longer_than_80_chars
     //   'INDEX MOD crossAxisCount: ${index % crossAxisCount} \n ${leftover.abs()}',

@@ -2,19 +2,6 @@ import 'package:equatable/equatable.dart';
 
 import 'package:foods_app/data/data.dart';
 
-/// A class that represents the data for a food list item.
-///
-/// This class is responsible for storing food list item data, including its
-/// ID, description, and a list of quick results.  Quick results are the
-/// amounts of 4 nutrients based on user preferences.
-///
-/// The [FoodListItemModel] class can be initialized by providing the food's
-/// [id], [description], and [quickResultsAmountsList], or by using the
-/// [fromFoodDAO]  constructor.
-///
-/// The [fromFoodDAO] factory constructor creates a [FoodListItemModel]
-/// instance from a [FoodDAO] object.
-
 class FoodListItemModel extends Equatable {
   const FoodListItemModel({
     required this.id,
@@ -45,13 +32,9 @@ class FoodListItemModel extends Equatable {
     return FoodListItemModel(
       id: id ?? this.id,
       description: description ?? this.description,
-      quickResultsAmountsList:
-          quickResultsAmountsList ?? this.quickResultsAmountsList,
+      quickResultsAmountsList: quickResultsAmountsList ?? this.quickResultsAmountsList,
     );
   }
-
-  @override
-  bool? get stringify => true;
 
   @override
   List<Object?> get props => [id, description, quickResultsAmountsList];

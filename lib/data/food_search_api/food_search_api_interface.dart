@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:foods_app/data/foods_api/models/food_dao.dart';
+import 'package:foods_app/data/food_search_api/models/food_dao.dart';
 
 /// Interface for for a foods database.
 
-abstract interface class FoodsDBApi {
+abstract interface class FoodSearchApiInterface {
   Future<FoodDAO?> queryFood({required int id});
   Future<List<FoodDAO>?> queryFoods({required String searchTerm});
   Future<void> dispose();

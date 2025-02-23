@@ -1,16 +1,18 @@
 include: package:very_good_analysis/analysis_options.yaml
 
 
-#TODO: Remove avoid_print
 analyzer:
   errors:
 
-    # avoid_print: ignore
+
     avoid_catches_without_on_clauses: ignore
     document_ignores: ignore
     flutter_style_todos: ignore
-    prefer_int_literals: ignore
+    lines_longer_than_80_chars: ignore
+    # prefer_int_literals: ignore
     public_member_api_docs: ignore
 
 
 
+formatter:
+  page_width: 120

@@ -361,36 +361,21 @@ class AppTheme {
 
   TextTheme applyToTextTheme(TextTheme baseTextTheme, ColorScheme colorScheme) {
     return baseTextTheme.copyWith(
-      displayLarge:
-          baseTextTheme.displayLarge?.copyWith(color: colorScheme.onSurface),
-      displayMedium:
-          baseTextTheme.displayMedium?.copyWith(color: colorScheme.onSurface),
-      displaySmall:
-          baseTextTheme.displaySmall?.copyWith(color: colorScheme.onSurface),
-      headlineLarge:
-          baseTextTheme.headlineLarge?.copyWith(color: colorScheme.onSurface),
-      headlineMedium:
-          baseTextTheme.headlineMedium?.copyWith(color: colorScheme.onSurface),
-      headlineSmall:
-          baseTextTheme.headlineSmall?.copyWith(color: colorScheme.onSurface),
-      titleLarge:
-          baseTextTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
-      titleMedium:
-          baseTextTheme.titleMedium?.copyWith(color: colorScheme.onSurface),
-      titleSmall:
-          baseTextTheme.titleSmall?.copyWith(color: colorScheme.onSurface),
-      bodyLarge:
-          baseTextTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
-      bodyMedium:
-          baseTextTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
-      bodySmall:
-          baseTextTheme.bodySmall?.copyWith(color: colorScheme.onSurface),
-      labelLarge:
-          baseTextTheme.labelLarge?.copyWith(color: colorScheme.onSurface),
-      labelMedium:
-          baseTextTheme.labelMedium?.copyWith(color: colorScheme.onSurface),
-      labelSmall:
-          baseTextTheme.labelSmall?.copyWith(color: colorScheme.onSurface),
+      displayLarge: baseTextTheme.displayLarge?.copyWith(color: colorScheme.onSurface),
+      displayMedium: baseTextTheme.displayMedium?.copyWith(color: colorScheme.onSurface),
+      displaySmall: baseTextTheme.displaySmall?.copyWith(color: colorScheme.onSurface),
+      headlineLarge: baseTextTheme.headlineLarge?.copyWith(color: colorScheme.onSurface),
+      headlineMedium: baseTextTheme.headlineMedium?.copyWith(color: colorScheme.onSurface),
+      headlineSmall: baseTextTheme.headlineSmall?.copyWith(color: colorScheme.onSurface),
+      titleLarge: baseTextTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
+      titleMedium: baseTextTheme.titleMedium?.copyWith(color: colorScheme.onSurface),
+      titleSmall: baseTextTheme.titleSmall?.copyWith(color: colorScheme.onSurface),
+      bodyLarge: baseTextTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
+      bodyMedium: baseTextTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
+      bodySmall: baseTextTheme.bodySmall?.copyWith(color: colorScheme.onSurface),
+      labelLarge: baseTextTheme.labelLarge?.copyWith(color: colorScheme.onSurface),
+      labelMedium: baseTextTheme.labelMedium?.copyWith(color: colorScheme.onSurface),
+      labelSmall: baseTextTheme.labelSmall?.copyWith(color: colorScheme.onSurface),
     );
   }
 

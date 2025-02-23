@@ -4,10 +4,20 @@ sealed class FoodSearchEvent extends Equatable {
   const FoodSearchEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class FoodSearchInitialized extends FoodSearchEvent {}
+
+final class FoodSearchEnded extends FoodSearchEvent {}
+
+final class FoodSearchListItemSelected extends FoodSearchEvent {
+  const FoodSearchListItemSelected(this.id);
+  final int id;
+
+  @override
+  List<Object?> get props => [id];
+}
 
 final class FoodSearchTextCleared extends FoodSearchEvent {}
 
@@ -22,5 +32,3 @@ final class FoodSearchTextChanged extends FoodSearchEvent {
   @override
   String toString() => 'TextChanged { text: $searchTerm }';
 }
-
-final class FoodSearchEnded extends FoodSearchEvent {}

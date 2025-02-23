@@ -58,12 +58,12 @@
 //     notifyListeners();
 //   }
 
-//   void resetToOriginalAmounts() {
-//     final currentFood = di.get<AppHistoryState>().lastFood;
-//     final amounts = currentFood!.createAmountStrings();
-//     _amountStrings = amounts;
-//     notifyListeners();
-//   }
+//   // void resetToOriginalAmounts() {
+//   //   final currentFood = di.get<AppHistoryState>().lastFood;
+//   //   final amounts = currentFood!.createAmountStrings();
+//   //   _amountStrings = amounts;
+//   //   notifyListeners();
+//   // }
 
 //   void clearAmounts() => _amountStrings.clear();
 

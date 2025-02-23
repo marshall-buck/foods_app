@@ -36,8 +36,7 @@ class FoodListItem extends StatelessWidget {
                 children: [
                   FoodDescription(food: food),
                   BlocBuilder<FoodSearchBloc, FoodSearchState>(
-                    buildWhen: (previous, current) =>
-                        previous.quickSearchIds != current.quickSearchIds,
+                    buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
                     builder: (context, state) {
                       return QuickResults(
                         quickResultsList: food.quickResultsAmountsList,

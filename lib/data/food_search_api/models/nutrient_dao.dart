@@ -310,6 +310,5 @@ class NutrientDAO extends Equatable {
     2000: {'name': 'Total Sugars', 'unit': 'g'},
   };
 
-  static const usdaDBNutrientLookupTable =
-      NutrientDTO.originalNutrientTableEdit;
+  static const usdaDBNutrientLookupTable = NutrientDTO.originalNutrientTableEdit;
 }

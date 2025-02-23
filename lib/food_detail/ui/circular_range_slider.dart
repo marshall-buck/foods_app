@@ -39,8 +39,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
 
   bool _isPointInsideHandle(Offset circleCenter, double radius, Offset point) {
     final distance = math.sqrt(
-      math.pow(point.dx - circleCenter.dx, 2) +
-          math.pow(point.dy - circleCenter.dy, 2),
+      math.pow(point.dx - circleCenter.dx, 2) + math.pow(point.dy - circleCenter.dy, 2),
     );
     return distance <= radius;
   }
@@ -81,8 +80,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
         onPanUpdate: (DragUpdateDetails details) {
           if (!_shouldPan) return;
 
-          final center =
-              Offset(widget.trackDiameter / 2, widget.trackDiameter / 2);
+          final center = Offset(widget.trackDiameter / 2, widget.trackDiameter / 2);
 
           final dx = details.localPosition.dx - center.dx;
           final dy = details.localPosition.dy - center.dy;
@@ -275,12 +273,9 @@ RotationDirection panHandler(DragUpdateDetails d, double radius) {
   final xChange = d.delta.dx.abs();
 
   /// Directional change on wheel
-  final verticalRotation = (onRightSide && panDown) || (onLeftSide && panUp)
-      ? yChange
-      : yChange * -1;
+  final verticalRotation = (onRightSide && panDown) || (onLeftSide && panUp) ? yChange : yChange * -1;
 
-  final horizontalRotation =
-      (onTop && panRight) || (onBottom && panLeft) ? xChange : xChange * -1;
+  final horizontalRotation = (onTop && panRight) || (onBottom && panLeft) ? xChange : xChange * -1;
 
   // Total computed change
   final rotationalChange = verticalRotation + horizontalRotation;

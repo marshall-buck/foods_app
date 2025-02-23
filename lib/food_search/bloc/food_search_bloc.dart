@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:foods_app/data/data.dart';
+
 import 'package:foods_app/food_search/models/food_list_item_model.dart';
 
 part 'food_search_event.dart';
@@ -10,13 +11,16 @@ part 'food_search_state.dart';
 
 class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   FoodSearchBloc({
-    required FoodsDBRepository foodsDBRepo,
+    required LocalFoodsDBRepo localFoodsDBRepo,
     required UserPrefsRepository userPreferences,
-  })  : _foodsDBRepo = foodsDBRepo,
+    required ActiveFoods activeFoods,
+  })  : _localFoodsDBRepo = localFoodsDBRepo,
         _userPreferencesRepository = userPreferences,
+        _activeFoods = activeFoods,
         super(const FoodSearchState()) {
     on<FoodSearchTextChanged>(_onTextChanged);
     on<FoodSearchTextCleared>(_onClearText);
+    on<FoodSearchListItemSelected>(_onListItemSelected);
     // on<FoodSearchInitialized>((event, emit) async {
     //   await emit.onEach(
     //     _userPreferencesRepository.quickSearchIdsStream,
@@ -27,8 +31,9 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     // });
   }
 
-  final FoodsDBRepository _foodsDBRepo;
+  final LocalFoodsDBRepo _localFoodsDBRepo;
   final UserPrefsRepository _userPreferencesRepository;
+  final ActiveFoods _activeFoods;
 
   // Future<void> _onQuickSearchPrefsChange(
   //   Emitter<FoodSearchState> emit,
@@ -37,6 +42,11 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   //   emit(state.copyWith(quickSearchIds: quickSearch));
   //   final oldFoods = state.foods;
   // }
+
+  Future<void> _onListItemSelected(FoodSearchListItemSelected event, Emitter<FoodSearchState> emit) async {
+    final food = await _localFoodsDBRepo.queryFood(id: event.id);
+    _activeFoods.add(food!);
+  }
 
   void _onClearText(
     FoodSearchTextCleared event,
@@ -95,7 +105,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   ) async {
     final foodListItems = <FoodListItemModel>[];
     try {
-      final results = await _foodsDBRepo.queryFoods(searchTerm: string);
+      final results = await _localFoodsDBRepo.queryFoods(searchTerm: string);
       final quickSearchIds = _userPreferencesRepository.currentQuickSearchIds;
 
       if (results != null) {
