@@ -118,7 +118,7 @@ class _SearchResultsList extends StatelessWidget {
               context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(food.id));
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<FoodDetailPage>(
                   builder: (context) => const FoodDetailPage(),
                 ),
               );

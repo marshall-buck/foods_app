@@ -5,26 +5,27 @@ import 'package:foods_app/domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ActiveFoods {
-  final Foods _activeFoods = Foods.empty();
+  final _activeFoods = Queue<Food?>();
 
-  final _activeFoodsStreamController = BehaviorSubject<Foods>();
+  final _activeFoodsStreamController = BehaviorSubject<Queue<Food?>>();
 
-  Stream<Foods> get activeFoodsStream => _activeFoodsStreamController.stream.asBroadcastStream();
+  Stream<Queue<Food?>> get activeFoodsStream => _activeFoodsStreamController.stream.asBroadcastStream();
 
-  Foods get activeFoods => _activeFoodsStreamController.valueOrNull ?? Foods.empty();
+  Queue<Food?> get activeFoods => _activeFoodsStreamController.valueOrNull ?? Queue<Food?>();
 
   void add(FoodDAO food) {
-    _activeFoods.add(food);
+    final convertedFood = Food.fromFoodDAO(food);
+    _activeFoods.add(convertedFood);
     _activeFoodsStreamController.add(_activeFoods);
   }
 
   void removeFood(Food food) {
-    _activeFoods.removeFood(food);
+    _activeFoods.removeWhere((e) => food.id == e?.id);
 
     _activeFoodsStreamController.add(_activeFoods);
   }
 
-  Food? get lastEntered => _activeFoods.lastEntered;
+  Food? get lastEntered => _activeFoods.isNotEmpty ? _activeFoods.last : null;
 
-  Food? get firstEntered => _activeFoods.firstEntered;
+  Food? get firstEntered => _activeFoods.isNotEmpty ? _activeFoods.first : null;
 }

@@ -13,6 +13,12 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       : _activeFoods = activeFoods,
         _localFoodsDBRepo = localFoodsDBRepo,
         super(const FoodDetailState()) {
+    on<FetchFoodDetailEvent>((event, emit) async {
+      await emit.forEach(
+        _activeFoods.activeFoodsStream,
+        onData: (Queue<Food?> foods) => FoodDetailState(foods: foods, status: FoodDetailStatus.success),
+      );
+    });
     on<AddFoodDetailEvent>(_onAddFoodDetail);
   }
 
@@ -24,8 +30,9 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       final food = await _localFoodsDBRepo.queryFood(id: event.id);
       print(food);
       _activeFoods.add(food!);
-      emit(FoodDetailState(foods: _activeFoods.activeFoods));
+      emit(state.copyWith(foods: _activeFoods.activeFoods, status: FoodDetailStatus.success));
     } catch (e) {
+      emit(state.copyWith(status: FoodDetailStatus.error));
       print(e);
     }
   }

@@ -7,6 +7,8 @@ sealed class FoodDetailEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class FetchFoodDetailEvent extends FoodDetailEvent {}
+
 final class AddFoodDetailEvent extends FoodDetailEvent {
   const AddFoodDetailEvent({required this.id});
   final int id;

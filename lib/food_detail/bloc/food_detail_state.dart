@@ -5,9 +5,9 @@ enum FoodDetailStatus { success, error }
 final class FoodDetailState extends Equatable {
   const FoodDetailState({this.status, this.foods});
   final FoodDetailStatus? status;
-  final Foods? foods;
+  final Queue<Food?>? foods;
 
-  FoodDetailState copyWith({FoodDetailStatus? status, Foods? foods}) {
+  FoodDetailState copyWith({FoodDetailStatus? status, Queue<Food?>? foods}) {
     return FoodDetailState(
       status: status ?? this.status,
       foods: foods ?? this.foods,
