@@ -27,45 +27,54 @@ class FoodDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-
-    ///(dimension of a side, spacing)
-    final tileSize = MagicTileDimension.tileSize(windowSize: width);
-
     return Material(
       child: SafeArea(
         child: BlocBuilder<FoodDetailBloc, FoodDetailState>(
           builder: (context, state) {
+            final width = MediaQuery.sizeOf(context).width;
+
+            ///(dimension of a side, spacing)
+            final tileSize = MagicTileDimension.tileSize(windowSize: width);
+            print(tileSize.dimension);
             switch (state.status) {
               case FoodDetailStatus.success:
-                final food = state.foods?.last;
+                final foods = state.foods;
                 return Stack(
                   children: [
                     CustomScrollView(
                       slivers: [
                         SliverPersistentHeader(
-                          floating: true,
-                          pinned: true,
                           delegate: _MySliverHeaderDelegate(
+                            maxHeight: tileSize.dimension + 48,
+                            minHeight: 100,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: tileSize.spacing),
-                              child: FoodDescriptionCard(
-                                tileSize: tileSize,
-                                food: food!,
+                              padding: const EdgeInsets.all(MagicSpacing.sp_4),
+                              child: CarouselView(
+                                itemExtent: width - MagicSpacing.sp_8, // Adjust itemExtent
+                                padding: EdgeInsets.zero, // Remove padding from CarouselView
+                                children: foods!
+                                    .map(
+                                      (food) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: MagicSpacing.sp_2), // Padding for each card
+                                        child: FoodDescriptionCard(
+                                          food: food!,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
                             ),
-                            maxHeight: tileSize.dimension,
-                            minHeight: 100,
                           ),
                         ),
-                        NutrientGrid(tileSize: tileSize, food: food),
+                        ...foods.map((food) => NutrientGrid(tileSize: tileSize, food: food!)),
                       ],
                     ),
                     Positioned(
                       bottom: 16,
                       right: 16,
                       child: FloatingActionButton(
-                        child: const Icon(Icons.compare),
+                        child: const Icon(Icons.settings),
                         onPressed: () => {},
                       ),
                     ),
@@ -104,10 +113,7 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: MagicNumbers.maxFoodDetailWidth),
-        child: child,
-      ),
+      child: child,
     );
   }
 
