@@ -14,14 +14,12 @@ class AmountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final amountStrings =
-    //     watchPropertyValue((FoodAmountManager m) => m.amountStrings);
-    // assert(amountStrings[id]?.$2 != null, 'The string is empty');
-
     return Text(
       '${food.amountStrings[id]!.$2} ${food.amountStrings[id]!.$3}',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
+      maxLines: 1, //Limit the number of lines
+      overflow: TextOverflow.fade,
     );
   }
 }

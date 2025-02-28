@@ -29,7 +29,7 @@ void main() async {
     log(error.toString(), stackTrace: stack);
     return true;
   };
-  Bloc.observer = const AppBlocObserver();
+  // Bloc.observer = const AppBlocObserver();
   final localDatabase = UsdaDB();
   await localDatabase.init();
   final cache = FoodsSearchCache();

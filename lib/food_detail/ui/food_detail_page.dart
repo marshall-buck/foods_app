@@ -35,7 +35,7 @@ class FoodDetailView extends StatelessWidget {
 
             ///(dimension of a side, spacing)
             final tileSize = MagicTileDimension.tileSize(windowSize: width);
-            print(tileSize.dimension);
+
             switch (state.status) {
               case FoodDetailStatus.success:
                 final foods = state.foods;
@@ -45,25 +45,23 @@ class FoodDetailView extends StatelessWidget {
                       slivers: [
                         SliverPersistentHeader(
                           delegate: _MySliverHeaderDelegate(
-                            maxHeight: tileSize.dimension + 48,
+                            maxHeight: tileSize.dimension,
                             minHeight: 100,
-                            child: Padding(
-                              padding: const EdgeInsets.all(MagicSpacing.sp_4),
-                              child: CarouselView(
-                                itemExtent: width - MagicSpacing.sp_8, // Adjust itemExtent
-                                padding: EdgeInsets.zero, // Remove padding from CarouselView
-                                children: foods!
-                                    .map(
-                                      (food) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: MagicSpacing.sp_2), // Padding for each card
-                                        child: FoodDescriptionCard(
-                                          food: food!,
-                                        ),
+                            child: CarouselView(
+                              shrinkExtent: 100,
+                              itemSnapping: true,
+                              itemExtent: width - MagicSpacing.sp_8, // Adjust itemExtent
+                              // padding: EdgeInsets.all(16), // Remove padding from CarouselView
+                              children: foods!
+                                  .map(
+                                    (food) => Padding(
+                                      padding: EdgeInsets.zero, // Padding for each card
+                                      child: FoodDescriptionCard(
+                                        food: food!,
                                       ),
-                                    )
-                                    .toList(),
-                              ),
+                                    ),
+                                  )
+                                  .toList(),
                             ),
                           ),
                         ),

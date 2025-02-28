@@ -178,4 +178,30 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
 
     return matches.reversed.toList();
   }
+
+  @override
+  void onEvent(FoodSearchEvent event) {
+    super.onEvent(event);
+    log('FoodSearchBloc onEvent $event');
+  }
+
+  // @override
+  // void onChange(Change<FoodSearchState> change) {
+  //   super.onChange(change);
+  //   log('onChange $change');
+  // }
+
+  // @override
+  // void onTransition(
+  //   Transition<FoodSearchEvent, FoodSearchState> transition,
+  // ) {
+  //   super.onTransition(transition);
+  //   log('onTransition $transition');
+  // }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+    log('onError $error');
+  }
 }

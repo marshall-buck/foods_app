@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -35,5 +36,31 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       emit(state.copyWith(status: FoodDetailStatus.error));
       print(e);
     }
+  }
+
+  @override
+  void onEvent(FoodDetailEvent event) {
+    super.onEvent(event);
+    log('FoodSearchBloc onEvent $event');
+  }
+
+  @override
+  void onChange(Change<FoodDetailState> change) {
+    super.onChange(change);
+    log('FoodDetailBloc onChange $change');
+  }
+
+  @override
+  void onTransition(
+    Transition<FoodDetailEvent, FoodDetailState> transition,
+  ) {
+    super.onTransition(transition);
+    log('FoodDetailBloc onTransition $transition');
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+    log('FoodDetailBloc onError $error');
   }
 }
