@@ -15,7 +15,7 @@ class AmountWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${food.amountStrings[id]!.$2} ${food.amountStrings[id]!.$3}',
+      '${food.amountRecordsMap[id]!.$2} ${food.amountRecordsMap[id]!.$3}',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
       maxLines: 1, //Limit the number of lines

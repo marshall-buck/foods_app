@@ -1,41 +1,23 @@
 // import 'dart:collection';
 
 // import 'package:equatable/equatable.dart';
-// import 'package:foods_app/data/data.dart';
-// import 'package:foods_app/domain/models/models.dart';
+
+// import 'package:foods_app/domain/domain.dart';
 
 // class Foods extends Equatable {
-//   const Foods(this.foods);
+//   const Foods({required List<Food> foods}) : _foods = foods;
 
-//   factory Foods.empty() => Foods(Queue<Food>());
-//   final Queue<Food?> foods;
+//   final List<Food> _foods;
 
-//   void add(FoodDAO food) {
-//     final convertedFood = Food.fromFoodDAO(food);
-
-//     foods.addLast(convertedFood);
-//   }
-
-//   void removeFood(Food food) {
-//     if (foods.isEmpty) return;
-//     foods.removeWhere((e) => e!.id == food.id);
-//   }
-
-//   void clear() {
-//     foods.clear();
-//   }
+//   Set<int> createNutrientAmountRecordsSet() => _foods.expand((food) => food.nutrientMap.keys).toSet();
 
 //   void resetToOriginalAmounts() {
-//     for (final food in foods) {
-//       food!.copyWith(amountStrings: food.createAmountStrings());
+//     for (final food in _foods) {
+//       food.copyWith(amountStrings: food.createAmountStrings());
 //     }
 //   }
 
-//   Food? get lastEntered => foods.isNotEmpty ? foods.last : null;
-
-//   Food? get firstEntered => foods.isNotEmpty ? foods.first : null;
-
 //   @override
 //   // TODO: implement props
-//   List<Object?> get props => [foods];
+//   List<Object?> get props => [];
 // }

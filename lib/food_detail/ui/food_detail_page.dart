@@ -4,6 +4,7 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
 import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 import 'package:foods_app/food_detail/ui/ui.dart';
+import 'package:foods_app/widgets/responsive_panes.dart';
 
 class FoodDetailPage extends StatelessWidget {
   const FoodDetailPage({super.key});
@@ -35,49 +36,23 @@ class FoodDetailView extends StatelessWidget {
 
             ///(dimension of a side, spacing)
             final tileSize = MagicTileDimension.tileSize(windowSize: width);
-
+            // final theme = Theme.of(context);
             switch (state.status) {
               case FoodDetailStatus.success:
-                final foods = state.foods;
-                return Stack(
-                  children: [
-                    CustomScrollView(
-                      slivers: [
-                        SliverPersistentHeader(
-                          delegate: _MySliverHeaderDelegate(
-                            maxHeight: tileSize.dimension,
-                            minHeight: 100,
-                            child: CarouselView(
-                              shrinkExtent: 100,
-                              itemSnapping: true,
-                              itemExtent: width - MagicSpacing.sp_8, // Adjust itemExtent
-                              // padding: EdgeInsets.all(16), // Remove padding from CarouselView
-                              children: foods!
-                                  .map(
-                                    (food) => Padding(
-                                      padding: EdgeInsets.zero, // Padding for each card
-                                      child: FoodDescriptionCard(
-                                        food: food!,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        ),
-                        ...foods.map((food) => NutrientGrid(tileSize: tileSize, food: food!)),
-                      ],
-                    ),
-                    Positioned(
-                      bottom: 16,
-                      right: 16,
-                      child: FloatingActionButton(
-                        child: const Icon(Icons.settings),
-                        onPressed: () => {},
-                      ),
-                    ),
-                  ],
+                final foods = state.foodsList;
+                return ResponsiveLayout(
+                  leftPane: ListView.builder(
+                    itemCount: foods!.length,
+                    itemBuilder: (context, index) {
+                      final food = foods[index];
+                      return SizedBox(height: 144, child: FoodDescriptionCard(food: food!));
+                    },
+                  ),
+                  mainPane: CustomScrollView(
+                    slivers: [...foods.map((food) => NutrientGrid(tileSize: tileSize, food: food!))],
+                  ),
                 );
+
               case FoodDetailStatus.error:
                 return const Center(
                   child: Text('An error occurred. Please try again.'),
@@ -126,3 +101,33 @@ class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     return true;
   }
 }
+
+
+// Positioned(
+//                       bottom: 16,
+//                       right: 16,
+//                       child: FloatingActionButton(
+//                         child: const Icon(Icons.settings),
+//                         onPressed: () => {},
+//                       ),
+//                     ),
+
+
+// CarouselView(
+//                           shrinkExtent: 100,
+//                           itemSnapping: true,
+//                           itemExtent: width - MagicSpacing.sp_8, // Adjust itemExtent
+//                           // padding: EdgeInsets.all(16), // Remove padding from CarouselView
+//                           children: foods!
+//                               .map(
+//                                 (food) => Padding(
+//                                   padding: EdgeInsets.zero, // Padding for each card
+//                                   child: FoodDescriptionCard(
+//                                     food: food!,
+//                                   ),
+//                                 ),
+//                               )
+//                               .toList(),
+//                         ),
+
+// ...foods.map((food) => NutrientGrid(tileSize: tileSize, food: food!)),

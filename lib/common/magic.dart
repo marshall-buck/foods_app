@@ -57,6 +57,26 @@ class MagicSpacing {
   static const double sp_24 = 96;
 }
 
+class MagicBorderRadius {
+  static const double br_0 = 0;
+  static const double br_1 = 4;
+  static const double br_2 = 8;
+  static const double br_3 = 12;
+  static const double br_4 = 16;
+  static const double br_5 = 20;
+  static const double br_6 = 24;
+  static const double br_7 = 28;
+  static const double br_8 = 32;
+  static const double br_9 = 36;
+  static const double br_10 = 40;
+  static const double br_11 = 44;
+  static const double br_12 = 48;
+  static const double br_14 = 56;
+  static const double br_16 = 64;
+  static const double br_20 = 80;
+  static const double br_24 = 96;
+}
+
 class MagicDurations {
   static const base0 = Duration(milliseconds: 200);
   static const base1 = Duration(milliseconds: 330);

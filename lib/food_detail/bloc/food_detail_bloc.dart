@@ -17,7 +17,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
     on<FetchFoodDetailEvent>((event, emit) async {
       await emit.forEach(
         _activeFoods.activeFoodsStream,
-        onData: (Queue<Food?> foods) => FoodDetailState(foods: foods, status: FoodDetailStatus.success),
+        onData: _onActiveFoodsData,
       );
     });
     on<AddFoodDetailEvent>(_onAddFoodDetail);
@@ -26,17 +26,27 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
   final ActiveFoods _activeFoods;
   final LocalFoodsDBRepo _localFoodsDBRepo;
 
+  FoodDetailState _onActiveFoodsData(Queue<Food?> foods) {
+    final amountIdsSet = foods.expand((food) => food!.nutrientMap.keys).toSet();
+    log('amountIdsSet: $amountIdsSet');
+    return state.copyWith(foods: foods, status: FoodDetailStatus.success, amountIdsSet: amountIdsSet);
+  }
+
   Future<void> _onAddFoodDetail(AddFoodDetailEvent event, Emitter<FoodDetailState> emit) async {
     try {
       final food = await _localFoodsDBRepo.queryFood(id: event.id);
       print(food);
       _activeFoods.add(food!);
-      emit(state.copyWith(foods: _activeFoods.activeFoods, status: FoodDetailStatus.success));
+
+      // emit(state.copyWith(
+      //     foods: _activeFoods.activeFoods, status: FoodDetailStatus.success, amountIdsSet: amountIdsSet));
     } catch (e) {
       emit(state.copyWith(status: FoodDetailStatus.error));
       print(e);
     }
   }
+
+  // Set<int?> createNutrientAmountRecordsSet() => foods!.expand((food) => food!.nutrientMap.keys).toSet();
 
   @override
   void onEvent(FoodDetailEvent event) {
