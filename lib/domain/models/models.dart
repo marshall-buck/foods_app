@@ -1,3 +1,3 @@
+export 'adjustable_item.dart';
 export 'food.dart';
-export 'foods.dart';
-export 'nutrient.dart';
+// export 'nutrient.dart';

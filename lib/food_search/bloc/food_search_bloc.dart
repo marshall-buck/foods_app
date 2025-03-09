@@ -48,7 +48,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   Future<void> _onListItemSelected(FoodSearchListItemSelected event, Emitter<FoodSearchState> emit) async {
     final food = await _localFoodsDBRepo.queryFood(id: event.id);
     assert(food != null, 'Food not found in _onListItemSelected, in FoodSearchBloc');
-    _activeFoods.add(food!);
+    _activeFoods.addFood(food!);
   }
 
   void _onClearText(

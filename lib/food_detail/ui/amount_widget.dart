@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/domain/domain.dart';
 
 class AmountWidget extends StatelessWidget {
-  const AmountWidget({
-    required this.textColor,
-    required this.id,
-    required this.food,
-    super.key,
-  });
+  const AmountWidget({required this.textColor, required this.amount, required this.unit, super.key});
   final Color textColor;
-  final int id;
-  final Food food;
+  final double amount;
+  final String unit;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${food.amountRecordsMap[id]!.$2} ${food.amountRecordsMap[id]!.$3}',
+      '$amount: $unit',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
       maxLines: 1, //Limit the number of lines
@@ -23,3 +17,5 @@ class AmountWidget extends StatelessWidget {
     );
   }
 }
+
+//  '${food.amountRecordsMap[id]!.$2} ${food.amountRecordsMap[id]!.$3}',

@@ -21,32 +21,89 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       );
     });
     on<AddFoodDetailEvent>(_onAddFoodDetail);
+    // on<ChangeUnitFoodDetailEvent>(_changeUnits);
   }
 
   final ActiveFoods _activeFoods;
   final LocalFoodsDBRepo _localFoodsDBRepo;
+  static const circularRangeFinderPercentChange = .05;
 
   FoodDetailState _onActiveFoodsData(Queue<Food?> foods) {
-    final amountIdsSet = foods.expand((food) => food!.nutrientMap.keys).toSet();
-    log('amountIdsSet: $amountIdsSet');
-    return state.copyWith(foods: foods, status: FoodDetailStatus.success, amountIdsSet: amountIdsSet);
+    final allNutrientIdsInQ = foods.expand((food) => food!.amountMap.keys.where((key) => key <= 9999)).toSet();
+    // log('allNutrientIdsInQ: $allNutrientIdsInQ');
+    return state.copyWith(
+      foods: foods,
+      status: FoodDetailStatus.success,
+      allNutrientIdsInQ: allNutrientIdsInQ,
+      modifier: _activeFoods.activeModifier,
+    );
   }
 
   Future<void> _onAddFoodDetail(AddFoodDetailEvent event, Emitter<FoodDetailState> emit) async {
     try {
       final food = await _localFoodsDBRepo.queryFood(id: event.id);
       print(food);
-      _activeFoods.add(food!);
-
-      // emit(state.copyWith(
-      //     foods: _activeFoods.activeFoods, status: FoodDetailStatus.success, amountIdsSet: amountIdsSet));
+      _activeFoods.addFood(food!);
     } catch (e) {
       emit(state.copyWith(status: FoodDetailStatus.error));
       print(e);
     }
   }
 
-  // Set<int?> createNutrientAmountRecordsSet() => foods!.expand((food) => food!.nutrientMap.keys).toSet();
+  // double _adjustAmountModifier(double amount) {
+  //   if (amount >= 50) {
+  //     return circularRangeFinderPercentChange * 2;
+  //   } else if (amount >= 10) {
+  //     return circularRangeFinderPercentChange * 2.1;
+  //   } else if (amount >= 1) {
+  //     return circularRangeFinderPercentChange * 2.3;
+  //   } else {
+  //     return circularRangeFinderPercentChange * 2.5;
+  //   }
+  // }
+
+  // void _changeUnits(ChangeUnitFoodDetailEvent event, Emitter<FoodDetailState> emit) {
+  //   final newMap = <int, AmountRecord>{};
+  //   final currentItem = state[id]?.$1;
+  //   for (final en in state.amountRecords!) {
+  //     final key = en.key;
+  //     final oldValue = en.value.$1;
+  //     final unit = en.value.$3;
+
+  //     final amountModifier = _adjustAmountModifier(currentItem!);
+
+  //     // (amountModifier / 100) calculates a percentage based on the amountModifier.
+  //     // Adding/Subtracting 1 to this percentage and multiplying it by the oldValue
+  //     // effectively increases/decreases the oldValue by the specified percentage.
+  //     final newValue = add ? oldValue * (1 + (amountModifier / 100)) : oldValue * (1 - (amountModifier / 100));
+
+  //     newMap[key] = (newValue, newValue.convert, unit);
+  //   }
+  //   _amountStrings = newMap;
+  // }
+  // void changeUnits({required bool add, required int id}) {
+  //   assert(
+  //     _amountStrings.isNotEmpty,
+  //     'FoodAmountManager: _amountStrings is empty',
+  //   );
+  //   final newMap = <int, AmountRecord>{};
+  //   final currentItem = _amountStrings[id]?.$1;
+  //   for (final en in _amountStrings.entries) {
+  //     final key = en.key;
+  //     final oldValue = en.value.$1;
+  //     final unit = en.value.$3;
+
+  //     final amountModifier = _adjustAmountModifier(currentItem!);
+
+  //     // (amountModifier / 100) calculates a percentage based on the amountModifier.
+  //     // Adding/Subtracting 1 to this percentage and multiplying it by the oldValue
+  //     // effectively increases/decreases the oldValue by the specified percentage.
+  //     final newValue = add ? oldValue * (1 + (amountModifier / 100)) : oldValue * (1 - (amountModifier / 100));
+
+  //     newMap[key] = (newValue, newValue.convert, unit);
+  //   }
+  //   _amountStrings = newMap;
+  // }
 
   @override
   void onEvent(FoodDetailEvent event) {

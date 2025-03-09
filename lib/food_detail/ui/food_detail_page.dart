@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
+import 'package:foods_app/domain/models/food.dart';
 import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 import 'package:foods_app/food_detail/ui/ui.dart';
 import 'package:foods_app/widgets/responsive_panes.dart';
@@ -32,25 +33,14 @@ class FoodDetailView extends StatelessWidget {
       child: SafeArea(
         child: BlocBuilder<FoodDetailBloc, FoodDetailState>(
           builder: (context, state) {
-            final width = MediaQuery.sizeOf(context).width;
-
-            ///(dimension of a side, spacing)
-            final tileSize = MagicTileDimension.tileSize(windowSize: width);
-            // final theme = Theme.of(context);
+            final foods = state.foodsList!;
             switch (state.status) {
               case FoodDetailStatus.success:
-                final foods = state.foodsList;
                 return ResponsiveLayout(
-                  leftPane: ListView.builder(
-                    itemCount: foods!.length,
-                    itemBuilder: (context, index) {
-                      final food = foods[index];
-                      return SizedBox(height: 144, child: FoodDescriptionCard(food: food!));
-                    },
+                  leftPane: FoodDescriptionCardList(
+                    foods: foods,
                   ),
-                  mainPane: CustomScrollView(
-                    slivers: [...foods.map((food) => NutrientGrid(tileSize: tileSize, food: food!))],
-                  ),
+                  mainPane: const NutrientCompareCards(),
                 );
 
               case FoodDetailStatus.error:
@@ -69,38 +59,56 @@ class FoodDetailView extends StatelessWidget {
   }
 }
 
-class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
-  const _MySliverHeaderDelegate({
-    required this.child,
-    required this.maxHeight,
-    required this.minHeight,
-  });
-
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
+class FoodDescriptionCardList extends StatelessWidget {
+  const FoodDescriptionCardList({required this.foods, super.key});
+  final List<Food?> foods;
   @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Center(
-      child: child,
+  Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final tileSize = MagicTileDimension.tileSize(windowSize: width);
+
+    return ListView.builder(
+      itemCount: foods.length,
+      itemBuilder: (context, index) {
+        final food = foods[index];
+        return SizedBox(height: tileSize.dimension, child: FoodDescriptionCard(food: food!));
+      },
     );
   }
-
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
 }
+
+// class _MySliverHeaderDelegate extends SliverPersistentHeaderDelegate {
+//   const _MySliverHeaderDelegate({
+//     required this.child,
+//     required this.maxHeight,
+//     required this.minHeight,
+//   });
+
+//   final double minHeight;
+//   final double maxHeight;
+//   final Widget child;
+//   @override
+//   Widget build(
+//     BuildContext context,
+//     double shrinkOffset,
+//     bool overlapsContent,
+//   ) {
+//     return Center(
+//       child: child,
+//     );
+//   }
+
+//   @override
+//   double get maxExtent => maxHeight;
+
+//   @override
+//   double get minExtent => minHeight;
+
+//   @override
+//   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+//     return true;
+//   }
+// }
 
 
 // Positioned(

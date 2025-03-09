@@ -5,18 +5,16 @@
 
 // import 'package:foods_app/domain/domain.dart';
 
-// import 'package:foods_app/ui/core/core.dart';
-
-// class FoodAmountManager extends ChangeNotifier {
+// class FoodAmountManager {
 //   Map<int, AmountRecord> _amountStrings = {};
 
 //   Map<int, AmountRecord> get amountStrings => _amountStrings;
 
 //   static const circularRangeFinderPercentChange = .05;
 
-//   void initAmountStrings(Food food) {
-//     _amountStrings = food.createAmountStrings();
-//   }
+//   // void initAmountStrings(Food food) {
+//   //   _amountStrings = food.createAmountStrings();
+//   // }
 
 //   double _adjustAmountModifier(double amount) {
 //     if (amount >= 50) {
@@ -30,7 +28,7 @@
 //     }
 //   }
 
-//   void changeUnits(RotationDirection direction, int id) {
+//   void changeUnits({required bool add, required int id}) {
 //     assert(
 //       _amountStrings.isNotEmpty,
 //       'FoodAmountManager: _amountStrings is empty',
@@ -48,14 +46,11 @@
 //       // Adding/Subtracting 1 to this percentage and multiplying it by the oldValue
 //       // effectively increases/decreases the oldValue by the specified percentage.
 
-//       final newValue = direction == RotationDirection.clockwise
-//           ? oldValue * (1 + (amountModifier / 100))
-//           : oldValue * (1 - (amountModifier / 100));
+//       final newValue = add ? oldValue * (1 + (amountModifier / 100)) : oldValue * (1 - (amountModifier / 100));
 
 //       newMap[key] = (newValue, Food.convertAmountToString(newValue), unit);
 //     }
 //     _amountStrings = newMap;
-//     notifyListeners();
 //   }
 
 //   // void resetToOriginalAmounts() {
@@ -66,11 +61,4 @@
 //   // }
 
 //   void clearAmounts() => _amountStrings.clear();
-
-//   @override
-//   void dispose() {
-//     // _amountStrings.clear();
-//     notifyListeners();
-//     super.dispose();
-//   }
 // }

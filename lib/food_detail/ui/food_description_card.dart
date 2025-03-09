@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
+import 'package:foods_app/edit_amount/edit_amount.dart';
 import 'package:foods_app/food_detail/ui/ui.dart';
 
 class FoodDescriptionCard extends StatelessWidget {
@@ -37,8 +38,8 @@ class FoodDescriptionCard extends StatelessWidget {
                       color: Theme.of(context).colorScheme.surfaceBright,
                       child: Center(
                         child: AmountWidget(
-                          food: food,
-                          id: food.id,
+                          amount: 0.9,
+                          unit: 'g',
                           textColor: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
@@ -61,7 +62,7 @@ class FoodDescriptionCard extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        food.description,
+                        food.name,
                         style: Theme.of(context).textTheme.bodySmall,
                         maxLines: 4, //Limit the number of lines
                         overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis

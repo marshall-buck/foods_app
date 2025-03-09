@@ -10,10 +10,6 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// This class is responsible for storing nutrient data, including its
 /// ID, name, amount, and unit.
 ///
-/// The [NutrientDAO] class can be initialized by providing the nutrient's
-/// [id], [name], [amount], and [unit], or by using the
-/// [NutrientDAO.fromUsdaDB] or [NutrientDAO.fromMapEntry] factory constructors.
-///
 /// The [NutrientDAO.fromUsdaDB] factory constructor creates a [NutrientDAO]
 /// instance from a Usda DB  [NutrientDTO] object.
 ///
@@ -38,17 +34,17 @@ class NutrientDAO extends Equatable {
     );
   }
 
-  /// Creates a [NutrientDAO] instance from a MapEntry `int, double` object.
-  factory NutrientDAO.fromMapEntry(MapEntry<int, double> entry) {
-    final id = entry.key;
-    final amount = entry.value;
-    return NutrientDAO(
-      id: id,
-      name: originalNutrientTableEdit[id]?['name'] ?? '',
-      amount: amount,
-      unit: originalNutrientTableEdit[id]?['unit'] ?? '',
-    );
-  }
+  // /// Creates a [NutrientDAO] instance from a MapEntry `int, double` object.
+  // factory NutrientDAO.fromMapEntry(MapEntry<int, double> entry) {
+  //   final id = entry.key;
+  //   final amount = entry.value;
+  //   return NutrientDAO(
+  //     id: id,
+  //     name: originalNutrientTableEdit[id]?['name'] ?? '',
+  //     amount: amount,
+  //     unit: originalNutrientTableEdit[id]?['unit'] ?? '',
+  //   );
+  // }
 
   final int id;
   final String name;

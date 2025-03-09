@@ -43,9 +43,9 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                 trackDiameter: MagicNumbers.circularRangeSliderTrackDiameter,
                 trackColor: Theme.of(context).colorScheme.onSurface,
                 child: AmountWidget(
-                  food: food,
+                  amount: 0.9,
+                  unit: 'g',
                   textColor: Theme.of(context).colorScheme.onSurface,
-                  id: id,
                 ),
               ),
             ),

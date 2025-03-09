@@ -6,6 +6,7 @@ analyzer:
 
 
     avoid_catches_without_on_clauses: ignore
+    avoid_print: ignore
     document_ignores: ignore
     flutter_style_todos: ignore
     lines_longer_than_80_chars: ignore
