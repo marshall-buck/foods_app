@@ -1,2 +1,2 @@
-export 'ui/food_detail_page.dart';
-export 'ui/nutrient_compare_cards.dart';
+export 'bloc/food_detail_bloc.dart';
+export 'ui/ui.dart';

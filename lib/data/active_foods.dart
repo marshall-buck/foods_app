@@ -6,10 +6,6 @@ import 'package:foods_app/data/data.dart';
 import 'package:foods_app/domain/domain.dart';
 import 'package:rxdart/rxdart.dart';
 
-/// Used for Food or nutrient amounts
-///                     amount,  amount, unit
-typedef AmountRecord = (double, String, String);
-
 class ActiveFoods {
   final _activeFoods = Queue<Food?>();
 

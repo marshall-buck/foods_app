@@ -1,13 +1,17 @@
+import 'package:equatable/equatable.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
-import 'package:foods_app/domain/models/models.dart';
 
-class Food extends AdjustableItem {
+/// Used for Food or nutrient amounts
+///                     amount,  amount, unit
+typedef AmountRecord = (double, String, String);
+
+class Food extends Equatable {
   const Food({
-    required super.id,
-    required super.name,
-    required super.defaultAmount,
-    required super.unit,
+    required this.id,
+    required this.name,
+    required this.defaultAmount,
+    required this.unit,
     required this.amountMap,
   });
 
@@ -20,6 +24,11 @@ class Food extends AdjustableItem {
       amountMap: amountMap,
     );
   }
+
+  final int id;
+  final String name;
+  final double defaultAmount;
+  final String unit;
 
   final Map<int, AmountRecord> amountMap;
 
@@ -39,8 +48,13 @@ class Food extends AdjustableItem {
     );
   }
 
+  double foodAmount(double modifier) => defaultAmount * modifier;
+  double nutrientAmount(double modifier, int nutrientId) => (amountMap[nutrientId]?.$1 ?? 0) * modifier;
+
+  String getNutrientUnit(int nutrientId) => amountMap[nutrientId]?.$3 ?? '';
+
   @override
-  List<Object?> get props => super.props..add(amountMap);
+  List<Object?> get props => [id, name, defaultAmount, unit, amountMap];
 }
 
 // class _Nutrient extends AdjustableItem {

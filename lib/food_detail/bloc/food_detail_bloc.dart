@@ -19,6 +19,10 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
         _activeFoods.activeFoodsStream,
         onData: _onActiveFoodsData,
       );
+      await emit.forEach(
+        _activeFoods.activeModifierStream,
+        onData: (_) => state.copyWith(modifier: _activeFoods.activeModifier),
+      );
     });
     on<AddFoodDetailEvent>(_onAddFoodDetail);
     // on<ChangeUnitFoodDetailEvent>(_changeUnits);
@@ -35,7 +39,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       foods: foods,
       status: FoodDetailStatus.success,
       allNutrientIdsInQ: allNutrientIdsInQ,
-      modifier: _activeFoods.activeModifier,
+      // modifier: _activeFoods.activeModifier,
     );
   }
 
@@ -117,13 +121,13 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
     log('FoodDetailBloc onChange $change');
   }
 
-  @override
-  void onTransition(
-    Transition<FoodDetailEvent, FoodDetailState> transition,
-  ) {
-    super.onTransition(transition);
-    log('FoodDetailBloc onTransition $transition');
-  }
+  // @override
+  // void onTransition(
+  //   Transition<FoodDetailEvent, FoodDetailState> transition,
+  // ) {
+  //   super.onTransition(transition);
+  //   log('FoodDetailBloc onTransition $transition');
+  // }
 
   @override
   void onError(Object error, StackTrace stackTrace) {

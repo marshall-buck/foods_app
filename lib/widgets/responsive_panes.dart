@@ -68,12 +68,7 @@ class ResponsiveLayout extends StatelessWidget {
                           MagicSpacing.sp_2,
                           MagicSpacing.sp_1,
                         ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
-                          ),
-                          child: leftPane,
-                        ),
+                        child: leftPane,
                       ),
                     ),
                     Expanded(
@@ -84,12 +79,7 @@ class ResponsiveLayout extends StatelessWidget {
                           MagicSpacing.sp_2,
                           MagicSpacing.sp_2,
                         ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
-                          ),
-                          child: mainPane,
-                        ),
+                        child: mainPane,
                       ),
                     ),
                   ],

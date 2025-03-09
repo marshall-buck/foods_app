@@ -33,14 +33,16 @@ class FoodDetailView extends StatelessWidget {
       child: SafeArea(
         child: BlocBuilder<FoodDetailBloc, FoodDetailState>(
           builder: (context, state) {
-            final foods = state.foodsList!;
             switch (state.status) {
               case FoodDetailStatus.success:
                 return ResponsiveLayout(
                   leftPane: FoodDescriptionCardList(
-                    foods: foods,
+                    foods: state.foodsList,
                   ),
-                  mainPane: const NutrientCompareCards(),
+                  mainPane: const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: SizedBox(height: 300, child: NutrientCompareCards()),
+                  ),
                 );
 
               case FoodDetailStatus.error:
