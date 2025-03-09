@@ -35,14 +35,14 @@ class FoodListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FoodDescription(food: food),
-                  BlocBuilder<FoodSearchBloc, FoodSearchState>(
-                    buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
+                  BlocSelector<FoodSearchBloc, FoodSearchState, List<String>>(
+                    selector: (state) => state.quickSearchIds,
                     builder: (context, state) {
                       return QuickResults(
                         quickResultsList: food.quickResultsAmountsList,
                       );
                     },
-                  ),
+                  )
                 ],
               ),
             ),
@@ -112,3 +112,13 @@ class QuickResults extends StatelessWidget {
     );
   }
 }
+
+
+//  BlocBuilder<FoodSearchBloc, FoodSearchState>(
+//                     buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
+//                     builder: (context, state) {
+//                       return QuickResults(
+//                         quickResultsList: food.quickResultsAmountsList,
+//                       );
+//                     },
+//                   ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foods_app/common/common.dart';
 
 import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 
@@ -18,12 +17,18 @@ class NutrientCompareCards extends StatelessWidget {
         final nutrientIds = state.allNutrientIdsInQ?.toList();
         final foods = state.foodsList;
         return ListView.builder(
-          itemExtent: 300,
+          // itemExtent: 300,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return NutrientCompareCard(
-              nutrientId: nutrientIds![index]!,
-              foods: foods,
+            return Padding(
+              padding: const EdgeInsets.all(24),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: NutrientCompareCard(
+                  nutrientId: nutrientIds![index]!,
+                  foods: foods,
+                ),
+              ),
             );
           },
         );

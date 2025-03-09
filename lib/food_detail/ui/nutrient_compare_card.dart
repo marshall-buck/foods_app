@@ -25,41 +25,7 @@ class NutrientCompareCard extends StatelessWidget {
           _NutrientCardTitle(
             id: nutrientId,
           ),
-          Wrap(
-            children: foods
-                .map(
-                  (food) => Padding(
-                    padding: const EdgeInsets.all(MagicSpacing.sp_4),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onLongPress: () {},
-                        child: ClipOval(
-                          child: ColoredBox(
-                            color: Theme.of(context).colorScheme.surfaceBright,
-                            child: Center(
-                              child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                                selector: (state) {
-                                  return state.modifier;
-                                },
-                                builder: (context, state) {
-                                  return AmountWidget(
-                                    textColor: Theme.of(context).colorScheme.onSurface,
-                                    amount: food!.nutrientAmount(state, nutrientId),
-                                    unit: food.getNutrientUnit(nutrientId),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
+          Expanded(child: NutrientDice(foods: foods, nutrientId: nutrientId)),
         ],
       ),
     );
@@ -68,8 +34,88 @@ class NutrientCompareCard extends StatelessWidget {
   }
 }
 
+class NutrientDice extends StatelessWidget {
+  const NutrientDice({
+    required this.foods,
+    required this.nutrientId,
+    super.key,
+  });
+
+  final List<Food?> foods;
+  final int nutrientId;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final itemSize = constraints.maxWidth < constraints.maxHeight
+            ? constraints.maxWidth / (foods.length > 3 ? 3 : 2)
+            : constraints.maxHeight / (foods.length > 3 ? 3 : 2);
+
+        return Wrap(
+          runSpacing: 8,
+          spacing: 8,
+          alignment: WrapAlignment.center,
+          runAlignment: WrapAlignment.center,
+          children: foods.map((food) {
+            return SizedBox(
+              width: itemSize - 8,
+              height: itemSize - 8,
+              child: NutrientItem(
+                nutrientId: nutrientId,
+                food: food!,
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}
+
+class NutrientItem extends StatelessWidget {
+  const NutrientItem({
+    required this.nutrientId,
+    required this.food,
+    super.key,
+  });
+
+  final int nutrientId;
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onLongPress: () {},
+        child: ClipOval(
+          child: ColoredBox(
+            color: Theme.of(context).colorScheme.surfaceBright,
+            child: Center(
+              child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
+                selector: (state) {
+                  return state.modifier;
+                },
+                builder: (context, state) {
+                  return AmountWidget(
+                    textColor: Theme.of(context).colorScheme.onSurface,
+                    amount: food!.nutrientAmount(state, nutrientId),
+                    unit: food.getNutrientUnit(nutrientId),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _NutrientCardTitle extends StatelessWidget {
-  const _NutrientCardTitle({required this.id, super.key});
+  const _NutrientCardTitle({required this.id});
 
   final int id;
 

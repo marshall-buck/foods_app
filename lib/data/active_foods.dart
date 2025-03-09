@@ -21,6 +21,8 @@ class ActiveFoods {
 
   Queue<Food?> get activeFoods => _activeFoodsStreamController.valueOrNull ?? Queue<Food?>();
 
+  static const maxFoodsAllowed = 6;
+
   void changeModifier(double double) {
     _activeModifierStreamController.add(double);
   }
@@ -30,6 +32,9 @@ class ActiveFoods {
   }
 
   void addFood(FoodDAO food) {
+    if (_activeFoods.length == 6) {
+      _activeFoods.removeLast();
+    }
     final map = <int, AmountRecord>{};
     map[food.id] = (MagicNumbers.defaultFoodAmount, MagicNumbers.defaultFoodAmount.convertAmountToString(), 'g');
     for (final item in food.nutrients.entries) {
