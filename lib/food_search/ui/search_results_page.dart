@@ -101,36 +101,36 @@ class _SearchResultsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foods = context.select<FoodSearchBloc, List<FoodListItemModel>>(
-      (bloc) => bloc.state.foods,
-    );
+    return BlocBuilder<FoodSearchBloc, FoodSearchState>(
+      builder: (context, state) {
+        return Expanded(
+          child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            controller: scrollController,
+            itemBuilder: (BuildContext context, int index) {
+              final food = state.foods[index];
 
-    return Expanded(
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        controller: scrollController,
-        itemBuilder: (BuildContext context, int index) {
-          final food = foods.elementAt(index);
-
-          final id = ValueKey<int>(food.id);
-          return GestureDetector(
-            onTap: () {
-              context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(food.id));
-              Navigator.push(
-                context,
-                MaterialPageRoute<FoodDetailPage>(
-                  builder: (context) => const FoodDetailPage(),
+              final id = ValueKey<int>(food.id);
+              return GestureDetector(
+                onTap: () {
+                  context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(food.id));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<FoodDetailPage>(
+                      builder: (context) => const FoodDetailPage(),
+                    ),
+                  );
+                },
+                child: FoodListItem(
+                  key: id,
+                  food: food,
                 ),
               );
             },
-            child: FoodListItem(
-              key: id,
-              food: food,
-            ),
-          );
-        },
-        itemCount: foods.length,
-      ),
+            itemCount: state.foods.length,
+          ),
+        );
+      },
     );
   }
 }
