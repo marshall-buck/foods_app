@@ -1,3 +1,4 @@
+import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
 
 /// {@template foods_search_cache}
@@ -11,12 +12,17 @@ class FoodsSearchCache {
   /// Retrieves a [FoodDAO] from the cache by its [id].
   ///
   /// Returns the [FoodDAO] if it exists in the cache, otherwise returns `null`.
-  FoodDAO? get(int id) => _cache[id];
+  FoodDAO? query(int id) => _cache[id];
 
   /// Adds a [FoodDAO] to the cache with the given [id].
   ///
   /// If an entry with the same [id] already exists, it will be replaced.
-  void set(int id, FoodDAO food) => _cache[id] = food;
+  void add(int id, FoodDAO food) {
+    if (_cache.length <= MagicNumbers.maxFoodSearchCacheAmount) {
+      _cache.remove(_cache.keys.first);
+    }
+    _cache[id] = food;
+  }
 
   /// Checks if a [FoodDAO] with the given [id] exists in the cache.
   ///
@@ -24,6 +30,5 @@ class FoodsSearchCache {
   bool contains(int id) => _cache.containsKey(id);
 
   /// Clears all entries from the cache.
-
   void clear() => _cache.clear();
 }
