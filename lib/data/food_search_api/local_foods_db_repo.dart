@@ -31,6 +31,10 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
     }
   }
 
+  /// Clears all entries from the cache.
+  @override
+  void clearCache() => _cache.clear();
+
   /// Provides a List [FoodDAO] objects from the database.
   /// If no foods are found in the database, the Future returns an empty list.
   @override
@@ -56,6 +60,7 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
   @override
   Future<void> dispose() async {
     await _localDBApi.dispose();
+    _cache.clear();
     assert(
       _localDBApi.isDataLoaded == false,
       'FoodsDBService- dispose assert error',
