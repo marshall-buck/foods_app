@@ -101,7 +101,7 @@ class NutrientItem extends StatelessWidget {
                 builder: (context, state) {
                   return AmountWidget(
                     textColor: Theme.of(context).colorScheme.onSurface,
-                    amount: food!.nutrientAmount(state, nutrientId),
+                    amount: food.nutrientAmount(state, nutrientId),
                     unit: food.getNutrientUnit(nutrientId),
                   );
                 },
