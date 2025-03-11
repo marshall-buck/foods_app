@@ -33,7 +33,7 @@ class ActiveFoods {
 
   void addFood(FoodDAO food) {
     if (_activeFoods.length == 6) {
-      _activeFoods.removeLast();
+      _activeFoods.removeFirst();
     }
     final map = <int, AmountRecord>{};
     map[food.id] = (MagicNumbers.defaultFoodAmount, MagicNumbers.defaultFoodAmount.convertAmountToString(), 'g');
