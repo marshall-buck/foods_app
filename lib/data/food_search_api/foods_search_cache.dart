@@ -24,7 +24,6 @@ class FoodsSearchCache {
   bool contains(int id) => _cache.containsKey(id);
 
   /// Clears all entries from the cache.
-  ///
-  /// The [term] parameter is currently unused.
-  void clear(String term) => _cache.clear();
+
+  void clear() => _cache.clear();
 }
