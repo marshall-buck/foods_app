@@ -113,22 +113,3 @@ class QuickResults extends StatelessWidget {
     );
   }
 }
-
-//  BlocBuilder<FoodSearchBloc, FoodSearchState>(
-//                     buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
-//                     builder: (context, state) {
-//                       return QuickResults(
-//                         quickResultsList: food.quickResultsAmountsList,
-//                       );
-//                     },
-//                   ),
-
-
-// BlocSelector<FoodSearchBloc, FoodSearchState, List<String>>(
-//                     selector: (state) => state.quickSearchIds,
-//                     builder: (context, state) {
-//                       return QuickResults(
-//                         quickResultsList: food.quickResultsAmountsList,
-//                       );
-//                     },
-//                   ),

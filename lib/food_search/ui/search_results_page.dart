@@ -69,7 +69,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
 }
 
 class _AnimatedQuickResults extends StatefulWidget {
-  const _AnimatedQuickResults({required this.scrollController, super.key});
+  const _AnimatedQuickResults({required this.scrollController});
   final ScrollController scrollController;
 
   @override
@@ -127,6 +127,7 @@ class _SearchResultsList extends StatelessWidget {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
       buildWhen: (previous, current) => previous.foods != current.foods,
       builder: (context, state) {
+        print('object');
         return Expanded(
           child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
