@@ -68,10 +68,11 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     final searchTerm = event.searchTerm;
 
     if (searchTerm.isEmpty) {
+      emit(state.copyWith(foods: const [])); // Clear foods when search term is empty
       return;
     } else {
       try {
-        emit(state.copyWith(foods: const []));
+        emit(state.copyWith(foods: const [])); // Clear foods before new search
         final results = await _queryFoods(searchTerm);
 
         if (results == null) {
