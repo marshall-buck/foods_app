@@ -18,7 +18,7 @@ class FoodsSearchCache {
   ///
   /// If an entry with the same [id] already exists, it will be replaced.
   void add(int id, FoodDAO food) {
-    if (_cache.length <= MagicNumbers.maxFoodSearchCacheAmount) {
+    if (_cache.length >= MagicNumbers.maxFoodSearchCacheAmount && _cache.isNotEmpty) {
       _cache.remove(_cache.keys.first);
     }
     _cache[id] = food;
