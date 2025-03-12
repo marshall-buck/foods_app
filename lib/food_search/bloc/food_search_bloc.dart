@@ -71,6 +71,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
       return;
     } else {
       try {
+        emit(state.copyWith(foods: const []));
         final results = await _queryFoods(searchTerm);
 
         if (results == null) {
@@ -84,7 +85,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
           emit(
             state.copyWith(
               status: FoodSearchStatus.success,
-              foods: results.$1,
+              foods: results.$1.toList(),
               quickSearchIds: results.$2,
             ),
           );
@@ -185,11 +186,11 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     log('FoodSearchBloc onEvent $event');
   }
 
-  // @override
-  // void onChange(Change<FoodSearchState> change) {
-  //   super.onChange(change);
-  //   log('onChange $change');
-  // }
+  @override
+  void onChange(Change<FoodSearchState> change) {
+    super.onChange(change);
+    log('onChange: change.nextState.foods.length: ${change.nextState.foods.length}');
+  }
 
   // @override
   // void onTransition(

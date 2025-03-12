@@ -115,19 +115,19 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
     log('FoodSearchBloc onEvent $event');
   }
 
-  // @override
-  // void onChange(Change<FoodDetailState> change) {
-  //   super.onChange(change);
-  //   log('FoodDetailBloc onChange $change');
-  // }
+  @override
+  void onChange(Change<FoodDetailState> change) {
+    super.onChange(change);
+    log('FoodDetailBloc onChange');
+  }
 
-  // @override
-  // void onTransition(
-  //   Transition<FoodDetailEvent, FoodDetailState> transition,
-  // ) {
-  //   super.onTransition(transition);
-  //   log('FoodDetailBloc onTransition $transition');
-  // }
+  @override
+  void onTransition(
+    Transition<FoodDetailEvent, FoodDetailState> transition,
+  ) {
+    super.onTransition(transition);
+    log('FoodDetailBloc onTransition');
+  }
 
   @override
   void onError(Object error, StackTrace stackTrace) {

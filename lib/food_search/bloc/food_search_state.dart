@@ -11,7 +11,7 @@ final class FoodSearchState extends Equatable {
   });
 
   final FoodSearchStatus status;
-  final List<FoodListItemModel> foods;
+  final List<FoodListItemModel?> foods;
   final List<String> quickSearchIds;
   final String error;
 
@@ -31,7 +31,7 @@ final class FoodSearchState extends Equatable {
 
   FoodSearchState copyWith({
     FoodSearchStatus? status,
-    List<FoodListItemModel>? foods,
+    List<FoodListItemModel?>? foods,
     List<String>? quickSearchIds,
     String? error,
   }) {
