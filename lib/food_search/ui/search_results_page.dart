@@ -15,33 +15,9 @@ class SearchResultsPage extends StatefulWidget {
 class _SearchResultsPage extends State<SearchResultsPage> {
   final _scrollController = ScrollController();
 
-  bool _showQuickResults = false;
-
-  void _onScroll() {
-    if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
-      setState(() {
-        _showQuickResults = true;
-      });
-
-      return;
-    }
-    setState(() {
-      _showQuickResults = false;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
-
   @override
   void dispose() {
-    _scrollController
-      ..removeListener(_onScroll)
-      ..dispose();
-
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -79,10 +55,8 @@ class _SearchResultsPage extends State<SearchResultsPage> {
                 child: _SearchBar(),
               ),
             ),
-            AnimatedContainer(
-              duration: MagicDurations.base1,
-              height: _showQuickResults && context.read<FoodSearchBloc>().state.hasResults ? 32 : 0,
-              child: const QuickResultsNamesContainer(),
+            _AnimatedQuickResults(
+              scrollController: _scrollController,
             ),
             _SearchResultsList(
               scrollController: _scrollController,
@@ -90,6 +64,55 @@ class _SearchResultsPage extends State<SearchResultsPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AnimatedQuickResults extends StatefulWidget {
+  const _AnimatedQuickResults({required this.scrollController, super.key});
+  final ScrollController scrollController;
+
+  @override
+  State<_AnimatedQuickResults> createState() => _AnimatedQuickResultsState();
+}
+
+class _AnimatedQuickResultsState extends State<_AnimatedQuickResults> {
+  bool _showQuickResults = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (widget.scrollController.position.userScrollDirection == ScrollDirection.forward) {
+      setState(() {
+        _showQuickResults = true;
+      });
+
+      return;
+    }
+    setState(() {
+      _showQuickResults = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: MagicDurations.base1,
+      height: _showQuickResults && context.read<FoodSearchBloc>().state.hasResults ? 32 : 0,
+      child: const QuickResultsNamesContainer(),
     );
   }
 }
@@ -110,7 +133,6 @@ class _SearchResultsList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final food = state.foods[index];
 
-              final id = ValueKey<int>(food.id);
               return GestureDetector(
                 onTap: () {
                   context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(food.id));
@@ -122,7 +144,7 @@ class _SearchResultsList extends StatelessWidget {
                   );
                 },
                 child: FoodListItem(
-                  key: id,
+                  key: ValueKey(food!.id),
                   food: food,
                 ),
               );

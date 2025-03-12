@@ -11,7 +11,7 @@ class FoodListItem extends StatelessWidget {
   /// Creates a [FoodListItem].
   ///
   /// The [food] argument is required and must not be null.
-  const FoodListItem({required super.key, required this.food});
+  const FoodListItem({required this.food, required super.key});
 
   /// The food item to display.
   final FoodListItemModel food;
@@ -35,14 +35,9 @@ class FoodListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FoodDescription(food: food),
-                  BlocSelector<FoodSearchBloc, FoodSearchState, List<String>>(
-                    selector: (state) => state.quickSearchIds,
-                    builder: (context, state) {
-                      return QuickResults(
-                        quickResultsList: food.quickResultsAmountsList,
-                      );
-                    },
-                  )
+                  QuickResults(
+                    food: food,
+                  ),
                 ],
               ),
             ),
@@ -88,34 +83,49 @@ class FoodDescription extends StatelessWidget {
 /// It is typically used as a child of a [FoodListItem].
 class QuickResults extends StatelessWidget {
   /// Creates a [QuickResults].
-  ///
-  /// The [quickResultsList] argument is required and must not be null.
-  const QuickResults({required this.quickResultsList, super.key});
+
+  const QuickResults({required this.food, super.key});
 
   /// The list of quick results to display.
-  final List<String> quickResultsList;
+  final FoodListItemModel food;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: quickResultsList.map((quickResult) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: Text(
-            quickResult,
-            style: AppTextStyle.m3BodyMedium.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
+    return BlocSelector<FoodSearchBloc, FoodSearchState, List<String>>(
+      selector: (state) {
+        return state.quickSearchIds;
+      },
+      builder: (context, state) {
+        return Row(
+          children: food.quickResultsAmountsList.map((quickResult) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Text(
+                quickResult,
+                style: AppTextStyle.m3BodyMedium.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+            );
+          }).toList(),
         );
-      }).toList(),
+      },
     );
   }
 }
 
-
 //  BlocBuilder<FoodSearchBloc, FoodSearchState>(
 //                     buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
+//                     builder: (context, state) {
+//                       return QuickResults(
+//                         quickResultsList: food.quickResultsAmountsList,
+//                       );
+//                     },
+//                   ),
+
+
+// BlocSelector<FoodSearchBloc, FoodSearchState, List<String>>(
+//                     selector: (state) => state.quickSearchIds,
 //                     builder: (context, state) {
 //                       return QuickResults(
 //                         quickResultsList: food.quickResultsAmountsList,
