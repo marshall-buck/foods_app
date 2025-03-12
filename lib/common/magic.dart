@@ -28,6 +28,8 @@ class MagicNumbers {
   static const double circularRangeSliderTrackStroke = 8;
   static const double circularRangeSliderHandleRadius = 16;
   static const double circularRangeSliderTrackDiameter = 200;
+
+  static const int maxFoodSearchCacheAmount = 500;
 }
 
 class MagicBreakPoints {
