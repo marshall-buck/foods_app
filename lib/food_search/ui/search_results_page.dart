@@ -125,6 +125,7 @@ class _SearchResultsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
+      buildWhen: (previous, current) => previous.foods != current.foods,
       builder: (context, state) {
         return Expanded(
           child: ListView.builder(
