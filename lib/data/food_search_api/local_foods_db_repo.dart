@@ -21,7 +21,7 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
   @override
   Future<FoodDAO?> queryFood({required int id}) async {
     if (_cache.contains(id)) {
-      return _cache.get(id);
+      return _cache.query(id);
     } else {
       final food = await _localDBApi.queryFood(id: id);
       if (food == null) {
@@ -48,7 +48,7 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
       return foods.map((food) {
         final convertedFood = FoodDAO.fromUsdaDB(food!);
         final id = convertedFood.id;
-        _cache.set(id, convertedFood);
+        _cache.add(id, convertedFood);
         return convertedFood;
       }).toList();
       // return foods.map((food) => FoodDAO.fromUsdaDB(food!)).toList();
