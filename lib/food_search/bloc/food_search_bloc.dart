@@ -55,11 +55,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     FoodSearchTextCleared event,
     Emitter<FoodSearchState> emit,
   ) =>
-      emit(
-        state.copyWith(
-          foods: const [],
-        ),
-      );
+      emit(const FoodSearchState());
 
   Future<void> _onTextChanged(
     FoodSearchTextChanged event,
@@ -68,12 +64,13 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     final searchTerm = event.searchTerm;
 
     if (searchTerm.isEmpty) {
-      emit(state.copyWith(foods: const [])); // Clear foods when search term is empty
+      emit(const FoodSearchState()); // Clear foods when search term is empty
       return;
     } else {
       try {
-        emit(state.copyWith(foods: const [])); // Clear foods before new search
+        // emit(state.copyWith(foods: const [])); // Clear foods before new search
         final results = await _queryFoods(searchTerm);
+        final foods = results?.$1 ?? [];
 
         if (results == null) {
           emit(
@@ -86,8 +83,8 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
           emit(
             state.copyWith(
               status: FoodSearchStatus.success,
-              foods: results.$1.toList(),
-              quickSearchIds: results.$2,
+              foods: foods,
+              // quickSearchIds: results.$2,
             ),
           );
         }
@@ -193,13 +190,13 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     log('onChange: change.nextState.foods.length: ${change.nextState.foods.length}');
   }
 
-  // @override
-  // void onTransition(
-  //   Transition<FoodSearchEvent, FoodSearchState> transition,
-  // ) {
-  //   super.onTransition(transition);
-  //   log('onTransition $transition');
-  // }
+  @override
+  void onTransition(
+    Transition<FoodSearchEvent, FoodSearchState> transition,
+  ) {
+    super.onTransition(transition);
+    log('onTransition ${transition.currentState.foods.length}:${transition.nextState.foods.length}');
+  }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
