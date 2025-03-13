@@ -27,23 +27,24 @@ class _DefaultPreferences {
   static const defaultSavedFoods = <String>[];
 }
 
+/// {@template user_prefs_repo}
+/// A repository that handles user preferences.
+/// {@endtemplate}
 class UserPrefsRepository {
+  /// {@macro user_prefs_repo}
   UserPrefsRepository({required SharedPreferencesAsync prefPlugin}) : _prefPlugin = prefPlugin;
   late final SharedPreferencesAsync _prefPlugin;
 
-  // final StreamController<List<String>> _savedFoodsController =
-  //     StreamController<List<String>>();
-
   final _quickSearchIdsController = BehaviorSubject<List<String>>();
 
+  /// A stream of quick search IDs.
   Stream<List<String>> get quickSearchIdsStream => _quickSearchIdsController.stream.asBroadcastStream();
 
+  /// The current quick search IDs.
   List<String> get currentQuickSearchIds =>
       _quickSearchIdsController.valueOrNull ?? _DefaultPreferences.defaultQuickSearchIds;
 
-  // final StreamController<String> _displayModeController =
-  //     StreamController<String>();
-
+  /// Initializes the user preferences repository.
   Future<void> init() async {
     try {
       await _initQuickSearchIds();
@@ -58,11 +59,7 @@ class UserPrefsRepository {
     }
   }
 
-  // List<String> createQuickSearchNames(List<String> ids) => ids
-  //   ..map((id) {
-  //     return NutrientDAO.originalNutrientTableEdit[int.parse(id)]!['name']!;
-  //   }).toList().reversed.toList();
-
+  /// Initializes the quick search IDs.
   Future<void> _initQuickSearchIds() async {
     try {
       final quickSearchPrefs = await _prefPlugin.getStringList(_PreferenceKeys.quickSearchIds);
@@ -86,6 +83,7 @@ class UserPrefsRepository {
     }
   }
 
+  /// Gets the display mode.
   Future<String> getDisplayMode() async {
     try {
       final colorMode = await _prefPlugin.getString(_PreferenceKeys.displayMode);
@@ -103,6 +101,7 @@ class UserPrefsRepository {
     }
   }
 
+  /// Sets the display mode.
   Future<void> setDisplayMode(String value) async {
     try {
       await _prefPlugin.setString(_PreferenceKeys.displayMode, value);
@@ -117,6 +116,7 @@ class UserPrefsRepository {
     }
   }
 
+  /// Sets the quick search IDs.
   Future<void> setQuickSearchIds(List<String> value) async {
     try {
       await _prefPlugin.setStringList(
@@ -134,6 +134,7 @@ class UserPrefsRepository {
     }
   }
 
+  /// Gets the saved foods.
   Future<List<String>> getSavedFoods() async {
     try {
       final savedFoods = await _prefPlugin.getStringList(_PreferenceKeys.savedFoods);
@@ -150,6 +151,7 @@ class UserPrefsRepository {
     }
   }
 
+  /// Sets the saved foods.
   Future<void> setSavedFoods(List<String> value) async {
     try {
       await _prefPlugin.setStringList(_PreferenceKeys.savedFoods, value);

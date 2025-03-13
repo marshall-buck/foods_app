@@ -3,13 +3,18 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:foods_app/data/data.dart';
+import 'package:foods_app/domain/domain.dart';
 
 import 'package:foods_app/food_search/models/food_list_item_model.dart';
 
 part 'food_search_event.dart';
 part 'food_search_state.dart';
 
+/// {@template food_search_bloc}
+/// A BLoC that handles food search events and states.
+/// {@endtemplate}
 class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
+  /// {@macro food_search_bloc}
   FoodSearchBloc({
     required LocalFoodsDBRepo localFoodsDBRepo,
     required UserPrefsRepository userPreferences,
@@ -45,18 +50,21 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   //   final oldFoods = state.foods;
   // }
 
+  /// On [FoodSearchListItemSelected] event, will add a [Food] to the [ActiveFoods] Queue.
   Future<void> _onListItemSelected(FoodSearchListItemSelected event, Emitter<FoodSearchState> emit) async {
     final food = await _localFoodsDBRepo.queryFood(id: event.id);
     assert(food != null, 'Food not found in _onListItemSelected, in FoodSearchBloc');
     _activeFoods.addFood(food!);
   }
 
+  /// On [FoodSearchTextCleared] event, will emit a new empty state.
   void _onClearText(
     FoodSearchTextCleared event,
     Emitter<FoodSearchState> emit,
   ) =>
       emit(const FoodSearchState());
 
+  /// On [FoodSearchTextChanged] event, will emit a new state based on results.
   Future<void> _onTextChanged(
     FoodSearchTextChanged event,
     Emitter<FoodSearchState> emit,
@@ -68,7 +76,6 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
       return;
     } else {
       try {
-        // emit(state.copyWith(foods: const [])); // Clear foods before new search
         final results = await _queryFoods(searchTerm);
         final foods = results?.$1 ?? [];
 
@@ -102,6 +109,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     }
   }
 
+  /// Queries foods based on the search term.
   Future<(List<FoodListItemModel>, List<String>)?> _queryFoods(
     String string,
   ) async {
@@ -117,7 +125,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
             quickSearchIds,
           );
 
-          final foodItem = await FoodListItemModel.fromFoodDAO(
+          final foodItem = FoodListItemModel.fromFoodDAO(
             food: food, nutrientAmounts: nutrientAmounts, //nutrientAmounts,
           );
 
@@ -157,8 +165,8 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   //   }
   // }
 
-  // Returns a list of nutrient amounts for the food, based on the user's
-  // quick search preferences.
+  /// Returns a list of nutrient amounts for the food, based on the user's quick search preferences.
+  /// This will populate the [FoodListItemModel]'s nutrient property.
   Future<List<String>> _createNutrientQuickSearchAmounts(
     FoodDAO food,
     List<String> quickSearchIds,
@@ -174,7 +182,6 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
         matches.add('0');
       }
     }
-
     return matches.reversed.toList();
   }
 

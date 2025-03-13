@@ -2,17 +2,22 @@ import 'package:equatable/equatable.dart';
 
 import 'package:foods_app/data/data.dart';
 
+/// {@template food_list_item_model}
+/// A model representing a food item in the list.
+/// {@endtemplate}
 class FoodListItemModel extends Equatable {
+  /// {@macro food_list_item_model}
   const FoodListItemModel({
     required this.id,
     required this.description,
     required this.quickResultsAmountsList,
   });
 
-  static Future<FoodListItemModel> fromFoodDAO({
+  /// Creates a [FoodListItemModel] from a [FoodDAO] object.
+  factory FoodListItemModel.fromFoodDAO({
     required FoodDAO food,
     required List<String> nutrientAmounts,
-  }) async {
+  }) {
     return FoodListItemModel(
       id: food.id,
       description: food.description,
@@ -24,6 +29,7 @@ class FoodListItemModel extends Equatable {
   final String description;
   final List<String> quickResultsAmountsList;
 
+  /// Creates a copy of the current [FoodListItemModel] with updated values.
   FoodListItemModel copyWith({
     int? id,
     String? description,

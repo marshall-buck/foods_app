@@ -30,6 +30,7 @@ class MagicNumbers {
   static const double circularRangeSliderTrackDiameter = 200;
 
   static const int maxFoodSearchCacheAmount = 500;
+  static const int maxActiveFoodsAllowed = 6;
 }
 
 class MagicBreakPoints {
