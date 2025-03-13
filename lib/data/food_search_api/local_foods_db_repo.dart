@@ -32,7 +32,7 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
     }
   }
 
-  /// Clears all entries from the cache.
+  /// Clears all entries from the [FoodsSearchCache] cache.
   @override
   void clearCache() => _cache.clear();
 

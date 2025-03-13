@@ -1,22 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:foods_app/data/data.dart';
-
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Integrate external api factory's here
 
+/// {@template nutrient_dao}
 /// A class that represents the data for a single nutrient.
 ///
 /// This class is responsible for storing nutrient data, including its
 /// ID, name, amount, and unit.
-///
-/// The [NutrientDAO.fromUsdaDB] factory constructor creates a [NutrientDAO]
-/// instance from a Usda DB  [NutrientDTO] object.
-///
-/// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDAO]
-/// instance from a [MapEntry<int, double>] object, which represents a single
-/// entry in the [FoodDAO.nutrients] map.
+/// {@endtemplate}
 class NutrientDAO extends Equatable {
+  /// {@macro nutrient_dao}
   const NutrientDAO({
     required this.id,
     required this.name,
@@ -46,9 +41,16 @@ class NutrientDAO extends Equatable {
   //   );
   // }
 
+  /// The unique identifier of the nutrient.
   final int id;
+
+  /// The name of the nutrient.
   final String name;
+
+  /// The amount of the nutrient.
   final double amount;
+
+  /// The unit of the nutrient.
   final String unit;
 
   @override
@@ -57,7 +59,7 @@ class NutrientDAO extends Equatable {
   @override
   bool get stringify => true;
 
-  /// A list of nutrient IDs included in the USDA DB .
+  /// A list of nutrient IDs included in the USDA DB.
   static const usdaNutrientIDs = [
     1003,
     1004,

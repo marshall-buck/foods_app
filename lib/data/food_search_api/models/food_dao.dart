@@ -1,17 +1,15 @@
 import 'package:equatable/equatable.dart';
-
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Integrate external api factory's here
 
+/// {@template food_dao}
 /// A class that represents the data for a food object.
-/// The purpose is to convert the api data into a base data class for the domain layer to use.
 ///
-/// The [FoodDAO] class is initialized by providing the food's
-/// [id], [description], and [nutrients].
-///
-
+/// The purpose is to convert the API data into a base data class for the domain layer to use.
+/// {@endtemplate}
 class FoodDAO extends Equatable {
+  /// {@macro food_dao}
   const FoodDAO({
     required this.id,
     required this.description,
@@ -26,8 +24,14 @@ class FoodDAO extends Equatable {
       nutrients: food.nutrients,
     );
   }
+
+  /// The unique identifier of the food.
   final int id;
+
+  /// The description of the food.
   final String description;
+
+  /// A map of nutrient id's to their amounts in the food.
   final Map<int, double> nutrients;
 
   @override
