@@ -52,7 +52,7 @@ class _SearchResultsPage extends State<SearchResultsPage> {
                   maxHeight: MagicNumbers.searchBarHeight,
                   minHeight: MagicNumbers.searchBarHeight,
                 ),
-                child: _SearchBar(),
+                child: const _SearchBar(),
               ),
             ),
             _AnimatedQuickResults(
@@ -127,7 +127,6 @@ class _SearchResultsList extends StatelessWidget {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
       buildWhen: (previous, current) => previous.foods != current.foods,
       builder: (context, state) {
-        print('object');
         return Expanded(
           child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -146,8 +145,7 @@ class _SearchResultsList extends StatelessWidget {
                   );
                 },
                 child: FoodListItem(
-                  key: ValueKey(food!.id),
-                  food: food,
+                  food: food!,
                 ),
               );
             },
@@ -160,6 +158,7 @@ class _SearchResultsList extends StatelessWidget {
 }
 
 class _SearchBar extends StatefulWidget {
+  const _SearchBar({super.key});
   @override
   State<_SearchBar> createState() => _SearchBarState();
 }

@@ -11,7 +11,7 @@ class FoodListItem extends StatelessWidget {
   /// Creates a [FoodListItem].
   ///
   /// The [food] argument is required and must not be null.
-  const FoodListItem({required this.food, required super.key});
+  const FoodListItem({required this.food, super.key});
 
   /// The food item to display.
   final FoodListItemModel food;
