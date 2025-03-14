@@ -43,7 +43,7 @@ class ActiveFoods {
   }
 
   /// Adds a [Food] to the end active foods Queue, and updates the Stream.
-  void addFood(FoodDAO food) {
+  void addFood(FoodDTO food) {
     if (_activeFoods.length == maxFoodsAllowed) {
       _activeFoods.removeFirst();
     }
@@ -51,7 +51,7 @@ class ActiveFoods {
     map[food.id] = (MagicNumbers.defaultFoodAmount, MagicNumbers.defaultFoodAmount.convertAmountToString(), 'g');
     for (final item in food.nutrients.entries) {
       final id = item.key;
-      final unit = NutrientDAO.usdaDBNutrientLookupTable[id]!['unit']!;
+      final unit = NutrientDTO.usdaDBNutrientLookupTable[id]!['unit']!;
       map[id] = (item.value, item.value.convertAmountToString(), unit);
     }
     final convertedFood = Food.fromFoodDAO(food, map);

@@ -8,17 +8,17 @@ import 'package:usda_db_package/usda_db_package.dart';
 ///
 /// The purpose is to convert the API data into a base data class for the domain layer to use.
 /// {@endtemplate}
-class FoodDAO extends Equatable {
+class FoodDTO extends Equatable {
   /// {@macro food_dao}
-  const FoodDAO({
+  const FoodDTO({
     required this.id,
     required this.description,
     required this.nutrients,
   });
 
-  /// Creates a [FoodDAO] instance from the local Usda DB [FoodDTO] object.
-  factory FoodDAO.fromUsdaDB(FoodDTO food) {
-    return FoodDAO(
+  /// Creates a [FoodDTO] instance from the local Usda DB [UsdaFoodModel] object.
+  factory FoodDTO.fromUsdaFoodModel(UsdaFoodModel food) {
+    return FoodDTO(
       id: food.id,
       description: food.description,
       nutrients: food.nutrients,

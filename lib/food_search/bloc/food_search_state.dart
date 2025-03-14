@@ -22,7 +22,7 @@ final class FoodSearchState extends Equatable {
   List<String> _createQuickSearchNames() {
     return quickSearchIds
         .map((id) {
-          return NutrientDAO.originalNutrientTableEdit[int.parse(id)]!['name']!;
+          return NutrientDTO.originalNutrientTableEdit[int.parse(id)]!['name']!;
         })
         .toList()
         .reversed

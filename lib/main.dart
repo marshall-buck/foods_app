@@ -29,10 +29,10 @@ void main() async {
     return true;
   };
   // Bloc.observer = const AppBlocObserver();
-  final localDatabase = UsdaDB();
-  await localDatabase.init();
+  final localDbDao = UsdaDbDAO();
+  await localDbDao.init();
   final cache = FoodsSearchCache();
-  final localDbRepository = LocalFoodsDBRepo(localDBApi: localDatabase, cache: cache);
+  final localDbRepository = LocalFoodsDBRepo(localDbDao: localDbDao, cache: cache);
   final asyncPrefs = SharedPreferencesAsync();
   final userPreferences = UserPrefsRepository(prefPlugin: asyncPrefs);
   await userPreferences.init();

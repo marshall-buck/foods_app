@@ -15,7 +15,7 @@ class Food extends Equatable {
     required this.amountMap,
   });
 
-  factory Food.fromFoodDAO(FoodDAO food, Map<int, AmountRecord> amountMap) {
+  factory Food.fromFoodDAO(FoodDTO food, Map<int, AmountRecord> amountMap) {
     return Food(
       id: food.id,
       name: food.description,

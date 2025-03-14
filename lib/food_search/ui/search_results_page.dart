@@ -158,7 +158,7 @@ class _SearchResultsList extends StatelessWidget {
 }
 
 class _SearchBar extends StatefulWidget {
-  const _SearchBar({super.key});
+  const _SearchBar();
   @override
   State<_SearchBar> createState() => _SearchBarState();
 }

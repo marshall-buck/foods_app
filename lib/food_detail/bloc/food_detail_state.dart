@@ -28,7 +28,7 @@ final class FoodDetailState extends Equatable {
 
   List<int> get foodIds => foods!.map((food) => food!.id).toList();
 
-  String getNutrientNameById(int id) => NutrientDAO.usdaDBNutrientLookupTable[id]?['name'] ?? '';
+  String getNutrientNameById(int id) => NutrientDTO.usdaDBNutrientLookupTable[id]?['name'] ?? '';
 
   @override
   List<Object?> get props => [status, foods, allNutrientIdsInQ, modifier];

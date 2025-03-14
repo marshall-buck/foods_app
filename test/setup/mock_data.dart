@@ -3,23 +3,23 @@
 import 'package:foods_app/data/data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
-const protein = NutrientDAO(id: 1003, amount: 20, unit: 'g', name: 'Protein');
-const totalFat = NutrientDAO(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
-const totalCarbs = NutrientDAO(
+const protein = NutrientDTO(id: 1003, amount: 20, unit: 'g', name: 'Protein');
+const totalFat = NutrientDTO(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
+const totalCarbs = NutrientDTO(
   id: 1005,
   amount: 30,
   unit: 'g',
   name: 'Total Carbohydrates',
 );
-const water = NutrientDAO(id: 1051, amount: 500, unit: 'g', name: 'Water');
-const totalSugars = NutrientDAO(
+const water = NutrientDTO(id: 1051, amount: 500, unit: 'g', name: 'Water');
+const totalSugars = NutrientDTO(
   id: 2000,
   amount: 10,
   unit: 'g',
   name: 'Total Sugars',
 );
 
-const food1 = FoodDAO(
+const food1 = FoodDTO(
   id: 167512,
   description: 'Pillsbury Golden Layer Buttermilk Biscuits, Artificial Flavor, refrigerated dough',
   nutrients: {
@@ -33,8 +33,8 @@ const food1 = FoodDAO(
   },
 );
 
-final food2 = FoodDAO.fromUsdaDB(
-  const FoodDTO(
+final food2 = FoodDTO.fromUsdaFoodModel(
+  const UsdaFoodModel(
     id: 167516,
     description: 'Waffles, buttermilk, frozen, ready-to-heat',
     nutrients: {

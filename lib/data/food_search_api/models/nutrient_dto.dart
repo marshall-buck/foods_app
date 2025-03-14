@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:foods_app/data/data.dart';
+
 import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Integrate external api factory's here
@@ -10,18 +10,18 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// This class is responsible for storing nutrient data, including its
 /// ID, name, amount, and unit.
 /// {@endtemplate}
-class NutrientDAO extends Equatable {
+class NutrientDTO extends Equatable {
   /// {@macro nutrient_dao}
-  const NutrientDAO({
+  const NutrientDTO({
     required this.id,
     required this.name,
     required this.amount,
     required this.unit,
   });
 
-  /// Creates a [NutrientDAO] instance from a [NutrientDTO] object.
-  factory NutrientDAO.fromUsdaDB(NutrientDTO nutrient) {
-    return NutrientDAO(
+  /// Creates a [NutrientDTO] instance from a [UsdaNutrientModel] object.
+  factory NutrientDTO.fromUsdaDB(UsdaNutrientModel nutrient) {
+    return NutrientDTO(
       id: nutrient.id,
       name: nutrient.name,
       amount: nutrient.amount,
@@ -308,5 +308,5 @@ class NutrientDAO extends Equatable {
     2000: {'name': 'Total Sugars', 'unit': 'g'},
   };
 
-  static const usdaDBNutrientLookupTable = NutrientDTO.originalNutrientTableEdit;
+  static const usdaDBNutrientLookupTable = UsdaNutrientModel.originalNutrientTableEdit;
 }

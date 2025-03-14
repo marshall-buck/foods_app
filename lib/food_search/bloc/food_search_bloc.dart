@@ -168,7 +168,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   /// Returns a list of nutrient amounts for the food, based on the user's quick search preferences.
   /// This will populate the [FoodListItemModel]'s nutrient property.
   Future<List<String>> _createNutrientQuickSearchAmounts(
-    FoodDAO food,
+    FoodDTO food,
     List<String> quickSearchIds,
   ) async {
     final nutrients = food.nutrients;

@@ -13,9 +13,9 @@ class FoodListItemModel extends Equatable {
     required this.quickResultsAmountsList,
   });
 
-  /// Creates a [FoodListItemModel] from a [FoodDAO] object.
+  /// Creates a [FoodListItemModel] from a [FoodDTO] object.
   factory FoodListItemModel.fromFoodDAO({
-    required FoodDAO food,
+    required FoodDTO food,
     required List<String> nutrientAmounts,
   }) {
     return FoodListItemModel(
