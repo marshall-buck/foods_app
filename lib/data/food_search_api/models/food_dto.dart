@@ -3,13 +3,13 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Integrate external api factory's here
 
-/// {@template food_dao}
+/// {@template food_dto}
 /// A class that represents the data for a food object.
 ///
 /// The purpose is to convert the API data into a base data class for the domain layer to use.
 /// {@endtemplate}
 class FoodDTO extends Equatable {
-  /// {@macro food_dao}
+  /// {@macro food_dto}
   const FoodDTO({
     required this.id,
     required this.description,

@@ -4,14 +4,14 @@ import 'package:usda_db_package/usda_db_package.dart';
 
 //TODO: Integrate external api factory's here
 
-/// {@template nutrient_dao}
+/// {@template nutrient_dto}
 /// A class that represents the data for a single nutrient.
 ///
 /// This class is responsible for storing nutrient data, including its
 /// ID, name, amount, and unit.
 /// {@endtemplate}
 class NutrientDTO extends Equatable {
-  /// {@macro nutrient_dao}
+  /// {@macro nutrient_dto}
   const NutrientDTO({
     required this.id,
     required this.name,
