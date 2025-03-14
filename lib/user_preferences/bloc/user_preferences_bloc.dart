@@ -15,8 +15,6 @@ class UserPreferencesBloc extends Bloc<UserPreferencesEvent, UserPreferencesStat
       await emit.onEach(
         _userPreferencesRepository.quickSearchIdsStream,
         onData: (quickSearch) {
-          // final names =
-          //     _userPreferencesRepository.createQuickSearchNames(quickSearch);
           emit(
             state.copyWith(
               quickSearchIds: quickSearch,
@@ -24,31 +22,8 @@ class UserPreferencesBloc extends Bloc<UserPreferencesEvent, UserPreferencesStat
           );
         },
       );
-      // await emit.onEach(
-      //   _userPreferencesRepository.savedFoodsStream,
-      //   onData: (savedFoods) {
-      //     emit(
-      //       state.copyWith(
-      //         savedFoods: savedFoods,
-      //       ),
-      //     );
-      //   },
-      // );
-      // await emit.onEach(
-      //   _userPreferencesRepository.displayModeStream,
-      //   onData: (displayMode) {
-      //     emit(
-      //       state.copyWith(displayMode: displayMode),
-      //     );
-      //   },
-      // );
     });
   }
 
   final UserPrefsRepository _userPreferencesRepository;
-
-  // List<String> _createQuickSearchNames(List<String> ids) => ids
-  //   ..map((id) {
-  //     return NutrientDAO.originalNutrientTableEdit[int.parse(id)]!['name']!;
-  //   }).toList().reversed.toList();
 }

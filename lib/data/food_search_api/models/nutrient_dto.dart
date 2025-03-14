@@ -29,11 +29,11 @@ class NutrientDTO extends Equatable {
     );
   }
 
-  // /// Creates a [NutrientDAO] instance from a MapEntry `int, double` object.
-  // factory NutrientDAO.fromMapEntry(MapEntry<int, double> entry) {
+  // /// Creates a [NutrientDTO] instance from a MapEntry `int, double` object.
+  // factory NutrientDTO.fromMapEntry(MapEntry<int, double> entry) {
   //   final id = entry.key;
   //   final amount = entry.value;
-  //   return NutrientDAO(
+  //   return NutrientDTO(
   //     id: id,
   //     name: originalNutrientTableEdit[id]?['name'] ?? '',
   //     amount: amount,

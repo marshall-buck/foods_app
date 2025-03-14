@@ -125,7 +125,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
             quickSearchIds,
           );
 
-          final foodItem = FoodListItemModel.fromFoodDAO(
+          final foodItem = FoodListItemModel.fromFoodDTO(
             food: food, nutrientAmounts: nutrientAmounts, //nutrientAmounts,
           );
 

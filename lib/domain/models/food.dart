@@ -15,7 +15,7 @@ class Food extends Equatable {
     required this.amountMap,
   });
 
-  factory Food.fromFoodDAO(FoodDTO food, Map<int, AmountRecord> amountMap) {
+  factory Food.fromFoodDTO(FoodDTO food, Map<int, AmountRecord> amountMap) {
     return Food(
       id: food.id,
       name: food.description,
@@ -56,63 +56,3 @@ class Food extends Equatable {
   @override
   List<Object?> get props => [id, name, defaultAmount, unit, amountMap];
 }
-
-// class _Nutrient extends AdjustableItem {
-//   const _Nutrient({
-//     required super.id,
-//     required super.defaultAmount,
-//     required super.unit,
-//     required super.name,
-//   });
-
-//   /// Creates a [_Nutrient] instance from a `MapEntry<int, double>` object.
-//   factory _Nutrient.fromMapEntry(MapEntry<int, double> entry) {
-//     final id = entry.key;
-//     final defaultAmount = entry.value;
-//     return _Nutrient(
-//       id: id,
-//       name: NutrientDAO.originalNutrientTableEdit[id]?['name'] ?? '',
-//       defaultAmount: defaultAmount,
-//       unit: NutrientDAO.originalNutrientTableEdit[id]?['unit'] ?? '',
-//     );
-//   }
-
-//   _Nutrient copyWith({
-//     int? id,
-//     String? name,
-//     double? defaultAmount,
-//     String? unit,
-//     double? modifier,
-//   }) {
-//     return _Nutrient(
-//       id: id ?? this.id,
-//       name: name ?? this.name,
-//       defaultAmount: defaultAmount ?? 1,
-//       unit: unit ?? this.unit,
-//     );
-//   }
-// }
-
-  // /// A [List] of all [Nutrient]'s in the [Food].
-  // List<Nutrient> get nutrientList => nutrientMap.values.toList();
-
-  /// Each entry key is an [id] of both the [Food] and all [_Nutrient]s.
-  /// Created for ease of use when adjusting the amounts in the ui.
-  /// The amount's are multiplied by a [modifier] for saved food amounts.
-  // Map<int, AmountRecord> get amountRecordsMap {
-  //   final adjustedFoodAmount = <int, AmountRecord>{
-  //     id: (MagicNumbers.defaultFoodAmount * modifier, MagicNumbers.defaultFoodAmount.convertAmountToString(), 'g'),
-  //   };
-  //   final adjustedNutrientAmounts = <int, AmountRecord>{};
-  //   for (final nutrient in nutrientMap.values.toList()) {
-  //     final amount = nutrient.amount * modifier;
-  //     final unit = nutrient.unit;
-  //     final displayString = amount.convertAmountToString();
-  //     adjustedNutrientAmounts[nutrient.id] = (nutrient.amount, displayString, unit);
-  //   }
-
-  //   return {
-  //     ...adjustedFoodAmount,
-  //     ...adjustedNutrientAmounts,
-  //   };
-  // }

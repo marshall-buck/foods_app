@@ -54,7 +54,7 @@ class ActiveFoods {
       final unit = NutrientDTO.usdaDBNutrientLookupTable[id]!['unit']!;
       map[id] = (item.value, item.value.convertAmountToString(), unit);
     }
-    final convertedFood = Food.fromFoodDAO(food, map);
+    final convertedFood = Food.fromFoodDTO(food, map);
 
     _activeFoods.add(convertedFood);
     _activeFoodsStreamController.add(_activeFoods);

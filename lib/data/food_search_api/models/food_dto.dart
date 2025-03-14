@@ -6,7 +6,7 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// {@template food_dto}
 /// A class that represents the data for a food object.
 ///
-/// The purpose is to convert the API data into a base data class for the domain layer to use.
+/// The purpose is to convert the external data into a base data class for the domain layer to use.
 /// {@endtemplate}
 class FoodDTO extends Equatable {
   /// {@macro food_dto}

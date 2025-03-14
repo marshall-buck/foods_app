@@ -8,11 +8,11 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// {@endtemplate}
 class LocalFoodsDBRepo implements FoodSearchApiInterface {
   /// {@macro foods_db_repo}
-  LocalFoodsDBRepo({required UsdaDbDAO localDbDao, required FoodsSearchCache cache})
-      : _localDbDao = localDbDao,
+  LocalFoodsDBRepo({required UsdaDbDAO usdaDbDao, required FoodsSearchCache cache})
+      : _usdADbDao = usdaDbDao,
         _cache = cache;
 
-  final UsdaDbDAO _localDbDao;
+  final UsdaDbDAO _usdADbDao;
   final FoodsSearchCache _cache;
 
   /// Provides a [FoodDTO] object from the database.
@@ -24,7 +24,7 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
     if (_cache.contains(id)) {
       return _cache.query(id);
     } else {
-      final food = await _localDbDao.queryFood(id: id);
+      final food = await _usdADbDao.queryFood(id: id);
       if (food == null) {
         return null;
       }
@@ -42,7 +42,7 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
   /// [searchTerm] is the term used to search for foods in the database.
   @override
   Future<List<FoodDTO>?> queryFoods({required String searchTerm}) async {
-    final foods = await _localDbDao.queryFoods(searchString: searchTerm);
+    final foods = await _usdADbDao.queryFoods(searchString: searchTerm);
 
     if (foods.isEmpty) {
       return null;
@@ -60,10 +60,10 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
   /// resources associated with the database.
   @override
   Future<void> dispose() async {
-    await _localDbDao.dispose();
+    await _usdADbDao.dispose();
     _cache.clear();
     assert(
-      _localDbDao.isDataLoaded == false,
+      _usdADbDao.isDataLoaded == false,
       'FoodsDBService- dispose assert error',
     );
   }
