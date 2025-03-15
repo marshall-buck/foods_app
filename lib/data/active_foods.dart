@@ -9,6 +9,7 @@ import 'package:rxdart/rxdart.dart';
 /// A class that manages the active foods in the application.
 /// {@endtemplate}
 class ActiveFoods {
+  /// The most recent food entered will be placed at he end of the Queue.
   final _activeFoods = Queue<Food?>();
 
   final _activeFoodsStreamController = BehaviorSubject<Queue<Food?>>();
@@ -25,7 +26,7 @@ class ActiveFoods {
   /// to get an adjusted amount. It is to be used when the user updates and active food in the ui.
   double get activeModifier => _activeModifierStreamController.value;
 
-  /// The current active foods.
+  /// The current active foods Queue.
   Queue<Food?> get activeFoods => _activeFoodsStreamController.valueOrNull ?? Queue<Food?>();
 
   static const maxFoodsAllowed = MagicNumbers.maxActiveFoodsAllowed;
@@ -66,10 +67,4 @@ class ActiveFoods {
 
     _activeFoodsStreamController.add(_activeFoods);
   }
-
-  /// The last (most recent) entered food.
-  Food? get lastEntered => _activeFoods.isNotEmpty ? _activeFoods.last : null;
-
-  /// The first entered food.
-  Food? get firstEntered => _activeFoods.isNotEmpty ? _activeFoods.first : null;
 }

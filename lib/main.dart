@@ -16,8 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:usda_db_package/usda_db_package.dart';
 
-//
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (details) {
@@ -28,7 +26,7 @@ void main() async {
     log(error.toString(), stackTrace: stack);
     return true;
   };
-  // Bloc.observer = const AppBlocObserver();
+
   final usdaDbDao = UsdaDbDAO();
   await usdaDbDao.init();
   final cache = FoodsSearchCache();

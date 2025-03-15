@@ -1,6 +1,0 @@
-How do I handle derived state.
-Another words, when you need data based on current bloc state, and you don't want to rebuild everything when derived data changes, but just the widgets that uses the derived data.
-There could be some heavy methods getting derived data.
-For example, your Bloc state has a property that is a List of  foo objects and you have 100's of list/grid items.
-Lets say each item has an adjustable interaction inside that changes a text field, and i need new data from that interaction,  this data should change a widget within each 
-ist
