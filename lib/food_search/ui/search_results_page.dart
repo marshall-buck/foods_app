@@ -122,18 +122,6 @@ class _SearchResultsList extends StatelessWidget {
 
   final ScrollController scrollController;
 
-  // void _handleOnTap(BuildContext context, int id) {
-  //   if (context.mounted) {
-  //     context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(id));
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute<FoodDetailPage>(
-  //         builder: (context) => const FoodDetailPage(),
-  //       ),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
@@ -145,12 +133,7 @@ class _SearchResultsList extends StatelessWidget {
             controller: scrollController,
             itemBuilder: (BuildContext context, int index) {
               final food = state.foods[index];
-              // return GestureDetector(
-              //   onTap: () => _handleOnTap(context, foods[index]!.id),
-              //   child: FoodListItem(
-              //     food: foods[index]!,
-              //   ),
-              // );
+
               return FoodListItem(food: food!);
             },
             itemCount: state.foods.length,

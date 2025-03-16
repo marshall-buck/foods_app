@@ -4,6 +4,8 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/food_detail/ui/food_detail_page.dart';
 import 'package:foods_app/food_search/food_search.dart';
 
+//TODO: Maybe send hte id into the FoodDetialPage, unless there is another need for the
+// SearchREsultsPage neding to know the ActiveFoodsState
 class FoodListItem extends StatelessWidget {
   const FoodListItem({required this.food, super.key});
 
@@ -41,8 +43,8 @@ class FoodListItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FoodDescription(food: food),
-                    QuickResults(
+                    _FoodDescription(food: food),
+                    _QuickResults(
                       food: food,
                     ),
                   ],
@@ -63,8 +65,8 @@ class FoodListItem extends StatelessWidget {
   }
 }
 
-class FoodDescription extends StatelessWidget {
-  const FoodDescription({required this.food, super.key});
+class _FoodDescription extends StatelessWidget {
+  const _FoodDescription({required this.food, super.key});
 
   final FoodListItemModel food;
 
@@ -77,8 +79,8 @@ class FoodDescription extends StatelessWidget {
   }
 }
 
-class QuickResults extends StatelessWidget {
-  const QuickResults({required this.food, super.key});
+class _QuickResults extends StatelessWidget {
+  const _QuickResults({required this.food, super.key});
 
   final FoodListItemModel food;
 
