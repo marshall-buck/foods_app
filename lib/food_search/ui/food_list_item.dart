@@ -66,7 +66,7 @@ class FoodListItem extends StatelessWidget {
 }
 
 class _FoodDescription extends StatelessWidget {
-  const _FoodDescription({required this.food, super.key});
+  const _FoodDescription({required this.food});
 
   final FoodListItemModel food;
 
@@ -80,7 +80,7 @@ class _FoodDescription extends StatelessWidget {
 }
 
 class _QuickResults extends StatelessWidget {
-  const _QuickResults({required this.food, super.key});
+  const _QuickResults({required this.food});
 
   final FoodListItemModel food;
 
