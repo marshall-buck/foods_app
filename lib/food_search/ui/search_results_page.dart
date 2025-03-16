@@ -181,13 +181,35 @@ class _SearchBarState extends State<_SearchBar> {
       constraints: Theme.of(context).searchBarTheme.constraints,
       hintText: MagicStrings.searchPageHintText,
       trailing: [
-        if (showBadge) const FoodResultsCountBadge() else const Spacer(),
+        if (showBadge) const _FoodResultsCountBadge() else const Spacer(),
         IconButton(
           onPressed: _onClear,
           icon: const Icon(Icons.clear_outlined),
         ),
       ],
       onChanged: (string) => _foodSearchBloc.add(FoodSearchTextChanged(searchTerm: _searchBarController.text)),
+    );
+  }
+}
+
+class _FoodResultsCountBadge extends StatelessWidget {
+  const _FoodResultsCountBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FoodSearchBloc, FoodSearchState>(
+      builder: (context, state) {
+        if (state.status == FoodSearchStatus.success) {
+          return Badge.count(
+            count: state.foods.length,
+            backgroundColor: Colors.transparent,
+            textColor: Theme.of(context).colorScheme.onSurface,
+            // padding: const EdgeInsets.only(right: 8),
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }
