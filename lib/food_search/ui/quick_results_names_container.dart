@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
@@ -13,15 +15,15 @@ class QuickResultsNamesContainer extends StatelessWidget {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
       buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
       builder: (context, state) {
-        final names = state.quickSearchNames;
+        log('state.quickSearchNames: ${state.quickSearchNames}');
         return Row(
-          children: names.map((quickResult) {
+          children: state.quickSearchNames.map((quickResult) {
             return Padding(
               padding: const EdgeInsets.only(right: 16),
               child: Text(
                 quickResult,
                 style: AppTextStyle.m3LabelSmall.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: Theme.of(context).colorScheme.error,
                 ),
               ),
             );

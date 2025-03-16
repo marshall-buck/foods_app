@@ -17,7 +17,7 @@ class FoodResultsCountBadge extends StatelessWidget {
             // padding: const EdgeInsets.only(right: 8),
           );
         } else {
-          return Container(); // or any other placeholder widget
+          return Container();
         }
       },
     );
