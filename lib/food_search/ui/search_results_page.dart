@@ -112,7 +112,33 @@ class _AnimatedQuickResultsState extends State<_AnimatedQuickResults> {
     return AnimatedContainer(
       duration: MagicDurations.base1,
       height: _showQuickResults && context.read<FoodSearchBloc>().state.hasResults ? 32 : 0,
-      child: const QuickResultsNamesContainer(),
+      child: const _QuickResultsNamesContainer(),
+    );
+  }
+}
+
+class _QuickResultsNamesContainer extends StatelessWidget {
+  const _QuickResultsNamesContainer();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FoodSearchBloc, FoodSearchState>(
+      buildWhen: (previous, current) => previous.quickSearchIds != current.quickSearchIds,
+      builder: (context, state) {
+        return Row(
+          children: state.quickSearchNames.map((quickResult) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Text(
+                quickResult,
+                style: AppTextStyle.m3LabelSmall.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
