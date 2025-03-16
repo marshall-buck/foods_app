@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
-import 'package:foods_app/food_detail/food_detail.dart';
+
 import 'package:foods_app/food_search/food_search.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -122,35 +122,36 @@ class _SearchResultsList extends StatelessWidget {
 
   final ScrollController scrollController;
 
-  void _handleOnTap(BuildContext context, int id) {
-    if (context.mounted) {
-      context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(id));
-      Navigator.push(
-        context,
-        MaterialPageRoute<FoodDetailPage>(
-          builder: (context) => const FoodDetailPage(),
-        ),
-      );
-    }
-  }
+  // void _handleOnTap(BuildContext context, int id) {
+  //   if (context.mounted) {
+  //     context.read<FoodSearchBloc>().add(FoodSearchListItemSelected(id));
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute<FoodDetailPage>(
+  //         builder: (context) => const FoodDetailPage(),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FoodSearchBloc, FoodSearchState>(
       buildWhen: (previous, current) => previous.foods != current.foods,
       builder: (context, state) {
-        final foods = state.foods;
         return Expanded(
           child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () => _handleOnTap(context, foods[index]!.id),
-                child: FoodListItem(
-                  food: foods[index]!,
-                ),
-              );
+              final food = state.foods[index];
+              // return GestureDetector(
+              //   onTap: () => _handleOnTap(context, foods[index]!.id),
+              //   child: FoodListItem(
+              //     food: foods[index]!,
+              //   ),
+              // );
+              return FoodListItem(food: food!);
             },
             itemCount: state.foods.length,
           ),
