@@ -23,11 +23,18 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
         _userPreferencesRepository = userPreferences,
         _activeFoods = activeFoods,
         super(const FoodSearchState()) {
+    /// Listens for the text to change in the SearchBar triggering a query to search for foods.
     on<FoodSearchTextChanged>(_onTextChanged);
+
+    /// Listens for the clear icon in the search bar, refreshing a new blank state.
     on<FoodSearchTextCleared>(_onClearText);
+
+    /// Triggers navigation to the details page.
     on<FoodSearchListItemSelected>((event, emit) async {
       await _onListItemSelected(event, emit);
     });
+
+    /// Triggers the bloc to populate and listen to the quickSearchId's stream.
     on<FoodSearchInitialized>((event, emit) async {
       await emit.onEach(
         _userPreferencesRepository.quickSearchIdsStream,
@@ -41,14 +48,6 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   final LocalFoodsDBRepo _localFoodsDBRepo;
   final UserPrefsRepository _userPreferencesRepository;
   final ActiveFoods _activeFoods;
-
-  // Future<void> _onQuickSearchPrefsChange(
-  //   Emitter<FoodSearchState> emit,
-  //   List<String> quickSearch,
-  // ) async {
-  //   emit(state.copyWith(quickSearchIds: quickSearch));
-  //   final oldFoods = state.foods;
-  // }
 
   /// On [FoodSearchListItemSelected] event, will add a [Food] to the [ActiveFoods] Queue.
   Future<void> _onListItemSelected(FoodSearchListItemSelected event, Emitter<FoodSearchState> emit) async {
@@ -144,27 +143,6 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     }
     return null;
   }
-
-  //Future<void> _getNames() async {
-  //   try {
-  //     final quick = await _userPreferencesRepository.currentQuickSearchIds;
-  //     final names = quick
-  //         .map((id) {
-  //           return NutrientDTO
-  //               .originalNutrientTableEdit[int.parse(id)]!['name']!;
-  //         })
-  //         .toList()
-  //         .reversed
-  //         .toList();
-  //   } catch (e) {
-  //     log(
-  //       'error',
-  //       time: DateTime.now(),
-  //       name: 'QuickSearchManager.getNames()',
-  //       error: e,
-  //     );
-  //   }
-  // }
 
   /// Returns a list of nutrient amounts for the food, based on the user's quick search preferences.
   /// This will populate the [FoodListItemModel]'s nutrient property.
