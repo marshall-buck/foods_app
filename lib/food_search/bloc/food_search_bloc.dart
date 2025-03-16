@@ -28,14 +28,14 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     on<FoodSearchListItemSelected>((event, emit) async {
       await _onListItemSelected(event, emit);
     });
-    // on<FoodSearchInitialized>((event, emit) async {
-    //   await emit.onEach(
-    //     _userPreferencesRepository.quickSearchIdsStream,
-    //     onData: (quickSearch) {
-    //       emit(state.copyWith(quickSearchIds: quickSearch));
-    //     },
-    //   );
-    // });
+    on<FoodSearchInitialized>((event, emit) async {
+      await emit.onEach(
+        _userPreferencesRepository.quickSearchIdsStream,
+        onData: (quickSearch) {
+          emit(state.copyWith(quickSearchIds: quickSearch));
+        },
+      );
+    });
   }
 
   final LocalFoodsDBRepo _localFoodsDBRepo;
@@ -145,12 +145,12 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     return null;
   }
 
-  // Future<void> _getNames() async {
+  //Future<void> _getNames() async {
   //   try {
-  //     final quick = await _userPreferences.quickSearchIds;
+  //     final quick = await _userPreferencesRepository.currentQuickSearchIds;
   //     final names = quick
   //         .map((id) {
-  //           return NutrientDAO
+  //           return NutrientDTO
   //               .originalNutrientTableEdit[int.parse(id)]!['name']!;
   //         })
   //         .toList()
@@ -195,7 +195,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   @override
   void onChange(Change<FoodSearchState> change) {
     super.onChange(change);
-    log('onChange: change.nextState.foods.length: ${change.nextState.foods.length}');
+    log('onChange: change.currentState.quickSearchNames: ${change.currentState.quickSearchNames}');
   }
 
   @override
@@ -203,7 +203,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     Transition<FoodSearchEvent, FoodSearchState> transition,
   ) {
     super.onTransition(transition);
-    log('onTransition ${transition.currentState.foods.length}:${transition.nextState.foods.length}');
+    log('onTransition ${transition.currentState.quickSearchNames}:${transition.nextState.quickSearchNames}');
   }
 
   @override

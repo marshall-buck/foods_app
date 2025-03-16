@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,7 +79,7 @@ class _AnimatedQuickResults extends StatefulWidget {
 }
 
 class _AnimatedQuickResultsState extends State<_AnimatedQuickResults> {
-  bool _showQuickResults = false;
+  bool _showQuickResults = true;
 
   @override
   void initState() {
@@ -132,7 +134,7 @@ class _QuickResultsNamesContainer extends StatelessWidget {
               child: Text(
                 quickResult,
                 style: AppTextStyle.m3LabelSmall.copyWith(
-                  color: Theme.of(context).colorScheme.error,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
             );

@@ -7,9 +7,13 @@ sealed class FoodSearchEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class FoodSearchInitialized extends FoodSearchEvent {}
+final class FoodSearchInitialized extends FoodSearchEvent {
+  const FoodSearchInitialized();
+}
 
-final class FoodSearchEnded extends FoodSearchEvent {}
+final class FoodSearchEnded extends FoodSearchEvent {
+  const FoodSearchEnded();
+}
 
 final class FoodSearchListItemSelected extends FoodSearchEvent {
   const FoodSearchListItemSelected(this.id);

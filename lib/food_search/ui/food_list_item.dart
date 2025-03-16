@@ -4,8 +4,8 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/food_detail/ui/food_detail_page.dart';
 import 'package:foods_app/food_search/food_search.dart';
 
-//TODO: Maybe send hte id into the FoodDetialPage, unless there is another need for the
-// SearchREsultsPage neding to know the ActiveFoodsState
+//TODO: Maybe send the id into the FoodDetailPage, unless there is another need for the
+// SearchResultsPage needing to know the ActiveFoodsState
 class FoodListItem extends StatelessWidget {
   const FoodListItem({required this.food, super.key});
 

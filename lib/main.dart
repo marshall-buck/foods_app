@@ -82,7 +82,7 @@ class EntryPoint extends StatelessWidget {
               localFoodsDBRepo: localDbRepository,
               userPreferences: userPreferencesRepo,
               activeFoods: activeFoods,
-            ),
+            )..add(const FoodSearchInitialized()),
           ),
           BlocProvider<UserPreferencesBloc>(
             lazy: false,
