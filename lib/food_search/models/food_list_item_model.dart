@@ -29,19 +29,6 @@ class FoodListItemModel extends Equatable {
   final String description;
   final List<String> quickResultsAmountsList;
 
-  /// Creates a copy of the current [FoodListItemModel] with updated values.
-  FoodListItemModel copyWith({
-    int? id,
-    String? description,
-    List<String>? quickResultsAmountsList,
-  }) {
-    return FoodListItemModel(
-      id: id ?? this.id,
-      description: description ?? this.description,
-      quickResultsAmountsList: quickResultsAmountsList ?? this.quickResultsAmountsList,
-    );
-  }
-
   @override
   List<Object?> get props => [id, description, quickResultsAmountsList];
 }

@@ -113,8 +113,8 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
   Future<(List<FoodListItemModel>, List<String>)?> _queryFoods(
     String string,
   ) async {
-    final foodListItems = <FoodListItemModel>[];
     try {
+      final foodListItems = <FoodListItemModel>[];
       final results = await _localFoodsDBRepo.queryFoods(searchTerm: string);
       final quickSearchIds = _userPreferencesRepository.currentQuickSearchIds;
 
@@ -128,9 +128,10 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
           final foodItem = FoodListItemModel.fromFoodDTO(
             food: food, nutrientAmounts: nutrientAmounts, //nutrientAmounts,
           );
-
+          // log('FoodListItemModel created, hash: ${foodItem.hashCode}');
           foodListItems.add(foodItem);
         }
+        // log('foodListItems hash: ${foodListItems.hashCode}');
         return (foodListItems, quickSearchIds);
       }
     } catch (e) {
