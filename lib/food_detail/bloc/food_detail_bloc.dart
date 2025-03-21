@@ -9,30 +9,45 @@ import 'package:foods_app/domain/domain.dart';
 part 'food_detail_event.dart';
 part 'food_detail_state.dart';
 
+/// {@template food_detail_bloc}
+/// A BLoC that manages the state and events for food details.
+/// This includes handling active foods, modifiers, and nutrient data.
+/// {@endtemplate}
 class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
-  FoodDetailBloc({required ActiveFoods activeFoods, required LocalFoodsDBRepo localFoodsDBRepo})
-      : _activeFoods = activeFoods,
+  /// {@macro food_detail_bloc}
+  FoodDetailBloc({
+    required ActiveFoods activeFoods,
+    required LocalFoodsDBRepo localFoodsDBRepo,
+  })  : _activeFoods = activeFoods,
         _localFoodsDBRepo = localFoodsDBRepo,
         super(const FoodDetailState()) {
+    /// Listens for the [FetchFoodDetailEvent] to update the state with active foods and modifiers.
     on<FetchFoodDetailEvent>((event, emit) async {
       await emit.forEach(
         _activeFoods.activeFoodsStream,
-        onData: _onActiveFoodsData,
+        onData: _onActiveFoodsDataChange,
       );
       await emit.forEach(
         _activeFoods.activeModifierStream,
         onData: (_) => state.copyWith(modifier: _activeFoods.activeModifier),
       );
     });
+
+    /// Handles the [AddFoodDetailEvent] to add a food to the active foods queue.
     on<AddFoodDetailEvent>(_onAddFoodDetail);
     // on<ChangeUnitFoodDetailEvent>(_changeUnits);
   }
 
   final ActiveFoods _activeFoods;
   final LocalFoodsDBRepo _localFoodsDBRepo;
-  static const circularRangeFinderPercentChange = .05;
 
-  FoodDetailState _onActiveFoodsData(Queue<Food?> foods) {
+  /// The percentage change used for circular range finder adjustments.
+  // static const circularRangeFinderPercentChange = .05;
+
+  /// Handles the [FetchFoodDetailEvent].
+  ///
+  /// [foods] is the queue of active foods.
+  FoodDetailState _onActiveFoodsDataChange(Queue<Food?> foods) {
     final allNutrientIdsInQ = foods.expand((food) => food!.amountMap.keys.where((key) => key <= 9999)).toSet();
     // log('allNutrientIdsInQ: $allNutrientIdsInQ');
     return state.copyWith(
@@ -43,6 +58,9 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
     );
   }
 
+  /// Handles the [AddFoodDetailEvent].
+  ///
+  /// [AddFoodDetailEvent] contains the ID of the food to be added.
   Future<void> _onAddFoodDetail(AddFoodDetailEvent event, Emitter<FoodDetailState> emit) async {
     try {
       final food = await _localFoodsDBRepo.queryFood(id: event.id);
