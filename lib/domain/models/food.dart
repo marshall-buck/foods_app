@@ -2,9 +2,31 @@ import 'package:equatable/equatable.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
 
-/// Used for Food or nutrient amounts
-///                     amount,  amount, unit
-typedef AmountRecord = (double, String, String);
+class AmountHolder extends Equatable {
+  const AmountHolder({
+    required this.amount,
+    required this.unitString,
+  });
+
+  final double amount;
+
+  final String unitString;
+
+  AmountHolder copyWith({
+    double? amount,
+    String? unitString,
+  }) {
+    return AmountHolder(
+      amount: amount ?? this.amount,
+      unitString: unitString ?? this.unitString,
+    );
+  }
+
+  String get amountString => amount.convertAmountToString();
+
+  @override
+  List<Object?> get props => [amount, amountString, unitString];
+}
 
 class Food extends Equatable {
   const Food({
@@ -15,7 +37,7 @@ class Food extends Equatable {
     required this.amountMap,
   });
 
-  factory Food.fromFoodDTO(FoodDTO food, Map<int, AmountRecord> amountMap) {
+  factory Food.fromFoodDTO(FoodDTO food, Map<int, AmountHolder> amountMap) {
     return Food(
       id: food.id,
       name: food.description,
@@ -30,14 +52,14 @@ class Food extends Equatable {
   final double defaultAmount;
   final String unit;
 
-  final Map<int, AmountRecord> amountMap;
+  final Map<int, AmountHolder> amountMap;
 
   Food copyWith({
     int? id,
     String? name,
     double? defaultAmount,
     String? unit,
-    Map<int, AmountRecord>? amountMap,
+    Map<int, AmountHolder>? amountMap,
   }) {
     return Food(
       id: id ?? this.id,
@@ -49,9 +71,10 @@ class Food extends Equatable {
   }
 
   double foodAmount(double modifier) => defaultAmount * modifier;
-  double nutrientAmount(double modifier, int nutrientId) => (amountMap[nutrientId]?.$1 ?? 0) * modifier;
 
-  String getNutrientUnit(int nutrientId) => amountMap[nutrientId]?.$3 ?? '';
+  double nutrientAmount(double modifier, int nutrientId) => (amountMap[nutrientId]?.amount ?? 0) * modifier;
+
+  String getNutrientUnit(int nutrientId) => amountMap[nutrientId]?.unitString ?? '';
 
   @override
   List<Object?> get props => [id, name, defaultAmount, unit, amountMap];

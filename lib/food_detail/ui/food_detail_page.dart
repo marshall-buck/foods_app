@@ -12,12 +12,10 @@ class FoodDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final activeFoods = RepositoryProvider.of<ActiveFoods>(context);
-    final localFoodsDB = RepositoryProvider.of<LocalFoodsDBRepo>(context);
     return BlocProvider(
       create: (BuildContext context) => FoodDetailBloc(
-        activeFoods: activeFoods,
-        localFoodsDBRepo: localFoodsDB,
+        activeFoods: RepositoryProvider.of<ActiveFoods>(context),
+        localFoodsDBRepo: RepositoryProvider.of<LocalFoodsDBRepo>(context),
       )..add(FetchFoodDetailEvent()),
       child: const FoodDetailView(),
     );

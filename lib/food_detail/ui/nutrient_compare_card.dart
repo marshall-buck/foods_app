@@ -22,10 +22,13 @@ class NutrientCompareCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _NutrientCardTitle(
-            id: nutrientId,
+          Padding(
+            padding: const EdgeInsets.only(top: MagicSpacing.sp_4),
+            child: _NutrientCardTitle(
+              id: nutrientId,
+            ),
           ),
-          Expanded(child: NutrientDice(foods: foods, nutrientId: nutrientId)),
+          Expanded(child: _NutrientDice(foods: foods, nutrientId: nutrientId)),
         ],
       ),
     );
@@ -34,8 +37,8 @@ class NutrientCompareCard extends StatelessWidget {
   }
 }
 
-class NutrientDice extends StatelessWidget {
-  const NutrientDice({
+class _NutrientDice extends StatelessWidget {
+  const _NutrientDice({
     required this.foods,
     required this.nutrientId,
     super.key,
@@ -61,7 +64,7 @@ class NutrientDice extends StatelessWidget {
             return SizedBox(
               width: itemSize - 8,
               height: itemSize - 8,
-              child: NutrientItem(
+              child: _NutrientItem(
                 nutrientId: nutrientId,
                 food: food!,
               ),
@@ -73,8 +76,8 @@ class NutrientDice extends StatelessWidget {
   }
 }
 
-class NutrientItem extends StatelessWidget {
-  const NutrientItem({
+class _NutrientItem extends StatelessWidget {
+  const _NutrientItem({
     required this.nutrientId,
     required this.food,
     super.key,

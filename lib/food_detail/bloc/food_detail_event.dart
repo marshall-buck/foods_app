@@ -17,11 +17,12 @@ final class AddFoodDetailEvent extends FoodDetailEvent {
   List<Object> get props => [id];
 }
 
-final class ChangeUnitFoodDetailEvent extends FoodDetailEvent {
-  const ChangeUnitFoodDetailEvent({required this.add, required this.id});
-  final bool add;
-  final int id;
+final class ModifyAmountFoodDetailEvent extends FoodDetailEvent {
+  const ModifyAmountFoodDetailEvent({
+    required this.modifier,
+  });
+  final double modifier;
 
   @override
-  List<Object> get props => [id, add];
+  List<Object> get props => [modifier];
 }

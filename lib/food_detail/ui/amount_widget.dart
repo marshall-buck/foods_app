@@ -17,5 +17,3 @@ class AmountWidget extends StatelessWidget {
     );
   }
 }
-
-//  '${food.amountRecordsMap[id]!.$2} ${food.amountRecordsMap[id]!.$3}',

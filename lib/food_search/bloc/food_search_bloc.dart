@@ -10,6 +10,8 @@ import 'package:foods_app/food_search/models/food_list_item_model.dart';
 part 'food_search_event.dart';
 part 'food_search_state.dart';
 
+//BUG: QuickSEarch names disappears from search bar after clear.
+
 /// {@template food_search_bloc}
 /// A BLoC that handles food search events and states.
 /// {@endtemplate}
@@ -61,7 +63,7 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     FoodSearchTextCleared event,
     Emitter<FoodSearchState> emit,
   ) =>
-      emit(const FoodSearchState());
+      emit(state.copyWith(quickSearchIds: _userPreferencesRepository.currentQuickSearchIds, foods: const []));
 
   /// On [FoodSearchTextChanged] event, will emit a new state based on results.
   Future<void> _onTextChanged(
@@ -181,7 +183,10 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     Transition<FoodSearchEvent, FoodSearchState> transition,
   ) {
     super.onTransition(transition);
-    log('onTransition ${transition.currentState.quickSearchNames}:${transition.nextState.quickSearchNames}');
+    log('''
+          onTransition: transition.currentState.quickSearchNames - transition.nextState.quickSearchNames
+          ${transition.currentState.quickSearchNames}:${transition.nextState.quickSearchNames}
+          ''');
   }
 
   @override

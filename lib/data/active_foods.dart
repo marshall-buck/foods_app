@@ -48,12 +48,17 @@ class ActiveFoods {
     if (_activeFoods.length == maxFoodsAllowed) {
       _activeFoods.removeFirst();
     }
-    final map = <int, AmountRecord>{};
-    map[food.id] = (MagicNumbers.defaultFoodAmount, MagicNumbers.defaultFoodAmount.convertAmountToString(), 'g');
+    final map = <int, AmountHolder>{};
+
+    map[food.id] = const AmountHolder(
+      amount: MagicNumbers.defaultFoodAmount,
+      // amountString: MagicNumbers.defaultFoodAmount.convertAmountToString(),
+      unitString: 'g',
+    );
     for (final item in food.nutrients.entries) {
       final id = item.key;
       final unit = NutrientDTO.usdaDBNutrientLookupTable[id]!['unit']!;
-      map[id] = (item.value, item.value.convertAmountToString(), unit);
+      map[id] = AmountHolder(amount: item.value, unitString: unit);
     }
     final convertedFood = Food.fromFoodDTO(food, map);
 
