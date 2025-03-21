@@ -53,18 +53,16 @@ class FoodDescriptionCard extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 2,
+          // flex: 2,
           child: Padding(
             padding: const EdgeInsets.only(
               right: MagicSpacing.sp_4,
             ),
-            child: Expanded(
-              child: Text(
-                food.name,
-                style: Theme.of(context).textTheme.bodySmall,
-                maxLines: 4, //Limit the number of lines
-                overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
-              ),
+            child: Text(
+              food.name,
+              style: Theme.of(context).textTheme.bodySmall,
+              maxLines: 4, //Limit the number of lines
+              overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
             ),
           ),
         ),

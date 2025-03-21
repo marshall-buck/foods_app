@@ -9,7 +9,7 @@ class AmountWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '$amount: $unit',
+      '$amount  $unit',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.titleMedium!.copyWith(color: textColor),
       maxLines: 1, //Limit the number of lines
