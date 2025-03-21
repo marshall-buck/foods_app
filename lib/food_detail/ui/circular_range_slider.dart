@@ -25,7 +25,7 @@ class CircularRangeSlider extends StatefulWidget {
   final Color trackColor;
   final Color handleColor;
   final Widget? child;
-  // final int? id;
+
   final void Function(RotationDirection, DragUpdateDetails)? onPanUpdate;
   final bool logging;
 
@@ -105,8 +105,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           });
         },
         child: Stack(
-          //
-          alignment: Alignment.center,
+          // alignment: Alignment.bottomCenter,
           children: [
             CustomPaint(
               size: Size.square(widget.trackDiameter),

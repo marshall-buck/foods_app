@@ -37,10 +37,7 @@ class FoodDetailView extends StatelessWidget {
                   leftPane: FoodDescriptionCardList(
                     foods: state.foodsList,
                   ),
-                  mainPane: const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: SizedBox(height: 300, child: NutrientCompareCards()),
-                  ),
+                  mainPane: SizedBox(height: 300, child: NutrientCompareCards()),
                 );
 
               case FoodDetailStatus.error:

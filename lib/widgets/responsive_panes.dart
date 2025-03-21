@@ -12,10 +12,7 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Get the current theme
-
-    // Get the background color
-    final mainContainerColor = theme.colorScheme.surfaceContainerLowest;
+    final mainContainerColor = Theme.of(context).colorScheme.surfaceContainerLowest;
 
     return SafeArea(
       child: Padding(
