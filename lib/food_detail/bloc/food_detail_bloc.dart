@@ -35,11 +35,18 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
 
     /// Handles the [AddFoodDetailEvent] to add a food to the active foods queue.
     on<AddFoodDetailEvent>(_onAddFoodDetail);
-    // on<ChangeUnitFoodDetailEvent>(_changeUnits);
+    on<ModifyAmountFoodDetailEvent>(_changeModifier);
   }
 
   final ActiveFoods _activeFoods;
   final LocalFoodsDBRepo _localFoodsDBRepo;
+
+  /// Handles the [ModifyAmountFoodDetailEvent] to change the active modifier.
+  void _changeModifier(ModifyAmountFoodDetailEvent event, Emitter<FoodDetailState> emit) {
+    // log('changeModifier: ${event.modifier}');
+    _activeFoods.changeModifier(event.modifier);
+    // emit(state.copyWith(modifier: _activeFoods.activeModifier));
+  }
 
   /// The percentage change used for circular range finder adjustments.
   // static const circularRangeFinderPercentChange = .05;

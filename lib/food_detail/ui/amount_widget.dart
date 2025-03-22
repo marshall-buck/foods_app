@@ -3,7 +3,12 @@ import 'package:foods_app/common/extensions.dart';
 
 // TODO: Change to use AmountHolder
 class AmountWidget extends StatelessWidget {
-  const AmountWidget({required this.textColor, required this.amount, required this.unit, super.key});
+  const AmountWidget({
+    required this.textColor,
+    required this.amount,
+    required this.unit,
+    super.key,
+  });
   final Color textColor;
   final double amount;
   final String unit;

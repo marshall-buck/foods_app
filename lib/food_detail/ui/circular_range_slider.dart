@@ -105,7 +105,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           });
         },
         child: Stack(
-          // alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           children: [
             CustomPaint(
               size: Size.square(widget.trackDiameter),
