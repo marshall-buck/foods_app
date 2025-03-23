@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:foods_app/common/magic.dart';
-import 'package:foods_app/domain/domain.dart';
+
+import 'package:foods_app/food_detail/food_detail.dart';
 import 'package:foods_app/food_detail/ui/ui.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
-  CircularRangeSliderPopUp({required this.context, required this.id, required this.food});
+  CircularRangeSliderPopUp({required this.context, required this.id});
   final BuildContext context;
   final int id;
-  final Food food;
+
   @override
   Color? get barrierColor => Theme.of(context).colorScheme.primaryContainer.withValues(alpha: MagicOpacity.op_70);
 
@@ -33,10 +35,8 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                 color: Theme.of(context).colorScheme.surface,
               ),
               child: CircularRangeSlider(
-                onPanUpdate: (direction, details) {
-                  // di.get<FoodAmountManager>().changeUnits(direction, id);
-                },
-                // id: id,
+                // logging: true,
+                onPanUpdate: (direction, details) {},
                 trackStroke: MagicNumbers.circularRangeSliderTrackStroke,
                 handleRadius: MagicNumbers.circularRangeSliderHandleRadius,
                 handleColor: Theme.of(context).colorScheme.primary,

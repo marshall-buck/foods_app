@@ -43,7 +43,7 @@ class _LeftAlignedFoodItem extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onLongPress: () {
                 Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(context: context, id: food.id, food: food),
+                  CircularRangeSliderPopUp<void>(context: context, id: food.id),
                 );
               },
               child: ClipOval(
@@ -120,7 +120,7 @@ class _RightAlignedFoodITem extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onLongPress: () {
                 Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(context: context, id: food.id, food: food),
+                  CircularRangeSliderPopUp<void>(context: context, id: food.id),
                 );
               },
               child: ClipOval(
