@@ -13,7 +13,7 @@ import 'package:usda_db_package/usda_db_package.dart';
 /// [NutrientDTO.fromUsdaDB] or [NutrientDTO.fromMapEntry] factory constructors.
 ///
 /// The [NutrientDTO.fromUsdaDB] factory constructor creates a [NutrientDTO]
-/// instance from a [SrLegacyNutrientModel] object.
+/// instance from a [UsdaNutrientModel] object.
 ///
 /// The [NutrientDTO.fromMapEntry] factory constructor creates a [NutrientDTO]
 /// instance from a [MapEntry<int, double>] object, which represents a single
@@ -29,8 +29,8 @@ class NutrientDTO extends Equatable {
     required this.unit,
   });
 
-  /// Creates a [NutrientDTO] instance from a [SrLegacyNutrientModel] object.
-  factory NutrientDTO.fromUsdaDB(SrLegacyNutrientModel nutrient) {
+  /// Creates a [NutrientDTO] instance from a [UsdaNutrientModel] object.
+  factory NutrientDTO.fromUsdaDB(UsdaNutrientModel nutrient) {
     return NutrientDTO(
       id: nutrient.id,
       name: nutrient.name,
@@ -312,5 +312,5 @@ class NutrientDTO extends Equatable {
   };
 
   static const usdaDBNutrientLookupTable =
-      SrLegacyNutrientModel.originalNutrientTableEdit;
+      UsdaNutrientModel.originalNutrientTableEdit;
 }

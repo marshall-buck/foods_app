@@ -7,7 +7,7 @@ void main() {
     group(' FoodDTO.fromUsdaDB', () {
       test('converts to FoodDTO', () {
         final food = FoodDTO.fromUsdaDB(
-          const SrLegacyFoodModel(
+          const UsdaFoodModel(
             id: 167516,
             description: 'Waffles, buttermilk, frozen, ready-to-heat',
             nutrients: {
@@ -31,7 +31,7 @@ void main() {
     group('allNutrientDTOs getter', () {
       test('gets all nutrients', () {
         final food = FoodDTO.fromUsdaDB(
-          const SrLegacyFoodModel(
+          const UsdaFoodModel(
             id: 167516,
             description: 'Waffles, buttermilk, frozen, ready-to-heat',
             nutrients: {

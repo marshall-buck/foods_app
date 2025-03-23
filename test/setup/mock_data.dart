@@ -4,18 +4,18 @@ import 'package:foods_app/data/data.dart';
 import 'package:usda_db_package/usda_db_package.dart';
 
 const protein =
-    SrLegacyNutrientModel(id: 1003, amount: 20, unit: 'g', name: 'Protein');
+    UsdaNutrientModel(id: 1003, amount: 20, unit: 'g', name: 'Protein');
 const totalFat =
-    SrLegacyNutrientModel(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
-const totalCarbs = SrLegacyNutrientModel(
+    UsdaNutrientModel(id: 1004, amount: 15, unit: 'g', name: 'Total Fat');
+const totalCarbs = UsdaNutrientModel(
   id: 1005,
   amount: 30,
   unit: 'g',
   name: 'Total Carbohydrates',
 );
 const water =
-    SrLegacyNutrientModel(id: 1051, amount: 500, unit: 'g', name: 'Water');
-const totalSugars = SrLegacyNutrientModel(
+    UsdaNutrientModel(id: 1051, amount: 500, unit: 'g', name: 'Water');
+const totalSugars = UsdaNutrientModel(
   id: 2000,
   amount: 10,
   unit: 'g',
@@ -38,7 +38,7 @@ const food1 = FoodDTO(
 );
 
 final food2 = FoodDTO.fromUsdaDB(
-  const SrLegacyFoodModel(
+  const UsdaFoodModel(
     id: 167516,
     description: 'Waffles, buttermilk, frozen, ready-to-heat',
     nutrients: {

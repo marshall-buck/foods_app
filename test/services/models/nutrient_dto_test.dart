@@ -19,7 +19,7 @@ void main() {
     group('NutrientDTO.fromUsdaDB', () {
       test("factory init's correctly", () {
         final nutrient = NutrientDTO.fromUsdaDB(
-          const SrLegacyNutrientModel(
+          const UsdaNutrientModel(
             id: 1004,
             amount: .55,
             name: 'Protein',

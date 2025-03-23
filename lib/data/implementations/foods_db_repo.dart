@@ -9,7 +9,7 @@ import 'package:usda_db_package/usda_db_package.dart';
 class FoodsDBRepo implements FoodsDB {
   /// {@macro foods_db_repo}
   FoodsDBRepo(this._localDBDataProvider);
-  final UsdaDB _localDBDataProvider;
+  final UsdaDbDAO _localDBDataProvider;
 
   /// Provides a [FoodDTO] object from the database.
   /// If the food ID is not found in the database, the Future returns null.

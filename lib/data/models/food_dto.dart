@@ -21,7 +21,7 @@ class FoodDTO extends Equatable {
   });
 
   /// Creates a [FoodDTO] instance from a [SrLegacyFoodModel] object.
-  factory FoodDTO.fromUsdaDB(SrLegacyFoodModel food) {
+  factory FoodDTO.fromUsdaDB(UsdaFoodModel food) {
     return FoodDTO(
       id: food.id,
       description: food.description,

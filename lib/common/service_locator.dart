@@ -6,6 +6,7 @@ import 'package:foods_app/ui/core/quick_search_manager.dart';
 import 'package:foods_app/ui/ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:usda_db_package/usda_db_package.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 /// Registers all get_it dependencies.
@@ -42,7 +43,7 @@ void registerDependencies() {
       () async {
         // initializes auto_hyphenating_text package,
         await initHyphenation();
-        final usdaDB = UsdaDB();
+        final usdaDB = UsdaDbDAO();
         await usdaDB.init();
         assert(usdaDB.isDataLoaded == true, 'usdaDB is not loaded');
         return FoodsDBRepo(usdaDB);
