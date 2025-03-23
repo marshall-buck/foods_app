@@ -32,6 +32,7 @@ class FoodAmountManager extends ChangeNotifier {
     }
   }
 
+  /// This is called in the CircularRangeSlider when the user rotates the handle.
   void changeUnits(RotationDirection direction, int id) {
     assert(
       _amountStrings.isNotEmpty,
