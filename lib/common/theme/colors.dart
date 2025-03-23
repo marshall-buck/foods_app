@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/common/text_styles.dart';
+import 'package:foods_app/common/theme/text_styles.dart';
 
 class AppTheme {
   const AppTheme(this.textTheme);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
-class ResponsiveLayout extends StatelessWidget {
-  const ResponsiveLayout({
+class ResponsivePanes extends StatelessWidget {
+  const ResponsivePanes({
     required this.leftPane,
     required this.mainPane,
     super.key,

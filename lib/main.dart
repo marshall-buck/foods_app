@@ -5,6 +5,7 @@ import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/app.dart';
 
 import 'package:foods_app/data/data.dart';
@@ -91,6 +92,11 @@ class EntryPoint extends StatelessWidget {
             )..add(
                 const UserPreferencesInitialized(),
               ),
+          ),
+          BlocProvider<AdjustAmountBloc>(
+            create: (BuildContext context) => AdjustAmountBloc(
+              activeFoods: activeFoods,
+            ),
           ),
         ],
         child: const App(),

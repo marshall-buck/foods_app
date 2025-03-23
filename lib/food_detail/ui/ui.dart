@@ -1,5 +1,4 @@
-export 'amount_widget.dart';
-export 'circular_range_slider.dart';
+export '../../common/widgets/amount_widget.dart';
 
 export 'food_description_card.dart';
 export 'food_detail_page.dart';

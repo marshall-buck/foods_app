@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/data/data.dart';
-import 'package:foods_app/domain/models/food.dart';
-import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
-import 'package:foods_app/food_detail/ui/ui.dart';
-import 'package:foods_app/widgets/responsive_panes.dart';
+import 'package:foods_app/domain/domain.dart';
+
+import 'package:foods_app/food_detail/food_detail.dart';
 
 class FoodDetailPage extends StatelessWidget {
   const FoodDetailPage({super.key});
@@ -33,11 +32,11 @@ class FoodDetailView extends StatelessWidget {
           builder: (context, state) {
             switch (state.status) {
               case FoodDetailStatus.success:
-                return ResponsiveLayout(
+                return ResponsivePanes(
                   leftPane: FoodDescriptionCardList(
                     foods: state.foodsList,
                   ),
-                  mainPane: SizedBox(height: 300, child: NutrientCompareCards()),
+                  mainPane: const SizedBox(height: 300, child: NutrientCompareCards()),
                 );
 
               case FoodDetailStatus.error:

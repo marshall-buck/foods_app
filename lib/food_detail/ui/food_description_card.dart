@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
-import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/food_detail/food_detail.dart';
 
 class FoodDescriptionCard extends StatelessWidget {

@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foods_app/adjust_amount/adjust_amount.dart';
 
-import 'package:foods_app/common/magic.dart';
-
-import 'package:foods_app/food_detail/food_detail.dart';
-import 'package:foods_app/food_detail/ui/ui.dart';
+import 'package:foods_app/common/common.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
   CircularRangeSliderPopUp({required this.context, required this.id});
@@ -36,7 +37,15 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
               ),
               child: CircularRangeSlider(
                 // logging: true,
-                onPanUpdate: (direction, details) {},
+                onPanUpdate: (direction, details) {
+                  // final percentage = direction == RotationDirection.clockwise
+                  //     ? (1 + (circularRangeFinderPercentChange / 100))
+                  //     : (1 - (circularRangeFinderPercentChange / 100));
+                  log('add: ${direction == RotationDirection.clockwise}');
+                  context
+                      .read<AdjustAmountBloc>()
+                      .add(AdjustAmountEvent(add: direction == RotationDirection.clockwise));
+                },
                 trackStroke: MagicNumbers.circularRangeSliderTrackStroke,
                 handleRadius: MagicNumbers.circularRangeSliderHandleRadius,
                 handleColor: Theme.of(context).colorScheme.primary,

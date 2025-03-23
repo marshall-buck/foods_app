@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 enum RotationDirection { clockwise, counterclockwise }
 
 // TODO:use speed indicator icons to adjust speed.
+
 class CircularRangeSlider extends StatefulWidget {
   const CircularRangeSlider({
     required this.trackStroke,
@@ -86,7 +87,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           final dy = details.localPosition.dy - center.dy;
           final newAngle = math.atan2(dy, dx);
 
-          final direction = panHandler(details, widget.trackDiameter / 2);
+          final direction = _panHandler(details, widget.trackDiameter / 2);
           // if (widget.onPanUpdate != null) {
           //   widget.onPanUpdate!(direction, details);
           // }
@@ -254,7 +255,7 @@ class _CircularRangeSliderHandlePainter extends CustomPainter {
   }
 }
 
-RotationDirection panHandler(DragUpdateDetails d, double radius) {
+RotationDirection _panHandler(DragUpdateDetails d, double radius) {
   /// Location of the pointer
   final onTop = d.localPosition.dy <= radius;
   final onLeftSide = d.localPosition.dx <= radius;

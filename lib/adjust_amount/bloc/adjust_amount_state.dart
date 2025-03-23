@@ -1,10 +1,10 @@
 part of 'adjust_amount_bloc.dart';
 
-sealed class AdjustAmountState extends Equatable {
-  const AdjustAmountState();
-  
-  @override
-  List<Object> get props => [];
-}
+final class AdjustAmountState extends Equatable {
+  const AdjustAmountState({required this.modifier});
 
-final class AdjustAmountInitial extends AdjustAmountState {}
+  final double modifier;
+
+  @override
+  List<Object> get props => [modifier];
+}
