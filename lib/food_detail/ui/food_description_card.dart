@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
-import 'package:foods_app/food_detail/food_detail.dart';
 
 class FoodDescriptionCard extends StatelessWidget {
   const FoodDescriptionCard({
@@ -43,24 +41,17 @@ class _LeftAlignedFoodItem extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onLongPress: () {
                 Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(context: context, id: food.id),
+                  CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
                 );
               },
               child: ClipOval(
                 child: ColoredBox(
                   color: Theme.of(context).colorScheme.surfaceBright,
                   child: Center(
-                    child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                      selector: (state) {
-                        return state.modifier;
-                      },
-                      builder: (context, state) {
-                        return AmountWidget(
-                          amount: food.foodAmount(state),
-                          unit: food.unit,
-                          textColor: Theme.of(context).colorScheme.onSurface,
-                        );
-                      },
+                    child: AmountWidget(
+                      amount: food.defaultAmount,
+                      unit: food.unit,
+                      textColor: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -120,24 +111,17 @@ class _RightAlignedFoodITem extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onLongPress: () {
                 Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(context: context, id: food.id),
+                  CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
                 );
               },
               child: ClipOval(
                 child: ColoredBox(
                   color: Theme.of(context).colorScheme.surfaceBright,
                   child: Center(
-                    child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                      selector: (state) {
-                        return state.modifier;
-                      },
-                      builder: (context, state) {
-                        return AmountWidget(
-                          amount: food.foodAmount(state),
-                          unit: food.unit,
-                          textColor: Theme.of(context).colorScheme.onSurface,
-                        );
-                      },
+                    child: AmountWidget(
+                      amount: food.defaultAmount,
+                      unit: food.unit,
+                      textColor: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ),

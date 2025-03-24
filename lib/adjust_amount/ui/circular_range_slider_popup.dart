@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/adjust_amount/adjust_amount.dart';
@@ -7,9 +5,10 @@ import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
-  CircularRangeSliderPopUp({required this.context, required this.id});
+  CircularRangeSliderPopUp({required this.context, required this.amount, required this.unit});
   final BuildContext context;
-  final int id;
+  final double amount;
+  final String unit;
 
   @override
   Color? get barrierColor => Theme.of(context).colorScheme.primaryContainer.withValues(alpha: MagicOpacity.op_70);
@@ -38,10 +37,6 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
               child: CircularRangeSlider(
                 // logging: true,
                 onPanUpdate: (direction, details) {
-                  // final percentage = direction == RotationDirection.clockwise
-                  //     ? (1 + (circularRangeFinderPercentChange / 100))
-                  //     : (1 - (circularRangeFinderPercentChange / 100));
-                  log('add: ${direction == RotationDirection.clockwise}');
                   context
                       .read<AdjustAmountBloc>()
                       .add(AdjustAmountEvent(add: direction == RotationDirection.clockwise));
@@ -52,8 +47,8 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                 trackDiameter: MagicNumbers.circularRangeSliderTrackDiameter,
                 trackColor: Theme.of(context).colorScheme.onSurface,
                 child: AmountWidget(
-                  amount: 0.9,
-                  unit: 'g',
+                  amount: amount,
+                  unit: unit,
                   textColor: Theme.of(context).colorScheme.onSurface,
                 ),
               ),

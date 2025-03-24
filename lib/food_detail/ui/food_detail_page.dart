@@ -68,11 +68,12 @@ class FoodDescriptionCardList extends StatelessWidget {
       itemBuilder: (context, index) {
         final food = foods[index];
         return SizedBox(
-            height: tileSize.dimension,
-            child: FoodDescriptionCard(
-              food: food!,
-              isEven: index.isEven,
-            ));
+          height: tileSize.dimension,
+          child: FoodDescriptionCard(
+            food: food!,
+            isEven: index.isEven,
+          ),
+        );
       },
     );
   }

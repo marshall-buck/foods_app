@@ -22,8 +22,9 @@ class ActiveFoods {
   /// A stream of the active modifier.
   Stream<double> get activeModifierStream => _activeModifierStreamController.stream.asBroadcastStream();
 
-  /// The current active modifier.  This is a double that represents the percentage change to multiply an amount by,
-  /// to get an adjusted amount. It is to be used when the user updates and active food in the ui.
+  /// The current active modifier.  A double representing a percentage.
+  /// The default value is 1.0, which represents no change.
+  /// This value is used (originalFoodValue * activeModifier) to calculate the current food value.
   double get activeModifier => _activeModifierStreamController.value;
 
   /// The current active foods Queue.
@@ -32,16 +33,10 @@ class ActiveFoods {
   static const maxFoodsAllowed = MagicNumbers.maxActiveFoodsAllowed;
 
   /// Changes the active modifier.
-  ///
-  /// [double] is the new modifier value.
-  void changeModifier(double double) {
-    _activeModifierStreamController.add(double);
-  }
+  void changeModifier(double double) => _activeModifierStreamController.add(double);
 
   /// Resets the active modifier to its default value.
-  void resetModifier() {
-    _activeModifierStreamController.add(1);
-  }
+  void resetModifier() => _activeModifierStreamController.add(1);
 
   /// Adds a [Food] to the end active foods Queue, and updates the Stream.
   void addFood(FoodDTO food) {

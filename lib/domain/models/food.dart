@@ -70,7 +70,7 @@ class Food extends Equatable {
     );
   }
 
-  double foodAmount(double modifier) => defaultAmount * modifier;
+  // double foodAmount(double modifier) => defaultAmount * modifier;
 
   double nutrientAmount(double modifier, int nutrientId) => (amountMap[nutrientId]?.amount ?? 0) * modifier;
 

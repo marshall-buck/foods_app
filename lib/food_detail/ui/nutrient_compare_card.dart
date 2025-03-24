@@ -6,8 +6,6 @@ import 'package:foods_app/domain/domain.dart';
 
 import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 
-import 'package:foods_app/food_detail/ui/ui.dart';
-
 class NutrientCompareCard extends StatelessWidget {
   const NutrientCompareCard({required this.nutrientId, required this.foods, super.key});
 
@@ -41,7 +39,6 @@ class _NutrientDice extends StatelessWidget {
   const _NutrientDice({
     required this.foods,
     required this.nutrientId,
-    super.key,
   });
 
   final List<Food?> foods;
@@ -80,7 +77,6 @@ class _NutrientItem extends StatelessWidget {
   const _NutrientItem({
     required this.nutrientId,
     required this.food,
-    super.key,
   });
 
   final int nutrientId;
