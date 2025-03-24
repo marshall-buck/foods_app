@@ -166,32 +166,32 @@ class FoodSearchBloc extends Bloc<FoodSearchEvent, FoodSearchState> {
     return matches.reversed.toList();
   }
 
-  @override
-  void onEvent(FoodSearchEvent event) {
-    super.onEvent(event);
-    log('FoodSearchBloc onEvent $event');
-  }
+  // @override
+  // void onEvent(FoodSearchEvent event) {
+  //   super.onEvent(event);
+  //   log('FoodSearchBloc onEvent $event');
+  // }
 
-  @override
-  void onChange(Change<FoodSearchState> change) {
-    super.onChange(change);
-    log('onChange: change.currentState.quickSearchNames: ${change.currentState.quickSearchNames}');
-  }
+  // @override
+  // void onChange(Change<FoodSearchState> change) {
+  //   super.onChange(change);
+  //   log('onChange: change.currentState.quickSearchNames: ${change.currentState.quickSearchNames}');
+  // }
 
-  @override
-  void onTransition(
-    Transition<FoodSearchEvent, FoodSearchState> transition,
-  ) {
-    super.onTransition(transition);
-    log('''
-          onTransition: transition.currentState.quickSearchNames - transition.nextState.quickSearchNames
-          ${transition.currentState.quickSearchNames}:${transition.nextState.quickSearchNames}
-          ''');
-  }
+  // @override
+  // void onTransition(
+  //   Transition<FoodSearchEvent, FoodSearchState> transition,
+  // ) {
+  //   super.onTransition(transition);
+  //   log('''
+  //         onTransition: transition.currentState.quickSearchNames - transition.nextState.quickSearchNames
+  //         ${transition.currentState.quickSearchNames}:${transition.nextState.quickSearchNames}
+  //         ''');
+  // }
 
-  @override
-  void onError(Object error, StackTrace stackTrace) {
-    super.onError(error, stackTrace);
-    log('onError $error');
-  }
+  // @override
+  // void onError(Object error, StackTrace stackTrace) {
+  //   super.onError(error, stackTrace);
+  //   log('onError $error');
+  // }
 }

@@ -46,10 +46,17 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                 handleColor: Theme.of(context).colorScheme.primary,
                 trackDiameter: MagicNumbers.circularRangeSliderTrackDiameter,
                 trackColor: Theme.of(context).colorScheme.onSurface,
-                child: AmountWidget(
-                  amount: amount,
-                  unit: unit,
-                  textColor: Theme.of(context).colorScheme.onSurface,
+                child: BlocSelector<AdjustAmountBloc, AdjustAmountState, double>(
+                  selector: (state) {
+                    return state.modifier;
+                  },
+                  builder: (context, state) {
+                    return AmountWidget(
+                      amount: amount * state,
+                      unit: unit,
+                      textColor: Theme.of(context).colorScheme.onSurface,
+                    );
+                  },
                 ),
               ),
             ),

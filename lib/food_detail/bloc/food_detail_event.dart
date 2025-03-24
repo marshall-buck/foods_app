@@ -18,11 +18,5 @@ final class AddFoodDetailEvent extends FoodDetailEvent {
 }
 
 final class ModifyAmountFoodDetailEvent extends FoodDetailEvent {
-  const ModifyAmountFoodDetailEvent({
-    required this.modifier,
-  });
-  final double modifier;
-
-  @override
-  List<Object> get props => [modifier];
+  const ModifyAmountFoodDetailEvent();
 }

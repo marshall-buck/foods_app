@@ -27,26 +27,29 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
         _activeFoods.activeFoodsStream,
         onData: _onActiveFoodsDataChange,
       );
-      await emit.forEach(
-        _activeFoods.activeModifierStream,
-        onData: (_) => state.copyWith(modifier: _activeFoods.activeModifier),
-      );
     });
 
     /// Handles the [AddFoodDetailEvent] to add a food to the active foods queue.
     on<AddFoodDetailEvent>(_onAddFoodDetail);
-    on<ModifyAmountFoodDetailEvent>(_changeModifier);
+    on<ModifyAmountFoodDetailEvent>(
+      (event, emit) async {
+        await emit.forEach(
+          _activeFoods.activeModifierStream,
+          onData: (data) => state.copyWith(modifier: data),
+        );
+      },
+    );
   }
 
   final ActiveFoods _activeFoods;
   final LocalFoodsDBRepo _localFoodsDBRepo;
 
   /// Handles the [ModifyAmountFoodDetailEvent] to change the active modifier.
-  void _changeModifier(ModifyAmountFoodDetailEvent event, Emitter<FoodDetailState> emit) {
-    // log('changeModifier: ${event.modifier}');
-    _activeFoods.changeModifier(event.modifier);
-    // emit(state.copyWith(modifier: _activeFoods.activeModifier));
-  }
+  // void _changeModifier(ModifyAmountFoodDetailEvent event, Emitter<FoodDetailState> emit) {
+  //   // log('changeModifier: ${event.modifier}');
+  //   _activeFoods.changeModifier(event.modifier);
+  //   // emit(state.copyWith(modifier: _activeFoods.activeModifier));
+  // }
 
   /// The percentage change used for circular range finder adjustments.
   // static const circularRangeFinderPercentChange = .05;
@@ -143,7 +146,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
   @override
   void onChange(Change<FoodDetailState> change) {
     super.onChange(change);
-    log('FoodDetailBloc onChange');
+    log('FoodDetailBloc onChange: ${state.modifier}');
   }
 
   @override
@@ -151,7 +154,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
     Transition<FoodDetailEvent, FoodDetailState> transition,
   ) {
     super.onTransition(transition);
-    log('FoodDetailBloc onTransition');
+    log('FoodDetailBloc onTransition: ${transition.currentState.modifier} -> ${transition.nextState.modifier}');
   }
 
   @override

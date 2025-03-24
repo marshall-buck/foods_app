@@ -34,7 +34,7 @@ class AdjustAmountBloc extends Bloc<AdjustAmountEvent, AdjustAmountState> {
 
   /// This is called in the CircularRangeSlider when the user rotates the handle.
   void _changeUnits(AdjustAmountEvent event, Emitter<AdjustAmountState> emit) {
-    log('_activeFoods.activeModifier before: ${_activeFoods.activeModifier}');
+    // log('_activeFoods.activeModifier before: ${_activeFoods.activeModifier}');
     final currentModifier = _activeFoods.activeModifier;
 
     final percentage = event.add == true
@@ -43,6 +43,6 @@ class AdjustAmountBloc extends Bloc<AdjustAmountEvent, AdjustAmountState> {
     _activeFoods.changeModifier(percentage * currentModifier);
     emit(AdjustAmountState(modifier: _activeFoods.activeModifier));
 
-    log('_activeFoods.activeModifier after: ${_activeFoods.activeModifier}');
+    // log('_activeFoods.activeModifier after: ${_activeFoods.activeModifier}');
   }
 }
