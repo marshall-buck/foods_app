@@ -70,9 +70,7 @@ class Food extends Equatable {
     );
   }
 
-  // double foodAmount(double modifier) => defaultAmount * modifier;
-
-  double nutrientAmount(double modifier, int nutrientId) => (amountMap[nutrientId]?.amount ?? 0) * modifier;
+  double nutrientAmount(int nutrientId) => amountMap[nutrientId]?.amount ?? 0;
 
   String getNutrientUnit(int nutrientId) => amountMap[nutrientId]?.unitString ?? '';
 

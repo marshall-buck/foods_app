@@ -1,6 +1,7 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
@@ -84,11 +85,18 @@ class _NutrientItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final amount = food.nutrientAmount(nutrientId);
+    final unit = food.getNutrientUnit(nutrientId);
     return AspectRatio(
       aspectRatio: 1,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onLongPress: () {},
+        onLongPress: () {
+          context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
+          Navigator.of(context).push(
+            CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit),
+          );
+        },
         child: ClipOval(
           child: ColoredBox(
             color: Theme.of(context).colorScheme.surfaceBright,
@@ -100,7 +108,7 @@ class _NutrientItem extends StatelessWidget {
                 builder: (context, state) {
                   return AmountWidget(
                     textColor: Theme.of(context).colorScheme.onSurface,
-                    amount: food.nutrientAmount(state, nutrientId),
+                    amount: food.nutrientAmount(nutrientId) * state,
                     unit: food.getNutrientUnit(nutrientId),
                   );
                 },

@@ -35,7 +35,7 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
       (event, emit) async {
         await emit.forEach(
           _activeFoods.activeModifierStream,
-          onData: (data) => state.copyWith(modifier: data),
+          onData: (_) => state.copyWith(modifier: _activeFoods.activeModifier),
         );
       },
     );
