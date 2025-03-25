@@ -21,7 +21,7 @@ class FoodDescriptionCard extends StatelessWidget {
       case true:
         return _LeftAlignedFoodItem(food: food);
       case false:
-        return isEven ? _LeftAlignedFoodItem(food: food) : _RightAlignedFoodITem(food: food);
+        return _RightAlignedFoodITem(food: food);
     }
   }
 }
@@ -31,6 +31,14 @@ class _LeftAlignedFoodItem extends StatelessWidget {
     required this.food,
   });
   final Food food;
+
+  void _onLongPress(BuildContext context) {
+    context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
+    Navigator.of(context).push(
+      CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -41,12 +49,7 @@ class _LeftAlignedFoodItem extends StatelessWidget {
             aspectRatio: 1,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onLongPress: () {
-                context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
-                Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
-                );
-              },
+              onLongPress: () => _onLongPress(context),
               child: ClipOval(
                 child: ColoredBox(
                   color: Theme.of(context).colorScheme.surfaceBright,
@@ -95,6 +98,14 @@ class _RightAlignedFoodITem extends StatelessWidget {
     required this.food,
   });
   final Food food;
+
+  void _onLongPress(BuildContext context) {
+    context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
+    Navigator.of(context).push(
+      CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -119,12 +130,7 @@ class _RightAlignedFoodITem extends StatelessWidget {
             aspectRatio: 1,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onLongPress: () {
-                context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
-                Navigator.of(context).push(
-                  CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
-                );
-              },
+              onLongPress: () => _onLongPress(context),
               child: ClipOval(
                 child: ColoredBox(
                   color: Theme.of(context).colorScheme.surfaceBright,

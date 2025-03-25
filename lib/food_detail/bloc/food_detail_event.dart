@@ -9,13 +9,13 @@ sealed class FoodDetailEvent extends Equatable {
 
 final class FetchFoodDetailEvent extends FoodDetailEvent {}
 
-final class AddFoodDetailEvent extends FoodDetailEvent {
-  const AddFoodDetailEvent({required this.id});
-  final int id;
+// final class AddFoodDetailEvent extends FoodDetailEvent {
+//   const AddFoodDetailEvent({required this.id});
+//   final int id;
 
-  @override
-  List<Object> get props => [id];
-}
+//   @override
+//   List<Object> get props => [id];
+// }
 
 final class ModifyAmountFoodDetailEvent extends FoodDetailEvent {
   const ModifyAmountFoodDetailEvent();

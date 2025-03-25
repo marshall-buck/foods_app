@@ -83,20 +83,25 @@ class _NutrientItem extends StatelessWidget {
   final int nutrientId;
   final Food food;
 
-  @override
-  Widget build(BuildContext context) {
+  void _onLongPressed(BuildContext context) {
     final amount = food.nutrientAmount(nutrientId);
     final unit = food.getNutrientUnit(nutrientId);
+    if (amount == 0) {
+      return; // Avoid showing the slider if the amount is zero
+    }
+    context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
+    Navigator.of(context).push(
+      CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onLongPress: () {
-          context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
-          Navigator.of(context).push(
-            CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit),
-          );
-        },
+        onLongPress: () => _onLongPressed(context),
         child: ClipOval(
           child: ColoredBox(
             color: Theme.of(context).colorScheme.surfaceBright,
