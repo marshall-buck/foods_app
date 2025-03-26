@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class ShapeCornersPainter extends CustomPainter {
   const ShapeCornersPainter({

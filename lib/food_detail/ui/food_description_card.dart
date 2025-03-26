@@ -62,7 +62,7 @@ class _AmountDisplay extends StatelessWidget {
           onLongPress: () => _onLongPress(context),
           child: ClipOval(
             child: ColoredBox(
-              color: Theme.of(context).colorScheme.surfaceBright,
+              color: Theme.of(context).colorScheme.secondaryContainer,
               child: Center(
                 child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
                   selector: (state) {
