@@ -33,10 +33,10 @@ class FoodDetailView extends StatelessWidget {
             switch (state.status) {
               case FoodDetailStatus.success:
                 return ResponsivePanes(
-                  leftPane: FoodDescriptionCards(
+                  foodsPane: FoodDescriptionCards(
                     foods: state.foodsList,
                   ),
-                  mainPane: const SizedBox(height: 300, child: NutrientCompareCards()),
+                  nutrientsPane: const SizedBox(height: 300, child: NutrientCompareCards()),
                 );
 
               case FoodDetailStatus.error:

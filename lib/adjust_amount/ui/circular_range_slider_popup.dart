@@ -55,7 +55,6 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                     return AmountWidget(
                       amount: amount * state,
                       unit: unit,
-                      textColor: Theme.of(context).colorScheme.onSurface,
                       index: index,
                     );
                   },

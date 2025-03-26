@@ -69,11 +69,7 @@ class _AmountDisplay extends StatelessWidget {
                     return state.modifier;
                   },
                   builder: (context, state) {
-                    return AmountWidget(
-                        amount: food.defaultAmount * state,
-                        unit: food.unit,
-                        textColor: Theme.of(context).colorScheme.onSurface,
-                        index: index);
+                    return AmountWidget(amount: food.defaultAmount * state, unit: food.unit, index: index);
                   },
                 ),
               ),

@@ -3,82 +3,72 @@ import 'package:foods_app/common/common.dart';
 
 class ResponsivePanes extends StatelessWidget {
   const ResponsivePanes({
-    required this.leftPane,
-    required this.mainPane,
+    required this.foodsPane,
+    required this.nutrientsPane,
     super.key,
   });
-  final Widget leftPane;
-  final Widget mainPane;
+  final Widget foodsPane;
+  final Widget nutrientsPane;
 
   @override
   Widget build(BuildContext context) {
-    final mainContainerColor = Theme.of(context).colorScheme.surface;
-
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: MagicSpacing.sp_4),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth >= 1024) {
-              // Expanded or larger window size
-              return Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_1,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
-                      ),
-                      child: leftPane,
-                    ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth >= 1024) {
+            // Expanded or larger window size
+            return Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(
+                    MagicSpacing.sp_2,
+                    MagicSpacing.sp_2,
+                    MagicSpacing.sp_2,
+                    MagicSpacing.sp_1,
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
-                      ),
-                      child: mainPane,
+                  child: foodsPane,
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
                     ),
+                    child: nutrientsPane,
                   ),
-                ],
-              );
-            } else {
-              // Compact or medium window size
-              return Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_1,
-                      ),
-                      child: leftPane,
+                ),
+              ],
+            );
+          } else {
+            // Compact or medium window size
+            return Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_1,
                     ),
+                    child: foodsPane,
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_1,
-                        MagicSpacing.sp_2,
-                        MagicSpacing.sp_2,
-                      ),
-                      child: mainPane,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_1,
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_2,
                     ),
+                    child: nutrientsPane,
                   ),
-                ],
-              );
-            }
-          },
-        ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }

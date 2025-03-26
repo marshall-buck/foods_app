@@ -103,7 +103,7 @@ class _NutrientItem extends StatelessWidget {
         onLongPress: () => _onLongPressed(context),
         child: ClipOval(
           child: ColoredBox(
-            color: Theme.of(context).colorScheme.surfaceBright,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             child: Center(
               child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
                 selector: (state) {
@@ -111,7 +111,6 @@ class _NutrientItem extends StatelessWidget {
                 },
                 builder: (context, state) {
                   return AmountWidget(
-                    textColor: Theme.of(context).colorScheme.onSurface,
                     amount: food.nutrientAmount(nutrientId) * state,
                     unit: food.getNutrientUnit(nutrientId),
                     index: foodIndex, // Use the foodIndex to differentiate between foods
