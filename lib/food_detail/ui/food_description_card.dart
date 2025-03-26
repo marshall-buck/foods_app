@@ -8,154 +8,104 @@ import 'package:foods_app/food_detail/food_detail.dart';
 class FoodDescriptionCard extends StatelessWidget {
   const FoodDescriptionCard({
     required this.food,
-    required this.isEven,
+    required this.index,
     super.key,
   });
 
   final Food food;
-  final bool isEven;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    switch (isEven) {
-      case true:
-        return _LeftAlignedFoodItem(food: food);
-      case false:
-        return _RightAlignedFoodITem(food: food);
-    }
+    final isEven = index.isEven;
+    return Row(
+      children: [
+        if (isEven) ...[
+          _AmountDisplay(
+            food: food,
+            index: index,
+          ),
+          _Description(food: food),
+        ] else ...[
+          _Description(food: food),
+          _AmountDisplay(
+            food: food,
+            index: index,
+          ),
+        ],
+      ],
+    );
   }
 }
 
-class _LeftAlignedFoodItem extends StatelessWidget {
-  const _LeftAlignedFoodItem({
-    required this.food,
-  });
+class _AmountDisplay extends StatelessWidget {
+  const _AmountDisplay({required this.food, required this.index});
+
   final Food food;
+  final int index;
 
   void _onLongPress(BuildContext context) {
     context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
     Navigator.of(context).push(
-      CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
+      CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit, index: index),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(MagicSpacing.sp_4),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onLongPress: () => _onLongPress(context),
-              child: ClipOval(
-                child: ColoredBox(
-                  color: Theme.of(context).colorScheme.surfaceBright,
-                  child: Center(
-                    child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                      selector: (state) {
-                        return state.modifier;
-                      },
-                      builder: (context, state) {
-                        return AmountWidget(
-                          amount: food.defaultAmount * state,
-                          unit: food.unit,
-                          textColor: Theme.of(context).colorScheme.onSurface,
-                        );
-                      },
-                    ),
-                  ),
+    return Padding(
+      padding: const EdgeInsets.all(MagicSpacing.sp_4),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onLongPress: () => _onLongPress(context),
+          child: ClipOval(
+            child: ColoredBox(
+              color: Theme.of(context).colorScheme.surfaceBright,
+              child: Center(
+                child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
+                  selector: (state) {
+                    return state.modifier;
+                  },
+                  builder: (context, state) {
+                    return AmountWidget(
+                        amount: food.defaultAmount * state,
+                        unit: food.unit,
+                        textColor: Theme.of(context).colorScheme.onSurface,
+                        index: index);
+                  },
                 ),
               ),
             ),
           ),
         ),
-        Expanded(
-          // flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              right: MagicSpacing.sp_4,
-            ),
-            child: Text(
-              food.name,
-              style: Theme.of(context).textTheme.bodySmall,
-              maxLines: 4, //Limit the number of lines
-              overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
-            ),
-          ),
-        ),
-      ],
+      ),
     );
-    //  },
-    //
   }
 }
 
-class _RightAlignedFoodITem extends StatelessWidget {
-  const _RightAlignedFoodITem({
+class _Description extends StatelessWidget {
+  const _Description({
     required this.food,
   });
-  final Food food;
 
-  void _onLongPress(BuildContext context) {
-    context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
-    Navigator.of(context).push(
-      CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit),
-    );
-  }
+  final Food food;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          // flex: 2,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              right: MagicSpacing.sp_4,
-            ),
-            child: Text(
-              food.name,
-              style: Theme.of(context).textTheme.bodySmall,
-              maxLines: 4, //Limit the number of lines
-              overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
-            ),
-          ),
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          right: MagicSpacing.sp_4,
         ),
-        Padding(
-          padding: const EdgeInsets.all(MagicSpacing.sp_4),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onLongPress: () => _onLongPress(context),
-              child: ClipOval(
-                child: ColoredBox(
-                  color: Theme.of(context).colorScheme.surfaceBright,
-                  child: Center(
-                    child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                      selector: (state) {
-                        return state.modifier;
-                      },
-                      builder: (context, state) {
-                        return AmountWidget(
-                          amount: food.defaultAmount * state,
-                          unit: food.unit,
-                          textColor: Theme.of(context).colorScheme.onSurface,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+        child: Text(
+          food.name,
+          style: Theme.of(context).textTheme.bodySmall,
+          maxLines: 4, //Limit the number of lines
+          overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
         ),
-      ],
+      ),
     );
-    //  },
-    //
   }
 }

@@ -65,6 +65,7 @@ class _NutrientDice extends StatelessWidget {
               child: _NutrientItem(
                 nutrientId: nutrientId,
                 food: food!,
+                foodIndex: foods.indexOf(food), // Ensure the index is unique for each food item
               ),
             );
           }).toList(),
@@ -75,13 +76,11 @@ class _NutrientDice extends StatelessWidget {
 }
 
 class _NutrientItem extends StatelessWidget {
-  const _NutrientItem({
-    required this.nutrientId,
-    required this.food,
-  });
+  const _NutrientItem({required this.nutrientId, required this.food, required this.foodIndex});
 
   final int nutrientId;
   final Food food;
+  final int foodIndex;
 
   void _onLongPressed(BuildContext context) {
     final amount = food.nutrientAmount(nutrientId);
@@ -91,7 +90,7 @@ class _NutrientItem extends StatelessWidget {
     }
     context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
     Navigator.of(context).push(
-      CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit),
+      CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit, index: foodIndex),
     );
   }
 
@@ -115,6 +114,7 @@ class _NutrientItem extends StatelessWidget {
                     textColor: Theme.of(context).colorScheme.onSurface,
                     amount: food.nutrientAmount(nutrientId) * state,
                     unit: food.getNutrientUnit(nutrientId),
+                    index: foodIndex, // Use the foodIndex to differentiate between foods
                   );
                 },
               ),

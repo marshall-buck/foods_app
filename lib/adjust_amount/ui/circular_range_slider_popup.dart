@@ -5,10 +5,11 @@ import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
 
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
-  CircularRangeSliderPopUp({required this.context, required this.amount, required this.unit});
+  CircularRangeSliderPopUp({required this.context, required this.amount, required this.unit, required this.index});
   final BuildContext context;
   final double amount;
   final String unit;
+  final int index;
 
   @override
   Color? get barrierColor => Theme.of(context).colorScheme.primaryContainer.withValues(alpha: MagicOpacity.op_70);
@@ -55,6 +56,7 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                       amount: amount * state,
                       unit: unit,
                       textColor: Theme.of(context).colorScheme.onSurface,
+                      index: index,
                     );
                   },
                 ),

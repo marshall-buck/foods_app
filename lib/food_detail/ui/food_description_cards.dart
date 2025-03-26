@@ -19,7 +19,7 @@ class FoodDescriptionCards extends StatelessWidget {
           height: tileSize.dimension,
           child: FoodDescriptionCard(
             food: food!,
-            isEven: index.isEven,
+            index: index,
           ),
         );
       },
