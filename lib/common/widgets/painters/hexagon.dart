@@ -1,18 +1,14 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:foods_app/common/common.dart';
 
-class HexagonPainter extends CustomPainter {
+class HexagonPainter extends BaseShapePainter {
   const HexagonPainter({
-    this.fill = false,
-    this.stroke = true,
-    this.color = Colors.black,
-    this.strokeWidth = 1.0,
-  }) : assert(fill || stroke, 'Either fill or stroke must be true.');
-  final bool fill;
-  final bool stroke;
-  final Color color;
-  final double strokeWidth;
+    required super.color,
+    super.fill,
+    super.stroke,
+    super.strokeWidth,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -24,12 +20,12 @@ class HexagonPainter extends CustomPainter {
     final path = Path();
     final centerX = size.width / 2;
     final centerY = size.height / 2;
-    final radius = size.width / 2;
+    final radius = (size.width / 2) - strokeAdjusterToFit;
 
     for (var i = 0; i < 6; i++) {
-      final angle = (i * 60) * (3.141592653589793 / 180); // Convert degrees to radians
-      final x = centerX + radius * cos(angle - 3.141592653589793 / 2);
-      final y = centerY + radius * sin(angle - 3.141592653589793 / 2);
+      final angle = (i * 60) * (pi / 180); // Convert degrees to radians
+      final x = centerX + radius * cos(angle - pi / 2);
+      final y = centerY + radius * sin(angle - pi / 2);
       if (i == 0) {
         path.moveTo(x, y);
       } else {
@@ -39,10 +35,5 @@ class HexagonPainter extends CustomPainter {
     path.close();
 
     canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

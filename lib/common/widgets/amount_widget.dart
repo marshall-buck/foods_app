@@ -21,17 +21,7 @@ class AmountWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SizedBox.square(
-          dimension: 48,
-          child: CustomPaint(
-            // size: const Size.square(48),
-            painter: ShapeCornersPainter(
-              numberOfCorners: index + 1,
-              color: Theme.of(context).colorScheme.onSecondaryContainer,
-              radius: 8,
-            ),
-          ),
-        ),
+        _Icon(index: index, color: Theme.of(context).colorScheme.onSecondaryContainer),
         Text(
           '${amount.convertAmountToString()}  $unit',
           textAlign: TextAlign.center,
@@ -46,3 +36,132 @@ class AmountWidget extends StatelessWidget {
     );
   }
 }
+
+class _Icon extends StatelessWidget {
+  const _Icon({
+    required this.index,
+    required this.color,
+    // ignore: unused_element_parameter
+    this.fill,
+    // ignore: unused_element_parameter
+    this.stroke,
+    // ignore: unused_element_parameter
+    this.strokeWidth,
+  });
+
+  final int index;
+  final Color color;
+  final bool? fill;
+  final bool? stroke;
+  final double? strokeWidth;
+
+  CustomPainter getPainter() {
+    final painters = [
+      SquarePainter(
+        color: color,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: strokeWidth,
+      ),
+      TrianglePainter(
+        color: color,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: strokeWidth,
+      ),
+      CirclePainter(
+        color: color,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: strokeWidth,
+      ),
+      PentagonPainter(
+        color: color,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: strokeWidth,
+      ),
+      HexagonPainter(
+        color: color,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: strokeWidth,
+      ),
+    ];
+
+    final painterIndex = index % painters.length;
+    return painters[painterIndex];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.square(
+      dimension: 48,
+      child: CustomPaint(
+        painter: getPainter(),
+      ),
+    );
+  }
+}
+
+// ShapeCornersPainter(
+//               numberOfCorners: index + 1,
+//               color: Theme.of(context).colorScheme.onSecondaryContainer,
+//               radius: 8,
+//             ),
+
+// class _ShapePainterSelector {
+//   const _ShapePainterSelector({
+//     required this.index,
+//     required this.color,
+//     // ignore: unused_element_parameter
+//     this.fill,
+//     // ignore: unused_element_parameter
+//     this.stroke,
+//     // ignore: unused_element_parameter
+//     this.strokeWidth,
+//   });
+//   final int index;
+//   final Color color;
+//   final bool? fill;
+//   final bool? stroke;
+//   final double? strokeWidth;
+
+//   CustomPainter getPainter() {
+//     final painters = [
+//       CirclePainter(
+//         color: color,
+//         fill: fill,
+//         stroke: stroke,
+//         strokeWidth: strokeWidth,
+//       ),
+//       SquarePainter(
+//         color: color,
+//         fill: fill,
+//         stroke: stroke,
+//         strokeWidth: strokeWidth,
+//       ),
+//       TrianglePainter(
+//         color: color,
+//         fill: fill,
+//         stroke: stroke,
+//         strokeWidth: strokeWidth,
+//       ),
+//       PentagonPainter(
+//         color: color,
+//         fill: fill,
+//         stroke: stroke,
+//         strokeWidth: strokeWidth,
+//       ),
+//       HexagonPainter(
+//         color: color,
+//         fill: fill,
+//         stroke: stroke,
+//         strokeWidth: strokeWidth,
+//       ),
+//     ];
+
+//     final painterIndex = index % painters.length;
+//     return painters[painterIndex];
+//   }
+// }

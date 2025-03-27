@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
-class TrianglePainter extends CustomPainter {
+class TrianglePainter extends BaseShapePainter {
   const TrianglePainter({
-    this.fill = true,
-    this.stroke = false,
-    this.color = Colors.black,
-    this.strokeWidth = MagicNumbers.defaultIconStroke,
-  }) : assert(fill || stroke, 'Either fill or stroke must be true.');
-  final bool fill;
-  final bool stroke;
-  final Color color;
-  final double strokeWidth;
-
-  // double get _strokeAdjusterToFit => MagicNumbers.defaultIconStroke / 2;
+    required super.color,
+    super.fill,
+    super.stroke,
+    super.strokeWidth,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -24,30 +18,18 @@ class TrianglePainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round
       ..strokeWidth = strokeWidth;
 
-    // final path = Path(); // Top center
+    final path = Path()
+      ..moveTo(size.width / 2, strokeAdjusterToFit) // Top center
+      ..lineTo(
+        strokeAdjusterToFit,
+        size.height - strokeAdjusterToFit,
+      ) // Bottom left
+      ..lineTo(
+        size.width - strokeAdjusterToFit,
+        size.height - strokeAdjusterToFit,
+      ) // Bottom right
+      ..close();
 
-    canvas.drawCircle(
-      Offset(size.width / 2, 0),
-      4,
-      paint,
-    );
-    // final path1 = Path()
-    //   ..moveTo(size.width / 2, _strokeAdjusterToFit) // Top center
-    //   ..lineTo(
-    //     0 + _strokeAdjusterToFit,
-    //     size.height - _strokeAdjusterToFit,
-    //   ) // Bottom left
-    //   ..lineTo(
-    //     size.width - _strokeAdjusterToFit,
-    //     size.height - _strokeAdjusterToFit,
-    //   ) // Bottom right
-    //   ..close();
-
-    // canvas.drawPath(path1, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+    canvas.drawPath(path, paint);
   }
 }
