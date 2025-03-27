@@ -29,6 +29,7 @@ class FoodDetailView extends StatelessWidget {
     return Material(
       child: SafeArea(
         child: BlocBuilder<FoodDetailBloc, FoodDetailState>(
+          buildWhen: (previous, current) => previous.foods != current.foods,
           builder: (context, state) {
             switch (state.status) {
               case FoodDetailStatus.success:

@@ -105,33 +105,6 @@ class _NutrientAmountDisplay extends StatelessWidget {
   }
 }
 
-// AspectRatio(
-//       aspectRatio: 1,
-//       child: GestureDetector(
-//         behavior: HitTestBehavior.opaque,
-//         onLongPress: () => _onLongPressed(context),
-//         child: ClipOval(
-//           child: ColoredBox(
-//             color: Theme.of(context).colorScheme.secondaryContainer,
-//             child: Center(
-//               child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-//                 selector: (state) {
-//                   return state.modifier;
-//                 },
-//                 builder: (context, state) {
-//                   return AmountWidget(
-//                     amount: food.nutrientAmount(nutrientId) * state,
-//                     unit: food.getNutrientUnit(nutrientId),
-//                     index: foodIndex, // Use the foodIndex to differentiate between foods
-//                   );
-//                 },
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-
 class _NutrientCardTitle extends StatelessWidget {
   const _NutrientCardTitle({required this.id});
 

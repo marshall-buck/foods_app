@@ -71,29 +71,29 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
   //   }
   // }
 
-  @override
-  void onEvent(FoodDetailEvent event) {
-    super.onEvent(event);
-    log('FoodSearchBloc onEvent $event');
-  }
+  // @override
+  // void onEvent(FoodDetailEvent event) {
+  //   super.onEvent(event);
+  //   log('FoodSearchBloc onEvent $event');
+  // }
 
-  @override
-  void onChange(Change<FoodDetailState> change) {
-    super.onChange(change);
-    log('FoodDetailBloc onChange: ${change.currentState.modifier} -> ${change.nextState.modifier}');
-  }
+  // @override
+  // void onChange(Change<FoodDetailState> change) {
+  //   super.onChange(change);
+  //   log('FoodDetailBloc onChange: ${change.currentState.modifier} -> ${change.nextState.modifier}');
+  // }
 
-  @override
-  void onTransition(
-    Transition<FoodDetailEvent, FoodDetailState> transition,
-  ) {
-    super.onTransition(transition);
-    log('FoodDetailBloc onTransition: ${transition.currentState.modifier} -> ${transition.nextState.modifier}');
-  }
+  // @override
+  // void onTransition(
+  //   Transition<FoodDetailEvent, FoodDetailState> transition,
+  // ) {
+  //   super.onTransition(transition);
+  //   log('FoodDetailBloc onTransition: ${transition.currentState.modifier} -> ${transition.nextState.modifier}');
+  // }
 
-  @override
-  void onError(Object error, StackTrace stackTrace) {
-    super.onError(error, stackTrace);
-    log('FoodDetailBloc onError $error');
-  }
+  // @override
+  // void onError(Object error, StackTrace stackTrace) {
+  //   super.onError(error, stackTrace);
+  //   log('FoodDetailBloc onError $error');
+  // }
 }

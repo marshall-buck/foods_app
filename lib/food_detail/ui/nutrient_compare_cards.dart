@@ -13,6 +13,7 @@ class NutrientCompareCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FoodDetailBloc, FoodDetailState>(
+      buildWhen: (previous, current) => previous.allNutrientIdsInQ != current.allNutrientIdsInQ,
       builder: (context, state) {
         final nutrientIds = state.allNutrientIdsInQ?.toList();
         final foods = state.foodsList;

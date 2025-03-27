@@ -56,34 +56,41 @@ class _FoodAmountDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onLongPress: () => _onLongPress(context),
-        child: ClipOval(
-          child: ColoredBox(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            child: Center(
-              child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                selector: (state) {
-                  return state.modifier;
-                },
-                builder: (context, state) {
-                  return AmountWidget(
-                    amount: food.defaultAmount * state,
-                    unit: food.unit,
-                    index: index,
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
+    return SharedAmountDisplay(
+      amount: food.defaultAmount,
+      unit: food.unit,
+      index: index,
+      onLongPress: _onLongPress,
     );
   }
 }
+
+// AspectRatio(
+//       aspectRatio: 1,
+//       child: GestureDetector(
+//         behavior: HitTestBehavior.opaque,
+//         onLongPress: () => _onLongPress(context),
+//         child: ClipOval(
+//           child: ColoredBox(
+//             color: Theme.of(context).colorScheme.secondaryContainer,
+//             child: Center(
+//               child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
+//                 selector: (state) {
+//                   return state.modifier;
+//                 },
+//                 builder: (context, state) {
+//                   return AmountWidget(
+//                     amount: food.defaultAmount * state,
+//                     unit: food.unit,
+//                     index: index,
+//                   );
+//                 },
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
 
 class _Description extends StatelessWidget {
   const _Description({required this.food, required this.textAlign});
