@@ -21,7 +21,7 @@ class FoodDescriptionCard extends StatelessWidget {
     return Row(
       children: [
         if (isEven) ...[
-          _AmountDisplay(
+          _FoodAmountDisplay(
             food: food,
             index: index,
           ),
@@ -31,7 +31,7 @@ class FoodDescriptionCard extends StatelessWidget {
             food: food,
             textAlign: TextAlign.end,
           ),
-          _AmountDisplay(
+          _FoodAmountDisplay(
             food: food,
             index: index,
           ),
@@ -41,8 +41,8 @@ class FoodDescriptionCard extends StatelessWidget {
   }
 }
 
-class _AmountDisplay extends StatelessWidget {
-  const _AmountDisplay({required this.food, required this.index});
+class _FoodAmountDisplay extends StatelessWidget {
+  const _FoodAmountDisplay({required this.food, required this.index});
 
   final Food food;
   final int index;
@@ -70,7 +70,11 @@ class _AmountDisplay extends StatelessWidget {
                   return state.modifier;
                 },
                 builder: (context, state) {
-                  return AmountWidget(amount: food.defaultAmount * state, unit: food.unit, index: index);
+                  return AmountWidget(
+                    amount: food.defaultAmount * state,
+                    unit: food.unit,
+                    index: index,
+                  );
                 },
               ),
             ),

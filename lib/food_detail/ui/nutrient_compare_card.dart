@@ -5,7 +5,7 @@ import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 
-import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
+import 'package:foods_app/food_detail/food_detail.dart';
 
 class NutrientCompareCard extends StatelessWidget {
   const NutrientCompareCard({required this.nutrientId, required this.foods, super.key});
@@ -27,7 +27,7 @@ class NutrientCompareCard extends StatelessWidget {
               id: nutrientId,
             ),
           ),
-          Expanded(child: _NutrientDice(foods: foods, nutrientId: nutrientId)),
+          Expanded(child: _NutrientAmountDisplays(foods: foods, nutrientId: nutrientId)),
         ],
       ),
     );
@@ -36,8 +36,8 @@ class NutrientCompareCard extends StatelessWidget {
   }
 }
 
-class _NutrientDice extends StatelessWidget {
-  const _NutrientDice({
+class _NutrientAmountDisplays extends StatelessWidget {
+  const _NutrientAmountDisplays({
     required this.foods,
     required this.nutrientId,
   });
@@ -62,7 +62,7 @@ class _NutrientDice extends StatelessWidget {
             return SizedBox(
               width: itemSize - 8,
               height: itemSize - 8,
-              child: _NutrientItem(
+              child: _NutrientAmountDisplay(
                 nutrientId: nutrientId,
                 food: food!,
                 foodIndex: foods.indexOf(food), // Ensure the index is unique for each food item
@@ -75,8 +75,8 @@ class _NutrientDice extends StatelessWidget {
   }
 }
 
-class _NutrientItem extends StatelessWidget {
-  const _NutrientItem({required this.nutrientId, required this.food, required this.foodIndex});
+class _NutrientAmountDisplay extends StatelessWidget {
+  const _NutrientAmountDisplay({required this.nutrientId, required this.food, required this.foodIndex});
 
   final int nutrientId;
   final Food food;
@@ -85,9 +85,9 @@ class _NutrientItem extends StatelessWidget {
   void _onLongPressed(BuildContext context) {
     final amount = food.nutrientAmount(nutrientId);
     final unit = food.getNutrientUnit(nutrientId);
-    if (amount == 0) {
-      return; // Avoid showing the slider if the amount is zero
-    }
+    // if (amount == 0) {
+    //   return; // Avoid showing the slider if the amount is zero
+    // }
     context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
     Navigator.of(context).push(
       CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit, index: foodIndex),
@@ -96,34 +96,41 @@ class _NutrientItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onLongPress: () => _onLongPressed(context),
-        child: ClipOval(
-          child: ColoredBox(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            child: Center(
-              child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                selector: (state) {
-                  return state.modifier;
-                },
-                builder: (context, state) {
-                  return AmountWidget(
-                    amount: food.nutrientAmount(nutrientId) * state,
-                    unit: food.getNutrientUnit(nutrientId),
-                    index: foodIndex, // Use the foodIndex to differentiate between foods
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
-      ),
+    return SharedAmountDisplay(
+      amount: food.nutrientAmount(nutrientId),
+      unit: food.getNutrientUnit(nutrientId),
+      index: foodIndex,
+      onLongPress: _onLongPressed,
     );
   }
 }
+
+// AspectRatio(
+//       aspectRatio: 1,
+//       child: GestureDetector(
+//         behavior: HitTestBehavior.opaque,
+//         onLongPress: () => _onLongPressed(context),
+//         child: ClipOval(
+//           child: ColoredBox(
+//             color: Theme.of(context).colorScheme.secondaryContainer,
+//             child: Center(
+//               child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
+//                 selector: (state) {
+//                   return state.modifier;
+//                 },
+//                 builder: (context, state) {
+//                   return AmountWidget(
+//                     amount: food.nutrientAmount(nutrientId) * state,
+//                     unit: food.getNutrientUnit(nutrientId),
+//                     index: foodIndex, // Use the foodIndex to differentiate between foods
+//                   );
+//                 },
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
 
 class _NutrientCardTitle extends StatelessWidget {
   const _NutrientCardTitle({required this.id});
