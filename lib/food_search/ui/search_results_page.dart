@@ -203,6 +203,7 @@ class _SearchBarState extends State<_SearchBar> {
       (bloc) => bloc.state.status == FoodSearchStatus.success,
     );
     return SearchBar(
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       controller: _searchBarController,
       constraints: Theme.of(context).searchBarTheme.constraints,
       hintText: MagicStrings.searchPageHintText,
