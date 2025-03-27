@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/adjust_amount/adjust_amount.dart';
 import 'package:foods_app/common/common.dart';
+
 import 'package:foods_app/domain/domain.dart';
 import 'package:foods_app/food_detail/food_detail.dart';
 
@@ -65,33 +66,6 @@ class _FoodAmountDisplay extends StatelessWidget {
   }
 }
 
-// AspectRatio(
-//       aspectRatio: 1,
-//       child: GestureDetector(
-//         behavior: HitTestBehavior.opaque,
-//         onLongPress: () => _onLongPress(context),
-//         child: ClipOval(
-//           child: ColoredBox(
-//             color: Theme.of(context).colorScheme.secondaryContainer,
-//             child: Center(
-//               child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-//                 selector: (state) {
-//                   return state.modifier;
-//                 },
-//                 builder: (context, state) {
-//                   return AmountWidget(
-//                     amount: food.defaultAmount * state,
-//                     unit: food.unit,
-//                     index: index,
-//                   );
-//                 },
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-
 class _Description extends StatelessWidget {
   const _Description({required this.food, required this.textAlign});
 
@@ -100,14 +74,32 @@ class _Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Text(
-        textAlign: textAlign,
-        food.name,
-        style: Theme.of(context).textTheme.bodySmall,
-        maxLines: 3, //Limit the number of lines
-        overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
-      ),
-    );
+    if (textAlign == TextAlign.start) {
+      return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(left: MagicSpacing.sp_1),
+          child: Text(
+            textAlign: textAlign,
+            food.name,
+            style: Theme.of(context).textTheme.bodySmall,
+            maxLines: 3, //Limit the number of lines
+            overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
+          ),
+        ),
+      );
+    } else {
+      return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(right: MagicSpacing.sp_1),
+          child: Text(
+            textAlign: textAlign,
+            food.name,
+            style: Theme.of(context).textTheme.bodySmall,
+            maxLines: 3, //Limit the number of lines
+            overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
+          ),
+        ),
+      );
+    }
   }
 }

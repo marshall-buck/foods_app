@@ -18,14 +18,11 @@ class AmountWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _Icon(index: index, color: Theme.of(context).colorScheme.onSecondaryContainer),
+        _Icon(index: index, color: Theme.of(context).colorScheme.primary),
         Text(
           '${amount.convertAmountToString()}  $unit',
           textAlign: TextAlign.center,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: Theme.of(context).colorScheme.onSecondaryContainer),
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface),
           maxLines: 1, //Limit the number of lines
           overflow: TextOverflow.fade,
         ),

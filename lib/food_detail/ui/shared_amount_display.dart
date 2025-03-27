@@ -27,8 +27,13 @@ class SharedAmountDisplay extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onLongPress: () => onLongPress(context),
         child: ClipOval(
-          child: ColoredBox(
-            color: Theme.of(context).colorScheme.secondaryContainer,
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Theme.of(context).colorScheme.primary, // Replace with your desired color
+              ),
+            ),
             child: Center(
               child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
                 selector: (state) => state.modifier,

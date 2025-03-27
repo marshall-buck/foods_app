@@ -16,8 +16,12 @@ class NutrientCompareCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        borderRadius: BorderRadius.circular(
+          MagicBorderRadius.br_16,
+        ),
       ),
       child: Column(
         children: [
