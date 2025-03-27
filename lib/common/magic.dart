@@ -32,6 +32,7 @@ class MagicNumbers {
   static const int maxFoodSearchCacheAmount = 500;
   static const int maxActiveFoodsAllowed = 6;
   static const double defaultIconStroke = 1.5;
+  static const double defaultAmountIconSize = 24;
 }
 
 class MagicBreakPoints {

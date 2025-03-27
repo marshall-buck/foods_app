@@ -25,9 +25,12 @@ class FoodDescriptionCard extends StatelessWidget {
             food: food,
             index: index,
           ),
-          _Description(food: food),
+          _Description(food: food, textAlign: TextAlign.start),
         ] else ...[
-          _Description(food: food),
+          _Description(
+            food: food,
+            textAlign: TextAlign.end,
+          ),
           _AmountDisplay(
             food: food,
             index: index,
@@ -53,25 +56,22 @@ class _AmountDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(MagicSpacing.sp_4),
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onLongPress: () => _onLongPress(context),
-          child: ClipOval(
-            child: ColoredBox(
-              color: Theme.of(context).colorScheme.secondaryContainer,
-              child: Center(
-                child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
-                  selector: (state) {
-                    return state.modifier;
-                  },
-                  builder: (context, state) {
-                    return AmountWidget(amount: food.defaultAmount * state, unit: food.unit, index: index);
-                  },
-                ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onLongPress: () => _onLongPress(context),
+        child: ClipOval(
+          child: ColoredBox(
+            color: Theme.of(context).colorScheme.secondaryContainer,
+            child: Center(
+              child: BlocSelector<FoodDetailBloc, FoodDetailState, double>(
+                selector: (state) {
+                  return state.modifier;
+                },
+                builder: (context, state) {
+                  return AmountWidget(amount: food.defaultAmount * state, unit: food.unit, index: index);
+                },
               ),
             ),
           ),
@@ -82,25 +82,20 @@ class _AmountDisplay extends StatelessWidget {
 }
 
 class _Description extends StatelessWidget {
-  const _Description({
-    required this.food,
-  });
+  const _Description({required this.food, required this.textAlign});
 
   final Food food;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          right: MagicSpacing.sp_4,
-        ),
-        child: Text(
-          food.name,
-          style: Theme.of(context).textTheme.bodySmall,
-          maxLines: 4, //Limit the number of lines
-          overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
-        ),
+      child: Text(
+        textAlign: textAlign,
+        food.name,
+        style: Theme.of(context).textTheme.bodySmall,
+        maxLines: 3, //Limit the number of lines
+        overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
       ),
     );
   }
