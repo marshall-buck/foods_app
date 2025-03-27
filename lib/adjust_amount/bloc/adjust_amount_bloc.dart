@@ -17,19 +17,6 @@ class AdjustAmountBloc extends Bloc<AdjustAmountEvent, AdjustAmountState> {
   /// A base percentage to change the modifier.
   static const circularRangeFinderPercentChange = .05;
 
-// //TODO: Change to extension on double
-//   double _adjustAmountModifier(double amount) {
-//     if (amount >= 50) {
-//       return circularRangeFinderPercentChange * 2;
-//     } else if (amount >= 10) {
-//       return circularRangeFinderPercentChange * 2.1;
-//     } else if (amount >= 1) {
-//       return circularRangeFinderPercentChange * 2.3;
-//     } else {
-//       return circularRangeFinderPercentChange * 2.5;
-//     }
-//   }
-
   /// This is called in the CircularRangeSlider when the user rotates the handle.
   void _changeUnits(AdjustAmountEvent event, Emitter<AdjustAmountState> emit) {
     // log('_activeFoods.activeModifier before: ${_activeFoods.activeModifier}');
