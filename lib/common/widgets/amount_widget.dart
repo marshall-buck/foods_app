@@ -17,6 +17,7 @@ class AmountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.min,
       children: [
         _Icon(index: index, color: Theme.of(context).colorScheme.primary),
         Text(

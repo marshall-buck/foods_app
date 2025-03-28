@@ -31,7 +31,7 @@ class SharedAmountDisplay extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Theme.of(context).colorScheme.primary, // Replace with your desired color
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             child: Center(

@@ -230,7 +230,7 @@ class _FoodResultsCountBadge extends StatelessWidget {
           return Badge.count(
             count: state.foods.length,
             backgroundColor: Colors.transparent,
-            textColor: Theme.of(context).colorScheme.onSurface,
+            textColor: Theme.of(context).colorScheme.tertiary,
             // padding: const EdgeInsets.only(right: 8),
           );
         } else {

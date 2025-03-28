@@ -14,7 +14,6 @@ class FoodDetailPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => FoodDetailBloc(
         activeFoods: RepositoryProvider.of<ActiveFoods>(context),
-        // localFoodsDBRepo: RepositoryProvider.of<LocalFoodsDBRepo>(context),
       )..add(FetchFoodDetailEvent()),
       child: const FoodDetailView(),
     );
@@ -27,8 +26,12 @@ class FoodDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: SafeArea(
-        child: BlocBuilder<FoodDetailBloc, FoodDetailState>(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Food Detail'),
+          centerTitle: true,
+        ),
+        body: BlocBuilder<FoodDetailBloc, FoodDetailState>(
           buildWhen: (previous, current) => previous.foods != current.foods,
           builder: (context, state) {
             switch (state.status) {

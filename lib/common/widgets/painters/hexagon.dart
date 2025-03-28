@@ -15,7 +15,11 @@ class HexagonPainter extends BaseShapePainter {
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
       ..strokeWidth = strokeWidth;
+    ;
 
     final path = Path();
     final centerX = size.width / 2;

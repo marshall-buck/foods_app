@@ -95,19 +95,19 @@ class MagicTileDimension {
   factory MagicTileDimension.tileSize({required double windowSize}) {
     switch (windowSize) {
       case <= MagicBreakPoints.xs:
-        return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_1);
+        return MagicTileDimension(dimension: xs, spacing: MagicSpacing.sp_1);
       case <= MagicBreakPoints.sm:
-        return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_3);
+        return MagicTileDimension(dimension: sm, spacing: MagicSpacing.sp_3);
       case > MagicBreakPoints.lg:
         return MagicTileDimension(dimension: lg, spacing: MagicSpacing.sp_6);
       default:
         return MagicTileDimension(dimension: md, spacing: MagicSpacing.sp_4);
     }
   }
-  // static double xs = 120;
-  // static double sm = 136;
-  static double md = 144;
-  static double lg = 160;
+  static double xs = 108;
+  static double sm = 112;
+  static double md = 120;
+  static double lg = 136;
 
   final double dimension;
   final double spacing;

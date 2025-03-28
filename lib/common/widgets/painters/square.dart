@@ -14,7 +14,11 @@ class SquarePainter extends BaseShapePainter {
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
       ..strokeWidth = strokeWidth;
+    ;
 
     final rect = Rect.fromLTWH(
       strokeAdjusterToFit,

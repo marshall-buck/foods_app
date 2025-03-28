@@ -63,9 +63,10 @@ class _NutrientAmountDisplays extends StatelessWidget {
           alignment: WrapAlignment.center,
           runAlignment: WrapAlignment.center,
           children: foods.map((food) {
-            return SizedBox(
-              width: itemSize - 8,
-              height: itemSize - 8,
+            return ConstrainedBox(
+              constraints: BoxConstraints.loose(Size.square(itemSize - 8)), // Adjust size to fit within the card
+              // width: itemSize - 8,
+              // height: itemSize - 8,
               child: _NutrientAmountDisplay(
                 nutrientId: nutrientId,
                 food: food!,
@@ -94,17 +95,25 @@ class _NutrientAmountDisplay extends StatelessWidget {
     // }
     context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
     Navigator.of(context).push(
-      CircularRangeSliderPopUp<void>(context: context, amount: amount, unit: unit, index: foodIndex),
+      CircularRangeSliderPopUp<void>(
+        context: context,
+        amount: amount,
+        unit: unit,
+        index: foodIndex,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SharedAmountDisplay(
-      amount: food.nutrientAmount(nutrientId),
-      unit: food.getNutrientUnit(nutrientId),
-      index: foodIndex,
-      onLongPress: _onLongPressed,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxHeight: 108, maxWidth: 108),
+      child: SharedAmountDisplay(
+        amount: food.nutrientAmount(nutrientId),
+        unit: food.getNutrientUnit(nutrientId),
+        index: foodIndex,
+        onLongPress: _onLongPressed,
+      ),
     );
   }
 }
