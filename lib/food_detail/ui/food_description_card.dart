@@ -57,14 +57,11 @@ class _FoodAmountDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints.tight(Size.square(108)),
-      child: SharedAmountDisplay(
-        amount: food.defaultAmount,
-        unit: food.unit,
-        index: index,
-        onLongPress: _onLongPress,
-      ),
+    return SharedAmountDisplay(
+      amount: food.defaultAmount,
+      unit: food.unit,
+      index: index,
+      onLongPress: _onLongPress,
     );
   }
 }

@@ -17,14 +17,13 @@ class AmountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.min,
       children: [
         _Icon(index: index, color: Theme.of(context).colorScheme.primary),
         Text(
           '${amount.convertAmountToString()}  $unit',
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface),
-          maxLines: 1, //Limit the number of lines
+          maxLines: 1,
           overflow: TextOverflow.fade,
         ),
       ],

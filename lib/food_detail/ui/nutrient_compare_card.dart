@@ -51,31 +51,18 @@ class _NutrientAmountDisplays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final itemSize = constraints.maxWidth < constraints.maxHeight
-            ? constraints.maxWidth / (foods.length > 3 ? 3 : 2)
-            : constraints.maxHeight / (foods.length > 3 ? 3 : 2);
-
-        return Wrap(
-          runSpacing: 8,
-          spacing: 8,
-          alignment: WrapAlignment.center,
-          runAlignment: WrapAlignment.center,
-          children: foods.map((food) {
-            return ConstrainedBox(
-              constraints: BoxConstraints.loose(Size.square(itemSize - 8)), // Adjust size to fit within the card
-              // width: itemSize - 8,
-              // height: itemSize - 8,
-              child: _NutrientAmountDisplay(
-                nutrientId: nutrientId,
-                food: food!,
-                foodIndex: foods.indexOf(food), // Ensure the index is unique for each food item
-              ),
-            );
-          }).toList(),
+    return Wrap(
+      runSpacing: 8,
+      spacing: 8,
+      alignment: WrapAlignment.center,
+      runAlignment: WrapAlignment.center,
+      children: foods.map((food) {
+        return _NutrientAmountDisplay(
+          nutrientId: nutrientId,
+          food: food!,
+          foodIndex: foods.indexOf(food), // Ensure the index is unique for each food item
         );
-      },
+      }).toList(),
     );
   }
 }
