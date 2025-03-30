@@ -5,6 +5,7 @@ import 'package:foods_app/common/common.dart';
 
 import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 
+// BUG: Icon bug.
 class SharedAmountDisplay extends StatelessWidget {
   const SharedAmountDisplay({
     required this.amount,
@@ -21,8 +22,12 @@ class SharedAmountDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
+    final tileSize = MagicTileDimension.tileSize(
+      windowSize: MediaQuery.sizeOf(context).shortestSide,
+    );
+    return ConstrainedBox(
+      constraints: BoxConstraints.tight(Size.square(tileSize.dimension)), // Ensure the widget is square
+
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onLongPress: () => onLongPress(context),

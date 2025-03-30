@@ -21,14 +21,11 @@ class NutrientCompareCards extends StatelessWidget {
           // itemExtent: 300,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(24),
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: NutrientCompareCard(
-                  nutrientId: nutrientIds![index]!,
-                  foods: foods,
-                ),
+            return AspectRatio(
+              aspectRatio: 1,
+              child: NutrientCompareCard(
+                nutrientId: nutrientIds![index]!,
+                foods: foods,
               ),
             );
           },

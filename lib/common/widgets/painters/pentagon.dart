@@ -19,7 +19,6 @@ class PentagonPainter extends BaseShapePainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
       ..strokeWidth = strokeWidth;
-    ;
 
     final path = Path();
     final centerX = size.width / 2;

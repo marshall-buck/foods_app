@@ -51,7 +51,12 @@ class _FoodAmountDisplay extends StatelessWidget {
   void _onLongPress(BuildContext context) {
     context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
     Navigator.of(context).push(
-      CircularRangeSliderPopUp<void>(context: context, amount: food.defaultAmount, unit: food.unit, index: index),
+      CircularRangeSliderPopUp<void>(
+        context: context,
+        amount: food.defaultAmount,
+        unit: food.unit,
+        index: index,
+      ),
     );
   }
 
@@ -82,8 +87,8 @@ class _Description extends StatelessWidget {
             textAlign: textAlign,
             food.name,
             style: Theme.of(context).textTheme.bodySmall,
-            maxLines: 3, //Limit the number of lines
-            overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       );
@@ -95,8 +100,8 @@ class _Description extends StatelessWidget {
             textAlign: textAlign,
             food.name,
             style: Theme.of(context).textTheme.bodySmall,
-            maxLines: 3, //Limit the number of lines
-            overflow: TextOverflow.ellipsis, //Handle overflow with ellipsis
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       );

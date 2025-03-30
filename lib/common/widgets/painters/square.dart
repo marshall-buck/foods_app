@@ -18,7 +18,6 @@ class SquarePainter extends BaseShapePainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
       ..strokeWidth = strokeWidth;
-    ;
 
     final rect = Rect.fromLTWH(
       strokeAdjusterToFit,
