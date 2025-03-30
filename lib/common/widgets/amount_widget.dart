@@ -7,19 +7,25 @@ class AmountWidget extends StatelessWidget {
     required this.amount,
     required this.unit,
     required this.index,
+    this.iconSize,
     super.key,
   });
 
   final double amount;
   final String unit;
   final int index;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _Icon(index: index, color: Theme.of(context).colorScheme.primary),
+        _Icon(
+          index: index,
+          color: Theme.of(context).colorScheme.primary,
+          size: iconSize,
+        ),
         Text(
           '${amount.convertAmountToString()}  $unit',
           textAlign: TextAlign.center,
@@ -38,6 +44,8 @@ class _Icon extends StatelessWidget {
     required this.index,
     required this.color,
     // ignore: unused_element_parameter
+    this.size,
+    // ignore: unused_element_parameter
     this.fill,
     // ignore: unused_element_parameter
     this.stroke,
@@ -50,6 +58,7 @@ class _Icon extends StatelessWidget {
   final bool? fill;
   final bool? stroke;
   final double? strokeWidth;
+  final double? size;
 
   CustomPainter getPainter() {
     final painters = [
@@ -98,7 +107,7 @@ class _Icon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: MagicNumbers.defaultAmountIconSize,
+      dimension: size ?? MagicNumbers.defaultAmountWidgetIconSize,
       child: CustomPaint(
         painter: getPainter(),
       ),

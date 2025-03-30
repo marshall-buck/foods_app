@@ -56,6 +56,7 @@ class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
                       amount: amount * state,
                       unit: unit,
                       index: index,
+                      iconSize: MagicNumbers.circularRangeFinderAmountWidgetIconSize,
                     );
                   },
                 ),
