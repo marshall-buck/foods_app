@@ -15,6 +15,9 @@ class LocalFoodsDBRepo implements FoodSearchApiInterface {
   final UsdaDbDAO _usdaDbDao;
   final FoodsSearchCache _cache;
 
+  @override
+  FoodsSearchCache get cache => _cache;
+
   /// Provides a [FoodDTO] object from the database.
   /// If the food ID is not found in the database, the Future returns null.
   ///
