@@ -1,8 +1,16 @@
+// ignore_for_file: unused_element_parameter
+
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 import 'package:foods_app/common/widgets/painters/heptagon.dart';
 
+/// {@template amount_widget}
+/// A widget that displays an amount with its unit and an associated icon.
+///
+/// The icon is determined by an [index] and can be customized in [iconSize].
+/// {@endtemplate}
 class AmountWidget extends StatelessWidget {
+  /// {@macro amount_widget}
   const AmountWidget({
     required this.amount,
     required this.unit,
@@ -11,9 +19,16 @@ class AmountWidget extends StatelessWidget {
     super.key,
   });
 
+  /// The numerical amount.
   final double amount;
+
+  /// The unit of the amount.
   final String unit;
+
+  /// The index used to determine the icon shape.
   final int index;
+
+  /// The size of the icon. If null, a default size is used.
   final double? iconSize;
 
   @override
@@ -29,7 +44,9 @@ class AmountWidget extends StatelessWidget {
         Text(
           '${amount.convertAmountToString()}  $unit',
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onSurface),
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
           maxLines: 1,
           overflow: TextOverflow.fade,
         ),
@@ -38,28 +55,44 @@ class AmountWidget extends StatelessWidget {
   }
 }
 
-//TODO: Figure out a way to make the icons stick with current foods.
+/// {@template icon_widget}
+/// A private widget that renders a custom-shaped icon.
+///
+/// The shape of the icon is determined by the [index] and can be one of
+/// several predefined shapes in [getPainter] .
+/// {@endtemplate}
 class _Icon extends StatelessWidget {
+  /// {@macro icon_widget}
   const _Icon({
     required this.index,
     required this.color,
-    // ignore: unused_element_parameter
     this.size,
-    // ignore: unused_element_parameter
     this.fill,
-    // ignore: unused_element_parameter
     this.stroke,
-    // ignore: unused_element_parameter
     this.strokeWidth,
   });
 
+  /// The index used to determine the shape of the icon.
   final int index;
+
+  /// The color of the icon.
   final Color color;
+
+  /// Whether the icon should be filled. Defaults to null.
   final bool? fill;
+
+  /// Whether the icon should have a stroke. Defaults to null.
   final bool? stroke;
+
+  /// The width of the stroke, if applicable. Defaults to null.
   final double? strokeWidth;
+
+  /// The size of the icon. If null, a default size is used.
   final double? size;
 
+  /// Returns the appropriate [CustomPainter] based on the [index].
+  ///
+  /// The painter determines the shape of the icon.
   CustomPainter getPainter() {
     final painters = [
       SquarePainter(
