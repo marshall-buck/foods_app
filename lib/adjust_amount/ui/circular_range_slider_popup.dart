@@ -4,6 +4,8 @@ import 'package:foods_app/adjust_amount/adjust_amount.dart';
 
 import 'package:foods_app/common/common.dart';
 
+// TODO: use speed indicator icons to adjust speed.
+
 class CircularRangeSliderPopUp<T> extends PopupRoute<T> {
   CircularRangeSliderPopUp({required this.context, required this.amount, required this.unit, required this.index});
   final BuildContext context;

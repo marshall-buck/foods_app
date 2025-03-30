@@ -5,8 +5,6 @@ import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 
 import 'package:foods_app/food_detail/ui/ui.dart';
 
-// TODO: make responsive
-
 class NutrientCompareCards extends StatelessWidget {
   const NutrientCompareCards({super.key});
 

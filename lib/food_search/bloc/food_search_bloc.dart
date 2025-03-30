@@ -10,7 +10,7 @@ import 'package:foods_app/food_search/models/food_list_item_model.dart';
 part 'food_search_event.dart';
 part 'food_search_state.dart';
 
-//BUG: QuickSEarch names disappears from search bar after clear.
+//BUG: QuickSearch names disappears from search bar after clear.
 
 /// {@template food_search_bloc}
 /// A BLoC that handles food search events and states.

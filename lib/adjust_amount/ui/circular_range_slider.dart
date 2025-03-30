@@ -5,8 +5,6 @@ import 'package:flutter/widgets.dart';
 
 enum RotationDirection { clockwise, counterclockwise }
 
-// TODO:use speed indicator icons to adjust speed.
-
 class CircularRangeSlider extends StatefulWidget {
   const CircularRangeSlider({
     required this.trackStroke,
