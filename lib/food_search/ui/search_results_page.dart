@@ -5,7 +5,12 @@ import 'package:foods_app/common/common.dart';
 
 import 'package:foods_app/food_search/food_search.dart';
 
+/// {@template search_results_page}
+/// A page that displays search results for food items.
+/// Includes a search bar, quick results, and a list of search results.
+/// {@endtemplate}
 class SearchResultsPage extends StatefulWidget {
+  /// {@macro search_results_page}
   const SearchResultsPage({super.key});
 
   @override
@@ -68,8 +73,15 @@ class _SearchResultsPage extends State<SearchResultsPage> {
   }
 }
 
+/// {@template animated_quick_results}
+/// A widget that displays quick search results with an animated height
+/// based on user scroll direction.
+/// {@endtemplate}
 class _AnimatedQuickResults extends StatefulWidget {
+  /// {@macro animated_quick_results}
   const _AnimatedQuickResults({required this.scrollController});
+
+  /// The scroll controller used to detect scroll direction.
   final ScrollController scrollController;
 
   @override
@@ -94,6 +106,7 @@ class _AnimatedQuickResultsState extends State<_AnimatedQuickResults> {
     super.dispose();
   }
 
+  /// Handles scroll events to toggle the visibility of quick results.
   void _onScroll() {
     if (widget.scrollController.position.userScrollDirection == ScrollDirection.forward) {
       setState(() {
@@ -117,7 +130,11 @@ class _AnimatedQuickResultsState extends State<_AnimatedQuickResults> {
   }
 }
 
+/// {@template quick_results_names_container}
+/// A container that displays the names of quick search results.
+/// {@endtemplate}
 class _QuickResultsNamesContainer extends StatelessWidget {
+  /// {@macro quick_results_names_container}
   const _QuickResultsNamesContainer();
 
   @override
@@ -143,9 +160,14 @@ class _QuickResultsNamesContainer extends StatelessWidget {
   }
 }
 
+/// {@template search_results_list}
+/// A widget that displays a list of search results for food items.
+/// {@endtemplate}
 class _SearchResultsList extends StatelessWidget {
+  /// {@macro search_results_list}
   const _SearchResultsList({required this.scrollController});
 
+  /// The scroll controller for the list view.
   final ScrollController scrollController;
 
   @override
@@ -170,7 +192,11 @@ class _SearchResultsList extends StatelessWidget {
   }
 }
 
+/// {@template search_bar}
+/// A search bar widget that allows users to input search terms.
+/// {@endtemplate}
 class _SearchBar extends StatefulWidget {
+  /// {@macro search_bar}
   const _SearchBar();
   @override
   State<_SearchBar> createState() => _SearchBarState();
@@ -180,6 +206,7 @@ class _SearchBarState extends State<_SearchBar> {
   final _searchBarController = TextEditingController();
   late FoodSearchBloc _foodSearchBloc;
 
+  /// Clears the search bar text and resets the search state.
   void _onClear() {
     _searchBarController.clear();
     _foodSearchBloc.add(FoodSearchTextCleared());
@@ -219,7 +246,11 @@ class _SearchBarState extends State<_SearchBar> {
   }
 }
 
+/// {@template food_results_count_badge}
+/// A badge that displays the count of food search results.
+/// {@endtemplate}
 class _FoodResultsCountBadge extends StatelessWidget {
+  /// {@macro food_results_count_badge}
   const _FoodResultsCountBadge();
 
   @override
