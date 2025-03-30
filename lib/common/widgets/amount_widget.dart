@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
+import 'package:foods_app/common/widgets/painters/heptagon.dart';
 
 class AmountWidget extends StatelessWidget {
   const AmountWidget({
@@ -31,6 +32,7 @@ class AmountWidget extends StatelessWidget {
   }
 }
 
+//TODO: Figure out a way to make the icons stick with current foods.
 class _Icon extends StatelessWidget {
   const _Icon({
     required this.index,
@@ -81,6 +83,12 @@ class _Icon extends StatelessWidget {
         stroke: stroke,
         strokeWidth: strokeWidth,
       ),
+      HeptagonPainter(
+        color: color,
+        fill: fill,
+        stroke: stroke,
+        strokeWidth: strokeWidth,
+      ),
     ];
 
     final painterIndex = index % painters.length;
@@ -97,65 +105,3 @@ class _Icon extends StatelessWidget {
     );
   }
 }
-
-// ShapeCornersPainter(
-//               numberOfCorners: index + 1,
-//               color: Theme.of(context).colorScheme.onSecondaryContainer,
-//               radius: 8,
-//             ),
-
-// class _ShapePainterSelector {
-//   const _ShapePainterSelector({
-//     required this.index,
-//     required this.color,
-//     // ignore: unused_element_parameter
-//     this.fill,
-//     // ignore: unused_element_parameter
-//     this.stroke,
-//     // ignore: unused_element_parameter
-//     this.strokeWidth,
-//   });
-//   final int index;
-//   final Color color;
-//   final bool? fill;
-//   final bool? stroke;
-//   final double? strokeWidth;
-
-//   CustomPainter getPainter() {
-//     final painters = [
-//       CirclePainter(
-//         color: color,
-//         fill: fill,
-//         stroke: stroke,
-//         strokeWidth: strokeWidth,
-//       ),
-//       SquarePainter(
-//         color: color,
-//         fill: fill,
-//         stroke: stroke,
-//         strokeWidth: strokeWidth,
-//       ),
-//       TrianglePainter(
-//         color: color,
-//         fill: fill,
-//         stroke: stroke,
-//         strokeWidth: strokeWidth,
-//       ),
-//       PentagonPainter(
-//         color: color,
-//         fill: fill,
-//         stroke: stroke,
-//         strokeWidth: strokeWidth,
-//       ),
-//       HexagonPainter(
-//         color: color,
-//         fill: fill,
-//         stroke: stroke,
-//         strokeWidth: strokeWidth,
-//       ),
-//     ];
-
-//     final painterIndex = index % painters.length;
-//     return painters[painterIndex];
-//   }
-// }

@@ -5,7 +5,6 @@ import 'package:foods_app/common/common.dart';
 
 import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 
-// BUG: Icon bug.
 class SharedAmountDisplay extends StatelessWidget {
   const SharedAmountDisplay({
     required this.amount,
