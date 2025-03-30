@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
+/// A painter for drawing a triangle shape.
+///
+/// {@template TrianglePainter}
+/// - [color] specifies the color of the triangle.
+/// - [fill] determines whether the triangle is filled. Defaults to `false`.
+/// - [stroke] determines whether the triangle has a stroke. Defaults to `true`.
+/// - [strokeWidth] specifies the width of the stroke. Defaults to `1.0`.
+/// {@endtemplate}
 class TrianglePainter extends BaseShapePainter {
+  /// {@macro TrianglePainter}
   const TrianglePainter({
     required super.color,
     super.fill,

@@ -2,7 +2,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
+/// A painter for drawing a pentagon shape.
+///
+/// {@template PentagonPainter}
+/// - [color] specifies the color of the pentagon.
+/// - [fill] determines whether the pentagon is filled. Defaults to `false`.
+/// - [stroke] determines whether the pentagon has a stroke. Defaults to `true`.
+/// - [strokeWidth] specifies the width of the stroke. Defaults to `1.0`.
+/// {@endtemplate}
 class PentagonPainter extends BaseShapePainter {
+  /// {@macro PentagonPainter}
   const PentagonPainter({
     required super.color,
     super.fill,

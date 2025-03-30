@@ -2,7 +2,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
+/// A painter for drawing a hexagon shape.
+///
+/// {@template HexagonPainter}
+/// - [color] specifies the color of the hexagon.
+/// - [fill] determines whether the hexagon is filled. Defaults to `false`.
+/// - [stroke] determines whether the hexagon has a stroke. Defaults to `true`.
+/// - [strokeWidth] specifies the width of the stroke. Defaults to `1.0`.
+/// {@endtemplate}
 class HexagonPainter extends BaseShapePainter {
+  /// {@macro HexagonPainter}
   const HexagonPainter({
     required super.color,
     super.fill,

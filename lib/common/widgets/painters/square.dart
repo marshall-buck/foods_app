@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
+/// A painter for drawing a square shape.
+///
+/// {@template SquarePainter}
+/// - [color] specifies the color of the square.
+/// - [fill] determines whether the square is filled. Defaults to `false`.
+/// - [stroke] determines whether the square has a stroke. Defaults to `true`.
+/// - [strokeWidth] specifies the width of the stroke. Defaults to `1.0`.
+/// {@endtemplate}
 class SquarePainter extends BaseShapePainter {
+  /// {@macro SquarePainter}
   const SquarePainter({
     required super.color,
     super.fill,

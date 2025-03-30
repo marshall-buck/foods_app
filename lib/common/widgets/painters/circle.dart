@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
+/// A painter for drawing a circle shape.
+///
+/// {@template CirclePainter}
+/// - [color] specifies the color of the circle.
+/// - [fill] determines whether the circle is filled. Defaults to `false`.
+/// - [stroke] determines whether the circle has a stroke. Defaults to `true`.
+/// - [strokeWidth] specifies the width of the stroke. Defaults to `1.0`.
+/// {@endtemplate}
 class CirclePainter extends BaseShapePainter {
+  /// {@macro CirclePainter}
   const CirclePainter({
     required super.color,
     super.fill,
