@@ -8,9 +8,6 @@ enum RotationDirection { clockwise, counterclockwise }
 
 /// A circular range slider widget for adjusting values.
 ///
-/// This widget allows users to interact with a circular slider to adjust
-/// values by rotating a handle around a track.
-///
 /// {@template CircularRangeSlider}
 /// - [trackStroke] specifies the thickness of the track.
 /// - [handleRadius] specifies the radius of the handle.
@@ -22,8 +19,6 @@ enum RotationDirection { clockwise, counterclockwise }
 /// - [logging] enables debug logging when set to true.
 /// {@endtemplate}
 class CircularRangeSlider extends StatefulWidget {
-  /// Creates a [CircularRangeSlider].
-  ///
   /// {@macro CircularRangeSlider}
   const CircularRangeSlider({
     required this.trackStroke,
