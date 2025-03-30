@@ -3,9 +3,28 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 
+/// The direction of rotation for the circular range slider.
 enum RotationDirection { clockwise, counterclockwise }
 
+/// A circular range slider widget for adjusting values.
+///
+/// This widget allows users to interact with a circular slider to adjust
+/// values by rotating a handle around a track.
+///
+/// {@template CircularRangeSlider}
+/// - [trackStroke] specifies the thickness of the track.
+/// - [handleRadius] specifies the radius of the handle.
+/// - [trackDiameter] specifies the diameter of the track.
+/// - [trackColor] specifies the color of the track.
+/// - [handleColor] specifies the color of the handle.
+/// - [child] is an optional widget to display at the center of the slider.
+/// - [onPanUpdate] is a callback triggered when the handle is dragged.
+/// - [logging] enables debug logging when set to true.
+/// {@endtemplate}
 class CircularRangeSlider extends StatefulWidget {
+  /// Creates a [CircularRangeSlider].
+  ///
+  /// {@macro CircularRangeSlider}
   const CircularRangeSlider({
     required this.trackStroke,
     required this.handleRadius,
@@ -18,14 +37,30 @@ class CircularRangeSlider extends StatefulWidget {
     super.key,
   });
 
+  /// The thickness of the track.
   final double trackStroke;
+
+  /// The radius of the handle.
   final double handleRadius;
+
+  /// The diameter of the track.
   final double trackDiameter;
+
+  /// The color of the track.
   final Color trackColor;
+
+  /// The color of the handle.
   final Color handleColor;
+
+  /// An optional widget to display at the center of the slider.
   final Widget? child;
 
+  /// A callback triggered when the handle is dragged.
+  ///
+  /// The callback provides the [RotationDirection] and [DragUpdateDetails].
   final void Function(RotationDirection, DragUpdateDetails)? onPanUpdate;
+
+  /// Enables debug logging when set to true.
   final bool logging;
 
   @override
@@ -36,6 +71,11 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
   double _angle = math.pi * 1.5;
   bool _shouldPan = false;
 
+  /// Checks if a point is inside the handle.
+  ///
+  /// - [circleCenter] is the center of the circle.
+  /// - [radius] is the radius of the handle.
+  /// - [point] is the point to check.
   bool _isPointInsideHandle(Offset circleCenter, double radius, Offset point) {
     final distance = math.sqrt(
       math.pow(point.dx - circleCenter.dx, 2) + math.pow(point.dy - circleCenter.dy, 2),
@@ -86,9 +126,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
           final newAngle = math.atan2(dy, dx);
 
           final direction = _panHandler(details, widget.trackDiameter / 2);
-          // if (widget.onPanUpdate != null) {
-          //   widget.onPanUpdate!(direction, details);
-          // }
+
           widget.onPanUpdate?.call(direction, details);
           if (widget.logging) {
             _logOnPanUpdate(details, dx, dy, newAngle);
@@ -130,8 +168,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
     );
   }
 
-  /// helper logging method for onPanStart.
-
+  /// Logs debug information for the `onPanStart` event.
   void _logOnPanStart(
     DragStartDetails details,
     Offset center,
@@ -139,7 +176,6 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
     Offset handleOffset,
   ) {
     dev.log(
-      // ignore: lines_longer_than_80_chars
       '${_isPointInsideHandle(handleOffset, widget.handleRadius, details.localPosition)}',
       name: 'onPanStart: isPointInsideCircle',
     );
@@ -154,8 +190,7 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
     dev.log('$center', name: 'onPanStart: center');
   }
 
-  // helper logging method for onPanUpdate.
-
+  /// Logs debug information for the `onPanUpdate` event.
   void _logOnPanUpdate(
     DragUpdateDetails details,
     double dx,
@@ -172,6 +207,10 @@ class _CircularRangeSliderState extends State<CircularRangeSlider> {
   }
 }
 
+/// A custom painter for the circular range slider track.
+///
+/// {@template CircularRangeSlider}
+/// {@endtemplate}
 class _CircularRangeSliderTrackPainter extends CustomPainter {
   const _CircularRangeSliderTrackPainter({
     required this.color,
@@ -179,8 +218,13 @@ class _CircularRangeSliderTrackPainter extends CustomPainter {
     required this.logging,
   });
 
+  /// The color of the track.
   final Color color;
+
+  /// The thickness of the track.
   final double trackStroke;
+
+  /// Enables debug logging when set to true.
   final bool logging;
 
   @override
@@ -211,6 +255,10 @@ class _CircularRangeSliderTrackPainter extends CustomPainter {
   }
 }
 
+/// A custom painter for the circular range slider handle.
+///
+/// {@template CircularRangeSlider}
+/// {@endtemplate}
 class _CircularRangeSliderHandlePainter extends CustomPainter {
   const _CircularRangeSliderHandlePainter({
     required this.angle,
@@ -218,9 +266,17 @@ class _CircularRangeSliderHandlePainter extends CustomPainter {
     required this.handleRadius,
     required this.logging,
   });
+
+  /// The angle of the handle.
   final double angle;
+
+  /// The color of the handle.
   final Color color;
+
+  /// The radius of the handle.
   final double handleRadius;
+
+  /// Enables debug logging when set to true.
   final bool logging;
 
   @override
@@ -253,6 +309,10 @@ class _CircularRangeSliderHandlePainter extends CustomPainter {
   }
 }
 
+/// Determines the rotation direction based on pan gestures.
+///
+/// - [d] is the drag update details.
+/// - [radius] is the radius of the circular slider.
 RotationDirection _panHandler(DragUpdateDetails d, double radius) {
   /// Location of the pointer
   final onTop = d.localPosition.dy <= radius;
@@ -279,26 +339,6 @@ RotationDirection _panHandler(DragUpdateDetails d, double radius) {
   final rotationalChange = verticalRotation + horizontalRotation;
 
   final movingClockwise = rotationalChange > 0;
-  // final movingCounterClockwise = rotationalChange < 0;
-
-  // dev.log('onTop: $onTop', name: '_panHandler');
-  // dev.log('onLeftSide: $onLeftSide', name: '_panHandler');
-  // dev.log('onRightSide: $onRightSide', name: '_panHandler');
-  // dev.log('onBottom: $onBottom', name: '_panHandler');
-  // dev.log('panUp: $panUp', name: '_panHandler');
-  // dev.log('panLeft: $panLeft', name: '_panHandler');
-  // dev.log('panRight: $panRight', name: '_panHandler');
-  // dev.log('panDown: $panDown', name: '_panHandler');
-  // dev.log('yChange: $yChange', name: '_panHandler');
-  // dev.log('xChange: $xChange', name: '_panHandler');
-  // dev.log('verticalRotation: $verticalRotation', name: '_panHandler');
-  // dev.log('horizontalRotation: $horizontalRotation', name: '_panHandler');
-  // dev.log('rotationalChange: $rotationalChange', name: '_panHandler');
-  // dev.log('movingClockwise: $movingClockwise', name: '_panHandler');
-  // dev.log(
-  //   'movingCounterClockwise: $movingCounterClockwise',
-  //   name: '_panHandler',
-  // );
 
   if (movingClockwise == true) {
     return RotationDirection.clockwise;
