@@ -5,6 +5,7 @@ import 'package:foods_app/data/data.dart';
 /// {@template amount_holder}
 /// A holder for an amount and its unit string.
 /// This can be either a nutrient of a food.
+/// The [amountString] is a formatted string representation of the amount.
 /// {@endtemplate}
 class AmountHolder extends Equatable {
   /// {@macro amount_holder}
@@ -34,7 +35,7 @@ class AmountHolder extends Equatable {
   String get amountString => amount.convertAmountToString();
 
   @override
-  List<Object?> get props => [amount, amountString, unitString];
+  List<Object?> get props => [amount, unitString];
 }
 
 /// {@template food}
@@ -50,7 +51,7 @@ class Food extends Equatable {
     required this.amountMap,
   });
 
-  /// Creates a [Food] instance from a [FoodDTO] and a nutrient amount map.
+  /// Creates a [Food] instance for  the ui,  from a [FoodDTO] from the data layer and a nutrient amount map.
   factory Food.fromFoodDTO(FoodDTO food, Map<int, AmountHolder> amountMap) {
     return Food(
       id: food.id,
@@ -73,7 +74,7 @@ class Food extends Equatable {
   /// The unit of the default amount.
   final String unit;
 
-  /// A map of nutrient IDs to their corresponding [AmountHolder].
+  /// A map of nutrient and food ID's to their corresponding [AmountHolder].
   final Map<int, AmountHolder> amountMap;
 
   /// Creates a copy of this [Food] with optional new values.
