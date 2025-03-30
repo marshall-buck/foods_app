@@ -5,7 +5,15 @@ import 'package:foods_app/food_detail/bloc/food_detail_bloc.dart';
 
 import 'package:foods_app/food_detail/ui/ui.dart';
 
+/// {@template nutrient_compare_cards}
+/// A widget that displays a  list of nutrient comparison cards
+/// for the active foods in the [FoodDetailBloc] state.
+///
+/// Screen size and orientation will determine scroll direction.
+///
+/// {@endtemplate}
 class NutrientCompareCards extends StatelessWidget {
+  /// {@macro nutrient_compare_cards}
   const NutrientCompareCards({super.key});
 
   @override
@@ -16,7 +24,6 @@ class NutrientCompareCards extends StatelessWidget {
         final nutrientIds = state.allNutrientIdsInQ?.toList();
         final foods = state.foodsList;
         return ListView.builder(
-          // itemExtent: 300,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return AspectRatio(

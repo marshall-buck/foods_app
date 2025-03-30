@@ -7,15 +7,24 @@ import 'package:foods_app/domain/domain.dart';
 
 import 'package:foods_app/food_detail/food_detail.dart';
 
+/// {@template nutrient_compare_card}
+/// A card widget that displays nutrient information for a specific nutrient
+/// across multiple foods.
+/// {@endtemplate}
 class NutrientCompareCard extends StatelessWidget {
+  /// {@macro nutrient_compare_card}
   const NutrientCompareCard({
     required this.nutrientId,
     required this.foods,
     super.key,
   });
 
+  /// The ID of the nutrient being displayed.
   final int nutrientId;
+
+  /// The list of foods to compare.
   final List<Food?> foods;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,18 +53,24 @@ class NutrientCompareCard extends StatelessWidget {
         ],
       ),
     );
-
-    //
   }
 }
 
+/// {@template nutrient_amount_displays}
+/// A widget that displays the nutrient amounts for a specific nutrient
+/// across multiple foods.
+/// {@endtemplate}
 class _NutrientAmountDisplays extends StatelessWidget {
+  /// {@macro nutrient_amount_displays}
   const _NutrientAmountDisplays({
     required this.foods,
     required this.nutrientId,
   });
 
+  /// The list of foods to display.
   final List<Food?> foods;
+
+  /// The ID of the nutrient being displayed.
   final int nutrientId;
 
   @override
@@ -69,26 +84,36 @@ class _NutrientAmountDisplays extends StatelessWidget {
         return _NutrientAmountDisplay(
           nutrientId: nutrientId,
           food: food!,
-          foodIndex: foods.indexOf(food), // Ensure the index is unique for each food item
+          foodIndex: foods.indexOf(food),
         );
       }).toList(),
     );
   }
 }
 
+/// {@template nutrient_amount_display}
+/// A widget that displays the nutrient amount for a specific food.
+/// {@endtemplate}
 class _NutrientAmountDisplay extends StatelessWidget {
-  const _NutrientAmountDisplay({required this.nutrientId, required this.food, required this.foodIndex});
+  /// {@macro nutrient_amount_display}
+  const _NutrientAmountDisplay({
+    required this.nutrientId,
+    required this.food,
+    required this.foodIndex,
+  });
 
+  /// The ID of the nutrient being displayed.
   final int nutrientId;
+
+  /// The food being displayed.
   final Food food;
+
+  /// The index of the food in the list.
   final int foodIndex;
 
   void _onLongPressed(BuildContext context) {
     final amount = food.nutrientAmount(nutrientId);
     final unit = food.getNutrientUnit(nutrientId);
-    // if (amount == 0) {
-    //   return; // Avoid showing the slider if the amount is zero
-    // }
     context.read<FoodDetailBloc>().add(const ModifyAmountFoodDetailEvent());
     Navigator.of(context).push(
       CircularRangeSliderPopUp<void>(
@@ -114,9 +139,14 @@ class _NutrientAmountDisplay extends StatelessWidget {
   }
 }
 
+/// {@template nutrient_card_title}
+/// A widget that displays the title of a nutrient card.
+/// {@endtemplate}
 class _NutrientCardTitle extends StatelessWidget {
+  /// {@macro nutrient_card_title}
   const _NutrientCardTitle({required this.id});
 
+  /// The ID of the nutrient being displayed.
   final int id;
 
   @override

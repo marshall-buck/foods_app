@@ -6,7 +6,13 @@ import 'package:foods_app/data/data.dart';
 import 'package:foods_app/food_detail/food_detail.dart';
 import 'package:foods_app/food_detail/ui/food_description_cards.dart';
 
+/// {@template food_detail_page}
+/// A page that displays detailed information about  food item(s).
+///
+/// This page uses a [FoodDetailBloc] to fetch and manage the state of food details.
+/// {@endtemplate}
 class FoodDetailPage extends StatelessWidget {
+  /// {@macro food_detail_page}
   const FoodDetailPage({super.key});
 
   @override
@@ -20,7 +26,13 @@ class FoodDetailPage extends StatelessWidget {
   }
 }
 
+/// {@template food_detail_view}
+/// A view that renders the UI for the food detail page.
+///
+/// Displays food details and handles different states such as success or error.
+/// {@endtemplate}
 class FoodDetailView extends StatelessWidget {
+  /// {@macro food_detail_view}
   const FoodDetailView({super.key});
 
   @override
@@ -43,7 +55,7 @@ class FoodDetailView extends StatelessWidget {
                   nutrientsPane: const SizedBox(height: 300, child: NutrientCompareCards()),
                 );
 
-              case FoodDetailStatus.error:
+              case FoodDetailStatus.error: //TODO: Create error dialogue.
                 return const Center(
                   child: Text('An error occurred. Please try again.'),
                 );

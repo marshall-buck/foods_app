@@ -6,14 +6,23 @@ import 'package:foods_app/common/common.dart';
 import 'package:foods_app/domain/domain.dart';
 import 'package:foods_app/food_detail/food_detail.dart';
 
+/// {@template food_description_card}
+/// A widget that displays a detailed description of a food item.
+///
+/// Alternates the layout of the description and amount display based on the index.
+/// {@endtemplate}
 class FoodDescriptionCard extends StatelessWidget {
+  /// {@macro food_description_card}
   const FoodDescriptionCard({
     required this.food,
     required this.index,
     super.key,
   });
 
+  /// The food item to display.
   final Food food;
+
+  /// The index of the food item in the list.
   final int index;
 
   @override
@@ -42,10 +51,19 @@ class FoodDescriptionCard extends StatelessWidget {
   }
 }
 
+/// {@template food_amount_display}
+/// A widget that displays the amount and unit of a food item.
+///
+/// Supports long press to adjust the amount.
+/// {@endtemplate}
 class _FoodAmountDisplay extends StatelessWidget {
+  /// {@macro food_amount_display}
   const _FoodAmountDisplay({required this.food, required this.index});
 
+  /// The food item to display.
   final Food food;
+
+  /// The index of the food item in the list.
   final int index;
 
   void _onLongPress(BuildContext context) {
@@ -71,10 +89,17 @@ class _FoodAmountDisplay extends StatelessWidget {
   }
 }
 
+/// {@template food_description}
+/// A widget that displays the name of a food item with text alignment.
+/// {@endtemplate}
 class _Description extends StatelessWidget {
+  /// {@macro food_description}
   const _Description({required this.food, required this.textAlign});
 
+  /// The food item to display.
   final Food food;
+
+  /// The text alignment for the description.
   final TextAlign textAlign;
 
   @override
