@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/common/common.dart';
 
+/// {@template responsive_panes}
+/// A widget that adapts its layout based on the available screen width.
+///
+/// Displays two panes (`foodsPane` and `nutrientsPane`) side-by-side
+/// when the screen width is greater than or equal to a predefined breakpoint.
+/// Otherwise, it displays the panes stacked vertically.
+///
+/// This widget ensures proper padding and spacing for both layouts.
+/// {@endtemplate}
 class ResponsivePanes extends StatelessWidget {
+  /// {@macro responsive_panes}
   const ResponsivePanes({
     required this.foodsPane,
     required this.nutrientsPane,
     super.key,
   });
+
+  /// The widget to display in the first pane (e.g., a list of foods).
   final Widget foodsPane;
+
+  /// The widget to display in the second pane (e.g., a list of nutrients).
   final Widget nutrientsPane;
 
   @override
@@ -15,24 +29,29 @@ class ResponsivePanes extends StatelessWidget {
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth >= 1024) {
-            // Expanded or larger window size
+          if (constraints.maxWidth >= MagicBreakPoints.md) {
             return Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(
-                    MagicSpacing.sp_2,
-                    MagicSpacing.sp_2,
-                    MagicSpacing.sp_2,
-                    MagicSpacing.sp_1,
+                Expanded(
+                  //TODO:Padding need to be adjusted.
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_1,
+                    ),
+                    child: foodsPane,
                   ),
-                  child: foodsPane,
                 ),
                 Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(MagicBorderRadius.br_10),
+                  //TODO:Padding need to be adjusted.
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_1,
+                      MagicSpacing.sp_2,
+                      MagicSpacing.sp_2,
                     ),
                     child: nutrientsPane,
                   ),
@@ -40,7 +59,7 @@ class ResponsivePanes extends StatelessWidget {
               ],
             );
           } else {
-            // Compact or medium window size
+            // smaller than md.
             return Column(
               children: [
                 Expanded(
