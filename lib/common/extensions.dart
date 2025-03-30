@@ -1,3 +1,6 @@
+/// Converts a double amount to a string with a specific number of decimal places
+/// based on the value of the amount.
+/// Used for converting the actual amount to a more readble format fo the ui.
 extension ConvertAmountToString on double {
   String convertAmountToString() {
     if (this == 0) return '0';
