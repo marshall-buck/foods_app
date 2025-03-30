@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:foods_app/data/data.dart';
 
-//TODO: Eventually multiple class will use this, right now only the local Usda uses it,
+//TODO: Eventually multiple classes will use this, right now only the local Usda uses it,
 // but further down the road external ips can be used.
 
 /// {@template food_search_api_interface}

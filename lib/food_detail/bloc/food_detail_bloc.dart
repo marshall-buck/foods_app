@@ -56,20 +56,6 @@ class FoodDetailBloc extends Bloc<FoodDetailEvent, FoodDetailState> {
     );
   }
 
-  // /// Handles the [AddFoodDetailEvent].
-  // ///
-  // /// [AddFoodDetailEvent] contains the ID of the food to be added.
-  // Future<void> _onAddFoodDetail(AddFoodDetailEvent event, Emitter<FoodDetailState> emit) async {
-  //   try {
-  //     final food = await _localFoodsDBRepo.queryFood(id: event.id);
-
-  //     _activeFoods.addFood(food!);
-  //   } catch (e) {
-  //     emit(state.copyWith(status: FoodDetailStatus.error));
-  //     // print(e);
-  //   }
-  // }
-
   // @override
   // void onEvent(FoodDetailEvent event) {
   //   super.onEvent(event);
