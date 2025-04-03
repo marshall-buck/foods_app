@@ -59,7 +59,7 @@ class NutrientDTO extends Equatable {
   @override
   bool get stringify => true;
 
-  /// A list of nutrient IDs included in the USDA DB.
+  /// A list of nutrient IDs to keep from the USDA DB.
   static const usdaNutrientIDs = [
     1003,
     1004,
@@ -307,6 +307,10 @@ class NutrientDTO extends Equatable {
     1412: {'name': '18:1-11 t (18:1t n-7)', 'unit': 'g'},
     2000: {'name': 'Total Sugars', 'unit': 'g'},
   };
+
+  static List<MapEntry<int, String>> get nutrientIdNameList {
+    return originalNutrientTableEdit.entries.map((entry) => MapEntry(entry.key, entry.value['name']!)).toList();
+  }
 
   static const usdaDBNutrientLookupTable = UsdaNutrientModel.originalNutrientTableEdit;
 }
